@@ -1,6 +1,15 @@
 # Data and model artefacts: NEVER committed
-data/
+data/*
 !data/.gitkeep
+!data/FairFace/
+data/FairFace/*
+!data/FairFace/.gitkeep
+!data/LFW/
+data/LFW/*
+!data/LFW/.gitkeep
+!data/UTKFace/
+data/UTKFace/*
+!data/UTKFace/.gitkeep
 checkpoints/
 outputs/
 runs/
