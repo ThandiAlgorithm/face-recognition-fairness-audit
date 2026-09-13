@@ -1,0 +1,85 @@
+meta:
+  issue: GOV-002
+  version: 1.0.0
+  frozen: false
+  frozen_date: null
+  frozen_commit: null
+  approved_by: []
+
+# positive class
+gender:
+  positive_class: female
+  codes:
+    female: 1
+    male: 0
+    unknown: null
+
+# age bands
+age_bands:
+  - {name: "0-19", min: 0, max: 19}
+  - {name: "20-39", min: 20, max: 39}
+  - {name: "40-59", min: 40, max: 59}
+  - {name: "60+", min: 60, max: null}
+
+age_unknown_policy:
+  lfw: unknown
+  missing_value: unknown
+  unknown_is_reported: true
+
+# continuous values kept
+retain_continuous:
+  - L_star
+  - a_star
+  - b_star
+  - ITA
+  - hue_angle
+
+# ITA six groups
+ita_groups:
+  - {name: very_light, ordinal_rank: 1, min_exclusive: 55, max_inclusive: null}
+  - {name: light, ordinal_rank: 2, min_exclusive: 41, max_inclusive: 55}
+  - {name: intermediate, ordinal_rank: 3, min_exclusive: 28, max_inclusive: 41}
+  - {name: tan, ordinal_rank: 4, min_exclusive: 10, max_inclusive: 28}
+  - {name: brown, ordinal_rank: 5, min_exclusive: -30, max_inclusive: 10}
+  - {name: dark, ordinal_rank: 6, min_exclusive: null, max_inclusive: -30}
+
+# Fitzpatrick ordinal
+fitzpatrick_ordinal:
+  I: 1
+  II: 2
+  III: 3
+  IV: 4
+  V: 5
+  VI: 6
+
+ordinal_correspondence:
+  enabled: true
+  validated: false
+
+# binary skin grouping
+skin_binary:
+  ita:
+    threshold_degrees: 28
+    lighter_rule: "ITA > 28"
+    darker_rule: "ITA <= 28"
+  fitzpatrick:
+    lighter: [I, II, III]
+    darker: [IV, V, VI]
+
+# hue
+hue:
+  primary_analysis: continuous_only
+  categorical_thresholds: null
+
+# race
+race:
+  within_dataset_only: true
+  direct_cross_dataset_comparison: false
+  native_available: [fairface, utkface]
+  derived_only: [lfw]
+  cross_dataset_axes_allowed:
+    - ITA
+    - L_star
+    - hue_angle
+    - gender
+    - image_quality_measures
