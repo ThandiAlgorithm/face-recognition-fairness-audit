@@ -1,6 +1,6 @@
 meta:
   issue: GOV-002
-  version: 1.0.0
+  version: 1.1.0
   frozen: false
   frozen_date: null
   frozen_commit: null
@@ -15,18 +15,43 @@ gender:
     unknown: null
 
 # age bands
-age_bands:
+age_bands_fine:
+  - {name: "0-2", min: 0, max: 2}
+  - {name: "3-9", min: 3, max: 9}
+  - {name: "10-19", min: 10, max: 19}
+  - {name: "20-29", min: 20, max: 29}
+  - {name: "30-39", min: 30, max: 39}
+  - {name: "40-49", min: 40, max: 49}
+  - {name: "50-59", min: 50, max: 59}
+  - {name: "60-69", min: 60, max: 69}
+  - {name: "70+", min: 70, max: null}
+
+# Coarse bands are used when intersections would otherwise become too small.
+age_bands_coarse:
   - {name: "0-19", min: 0, max: 19}
   - {name: "20-39", min: 20, max: 39}
   - {name: "40-59", min: 40, max: 59}
   - {name: "60+", min: 60, max: null}
 
+# Which age grouping to use for each type of analysis.
+age_band_usage:
+  composition: fine
+  single_axis: fine
+  two_way_intersection: fine
+  three_way_intersection: coarse
+
+# Every fine age band fits fully inside one coarse age band.
+age_band_nesting_verified: true
+
+# Age handling
 age_unknown_policy:
   lfw: unknown
   missing_value: unknown
   unknown_is_reported: true
+  do_not_force_uncertain_age_into_band: true
 
-# continuous values kept
+# Keep continuous skin-colour values.
+# Categories are derived from these values, but the raw values are not discarded.
 retain_continuous:
   - L_star
   - a_star
@@ -43,7 +68,7 @@ ita_groups:
   - {name: brown, ordinal_rank: 5, min_exclusive: -30, max_inclusive: 10}
   - {name: dark, ordinal_rank: 6, min_exclusive: null, max_inclusive: -30}
 
-# Fitzpatrick ordinal
+# Fitzpatrick ordinal order
 fitzpatrick_ordinal:
   I: 1
   II: 2
@@ -52,31 +77,43 @@ fitzpatrick_ordinal:
   V: 5
   VI: 6
 
+# We plan to compare the two ordinal measurement routes,
+# but the mapping still needs to be validated.
 ordinal_correspondence:
   enabled: true
   validated: false
 
-# binary skin grouping
+# Binary skin grouping used for the main lighter/darker comparison.
 skin_binary:
   ita:
     threshold_degrees: 28
     lighter_rule: "ITA > 28"
     darker_rule: "ITA <= 28"
+
   fitzpatrick:
     lighter: [I, II, III]
     darker: [IV, V, VI]
 
-# hue
+# Hue stays continuous in the main analysis.
+# We do not create arbitrary hue categories.
 hue:
   primary_analysis: continuous_only
   categorical_thresholds: null
 
-# race
+# Race handling
 race:
   within_dataset_only: true
   direct_cross_dataset_comparison: false
-  native_available: [fairface, utkface]
-  derived_only: [lfw]
+
+  native_available:
+    - fairface
+    - utkface
+
+  derived_only:
+    - lfw
+
+  # These axes can be compared across datasets,
+  # subject to label compatibility.
   cross_dataset_axes_allowed:
     - ITA
     - L_star
