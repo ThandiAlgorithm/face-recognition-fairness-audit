@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import os
@@ -9,7 +8,6 @@ from typing import Optional
 
 import cv2
 import numpy as np
-import pandas as pd
 
 # Check TensorFlow availability before setting the flag.
 _TENSORFLOW_IMPORTED_TOO_EARLY = "tensorflow" in sys.modules
@@ -31,28 +29,37 @@ def package_version(name: str) -> str:
     except PackageNotFoundError:
         return "not-installed"
 
-CANONICAL_LANDMARK_FRACTIONS = [
-    (0.35, 0.35),
-    (0.65, 0.35),
-    (0.50, 0.52),
-    (0.38, 0.72),
-    (0.62, 0.72),
-]
-ALIGN_OUTPUT_SIZE = 224
 
-# RetinaFace needs a lower threshold for cropped faces.
-DEFAULT_THRESHOLD = 0.5
+def _runtime_defaults() -> tuple[float, bool, int, list]:
+    from src import config
 
+    gov006 = config.load_gov006()
+    detector_cfg = config.detector_config(gov006)
+    alignment_cfg = config.alignment_config(gov006)
 
-def build_pilot_sample(canonical_images_df: pd.DataFrame, seed: int, n_per_dataset: int = 50) -> pd.DataFrame:
-    parts = []
-    for dataset, group in canonical_images_df.groupby("dataset"):
-        n = min(n_per_dataset, len(group))
-        parts.append(group.sample(n=n, random_state=seed))
-    return pd.concat(parts, ignore_index=True)
+    return (
+        float(detector_cfg["confidence_threshold"]),
+        bool(detector_cfg["allow_upscaling"]),
+        int(alignment_cfg["output_size"]),
+        alignment_cfg["canonical_landmark_fractions"],
+    )
 
 
-def get_model_info() -> dict:
+def build_retinaface_model():
+    _check_retinaface_runtime()
+    from retinaface import RetinaFace
+
+    return RetinaFace.build_model()
+
+
+def get_model_info(threshold: Optional[float] = None, allow_upscaling: Optional[bool] = None) -> dict:
+    default_threshold, default_upscaling, _, _ = _runtime_defaults()
+
+    if threshold is None:
+        threshold = default_threshold
+    if allow_upscaling is None:
+        allow_upscaling = default_upscaling
+
     return {
         "package": "retina-face",
         "package_version": package_version("retina-face"),
@@ -60,14 +67,28 @@ def get_model_info() -> dict:
         "tensorflow_version": package_version("tensorflow"),
         "tf_keras_version": package_version("tf-keras"),
         "legacy_keras_enabled": os.environ.get("TF_USE_LEGACY_KERAS") == "1",
-        "threshold": DEFAULT_THRESHOLD,
-        "allow_upscaling": True,
+        "threshold": float(threshold),
+        "allow_upscaling": bool(allow_upscaling),
     }
 
 
-def detect_faces(image_path: Path, threshold: float = DEFAULT_THRESHOLD) -> dict:
+def detect_faces(
+    image_path: Path,
+    model=None,
+    threshold: Optional[float] = None,
+    allow_upscaling: Optional[bool] = None,
+) -> dict:
     _check_retinaface_runtime()
     from retinaface import RetinaFace
+
+    default_threshold, default_upscaling, _, _ = _runtime_defaults()
+
+    if threshold is None:
+        threshold = default_threshold
+    if allow_upscaling is None:
+        allow_upscaling = default_upscaling
+    if model is None:
+        model = build_retinaface_model()
 
     result = {
         "path": str(image_path),
@@ -76,10 +97,18 @@ def detect_faces(image_path: Path, threshold: float = DEFAULT_THRESHOLD) -> dict
         "number_of_faces": 0,
         "detections": [],
     }
+
     try:
-        raw = RetinaFace.detect_faces(str(image_path), threshold=threshold)
+        raw = RetinaFace.detect_faces(
+            img_path=str(image_path),
+            threshold=float(threshold),
+            model=model,
+            allow_upscaling=bool(allow_upscaling),
+        )
+
         if not isinstance(raw, dict):
             raw = {}
+
         for face in raw.values():
             x1, y1, x2, y2 = [float(v) for v in face["facial_area"]]
             lm = face["landmarks"]
@@ -97,10 +126,13 @@ def detect_faces(image_path: Path, threshold: float = DEFAULT_THRESHOLD) -> dict
                     "det_score": float(face["score"]),
                 }
             )
+
         result["number_of_faces"] = len(result["detections"])
         result["inference_success"] = True
+
     except Exception as exc:
         result["inference_error"] = f"{type(exc).__name__}: {exc}"
+
     return result
 
 
@@ -115,13 +147,42 @@ def select_primary_face(detections: list[dict]) -> Optional[dict]:
     return max(detections, key=lambda d: (bbox_area(d), d["det_score"]))
 
 
-def align_face(image_bgr: np.ndarray, kps: list[list[float]], output_size: int = ALIGN_OUTPUT_SIZE) -> Optional[np.ndarray]:
-    src = np.array(kps, dtype=np.float32)
-    dst = np.array(
-        [(fx * output_size, fy * output_size) for fx, fy in CANONICAL_LANDMARK_FRACTIONS],
+def align_face(
+    image_rgb: np.ndarray,
+    keypoints: list[list[float]],
+    output_size: Optional[int] = None,
+    canonical_landmark_fractions: Optional[list] = None,
+    return_transform: bool = False,
+):
+    _, _, default_size, default_points = _runtime_defaults()
+
+    if output_size is None:
+        output_size = default_size
+    if canonical_landmark_fractions is None:
+        canonical_landmark_fractions = default_points
+
+    source = np.array(keypoints, dtype=np.float32)
+    destination = np.array(
+        [
+            [float(fx) * output_size, float(fy) * output_size]
+            for fx, fy in canonical_landmark_fractions
+        ],
         dtype=np.float32,
     )
-    transform, _ = cv2.estimateAffinePartial2D(src, dst, method=cv2.LMEDS)
+
+    transform, _ = cv2.estimateAffinePartial2D(source, destination, method=cv2.LMEDS)
+
     if transform is None:
-        return None
-    return cv2.warpAffine(image_bgr, transform, (output_size, output_size), flags=cv2.INTER_LINEAR)
+        return (None, None) if return_transform else None
+
+    aligned = cv2.warpAffine(
+        image_rgb,
+        transform,
+        (output_size, output_size),
+        flags=cv2.INTER_LINEAR,
+    )
+
+    if return_transform:
+        return aligned, transform
+
+    return aligned

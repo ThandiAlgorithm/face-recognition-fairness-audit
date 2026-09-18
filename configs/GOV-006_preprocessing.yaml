@@ -1,0 +1,133 @@
+meta:
+  issue: GOV-006
+  version: 1.0.0
+  frozen: false
+  frozen_date: null
+  frozen_commit: null
+  approved_by: []
+
+raw_data:
+  read_only: true
+  never_overwrite_source: true
+  manifest_fields: [dataset, variant, relative_path, file_size_bytes, sha256, archive_version]
+
+integrity:
+  open_every_file: true
+  record_before_conversion: [width_px, height_px, original_mode, format, colour_profile]
+  exif_orientation:
+    apply: true
+    stage: before_detection
+    method: pillow_exif_transpose
+    overwrite_raw: false
+
+colour:
+  input_space: sRGB
+  lab_illuminant: D65
+  lab_observer: "2deg"
+  library: skimage.color.rgb2lab
+  library_version_pinned_in: configs/GOV-008_models.yaml
+  profile_policy:
+    if_profile_present: convert_to_sRGB
+    if_profile_absent: assume_sRGB_and_flag
+    flag_field: colour_profile_assumed
+
+greyscale:
+  detect_by: [original_mode_is_L, chroma_below_tolerance]
+  chroma_tolerance: 2.0
+  eligible_for_non_colour_analyses: true
+  eligible_for_skin_colour_audit: false
+  replicate_grey_channel_to_rgb: false
+
+detector:
+  name: RetinaFace
+  implementation: serengil_tensorflow
+  package: retina-face
+  confidence_threshold: 0.90
+  allow_upscaling: true
+  preserve_all_detections: true
+  primary_face_rule: largest_bbox_then_confidence
+
+alignment:
+  landmarks: 5
+  transform: similarity
+  output_size: 224
+  canonical_landmark_fractions:
+    - [0.35, 0.35]
+    - [0.65, 0.35]
+    - [0.50, 0.52]
+    - [0.38, 0.72]
+    - [0.62, 0.72]
+  store_transform: true
+  interpolation: bilinear
+
+skin_measurement:
+  stage: after_alignment_before_any_augmentation
+  computed_on: aligned_crop
+  roi_method: fixed_patches_on_aligned_crop_with_chroma_filter
+  roi_decided_date: 2026-09-15
+  roi_patches:
+    forehead:    {x: [0.40, 0.60], y: [0.18, 0.28]}
+    cheek_left:  {x: [0.22, 0.36], y: [0.48, 0.62]}
+    cheek_right: {x: [0.64, 0.78], y: [0.48, 0.62]}
+  roi_skin_filter:
+    space: YCbCr
+    cb_range: [77, 127]
+    cr_range: [133, 173]
+  roi_min_valid_pixels: 200
+  store_once: [L_star, a_star, b_star]
+  derive_from_stored: [ITA, hue_angle]
+  ita_formula: "arctan((L_star - 50) / b_star) * 180 / pi"
+  hue_formula: "degrees(atan2(b_star, a_star)) mod 360"
+
+  # divide by zero guard
+  ita_guard:
+    b_star_min_abs: 1.0
+    on_guard_trip: set_ita_null_and_flag
+    flag_field: ita_undefined
+
+augmentation:
+  audit_datasets: [lfw, fairface, utkface]
+  photometric_augmentation_before_measurement: false
+  forbidden_before_measurement:
+    - brightness_jitter
+    - contrast_jitter
+    - colour_jitter
+    - hue_jitter
+    - saturation_jitter
+
+soft_attributes:
+  model_ref: celeba_attribute_classifier
+  store: probabilities
+  excluded_from_skin_tone_use: [Pale_Skin]
+
+splits:
+  lock_before_any_development_analysis: true
+  lfw:
+    view1: development
+    view2: sealed_until_final_reporting
+    view2_access_requires: GOV-010_amendment
+  fairface: official_train_val
+  utkface:
+    method: deterministic_project_split
+    seed: 26041
+    committed_file: metadata/utkface_split.csv
+
+stage_order:
+  1: read_raw_archive
+  2: build_file_manifest
+  3: decode_and_integrity_check
+  4: apply_exif_orientation
+  5: colour_handling
+  6: parse_native_labels
+  7: duplicate_checks
+  8: create_stable_image_id
+  9: write_master_row
+  10: lock_splits
+  11: run_detection
+  12: resolve_primary_face
+  13: align
+  14: visual_measures
+  15: skin_colour
+  16: soft_attributes
+  17: build_derived_tables
+  18: statistical_audit

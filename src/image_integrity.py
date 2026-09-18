@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import time
 import warnings
+from io import BytesIO
 from pathlib import Path
 from typing import Optional
 
 import numpy as np
 import pandas as pd
-from PIL import Image, ImageOps
+from PIL import Image, ImageCms, ImageOps
 
 from src import paths
 
@@ -93,6 +94,48 @@ def _jpeg_looks_complete(path: Path) -> Optional[bool]:
             return head == JPEG_SOI and fh.read(2) == JPEG_EOI
     except OSError:
         return False
+
+
+def load_rgb_for_analysis(path: Path) -> tuple[np.ndarray, dict]:
+    with Image.open(path) as image:
+        original_mode = image.mode
+        exif_orientation = _exif_orientation(image)
+        icc_profile = image.info.get("icc_profile")
+
+        oriented = ImageOps.exif_transpose(image)
+        color_conversion = "assumed_srgb_no_profile"
+        color_conversion_error = None
+
+        if icc_profile:
+            try:
+                source_profile = ImageCms.ImageCmsProfile(BytesIO(icc_profile))
+                destination_profile = ImageCms.createProfile("sRGB")
+                converted = ImageCms.profileToProfile(
+                    oriented.convert("RGB"),
+                    source_profile,
+                    destination_profile,
+                    outputMode="RGB",
+                )
+                color_conversion = "embedded_profile_to_srgb"
+            except Exception as exc:
+                converted = oriented.convert("RGB")
+                color_conversion = "profile_conversion_failed_assumed_srgb"
+                color_conversion_error = f"{type(exc).__name__}: {exc}"
+        else:
+            converted = oriented.convert("RGB")
+
+        converted.load()
+        array = np.asarray(converted).copy()
+
+    metadata = {
+        "original_mode": original_mode,
+        "exif_orientation": exif_orientation,
+        "icc_profile_present": bool(icc_profile),
+        "color_conversion": color_conversion,
+        "color_conversion_error": color_conversion_error,
+    }
+
+    return array, metadata
 
 
 def decode_and_measure_image(path: Path) -> dict:

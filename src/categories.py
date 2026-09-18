@@ -60,3 +60,33 @@ def bucket_numeric_age(age: Optional[float], age_bands_fine: list[dict]) -> Opti
         if age >= lo and (hi is None or age <= hi):
             return band["name"]
     return None
+
+
+def fairface_gender_to_code(value: str, gov002: dict) -> Optional[int]:
+    if value is None or pd.isna(value):
+        return None
+    normalized = str(value).strip().lower()
+    codes = gov002["gender"]["codes"]
+    if normalized not in codes:
+        return None
+    return codes[normalized]
+
+
+def assign_ita_group(ita: Optional[float], gov002: dict) -> Optional[str]:
+    if ita is None or pd.isna(ita):
+        return None
+    for group in gov002["ita_groups"]:
+        lower = group["min_exclusive"]
+        upper = group["max_inclusive"]
+        lower_ok = lower is None or ita > lower
+        upper_ok = upper is None or ita <= upper
+        if lower_ok and upper_ok:
+            return group["name"]
+    return None
+
+
+def assign_ita_binary(ita: Optional[float], gov002: dict) -> Optional[str]:
+    if ita is None or pd.isna(ita):
+        return None
+    threshold = float(gov002["skin_binary"]["ita"]["threshold_degrees"])
+    return "lighter" if ita > threshold else "darker"

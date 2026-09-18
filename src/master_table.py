@@ -1,31 +1,29 @@
-
 from __future__ import annotations
 
 import hashlib
 
 import pandas as pd
 
-from src import paths
-
-# Dataset preprocessing provenance.
+# Dataset preprocessing provenance -- what the source data requires,
+# not whether the project has run detection/alignment on it yet.
 PROVENANCE = {
     "fairface": {
         "source_preprocessed": True,
         "source_preprocessing_method": "publisher_dlib_crop",
-        "project_detection_applied": False,
-        "project_alignment_applied": False,
+        "project_detection_required": False,
+        "project_alignment_required": False,
     },
     "utkface": {
         "source_preprocessed": True,
         "source_preprocessing_method": "publisher_aligned_cropped",
-        "project_detection_applied": False,
-        "project_alignment_applied": False,
+        "project_detection_required": False,
+        "project_alignment_required": False,
     },
     "lfw": {
         "source_preprocessed": False,
         "source_preprocessing_method": "none_original_unaligned",
-        "project_detection_applied": True,
-        "project_alignment_applied": True,
+        "project_detection_required": True,
+        "project_alignment_required": True,
     },
 }
 
@@ -94,34 +92,70 @@ def build_base_master_table(
 
     master["image_id"] = master.apply(lambda r: stable_image_id(r["dataset"], r["relative_path"]), axis=1)
 
-    integrity_small = image_integrity_df[
-        ["path", "decode_success", "decoded_width", "decoded_height", "original_mode"]
-    ].rename(columns={"path": "relative_path", "decoded_width": "width", "decoded_height": "height", "original_mode": "mode"})
-    master = master.merge(integrity_small, on="relative_path", how="left")
+    integrity_cols = [
+        "path", "decode_success", "decoded_width", "decoded_height", "original_mode",
+        "achromatic_rgb", "icc_profile_present", "exif_orientation",
+    ]
+    integrity_small = image_integrity_df[integrity_cols].rename(
+        columns={"path": "relative_path", "decoded_width": "width", "decoded_height": "height", "original_mode": "mode"}
+    )
+    master = master.merge(integrity_small, on="relative_path", how="left", validate="one_to_one")
     master["corrupt"] = ~master["decode_success"].fillna(False)
     master["format"] = master["relative_path"].apply(lambda p: p.rsplit(".", 1)[-1].lower() if "." in p else None)
 
     # Join duplicate flags.
     dup_small = hashes_df[["path", "exact_duplicate_group"]].rename(columns={"path": "relative_path"})
-    master = master.merge(dup_small, on="relative_path", how="left")
+    master = master.merge(dup_small, on="relative_path", how="left", validate="one_to_one")
     master["exact_duplicate"] = master["exact_duplicate_group"].notna()
     master["near_duplicate_candidate"] = None  # 9.2 cut, not run this pass
     master["cross_dataset_overlap"] = master["relative_path"].isin(cross_dataset_overlap_paths)
 
-    # Add preprocessing provenance.
-    for field in ["source_preprocessed", "source_preprocessing_method", "project_detection_applied", "project_alignment_applied"]:
+    # Add preprocessing provenance -- describes what each dataset requires.
+    for field in [
+        "source_preprocessed", "source_preprocessing_method",
+        "project_detection_required", "project_alignment_required",
+    ]:
         master[field] = master["dataset"].map(lambda d: PROVENANCE[d][field])
 
-    # Reserve feature columns.
+    # These describe what has actually been run, filled in by enrich_master
+    # once detection/alignment/measurement is executed. False until then.
+    master["project_detection_applied"] = False
+    master["project_alignment_applied"] = False
+
+    # Reserve feature columns, filled in by the pilot / full extraction runs.
     for col in [
         "detection_success", "number_of_faces", "detection_confidence", "bbox",
-        "alignment_success", "pilot_run",
+        "all_detections_json",
+        "alignment_success", "alignment_transform", "aligned_path",
+        "pilot_run",
         "brightness", "contrast", "sharpness", "face_bbox_area_px", "face_area_ratio",
         "yaw", "pitch", "roll",
-        "skin_roi_valid", "skin_valid_fraction", "L_star", "a_star", "b_star",
-        "ITA", "ita_undefined", "hue_angle",
+        "skin_roi_total_pixel_count", "skin_roi_valid_pixel_count", "skin_valid_fraction",
+        "skin_roi_valid", "skin_roi_invalid_reason",
+        "L_star", "a_star", "b_star",
+        "ITA", "ita_undefined", "ITA_group", "ITA_binary", "hue_angle",
     ]:
         master[col] = None
     master["pilot_run"] = False
 
     return master
+
+
+def enrich_master(master: pd.DataFrame, updates: pd.DataFrame, key: str = "relative_path") -> pd.DataFrame:
+    if key not in master.columns:
+        raise KeyError(f"Master table missing key: {key}")
+    if key not in updates.columns:
+        raise KeyError(f"Update table missing key: {key}")
+    if updates[key].duplicated().any():
+        raise ValueError("Update table contains duplicate keys.")
+
+    output = master.copy().set_index(key)
+    update_indexed = updates.copy().set_index(key)
+
+    for column in update_indexed.columns:
+        if column not in output.columns:
+            output[column] = None
+        common = output.index.intersection(update_indexed.index)
+        output.loc[common, column] = update_indexed.loc[common, column]
+
+    return output.reset_index()
