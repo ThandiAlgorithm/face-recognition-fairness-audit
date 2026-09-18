@@ -3,7 +3,7 @@ meta:
   version: 1.1.0
   frozen: true
   frozen_date: 2026-09-17
-  frozen_commit: PENDING_SHARED_REPO_FREEZE_COMMIT
+  frozen_commit: 6a5bef9ff727c793f0e710231d98118ceffaab7d
   approved_by: RZ and TM
 
 global:

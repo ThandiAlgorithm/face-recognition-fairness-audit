@@ -5,7 +5,7 @@
 **Status:** Frozen  
 **Approved by:** RZ and TM  
 **Freeze date:** 2026-09-17  
-**Freeze commit:** PENDING_SHARED_REPO_FREEZE_COMMIT
+**Freeze commit:** 6a5bef9ff727c793f0e710231d98118ceffaab7d
 
 ## Project Dates
 
