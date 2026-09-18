@@ -1,0 +1,189 @@
+meta:
+  source_issue: GOV-008
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: 6a5bef9ff727c793f0e710231d98118ceffaab7d 
+  approved_by: RZ and TM
+  status: Done
+
+seeds:
+  project_seed: 26041
+  applied_to: [python_random, numpy, torch_cpu, torch_cuda]
+
+determinism:
+  cudnn_benchmark: false
+  torch_use_deterministic_algorithms: true
+  non_deterministic_ops_permitted: []
+  bit_for_bit_across_hardware_claimed: false
+
+libraries:
+  python: "3.13.15"
+
+  torch: "2.14.0+cpu"
+  torchvision: "0.29.0+cpu"
+
+  # Local PyTorch installation is CPU-only.
+  cuda_runtime: null
+  gpu_driver: "581.95"
+
+  numpy: "2.5.3"
+  pandas: "3.0.5"
+  scipy: "1.18.1"
+  statsmodels: "0.15.0"
+  scikit_learn: "1.9.1"
+  scikit_image: "0.26.0"
+  pillow: "12.3.0"
+  opencv: "5.0.0.93"
+  onnxruntime: "1.30.0"
+  imagehash: "4.3.2"
+  pyarrow: "25.0.1"
+
+  fairlearn: null
+  aif360: null
+
+  lock_file: "docs/env/requirements-lock.txt"
+
+execution_profiles:
+
+  local_windows:
+    role: development_and_reproducibility
+    status: captured
+    python: "3.13.15"
+    torch: "2.14.0+cpu"
+    accelerator: cpu
+    gpu_present: "NVIDIA GeForce MX130"
+    gpu_used_for_canonical_runs: false
+    gpu_driver: "581.95"
+    lock_file: "docs/env/requirements-lock.txt"
+
+  wits_hpc:
+    role: bulk_compute
+    status: pending_runtime_capture
+
+    infrastructure_source: "Wits EIE compute-cluster access email"
+
+    reported_os: "Ubuntu 20.04.3"
+
+    cpu_cluster:
+      node_count: 20
+      cpu_per_node: "Intel Core i7-3770 @ 3.40 GHz"
+      memory_gb_per_node: 32
+
+    gpu_node:
+      cpu: "2 x Intel Xeon E5-2620 v3 @ 2.40 GHz"
+      memory_gb: 128
+      gpu: "NVIDIA Tesla K40c"
+      gpu_memory_gb: 12
+      cuda_cores_reported: 2440
+
+    python: null
+    torch: null
+    cuda_runtime: null
+    gpu_driver: null
+    lock_file: null
+
+    bulk_use_allowed_before_runtime_capture: false
+
+
+checkpoints:
+  retinaface:
+    status: not_selected
+    id: null
+    model_name: RetinaFace
+    backbone: null
+    source_url: null
+    download_date: null
+    file_name: null
+    sha256: null
+    training_dataset_claimed: null
+    licence: null
+    input_size: null
+    input_normalisation: null
+    detection_threshold: null
+    demographic_evaluation_published: false
+
+  fitzpatrick_classifier:
+    status: not_selected
+    id: null
+    source_url: null
+    download_date: null
+    file_name: null
+    sha256: null
+    training_dataset_claimed: null
+    label_space: [I, II, III, IV, V, VI]
+    licence: null
+    input_size: null
+    input_normalisation: null
+    is_ground_truth: false
+
+  celeba_attribute_classifier:
+    status: not_trained
+    id: null
+    trained_by: project
+    training_config: null
+    training_seed: 26041
+    sha256: null
+    input_size: null
+    input_normalisation: null
+    validation_metrics_path: null
+
+  arcface:
+    status: not_selected
+    id: null
+    model_name: null
+    backbone: null
+    source_url: null
+    download_date: null
+    file_name: null
+    sha256: null
+    training_dataset_claimed: null
+    licence: null
+    embedding_dim: null
+    input_size: null
+    input_normalisation: null
+    score_type: null
+    lfw_identity_overlap_checked: false
+    lfw_identity_overlap_result: null
+
+  facenet:
+    status: not_selected
+    id: null
+    model_name: null
+    backbone: null
+    source_url: null
+    download_date: null
+    file_name: null
+    sha256: null
+    training_dataset_claimed: null
+    licence: null
+    embedding_dim: null
+    input_size: null
+    input_normalisation: null
+    score_type: null
+    lfw_identity_overlap_checked: false
+    lfw_identity_overlap_result: null
+
+hardware_log_fields:
+  - node_name
+  - gpu_model
+  - gpu_count
+  - cuda_runtime
+  - cpu_model
+  - operating_system
+  - peak_gpu_memory_mb
+
+smoke_test:
+  required_before_bulk: true
+  n_images: 20
+  coverage: [lfw, fairface, utkface]
+  checks: [decode, exif, colour_conversion, detection, alignment, skin_measurement, table_write, rerun_identical]
+  passed: false
+  passed_date: null
+
+closure_requirements:
+  - exact_python_patch_recorded
+  - environment_lock_file_created
+  - required_libraries_pinned
+  - every_checkpoint_used_in_phase1_selected_and_provenance_completed
+  - smoke_test_passed_before_bulk_processing

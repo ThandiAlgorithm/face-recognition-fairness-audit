@@ -1,32 +1,22 @@
 meta:
-  issue: GOV-003
-  version: 1.0.0
-  frozen: false
-  frozen_date: null
-  frozen_commit: null
-  approved_by: []
+  source_issue: GOV-003
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: 6a5bef9ff727c793f0e710231d98118ceffaab7d
+  approved_by: RZ and TM
 
-# Image- and identity-level thresholds match the scientific plan's own
-# starting recommendation: do not formally report subgroup metrics below
-# n=30, and flag 30-100 as low-confidence. Verification-pair thresholds are
-# set higher (100 / 300) because FMR and FNMR are lower-incidence rates than
-# a simple proportion and need a larger sample to produce a stable estimate
-# and a usable confidence interval.
 minimum_cell_size:
-
-  # image level
   image:
     suppress_below: 30
     low_confidence_below: 100
     n_means: eligible_images_for_the_analysis
 
-  # identity level
   identity:
     suppress_below: 30
     low_confidence_below: 100
     n_means: distinct_eligible_identities
 
-  # verification pair level
   verification_pair:
     suppress_below: 100
     low_confidence_below: 300

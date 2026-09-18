@@ -1,7 +1,12 @@
 # Phase 1 Preprocessing Protocol
 
-GOV-006. Version 1.0.0. Frozen date: [FILL]. Commit: [FILL].
-Numerical settings are in `configs/GOV006_preprocessing.yaml`. This document
+**Source issue:** GOV-006  
+**Version:** 1.1.0  
+**Status:** Frozen
+**Freeze date:** 2026-09-17 
+**Freeze commit:** 6a5bef9ff727c793f0e710231d98118ceffaab7d
+
+Numerical settings are in `configs/preprocessing.yaml`. This document
 fixes the order.
 
 Rerunning the pipeline on the same raw input with the same config must produce
@@ -35,8 +40,7 @@ the same output table.
 EXIF orientation before detection. A sideways face is a detection failure with
 no demographic cause, and it would contaminate the Layer 0 result.
 
-Split locking before any development analysis. LFW View 2 is sealed. Once
-opened for development it can no longer serve as a generalisation estimate.
+Split locking before any confirmatory or model-development analysis. LFW View 2 is sealed. Exploratory Phase 0 QA may inspect dataset-wide structure, integrity and provenance, but any result intended for the formal audit is rerun from the locked master table. View 2 is never opened for development.
 
 Alignment before any aligned-crop measurement. Visual measures and skin colour
 are both defined on the aligned crop.
@@ -70,7 +74,7 @@ the image, so the two remain consistent with each other.
 
 Colour conversion: sRGB input, D65 illuminant, 2 degree observer, using
 `skimage.color.rgb2lab` at the version pinned in
-`configs/GOV008_models.yaml`. The conversion is not unique and ITA depends on
+`configs/models.yaml`. The conversion is not unique and ITA depends on
 which convention is used.
 
 ## Augmentation
@@ -83,7 +87,7 @@ to that training pipeline alone.
 
 No source record is deleted from the master table. Failure is stored as data,
 with a machine-readable `exclusion_reason` and the relevant eligibility masks
-set to false. Exclusion rules are in `configs/GOV007_exclusions.yaml`.
+set to false. Exclusion rules are in `configs/exclusions.yaml`.
 
 ## What this protocol cannot prove
 
