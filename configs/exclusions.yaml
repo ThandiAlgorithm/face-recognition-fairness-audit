@@ -1,0 +1,87 @@
+meta:
+  source_issue: GOV-007
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: PENDING_SHARED_REPO_FREEZE_COMMIT
+  approved_by: RZ and TM
+
+failure_handling:
+  delete_rows: false
+  every_ineligible_row_needs_reason_or_flag: true
+  overlapping_failure_flags_allowed: true
+
+  cases:
+    corrupt_file: {keep_row: true, eligible: [], reason: corrupt_file}
+    decode_failure: {keep_row: true, eligible: [], reason: decode_failure}
+    label_parse_failure: {keep_row: true, eligible: [detection, visual, skin], reason: label_parse_failure}
+    missing_demographic_label: {keep_row: true, eligible: [detection, visual, skin], reason: missing_required_label}
+    zero_detection: {keep_row: true, eligible: [detection], reason: zero_detection}
+    multi_detection: {keep_row: true, eligible: [detection, visual, skin], reason: null}
+    alignment_failure: {keep_row: true, eligible: [detection], reason: alignment_failure}
+    invalid_skin_roi: {keep_row: true, eligible: [detection, visual], reason: invalid_skin_roi}
+    greyscale: {keep_row: true, eligible: [detection, visual], reason: greyscale_no_chroma}
+    ita_undefined: {keep_row: true, eligible: [detection, visual], reason: ita_undefined}
+    exact_duplicate: {keep_row: true, eligible: [detection, visual, skin], reason: exact_duplicate}
+    near_duplicate_confirmed: {keep_row: true, eligible: [detection, visual, skin], reason: near_duplicate_confirmed}
+    cross_dataset_dup: {keep_row: true, eligible: [detection, visual, skin], reason: cross_dataset_duplicate_confirmed}
+    low_confidence_label: {keep_row: true, eligible: [detection, visual, skin], reason: low_confidence_label}
+    thin_cell: {keep_row: true, eligible: all, reason: thin_cell}
+
+low_confidence_labels:
+  threshold: 0.70
+  policy: recode_to_unknown_for_confirmatory_analysis
+  preserve_original_prediction: true
+  preserve_original_confidence: true
+  native_label_without_confidence_remains_eligible_if_native_schema_valid: true
+
+duplicates:
+  exact:
+    action: group_and_flag
+    report_both: [raw_file_count, unique_image_count]
+    allow_duplicate_weighting_in_model_evaluation: false
+  near:
+    action: flag_for_review
+    auto_delete: false
+    statuses: [candidate, confirmed, false_alarm, uncertain]
+  cross_dataset:
+    action: flag_and_report
+    report_even_if_zero: true
+    excluded_from: [eligible_cross_dataset_eval]
+  lfw_pair_exception:
+    rewrite_official_protocol: false
+    handling: flag_and_report_sensitivity
+
+exclusion_reason_vocabulary:
+  - corrupt_file
+  - decode_failure
+  - label_parse_failure
+  - missing_required_label
+  - low_confidence_label
+  - zero_detection
+  - multi_detection_unresolved
+  - alignment_failure
+  - invalid_skin_roi
+  - greyscale_no_chroma
+  - ita_undefined
+  - exact_duplicate
+  - near_duplicate_confirmed
+  - cross_dataset_duplicate_confirmed
+  - thin_cell
+
+eligibility_masks:
+  eligible_detection_audit: "not corrupt and not decode_failure"
+  eligible_visual_audit: "eligible_detection_audit and n_detections >= 1 and alignment_valid"
+  eligible_skin_audit: "eligible_visual_audit and skin_roi_valid and not is_greyscale and not ita_undefined"
+  eligible_gender_audit: "gender != unknown and (gender_source == native or gender_confidence >= 0.70)"
+  eligible_age_audit: "age is not null and (age_source == native or age_confidence >= 0.70)"
+  eligible_race_audit: "race != unknown and (race_source == native or race_confidence >= 0.70)"
+  eligible_demographic_audit: "analysis-specific intersection of the required attribute masks; never assume one universal demographic mask"
+  eligible_cross_dataset_eval: "eligible_skin_audit and not cross_dataset_dup"
+  eligible_lfw_pair_eval: "both members satisfy the pair analysis eligibility requirements and pair_demog_complete"
+
+reconciliation:
+  per_analysis_rule: "input_count == eligible_count + ineligible_count"
+  exclusion_reason_counts_may_overlap: true
+  do_not_sum_overlapping_reason_counts_to_reconcile_total: true
+  validation_script: scripts/validate_master_table.py

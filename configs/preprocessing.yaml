@@ -1,19 +1,19 @@
 meta:
-  issue: GOV-006
-  version: 1.0.0
-  frozen: false
-  frozen_date: null
-  frozen_commit: null
-  approved_by: []
+  source_issue: GOV-006
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: PENDING_SHARED_REPO_FREEZE_COMMIT
+  approved_by: RZ and TM
 
 raw_data:
   read_only: true
   never_overwrite_source: true
-  manifest_fields: [dataset, variant, relative_path, file_size_bytes, sha256, archive_version]
+  manifest_fields: [dataset, dataset_version, original_path, file_size_bytes, file_sha256, archive_sha256]
 
 integrity:
   open_every_file: true
-  record_before_conversion: [width_px, height_px, original_mode, format, colour_profile]
+  record_before_conversion: [width_px, height_px, original_mode, image_format, colour_profile]
   exif_orientation:
     apply: true
     stage: before_detection
@@ -25,7 +25,7 @@ colour:
   lab_illuminant: D65
   lab_observer: "2deg"
   library: skimage.color.rgb2lab
-  library_version_pinned_in: configs/GOV008_models.yaml
+  library_version_pinned_in: configs/models.yaml
   profile_policy:
     if_profile_present: convert_to_sRGB
     if_profile_absent: assume_sRGB_and_flag
@@ -47,7 +47,7 @@ detection:
     first: largest_bbox_area
     tie_break: highest_confidence
     manual_override_allowed: false
-    manual_override_requires: GOV-010_amendment_and_logged_override
+    manual_override_requires: protocol_amendment_and_logged_override
 
 alignment:
   landmarks: 5
@@ -60,14 +60,14 @@ alignment:
 skin_measurement:
   stage: after_alignment_before_any_augmentation
   computed_on: aligned_crop
-  roi_method: "[FILL] forehead_and_cheeks | face_parsing_mask | dif_algorithm"
+  roi_method: null
+  roi_method_status: deferred_to_MEA-001_decision_gate
+  roi_method_note: "Handbook requires one deterministic method, exact geometry, erosion/outlier handling and invalid-ROI rule to be frozen and visually validated before MEA-002. Do not silently invent it here."
   roi_min_valid_pixels: 200
   store_once: [L_star, a_star, b_star]
   derive_from_stored: [ITA, hue_angle]
   ita_formula: "arctan((L_star - 50) / b_star) * 180 / pi"
   hue_formula: "degrees(atan2(b_star, a_star)) mod 360"
-
-  # divide by zero guard
   ita_guard:
     b_star_min_abs: 1.0
     on_guard_trip: set_ita_null_and_flag
@@ -76,12 +76,7 @@ skin_measurement:
 augmentation:
   audit_datasets: [lfw, fairface, utkface]
   photometric_augmentation_before_measurement: false
-  forbidden_before_measurement:
-    - brightness_jitter
-    - contrast_jitter
-    - colour_jitter
-    - hue_jitter
-    - saturation_jitter
+  forbidden_before_measurement: [brightness_jitter, contrast_jitter, colour_jitter, hue_jitter, saturation_jitter]
 
 soft_attributes:
   model_ref: celeba_attribute_classifier
@@ -89,16 +84,18 @@ soft_attributes:
   excluded_from_skin_tone_use: [Pale_Skin]
 
 splits:
-  lock_before_any_development_analysis: true
+  lock_before_any_confirmatory_or_model_development_analysis: true
+  exploratory_phase0_qa_allowed: true
+  exploratory_phase0_qa_must_be_rerun_after_split_lock: true
   lfw:
     view1: development
     view2: sealed_until_final_reporting
-    view2_access_requires: GOV-010_amendment
+    view2_access_requires: protocol_amendment
   fairface: official_train_val
   utkface:
     method: deterministic_project_split
     seed: 26041
-    committed_file: metadata/utkface_split.csv
+    committed_file: manifests/splits/utkface_split.csv
 
 stage_order:
   1: read_raw_archive

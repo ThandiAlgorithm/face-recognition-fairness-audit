@@ -1,7 +1,12 @@
 # Master Data Dictionary
 
-**GOV-005.** Version 1.0.0. Frozen date: [FILL]. Commit: [FILL].
-Approved by: [FILL RZ], [FILL TM].
+**Source issue:** GOV-005  
+**Version:** 1.1.0  
+**Status:** Frozen
+**Freeze date:** 2026-09-17  
+**Freeze commit:** PENDING_SHARED_REPO_FREEZE_COMMIT  
+**Approved by:** RZ and TM  
+**Approval date:** 2026-09-17
 
 No column may be added to a master table without first being added here.
 
@@ -39,6 +44,30 @@ identifiers, and are linked instead through `exact_dup_group`.
 
 ---
 
+
+## file_manifest
+
+| Field | Type | Meaning |
+|---|---|---|
+| `dataset` | category | lfw, fairface, utkface, celeba |
+| `dataset_version` | string | acquisition-manifest identifier |
+| `original_path` | string | relative path inside the extracted raw dataset |
+| `filename` | string | original basename |
+| `extension` | string | original suffix |
+| `file_size_bytes` | int | byte size before processing |
+| `file_sha256` | string | cryptographic hash of the raw file bytes |
+| `archive_sha256` | string, null | source archive hash where an archive exists |
+| `width_px` | int, null | decoded width before conversion |
+| `height_px` | int, null | decoded height before conversion |
+| `original_mode` | string, null | Pillow/original decoded mode |
+| `image_format` | string, null | decoded file format |
+| `decode_ok` | bool | whether the image decoded successfully |
+| `decode_error` | string, null | exception/error text when decode fails |
+
+The manifest contains every raw file. Image-level master rows are created from the manifest without deleting failures.
+
+---
+
 ## master_annotations
 
 ### Identity and provenance
@@ -49,6 +78,9 @@ identifiers, and are linked instead through `exact_dup_group`.
 | `dataset` | category | lfw, fairface, utkface, celeba | Phase 0 | fixed vocabulary |
 | `dataset_version` | string | manifest id | Phase 0 | required |
 | `original_path` | string | relative path | Phase 0 | raw path only |
+| `file_size_bytes` | int | bytes | Phase 0 | from raw file before processing |
+| `file_sha256` | string | SHA-256 hex | Phase 0 | byte-level file hash; used for exact duplicates |
+| `image_format` | string | JPEG, PNG, etc. | integrity | recorded before conversion |
 | `split` | category | train, val, test, view1, view2, none | Phase 0 | locked before any development analysis |
 | `subject_id` | string, null | identity label | Phase 0 | null where the dataset has none. Never invented |
 
@@ -69,16 +101,16 @@ identifiers, and are linked instead through `exact_dup_group`.
 
 | Field | Type | Units / values | Stage | Rule |
 |---|---|---|---|---|
-| `gender` | category, null | female, male, unknown | labels | `gender_source` required whenever non-null. Numeric coding for analysis is fixed in `configs/GOV002_categories.yaml` |
+| `gender` | category, null | female, male, unknown | labels | `gender_source` required whenever non-null |
 | `gender_source` | string | native, derived:\<method\>, unavailable | labels | required |
 | `gender_confidence` | float, null | 0 to 1 | labels | null when the source provides none |
 | `race` | category, null | dataset-specific vocabulary | labels | never mapped across datasets |
 | `race_source` | string | native, derived:\<method\>, unavailable | labels | required |
 | `race_confidence` | float, null | 0 to 1 | labels | null when unavailable |
-| `age` | float, null | years | labels | raw value, never the band. For FairFace this is the native bin's own boundary value, not a measured age (FairFace provides no continuous age) |
-| `age_source` | string | native, derived:\<method\>, unavailable | labels | required. FairFace is always `derived:fairface_bin_boundary`, never `native` |
+| `age` | float, null | years | labels | raw value, never the band |
+| `age_source` | string | native, derived:\<method\>, unavailable | labels | required |
 | `age_confidence` | float, null | 0 to 1 | labels | null when unavailable |
-| `age_band` | category, null | from `configs/GOV002_categories.yaml` | analysis | derived, never stored instead of `age` |
+| `age_band` | category, null | from `configs/categories.yaml` | analysis | derived, never stored instead of `age` |
 
 ### Duplicates
 
@@ -95,10 +127,9 @@ identifiers, and are linked instead through `exact_dup_group`.
 | Field | Type | Units / values | Stage | Rule |
 |---|---|---|---|---|
 | `bbox` | array, null | x1, y1, x2, y2 in pixels of the EXIF-oriented image | detection | coordinate origin is top-left |
-| `det_confidence` | float, null | 0 to 1 | detection | checkpoint recorded in `configs/GOV008_models.yaml` |
+| `det_confidence` | float, null | 0 to 1 | detection | checkpoint recorded in `configs/models.yaml` |
 | `n_detections` | int | count | detection | 0 is a valid value and is retained |
 | `no_detection` | bool | true, false | detection | a finding, not a software error |
-| `detected` | bool | true, false | detection | derived convenience field, `n_detections >= 1` (i.e. `not no_detection`) — kept so statistical configs can refer to a positively-phrased outcome |
 | `multi_detection` | bool | true, false | detection | all detections stored in `detections_all` |
 | `detections_all` | array, null | list of bbox and score | detection | written before any primary face is chosen |
 | `landmarks` | array, null | five points, pixels | detection | same coordinate origin as bbox |
@@ -115,7 +146,7 @@ identifiers, and are linked instead through `exact_dup_group`.
 | `sharpness` | float, null | variance of Laplacian | visual | higher is sharper. Direction stated because it is not obvious |
 | `face_px_area` | float, null | pixels squared | visual | from the raw bbox |
 | `face_area_ratio` | float, null | 0 to 1 | visual | bbox area divided by image area |
-| `yaw`, `pitch`, `roll` | float, null | degrees | visual | method fixed in `configs/GOV006_preprocessing.yaml`. Null in Phase 1 if pose is deferred |
+| `yaw`, `pitch`, `roll` | float, null | degrees | visual | method fixed in `configs/preprocessing.yaml`. Null in Phase 1 if pose is deferred |
 
 ### Skin measures
 
@@ -126,7 +157,7 @@ identifiers, and are linked instead through `exact_dup_group`.
 | `b_star` | float, null | CIELAB | measurement | pre-augmentation |
 | `ITA` | float, null | degrees | measurement | derived from stored L\* and b\*, never recomputed from the image |
 | `hue_angle` | float, null | degrees, 0 to 360 | measurement | `atan2(b_star, a_star)` converted to degrees and wrapped to [0, 360) |
-| `ita_group` | category, null | six ITA groups | analysis | derived from config thresholds, `configs/GOV002_categories.yaml` |
+| `ita_group` | category, null | six ITA groups | analysis | derived from config thresholds |
 | `ita_ordinal` | int, null | 1 to 6 | analysis | ordinal rank for agreement analysis |
 | `fitz_classifier` | category, null | I to VI | measurement | proxy output, not ground truth |
 | `fitz_classifier_conf` | float, null | 0 to 1 | measurement | null when unavailable |
@@ -152,13 +183,13 @@ together.
 |---|---|---|---|---|
 | `low_confidence` | bool | true, false | throughout | threshold from config |
 | `thin_cell` | bool | true, false | analysis | applied per GOV-003 |
-| `exclusion_reason` | string, null | controlled vocabulary below | throughout | no record is ever dropped without one |
-| `eligible_detection_audit` | bool | true, false | derived | rule in `configs/GOV006_preprocessing.yaml` |
-| `eligible_visual_audit` | bool | true, false | derived | rule in config |
-| `eligible_skin_audit` | bool | true, false | derived | rule in config |
-| `eligible_demographic_audit` | bool | true, false | derived | rule in config |
-| `eligible_cross_dataset_eval` | bool | true, false | derived | rule in config |
-| `eligible_lfw_pair_eval` | bool | true, false | derived | rule in config |
+| `exclusion_reason` | string, null | primary controlled reason | throughout | retained for concise reporting; detailed boolean flags remain authoritative |
+| `eligible_detection_audit` | bool | true, false | derived | rule in `configs/exclusions.yaml` |
+| `eligible_visual_audit` | bool | true, false | derived | rule in `configs/exclusions.yaml` |
+| `eligible_skin_audit` | bool | true, false | derived | rule in `configs/exclusions.yaml` |
+| `eligible_demographic_audit` | bool | true, false | derived | analysis-specific rule in `configs/exclusions.yaml` |
+| `eligible_cross_dataset_eval` | bool | true, false | derived | rule in `configs/exclusions.yaml` |
+| `eligible_lfw_pair_eval` | bool | true, false | derived | rule in `configs/exclusions.yaml` |
 
 ### Controlled vocabulary for `exclusion_reason`
 
@@ -189,20 +220,20 @@ thin_cell
 | `pair_id` | string | stable id | never reused |
 | `fold` | int | 1 to 10 | from the official protocol |
 | `view` | category | view1, view2 | view2 sealed until final reporting |
-| `is_genuine` | bool | true, false | true is a mated pair. This is the positive-class convention for verification metrics (FMR/FNMR) — see GOV-004's `verification_metrics` |
+| `is_genuine` | bool | true, false | true is a mated pair |
 | `identity_1`, `identity_2` | string | identity label | from the official list |
 | `image_id_1`, `image_id_2` | string | master table key | must resolve |
 | `gender_1`, `gender_2` | category | female, male, unknown | derived, source in master table |
-| `same_gender` | bool | true, false | null-safe: false if either is unknown, with `pair_demog_complete` false |
+| `same_gender` | bool, null | true, false, null | null if either member is unknown; never convert unknown to false |
 | `skin_group_1`, `skin_group_2` | category | lighter, darker, unknown | from `skin_group_ita` |
-| `same_skin_group` | bool | true, false | as above |
+| `same_skin_group` | bool, null | true, false, null | null if either member is unknown |
 | `age_band_1`, `age_band_2` | category | age band or unknown | as above |
-| `same_age_band` | bool | true, false | as above |
+| `same_age_band` | bool, null | true, false, null | null if either member is unknown |
 | `pair_demog_complete` | bool | true, false | true only when both members have all three attributes known |
 | `yoked` | category | fully_yoked, partially_yoked, cross_demographic, unknown | fully yoked means same gender, skin group and age band |
 | `brightness_difference` | float | absolute difference in L\* | both members must be eligible |
 | `pose_difference` | float, null | degrees | null in Phase 1 if pose is deferred |
-| `model_name` | string | checkpoint id from `configs/GOV008_models.yaml` | never a bare name such as "ArcFace" |
+| `model_name` | string | checkpoint id from `configs/models.yaml` | never a bare name such as "ArcFace" |
 | `model_score` | float, null | similarity | scale documented per model |
 | `threshold` | float, null | decision threshold | single value across all subgroups |
 | `decision` | category | match, non_match, null | null until scoring is run |

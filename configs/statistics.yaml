@@ -1,15 +1,17 @@
 meta:
-  issue: GOV-004
-  version: 1.0.0
-  frozen: false
-  frozen_date: null
-  frozen_commit: null
-  approved_by: []
+  source_issue: GOV-004
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: PENDING_SHARED_REPO_FREEZE_COMMIT
+  approved_by: RZ and TM
 
 global:
   alpha: 0.05
   ci_level: 0.95
   seed: 26041
+  primary_fairness_criterion: equalised_odds
+  secondary_fairness_criteria: [demographic_parity, equality_of_opportunity]
 
 bootstrap:
   iterations: 5000
@@ -34,7 +36,6 @@ multiple_testing:
     - {id: EXPLORATORY, scope: not_pooled_into_confirmatory_families}
 
 test_map:
-
   two_group_continuous:
     applies_to: [brightness, contrast, sharpness, face_px_area, face_area_ratio, ITA, L_star, hue_angle]
     primary_test: mann_whitney_u
@@ -66,21 +67,16 @@ test_map:
     condition: same_test_examples_both_models
 
 agreement:
-
-  # H1 primary
   icc:
     model: two_way_mixed_effects
     definition: absolute_agreement
     type: single_measurement
     computed_on: ordinal_rank_1_to_6
-    substantial_threshold: 0.75
     interpretation_bands:
       poor: "<0.50"
       moderate: "0.50-0.75"
       good: "0.75-0.90"
       excellent: ">0.90"
-    interpretation_reference: "Koo, T.K. & Li, M.Y. (2016). A guideline of selecting and reporting intraclass correlation coefficients for reliability research. Journal of Chiropractic Medicine, 15(2), 155-163."
-    interpret_on_ci_not_point_estimate: true
     report_band_name_not_word_substantial: true
     ci_required: true
 
@@ -101,7 +97,7 @@ agreement:
 
 verification_metrics:
   threshold_policy: single_fixed_threshold_for_all_subgroups
-  report_per_subgroup: [fmr, fnmr, subgroup_difference, ci_95]
+  report_per_subgroup: [fmr, fnmr, subgroup_difference, ci_95, n]
   additional: [within_demographic_vs_cross_demographic_difference]
   per_subgroup_threshold_in_primary_analysis: false
 
