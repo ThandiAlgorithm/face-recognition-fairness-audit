@@ -4,8 +4,9 @@ import hashlib
 
 import pandas as pd
 
-# Dataset preprocessing provenance -- what the source data requires,
-# not whether the project has run detection/alignment on it yet.
+# Dataset preprocessing provenance.
+# What the source data requires, not whether the project has run
+# detection/alignment on it yet.
 PROVENANCE = {
     "fairface": {
         "source_preprocessed": True,
@@ -110,7 +111,7 @@ def build_base_master_table(
     master["near_duplicate_candidate"] = None  # 9.2 cut, not run this pass
     master["cross_dataset_overlap"] = master["relative_path"].isin(cross_dataset_overlap_paths)
 
-    # Add preprocessing provenance -- describes what each dataset requires.
+    # Add preprocessing provenance.
     for field in [
         "source_preprocessed", "source_preprocessing_method",
         "project_detection_required", "project_alignment_required",

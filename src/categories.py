@@ -17,8 +17,6 @@ FAIRFACE_AGE_TO_FINE_BAND = {
     "more than 70": "70+",
 }
 
-FAIRFACE_GENDER_TO_CODE = {"Female": 1, "Male": 0}
-
 
 def verify_fine_in_coarse_nesting(age_bands_fine: list[dict], age_bands_coarse: list[dict]) -> pd.DataFrame:
     rows = []

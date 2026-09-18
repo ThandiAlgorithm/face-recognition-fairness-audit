@@ -27,9 +27,18 @@ def sharpness(rgb: np.ndarray) -> float:
 
 
 def face_size(bbox: list[float], image_width: int, image_height: int) -> dict:
-    x1, y1, x2, y2 = bbox
+    x1, y1, x2, y2 = [float(v) for v in bbox]
+
+    width = float(image_width)
+    height = float(image_height)
+
+    x1 = min(max(x1, 0.0), width)
+    x2 = min(max(x2, 0.0), width)
+    y1 = min(max(y1, 0.0), height)
+    y2 = min(max(y2, 0.0), height)
+
     bbox_area = max(0.0, x2 - x1) * max(0.0, y2 - y1)
-    image_area = int(image_width) * int(image_height)
+    image_area = width * height
     ratio = bbox_area / image_area if image_area > 0 else None
     return {
         "face_bbox_area_px": bbox_area,

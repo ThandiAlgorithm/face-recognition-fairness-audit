@@ -194,7 +194,7 @@ def decode_and_measure_image(path: Path) -> dict:
 
                 oriented = ImageOps.exif_transpose(img)
                 try:
-                    oriented.load()  # force full pixel decode -- this is the point
+                    oriented.load()  # Force full pixel decode.
                     arr = np.asarray(oriented)
                 finally:
                     if oriented is not img:
