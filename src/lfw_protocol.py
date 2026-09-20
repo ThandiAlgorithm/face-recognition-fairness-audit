@@ -1,153 +1,171 @@
 from __future__ import annotations
 
+import hashlib
+import re
 from pathlib import Path
 
 import pandas as pd
 
-
-def image_path(image_root: Path, name: str, image_number: int) -> Path:
-    return image_root / str(name) / f"{name}_{int(image_number):04d}.jpg"
+from src import paths
 
 
-def _data_columns(dataframe: pd.DataFrame) -> list[str]:
-    return [c for c in dataframe.columns if c != "metadata_source"]
+def _pair_id(view: str, fold: int, identity_1: str, number_1: int, identity_2: str, number_2: int) -> str:
+    payload = f"{view}|{fold}|{identity_1}|{number_1}|{identity_2}|{number_2}"
+    digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+    return f"LFWPAIR-{digest}"
 
 
-def normalize_match_table(dataframe: pd.DataFrame, source_name: str) -> pd.DataFrame:
-    columns = _data_columns(dataframe)
-    if len(columns) < 3:
-        raise ValueError(f"{source_name} needs at least three columns.")
-
-    rows = []
-    for row_index, row in dataframe.iterrows():
-        name = str(row[columns[0]])
-        image_one = int(row[columns[1]])
-        image_two = int(row[columns[2]])
-        rows.append(
-            {
-                "source": source_name,
-                "source_row": int(row_index),
-                "pair_type": "genuine",
-                "name_1": name,
-                "image_num_1": image_one,
-                "name_2": name,
-                "image_num_2": image_two,
-            }
-        )
-    return pd.DataFrame(rows)
+def _image_number(original_path: str) -> int | None:
+    match = re.match(r"^.+_(\d+)$", Path(original_path).stem)
+    return int(match.group(1)) if match else None
 
 
-def normalize_mismatch_table(dataframe: pd.DataFrame, source_name: str) -> pd.DataFrame:
-    columns = _data_columns(dataframe)
+def normalize_view2_pairs(pairs_csv: Path) -> pd.DataFrame:
+    frame = pd.read_csv(pairs_csv)
+    columns = list(frame.columns)
     if len(columns) < 4:
-        raise ValueError(f"{source_name} needs at least four columns.")
+        raise RuntimeError("pairs.csv must contain four columns after parsing.")
 
     rows = []
-    for row_index, row in dataframe.iterrows():
-        rows.append(
-            {
-                "source": source_name,
-                "source_row": int(row_index),
-                "pair_type": "impostor",
-                "name_1": str(row[columns[0]]),
-                "image_num_1": int(row[columns[1]]),
-                "name_2": str(row[columns[2]]),
-                "image_num_2": int(row[columns[3]]),
-            }
-        )
-    return pd.DataFrame(rows)
-
-
-def normalize_pairs_table(dataframe: pd.DataFrame, source_name: str = "pairs.csv") -> pd.DataFrame:
-    columns = _data_columns(dataframe)
-    if len(columns) < 4:
-        raise ValueError(f"{source_name} needs four data columns.")
-
-    rows = []
-    for row_index, row in dataframe.iterrows():
+    for index, row in frame.iterrows():
         first_name = row[columns[0]]
         first_number = row[columns[1]]
-        third_value = row[columns[2]]
-        fourth_value = row[columns[3]]
-
-        if pd.isna(fourth_value):
-            pair_type = "genuine"
-            second_name = first_name
-            second_number = third_value
+        third = row[columns[2]]
+        fourth = row[columns[3]]
+        fold = int(index // 600) + 1
+        if pd.isna(fourth):
+            identity_1 = str(first_name)
+            identity_2 = str(first_name)
+            number_1 = int(first_number)
+            number_2 = int(third)
+            is_genuine = True
         else:
-            pair_type = "impostor"
-            second_name = third_value
-            second_number = fourth_value
-
+            identity_1 = str(first_name)
+            identity_2 = str(third)
+            number_1 = int(first_number)
+            number_2 = int(fourth)
+            is_genuine = False
         rows.append(
             {
-                "source": source_name,
-                "source_row": int(row_index),
-                "fold": int(row_index // 600) + 1,
-                "pair_type": pair_type,
-                "name_1": str(first_name),
-                "image_num_1": int(first_number),
-                "name_2": str(second_name),
-                "image_num_2": int(second_number),
+                "fold": fold,
+                "view": "view2",
+                "is_genuine": is_genuine,
+                "identity_1": identity_1,
+                "identity_2": identity_2,
+                "image_number_1": number_1,
+                "image_number_2": number_2,
             }
         )
     return pd.DataFrame(rows)
 
 
-def validate_pair_table(pair_table: pd.DataFrame, image_root: Path) -> pd.DataFrame:
-    output = pair_table.copy()
+def build_lfw_pairs(master: pd.DataFrame, pairs_csv: Path) -> pd.DataFrame:
+    pairs = normalize_view2_pairs(pairs_csv)
+    lfw = master[master["dataset"].eq("lfw")].copy()
+    lfw["image_number"] = lfw["original_path"].apply(_image_number)
+    lookup = lfw.set_index(["subject_id", "image_number"], drop=False)
 
-    output["path_1"] = output.apply(lambda r: str(image_path(image_root, r["name_1"], r["image_num_1"])), axis=1)
-    output["path_2"] = output.apply(lambda r: str(image_path(image_root, r["name_2"], r["image_num_2"])), axis=1)
+    rows = []
+    for item in pairs.itertuples(index=False):
+        key_1 = (item.identity_1, item.image_number_1)
+        key_2 = (item.identity_2, item.image_number_2)
+        if key_1 not in lookup.index or key_2 not in lookup.index:
+            raise RuntimeError(f"LFW pair does not resolve to master rows: {key_1}, {key_2}")
+        left = lookup.loc[key_1]
+        right = lookup.loc[key_2]
+        if isinstance(left, pd.DataFrame) or isinstance(right, pd.DataFrame):
+            raise RuntimeError("LFW lookup is not unique by identity and image number.")
 
-    output["path_1_exists"] = output["path_1"].apply(lambda p: Path(p).exists())
-    output["path_2_exists"] = output["path_2"].apply(lambda p: Path(p).exists())
+        pair_demog_complete = all(
+            [
+                left["gender"] != "unknown",
+                right["gender"] != "unknown",
+                pd.notna(left["skin_group_ita"]),
+                pd.notna(right["skin_group_ita"]),
+                pd.notna(left["age_band"]),
+                pd.notna(right["age_band"]),
+            ]
+        )
+        same_gender = bool(pair_demog_complete and left["gender"] == right["gender"])
+        same_skin = bool(pair_demog_complete and left["skin_group_ita"] == right["skin_group_ita"])
+        same_age = bool(pair_demog_complete and left["age_band"] == right["age_band"])
+        if not pair_demog_complete:
+            yoked = "unknown"
+        elif same_gender and same_skin and same_age:
+            yoked = "fully_yoked"
+        elif same_gender or same_skin or same_age:
+            yoked = "partially_yoked"
+        else:
+            yoked = "cross_demographic"
 
-    genuine_valid = output["pair_type"].eq("genuine") & output["name_1"].eq(output["name_2"])
-    impostor_valid = output["pair_type"].eq("impostor") & output["name_1"].ne(output["name_2"])
-    output["identity_relation_valid"] = genuine_valid | impostor_valid
+        brightness_difference = None
+        if pd.notna(left["brightness"]) and pd.notna(right["brightness"]):
+            brightness_difference = abs(float(left["brightness"]) - float(right["brightness"]))
 
-    output["pair_valid"] = output["path_1_exists"] & output["path_2_exists"] & output["identity_relation_valid"]
+        rows.append(
+            {
+                "pair_id": _pair_id(
+                    "view2",
+                    item.fold,
+                    item.identity_1,
+                    item.image_number_1,
+                    item.identity_2,
+                    item.image_number_2,
+                ),
+                "fold": int(item.fold),
+                "view": "view2",
+                "is_genuine": bool(item.is_genuine),
+                "identity_1": item.identity_1,
+                "identity_2": item.identity_2,
+                "image_id_1": left["image_id"],
+                "image_id_2": right["image_id"],
+                "gender_1": left["gender"],
+                "gender_2": right["gender"],
+                "same_gender": same_gender,
+                "skin_group_1": left["skin_group_ita"] if pd.notna(left["skin_group_ita"]) else "unknown",
+                "skin_group_2": right["skin_group_ita"] if pd.notna(right["skin_group_ita"]) else "unknown",
+                "same_skin_group": same_skin,
+                "age_band_1": left["age_band"] if pd.notna(left["age_band"]) else "unknown",
+                "age_band_2": right["age_band"] if pd.notna(right["age_band"]) else "unknown",
+                "same_age_band": same_age,
+                "pair_demog_complete": bool(pair_demog_complete),
+                "yoked": yoked,
+                "brightness_difference": brightness_difference,
+                "pose_difference": None,
+                "model_name": None,
+                "model_score": None,
+                "threshold": None,
+                "decision": None,
+            }
+        )
 
+    output = pd.DataFrame(rows)
+    if len(output) != 6000:
+        raise RuntimeError(f"Expected 6000 View 2 pairs, found {len(output)}")
+    fold_counts = output.groupby(["fold", "is_genuine"]).size().unstack(fill_value=0)
+    if len(fold_counts) != 10:
+        raise RuntimeError("Expected ten LFW View 2 folds.")
     return output
 
 
-def validate_people_table(people: pd.DataFrame, image_root: Path) -> pd.DataFrame:
-    columns = _data_columns(people)
+def validate_people_counts(people_csv: Path, image_root: Path) -> pd.DataFrame:
+    people = pd.read_csv(people_csv)
+    columns = list(people.columns)
     if len(columns) < 2:
-        raise ValueError("people table needs name and image count columns.")
-
-    name_column = columns[0]
-    count_column = columns[1]
+        raise RuntimeError("people.csv must contain identity and image count columns.")
     rows = []
-
     for _, row in people.iterrows():
-        if pd.isna(row[name_column]):
-            continue
-
-        name = str(row[name_column])
-        declared = int(row[count_column])
-        folder = image_root / name
-        actual = len(list(folder.glob("*.jpg"))) if folder.exists() else 0
-
+        identity = str(row[columns[0]])
+        declared = int(row[columns[1]])
+        folder = image_root / identity
+        actual = len(list(folder.glob("*"))) if folder.exists() else 0
         rows.append(
             {
-                "name": name,
+                "identity": identity,
                 "declared_images": declared,
-                "actual_images": actual,
+                "actual_files": actual,
                 "folder_exists": folder.exists(),
                 "count_matches": declared == actual,
             }
         )
-
     return pd.DataFrame(rows)
-
-
-def protocol_summary(validated_pairs: pd.DataFrame) -> dict:
-    return {
-        "rows": int(len(validated_pairs)),
-        "genuine_pairs": int(validated_pairs["pair_type"].eq("genuine").sum()),
-        "impostor_pairs": int(validated_pairs["pair_type"].eq("impostor").sum()),
-        "valid_pairs": int(validated_pairs["pair_valid"].sum()),
-        "invalid_pairs": int((~validated_pairs["pair_valid"]).sum()),
-    }

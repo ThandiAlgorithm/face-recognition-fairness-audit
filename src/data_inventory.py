@@ -1,125 +1,255 @@
-
 from __future__ import annotations
 
-import datetime
+import hashlib
 from pathlib import Path
-from typing import Optional
 
 import pandas as pd
 
-IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
-METADATA_EXTENSIONS = {".csv", ".txt", ".json"}
+from src import paths
 
 
-def scan_directory(root: Path) -> dict:
-    counts = {
-        "all_files": 0,
-        "image_files": 0,
-        "metadata_files": 0,
-        "other_files": 0,
-        "directories": 0,
-    }
-    if not root.exists():
-        return counts
-
-    for path in root.rglob("*"):
-        if path.is_dir():
-            counts["directories"] += 1
-            continue
-        counts["all_files"] += 1
-        suffix = path.suffix.lower()
-        if suffix in IMAGE_EXTENSIONS:
-            counts["image_files"] += 1
-        elif suffix in METADATA_EXTENSIONS:
-            counts["metadata_files"] += 1
-        else:
-            counts["other_files"] += 1
-    return counts
+KNOWN_METADATA_SUFFIXES = {".csv", ".tsv", ".txt", ".json", ".yaml", ".yml"}
+KNOWN_DOC_SUFFIXES = {".md", ".rst", ".pdf", ".html", ".htm"}
+KNOWN_ARCHIVE_SUFFIXES = {".zip", ".gz", ".tgz", ".tar", ".bz2", ".7z"}
+KNOWN_SYSTEM_FILENAMES = {
+    ".ds_store",
+    "thumbs.db",
+    "desktop.ini",
+}
 
 
-def count_identities(root: Path) -> Optional[int]:
-    if not root.exists():
-        return None
-    return sum(1 for p in root.iterdir() if p.is_dir())
+def sha256_file(path: Path, chunk_size: int = 1 << 20) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        while True:
+            chunk = handle.read(chunk_size)
+            if not chunk:
+                break
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
-def list_image_files(root: Path) -> list[Path]:
-    if not root.exists():
-        return []
-    return [p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS]
+def _is_under(path: Path, root: Path) -> bool:
+    try:
+        path.resolve().relative_to(root.resolve())
+        return True
+    except ValueError:
+        return False
 
 
-README_STEMS = {"readme", "license", "licence", "version", "citation"}
+def _classify_file(
+    path: Path,
+    image_roots: list[Path],
+    label_files: set[Path],
+) -> str:
+    resolved = path.resolve()
+
+    if resolved in label_files:
+        return "metadata"
+
+    if path.name.lower() in KNOWN_SYSTEM_FILENAMES:
+        return "system_file"
+
+    if any(
+        _is_under(path, root)
+        for root in image_roots
+    ):
+        if path.suffix.lower() in (
+            KNOWN_METADATA_SUFFIXES
+            | KNOWN_DOC_SUFFIXES
+        ):
+            return "metadata_or_documentation"
+
+        return "image_candidate"
+
+    suffix = path.suffix.lower()
+
+    if suffix in KNOWN_ARCHIVE_SUFFIXES:
+        return "archive"
+
+    if suffix in KNOWN_METADATA_SUFFIXES:
+        return "metadata"
+
+    if suffix in KNOWN_DOC_SUFFIXES:
+        return "documentation"
+
+    return "other"
 
 
-def find_provenance_files(root: Path) -> list[str]:
-    if not root.exists():
-        return []
-    return sorted(
-        str(p.relative_to(root))
-        for p in root.rglob("*")
-        if p.is_file() and p.stem.lower() in README_STEMS
+def validate_dataset_variant(dataset: str, dataset_cfg: dict) -> list[str]:
+    warnings = []
+    variant = str(dataset_cfg["variant"]).lower()
+    roots = [str(item).lower() for item in dataset_cfg["image_roots"]]
+    forbidden = [str(item).lower() for item in dataset_cfg.get("forbidden_path_tokens", [])]
+
+    for root in roots:
+        for token in forbidden:
+            if token and token in root:
+                raise RuntimeError(
+                    f"{dataset} canonical root contains forbidden variant token '{token}': {root}"
+                )
+
+    if dataset in {"lfw", "utkface"} and "in_the_wild" not in variant and "original" not in variant:
+        warnings.append(f"{dataset} variant does not explicitly say original or in_the_wild: {variant}")
+
+    if dataset == "fairface" and dataset_cfg.get("source_preprocessed") is not True:
+        raise RuntimeError("FairFace must be marked source_preprocessed=true for the official release.")
+
+    return warnings
+
+
+def build_file_manifest(preprocessing_cfg: dict) -> pd.DataFrame:
+    rows = []
+
+    for dataset, dataset_cfg in preprocessing_cfg["datasets"].items():
+        validate_dataset_variant(dataset, dataset_cfg)
+
+        dataset_root = paths.DATA_DIR / dataset_cfg["root"]
+
+        image_roots = [
+            paths.DATA_DIR / item
+            for item in dataset_cfg["image_roots"]
+        ]
+
+        label_files = {
+            (paths.DATA_DIR / item).resolve()
+            for item in dataset_cfg.get("label_files", [])
+        }
+
+        if not dataset_root.exists():
+            raise FileNotFoundError(
+                f"Dataset root not found for {dataset}: {dataset_root}"
+            )
+
+        files_to_manifest: set[Path] = set()
+
+        # Scan every file inside the canonical image roots.
+        #
+        # Do not filter by extension here. Files with unusual or malformed
+        # extensions must still enter the manifest and integrity stage.
+        for image_root in image_roots:
+            if not image_root.exists():
+                raise FileNotFoundError(
+                    f"Canonical image root not found for "
+                    f"{dataset}: {image_root}"
+                )
+
+            if not image_root.is_dir():
+                raise RuntimeError(
+                    f"Canonical image root is not a directory: "
+                    f"{image_root}"
+                )
+
+            for file_path in image_root.rglob("*"):
+                if file_path.is_file():
+                    files_to_manifest.add(
+                        file_path.resolve()
+                    )
+
+        # Explicitly configured metadata/label files may sit outside the
+        # canonical image roots, so include them separately.
+        for label_file in label_files:
+            if not label_file.exists():
+                raise FileNotFoundError(
+                    f"Configured label file not found for "
+                    f"{dataset}: {label_file}"
+                )
+
+            files_to_manifest.add(
+                label_file
+            )
+
+        for file_path in sorted(
+            files_to_manifest,
+            key=lambda item: item.as_posix().lower(),
+        ):
+            role = _classify_file(
+                file_path,
+                image_roots,
+                label_files,
+            )
+
+            rows.append(
+                {
+                    "dataset": dataset,
+                    "dataset_version": dataset_cfg["dataset_version"],
+                    "variant": dataset_cfg["variant"],
+                    "original_path": paths.data_rel(file_path),
+                    "file_size_bytes": int(
+                        file_path.stat().st_size
+                    ),
+                    "sha256": sha256_file(file_path),
+                    "archive_version": dataset_cfg.get(
+                        "archive_version",
+                        "unknown",
+                    ),
+                    "file_role": role,
+                    "suffix": file_path.suffix.lower(),
+                    "source_preprocessed": bool(
+                        dataset_cfg["source_preprocessed"]
+                    ),
+                    "project_detection_required": bool(
+                        dataset_cfg["project_detection_required"]
+                    ),
+                    "project_alignment_required": bool(
+                        dataset_cfg["project_alignment_required"]
+                    ),
+                }
+            )
+
+    manifest = pd.DataFrame(rows)
+
+    if manifest.empty:
+        raise RuntimeError(
+            "File manifest is empty."
+        )
+
+    if manifest["original_path"].duplicated().any():
+        duplicates = manifest.loc[
+            manifest["original_path"].duplicated(),
+            "original_path",
+        ].head().tolist()
+
+        raise RuntimeError(
+            f"Manifest contains duplicate paths: {duplicates}"
+        )
+
+    return manifest
+
+
+def canonical_image_candidates(manifest: pd.DataFrame) -> pd.DataFrame:
+    return manifest[manifest["file_role"].eq("image_candidate")].copy()
+
+
+def check_archives(preprocessing_cfg: dict) -> pd.DataFrame:
+    rows = []
+    archives = preprocessing_cfg.get("archives", [])
+    for item in archives:
+        path = paths.PROJECT_ROOT / item["path"]
+        expected = item.get("sha256")
+        exists = path.exists()
+        actual = sha256_file(path) if exists else None
+        pinned = bool(expected and expected not in {"FILL", "TODO", "unknown"})
+        rows.append(
+            {
+                "dataset": item["dataset"],
+                "variant": item["variant"],
+                "archive_path": item["path"],
+                "exists": exists,
+                "expected_sha256": expected,
+                "actual_sha256": actual,
+                "checksum_pinned": pinned,
+                "checksum_matches": bool(exists and pinned and actual == expected),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def dataset_count_report(manifest: pd.DataFrame) -> pd.DataFrame:
+    images = canonical_image_candidates(manifest)
+    return (
+        images.groupby(["dataset", "dataset_version", "variant"], dropna=False)
+        .size()
+        .rename("source_files_in_canonical_image_roots")
+        .reset_index()
     )
-
-
-def find_metadata_files(root: Path, max_depth: int = 2) -> list[str]:
-    if not root.exists():
-        return []
-    out = []
-    for p in root.rglob("*"):
-        if not p.is_file() or p.suffix.lower() not in METADATA_EXTENSIONS:
-            continue
-        if len(p.relative_to(root).parts) > max_depth:
-            continue
-        out.append(str(p.relative_to(root)))
-    return sorted(out)
-
-
-def find_image_directories(root: Path) -> list[str]:
-    if not root.exists():
-        return []
-    out = []
-    for d in [root, *(p for p in root.rglob("*") if p.is_dir())]:
-        if any(p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS for p in d.iterdir()):
-            rel = str(d.relative_to(root))
-            out.append(rel if rel != "." else ".")
-    return sorted(out)
-
-
-def build_dataset_inventory(data_dir: Path, dataset_dirs: dict[str, str]) -> pd.DataFrame:
-    scanned_date = datetime.date.today().isoformat()
-    rows = []
-    for name, dirname in dataset_dirs.items():
-        root = data_dir / dirname
-        prov = find_provenance_files(root)
-        meta = find_metadata_files(root)
-        imgdirs = find_image_directories(root)
-        rows.append({
-            "dataset": name,
-            "detected_path": str(root),
-            "exists": root.exists(),
-            "date_scanned": scanned_date,
-            "provenance_files_found": "; ".join(prov) if prov else "none found",
-            "n_provenance_files": len(prov),
-            "metadata_files_found": "; ".join(meta) if meta else "none found",
-            "n_metadata_files": len(meta),
-            "n_image_directories": len(imgdirs),
-            "image_directories_sample": "; ".join(imgdirs[:5]),
-            **scan_directory(root),
-        })
-    return pd.DataFrame(rows)
-
-
-def build_file_inventory(data_dir: Path, locations: dict[tuple, str]) -> pd.DataFrame:
-    rows = []
-    for (dataset, location), rel in locations.items():
-        root = data_dir / rel
-        rows.append({
-            "dataset": dataset,
-            "location": location,
-            "path": str(root),
-            "exists": root.exists(),
-            **scan_directory(root),
-            "identities": count_identities(root),
-        })
-    return pd.DataFrame(rows)

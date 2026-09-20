@@ -4,159 +4,334 @@ import hashlib
 
 import pandas as pd
 
-# Dataset preprocessing provenance.
-# What the source data requires, not whether the project has run
-# detection/alignment on it yet.
-PROVENANCE = {
-    "fairface": {
-        "source_preprocessed": True,
-        "source_preprocessing_method": "publisher_dlib_crop",
-        "project_detection_required": False,
-        "project_alignment_required": False,
-    },
-    "utkface": {
-        "source_preprocessed": True,
-        "source_preprocessing_method": "publisher_aligned_cropped",
-        "project_detection_required": False,
-        "project_alignment_required": False,
-    },
-    "lfw": {
-        "source_preprocessed": False,
-        "source_preprocessing_method": "none_original_unaligned",
-        "project_detection_required": True,
-        "project_alignment_required": True,
-    },
-}
+from src import categories
 
 
-def stable_image_id(dataset: str, relative_path: str) -> str:
-    return hashlib.sha256(f"{dataset}::{relative_path}".encode("utf-8")).hexdigest()
+MASTER_COLUMNS = [
+    "image_id",
+    "dataset",
+    "dataset_version",
+    "original_path",
+    "split",
+    "subject_id",
+    "width_px",
+    "height_px",
+    "original_mode",
+    "colour_profile",
+    "colour_profile_assumed",
+    "is_greyscale",
+    "corrupt",
+    "parse_failed",
+    "gender",
+    "gender_source",
+    "gender_confidence",
+    "race",
+    "race_source",
+    "race_confidence",
+    "age",
+    "age_source",
+    "age_confidence",
+    "age_band",
+    "exact_dup_group",
+    "near_dup_group",
+    "near_dup_status",
+    "cross_dataset_dup",
+    "cross_dataset_dup_status",
+    "bbox",
+    "det_confidence",
+    "n_detections",
+    "no_detection",
+    "multi_detection",
+    "detections_all",
+    "landmarks",
+    "alignment_transform",
+    "aligned_path",
+    "alignment_valid",
+    "brightness",
+    "contrast",
+    "sharpness",
+    "face_px_area",
+    "face_area_ratio",
+    "yaw",
+    "pitch",
+    "roll",
+    "L_star",
+    "a_star",
+    "b_star",
+    "ITA",
+    "hue_angle",
+    "ita_group",
+    "ita_ordinal",
+    "fitz_classifier",
+    "fitz_classifier_conf",
+    "fitz_ordinal",
+    "skin_group_ita",
+    "skin_group_fitz",
+    "skin_roi_valid",
+    "ita_undefined",
+    "low_confidence",
+    "thin_cell",
+    "exclusion_reason",
+    "eligible_detection_audit",
+    "eligible_visual_audit",
+    "eligible_skin_audit",
+    "eligible_demographic_audit",
+    "eligible_cross_dataset_eval",
+    "eligible_lfw_pair_eval",
+]
 
 
-def build_fairface_rows(fairface_categorised: pd.DataFrame) -> pd.DataFrame:
-    df = fairface_categorised.copy()
-    df["relative_path"] = df["file"].apply(lambda f: f"FairFace/{f}")
-    df["original_filename"] = df["file"].apply(lambda f: f.split("/")[-1])
-    df["subject_id"] = None
-    return df
+def stable_image_id(dataset: str, dataset_version: str, original_path: str) -> str:
+    payload = f"{dataset_version}|{original_path}"
+    digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+    return f"{dataset}-{digest}"
 
 
-def build_utkface_rows(utkface_categorised: pd.DataFrame) -> pd.DataFrame:
-    df = utkface_categorised.copy()
-    df["relative_path"] = "UTKFace/UTKFace/" + df["relative_path"]
-    df["subject_id"] = None
-    return df
-
-
-def build_lfw_rows(lfw_categorised: pd.DataFrame) -> pd.DataFrame:
-    df = lfw_categorised.copy()
-    df["relative_path"] = df["original_path"]
-    df["original_filename"] = df["relative_path"].apply(lambda p: p.split("/")[-1])
-    return df
-
-
-def build_base_master_table(
-    fairface_categorised: pd.DataFrame,
-    utkface_categorised: pd.DataFrame,
-    lfw_categorised: pd.DataFrame,
-    image_integrity_df: pd.DataFrame,
-    hashes_df: pd.DataFrame,
-    cross_dataset_overlap_paths: set,
+def build_master(
+    manifest: pd.DataFrame,
+    integrity: pd.DataFrame,
+    labels: pd.DataFrame,
+    duplicates: pd.DataFrame,
+    preprocessing_cfg: dict,
 ) -> pd.DataFrame:
-    fairface_rows = build_fairface_rows(fairface_categorised)
-    utkface_rows = build_utkface_rows(utkface_categorised)
-    lfw_rows = build_lfw_rows(lfw_categorised)
+    images = manifest[manifest["file_role"].eq("image_candidate")].copy()
+    base = images[
+        [
+            "dataset",
+            "dataset_version",
+            "variant",
+            "original_path",
+            "source_preprocessed",
+            "project_detection_required",
+            "project_alignment_required",
+        ]
+    ].copy()
 
-    common_cols = [
-        "dataset", "relative_path", "original_filename", "subject_id", "split",
-        "age_native", "age_band_fine", "age_band_coarse", "age_source",
-        "gender_native", "gender_code", "gender_source",
-        "race_native", "race_source",
-    ]
+    base["image_id"] = base.apply(
+        lambda row: stable_image_id(
+            row["dataset"],
+            row["dataset_version"],
+            row["original_path"],
+        ),
+        axis=1,
+    )
+    if not base["image_id"].is_unique:
+        raise RuntimeError("Stable image IDs are not unique.")
 
-    frames = []
-    for df in (fairface_rows, utkface_rows, lfw_rows):
-        for col in common_cols:
-            if col not in df.columns:
-                df[col] = None
-        frames.append(df[common_cols])
-
-    master = pd.concat(frames, ignore_index=True)
-    master["age_numeric"] = None
-    master.loc[master["dataset"] == "utkface", "age_numeric"] = utkface_categorised["age_native"].values
-    # Use one type for age values.
-    master["age_native"] = master["age_native"].apply(lambda x: None if pd.isna(x) else str(x))
-    master["gender_standard"] = master["gender_code"].map({1: "female", 0: "male"})
-    master["age_source"] = master["dataset"].map(
-        {"fairface": "native", "utkface": "native", "lfw": "unknown_no_metadata_supplied"}
+    master = base.merge(
+        integrity,
+        on="original_path",
+        how="left",
+        validate="one_to_one",
+    ).merge(
+        labels,
+        on="original_path",
+        how="left",
+        validate="one_to_one",
+    ).merge(
+        duplicates,
+        on="original_path",
+        how="left",
+        validate="one_to_one",
     )
 
-    master["image_id"] = master.apply(lambda r: stable_image_id(r["dataset"], r["relative_path"]), axis=1)
-
-    integrity_cols = [
-        "path", "decode_success", "decoded_width", "decoded_height", "original_mode",
-        "achromatic_rgb", "icc_profile_present", "exif_orientation",
-    ]
-    integrity_small = image_integrity_df[integrity_cols].rename(
-        columns={"path": "relative_path", "decoded_width": "width", "decoded_height": "height", "original_mode": "mode"}
-    )
-    master = master.merge(integrity_small, on="relative_path", how="left", validate="one_to_one")
     master["corrupt"] = ~master["decode_success"].fillna(False)
-    master["format"] = master["relative_path"].apply(lambda p: p.rsplit(".", 1)[-1].lower() if "." in p else None)
+    master["parse_failed"] = master["parse_failed"].fillna(True)
+    master["split"] = master["split"].fillna("none")
+    master["gender"] = master["gender"].fillna("unknown")
+    master["gender_source"] = master["gender_source"].fillna("unavailable")
+    master["race"] = master["race"].fillna("unknown")
+    master["race_source"] = master["race_source"].fillna("unavailable")
+    master["age_source"] = master["age_source"].fillna("unavailable")
+    master["near_dup_status"] = master["near_dup_status"].fillna("none")
+    master["cross_dataset_dup"] = master["cross_dataset_dup"].fillna(False)
+    master["cross_dataset_dup_status"] = master["cross_dataset_dup_status"].fillna("none")
 
-    # Join duplicate flags.
-    dup_small = hashes_df[["path", "exact_duplicate_group"]].rename(columns={"path": "relative_path"})
-    master = master.merge(dup_small, on="relative_path", how="left", validate="one_to_one")
-    master["exact_duplicate"] = master["exact_duplicate_group"].notna()
-    master["near_duplicate_candidate"] = None  # 9.2 cut, not run this pass
-    master["cross_dataset_overlap"] = master["relative_path"].isin(cross_dataset_overlap_paths)
+    nullable_columns = [
+        "bbox",
+        "det_confidence",
+        "n_detections",
+        "no_detection",
+        "multi_detection",
+        "detections_all",
+        "landmarks",
+        "alignment_transform",
+        "aligned_path",
+        "alignment_valid",
+        "brightness",
+        "contrast",
+        "sharpness",
+        "face_px_area",
+        "face_area_ratio",
+        "yaw",
+        "pitch",
+        "roll",
+        "L_star",
+        "a_star",
+        "b_star",
+        "ITA",
+        "hue_angle",
+        "ita_group",
+        "ita_ordinal",
+        "fitz_classifier",
+        "fitz_classifier_conf",
+        "fitz_ordinal",
+        "skin_group_ita",
+        "skin_group_fitz",
+        "skin_roi_valid",
+        "ita_undefined",
+        "low_confidence",
+        "thin_cell",
+        "exclusion_reason",
+        "eligible_detection_audit",
+        "eligible_visual_audit",
+        "eligible_skin_audit",
+        "eligible_demographic_audit",
+        "eligible_cross_dataset_eval",
+        "eligible_lfw_pair_eval",
+    ]
+    for column in nullable_columns:
+        if column not in master.columns:
+            master[column] = None
 
-    # Add preprocessing provenance.
-    for field in [
-        "source_preprocessed", "source_preprocessing_method",
-        "project_detection_required", "project_alignment_required",
-    ]:
-        master[field] = master["dataset"].map(lambda d: PROVENANCE[d][field])
-
-    # These describe what has actually been run, filled in by enrich_master
-    # once detection/alignment/measurement is executed. False until then.
-    master["project_detection_applied"] = False
-    master["project_alignment_applied"] = False
-
-    # Reserve feature columns, filled in by the pilot / full extraction runs.
-    for col in [
-        "detection_success", "number_of_faces", "detection_confidence", "bbox",
-        "all_detections_json",
-        "alignment_success", "alignment_transform", "aligned_path",
-        "pilot_run",
-        "brightness", "contrast", "sharpness", "face_bbox_area_px", "face_area_ratio",
-        "yaw", "pitch", "roll",
-        "skin_roi_total_pixel_count", "skin_roi_valid_pixel_count", "skin_valid_fraction",
-        "skin_roi_valid", "skin_roi_invalid_reason",
-        "L_star", "a_star", "b_star",
-        "ITA", "ita_undefined", "ITA_group", "ITA_binary", "hue_angle",
-    ]:
-        master[col] = None
-    master["pilot_run"] = False
+    supplied = master["source_preprocessed"].fillna(False) & master["decode_success"].fillna(False)
+    master.loc[supplied, "alignment_valid"] = True
+    master.loc[supplied, "aligned_path"] = master.loc[supplied, "original_path"]
 
     return master
 
 
-def enrich_master(master: pd.DataFrame, updates: pd.DataFrame, key: str = "relative_path") -> pd.DataFrame:
-    if key not in master.columns:
-        raise KeyError(f"Master table missing key: {key}")
-    if key not in updates.columns:
-        raise KeyError(f"Update table missing key: {key}")
-    if updates[key].duplicated().any():
-        raise ValueError("Update table contains duplicate keys.")
+def apply_utkface_split(master: pd.DataFrame, split_table: pd.DataFrame) -> pd.DataFrame:
+    output = master.copy()
+    mapping = split_table.set_index("image_id")["split"]
+    mask = output["dataset"].eq("utkface")
+    output.loc[mask, "split"] = output.loc[mask, "image_id"].map(mapping)
+    if output.loc[mask, "split"].isna().any():
+        raise RuntimeError("UTKFace split assignment is incomplete.")
+    return output
 
-    output = master.copy().set_index(key)
-    update_indexed = updates.copy().set_index(key)
 
-    for column in update_indexed.columns:
+def apply_detection_updates(master: pd.DataFrame, updates: pd.DataFrame) -> pd.DataFrame:
+    if updates.empty:
+        return master.copy()
+    if updates["image_id"].duplicated().any():
+        raise RuntimeError("Detection updates contain duplicate image IDs.")
+    output = master.set_index("image_id").copy()
+    incoming = updates.set_index("image_id")
+    common = output.index.intersection(incoming.index)
+    for column in incoming.columns:
         if column not in output.columns:
-            output[column] = None
-        common = output.index.intersection(update_indexed.index)
-        output.loc[common, column] = update_indexed.loc[common, column]
-
+            continue
+        output.loc[common, column] = incoming.loc[common, column]
     return output.reset_index()
+
+
+def apply_measurement_categories(master: pd.DataFrame, categories_cfg: dict) -> pd.DataFrame:
+    output = master.copy()
+    output["ita_group"] = output["ITA"].apply(lambda value: categories.assign_ita_group(value, categories_cfg))
+    output["ita_ordinal"] = output["ITA"].apply(lambda value: categories.assign_ita_ordinal(value, categories_cfg))
+    output["skin_group_ita"] = output["ITA"].apply(lambda value: categories.assign_ita_binary(value, categories_cfg))
+    return output
+
+
+def _primary_exclusion_reason(row: pd.Series, exclusions_cfg: dict) -> str | None:
+    checks = {
+        "corrupt_file": bool(row.get("corrupt", False)),
+        "decode_failure": row.get("decode_success") is False,
+        "label_parse_failure": bool(row.get("parse_failed", False)),
+        "missing_required_label": row.get("gender", "unknown") == "unknown",
+        "low_confidence_label": bool(row.get("low_confidence", False)),
+        "zero_detection": row.get("no_detection") is True,
+        "multi_detection_unresolved": False,
+        "alignment_failure": row.get("alignment_valid") is False,
+        "invalid_skin_roi": row.get("skin_roi_valid") is False and row.get("is_greyscale") is not True,
+        "greyscale_no_chroma": row.get("is_greyscale") is True,
+        "ita_undefined": row.get("ita_undefined") is True,
+        "exact_duplicate": pd.notna(row.get("exact_dup_group")),
+        "near_duplicate_confirmed": row.get("near_dup_status") == "confirmed",
+        "cross_dataset_duplicate_confirmed": row.get("cross_dataset_dup") is True,
+        "thin_cell": bool(row.get("thin_cell", False)),
+    }
+    for reason in exclusions_cfg["exclusion_precedence"]:
+        if checks.get(reason, False):
+            return reason
+    return None
+
+
+def apply_eligibility(
+    master: pd.DataFrame,
+    manifest: pd.DataFrame,
+    exclusions_cfg: dict,
+) -> pd.DataFrame:
+    output = master.copy()
+    source = manifest.loc[
+        manifest["file_role"].eq("image_candidate"),
+        ["original_path", "source_preprocessed", "project_detection_required"],
+    ]
+    needed = [
+        column
+        for column in ["source_preprocessed", "project_detection_required"]
+        if column not in output.columns
+    ]
+    if needed:
+        output = output.merge(
+            source[["original_path", *needed]],
+            on="original_path",
+            how="left",
+            validate="one_to_one",
+        )
+
+    threshold = float(exclusions_cfg["low_confidence_labels"]["threshold"])
+    native = output["gender_source"].eq("native")
+    confidence_values = pd.to_numeric(output["gender_confidence"], errors="coerce")
+    confidence_ok = confidence_values.ge(threshold).fillna(False)
+    output["low_confidence"] = (
+        output["gender"].ne("unknown")
+        & ~native
+        & ~confidence_ok
+    )
+
+    output["eligible_detection_audit"] = ~output["corrupt"].eq(True)
+    project_required = output["project_detection_required"].eq(True)
+    n_detections = pd.to_numeric(output["n_detections"], errors="coerce")
+    detector_ok = ~project_required | n_detections.ge(1).fillna(False)
+    output["eligible_visual_audit"] = (
+        output["eligible_detection_audit"]
+        & detector_ok
+        & output["alignment_valid"].eq(True)
+    )
+    output["eligible_skin_audit"] = (
+        output["eligible_visual_audit"]
+        & output["skin_roi_valid"].eq(True)
+        & ~output["is_greyscale"].eq(True)
+        & ~output["ita_undefined"].eq(True)
+    )
+    output["eligible_demographic_audit"] = (
+        output["gender"].ne("unknown")
+        & (native | confidence_ok)
+    )
+    output["eligible_cross_dataset_eval"] = (
+        output["eligible_skin_audit"]
+        & ~output["cross_dataset_dup"].eq(True)
+    )
+    output["eligible_lfw_pair_eval"] = False
+    output["exclusion_reason"] = output.apply(
+        lambda row: _primary_exclusion_reason(row, exclusions_cfg),
+        axis=1,
+    )
+
+    output = output.drop(
+        columns=["source_preprocessed", "project_detection_required"],
+        errors="ignore",
+    )
+    return output
+
+
+def finalise_master(master: pd.DataFrame) -> pd.DataFrame:
+    missing = [column for column in MASTER_COLUMNS if column not in master.columns]
+    if missing:
+        raise RuntimeError(f"Master table is missing GOV-005 columns: {missing}")
+    extra = [column for column in master.columns if column not in MASTER_COLUMNS]
+    if extra:
+        master = master.drop(columns=extra)
+    return master[MASTER_COLUMNS].copy()

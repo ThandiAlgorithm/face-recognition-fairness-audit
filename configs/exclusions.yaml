@@ -1,0 +1,72 @@
+meta:
+  issue: GOV-007
+  version: 1.0.1
+  frozen: false
+  frozen_date: null
+  frozen_commit: null
+  approved_by: []
+
+failure_handling:
+  delete_rows: false
+  every_exclusion_needs_reason: true
+
+low_confidence_labels:
+  threshold: 0.70
+  policy: recode_to_unknown_for_confirmatory_analysis
+  preserve_original_prediction: true
+  preserve_original_confidence: true
+
+duplicates:
+  exact:
+    action: group_and_flag
+    allow_duplicate_weighting_in_model_evaluation: false
+  near:
+    action: flag_for_review
+    auto_delete: false
+    statuses: [candidate, confirmed, false_alarm, uncertain]
+  cross_dataset:
+    action: flag_and_report
+    report_even_if_zero: true
+    excluded_from: [eligible_cross_dataset_eval]
+
+eligibility_masks:
+  eligible_detection_audit: "not corrupt"
+  eligible_visual_audit: "eligible_detection_audit and alignment_valid and either detector not required or n_detections >= 1"
+  eligible_skin_audit: "eligible_visual_audit and skin_roi_valid and not is_greyscale and not ita_undefined"
+  eligible_demographic_audit: "gender != unknown and native labels are eligible without confidence and derived labels require confidence >= 0.70"
+  eligible_cross_dataset_eval: "eligible_skin_audit and not cross_dataset_dup"
+  eligible_lfw_pair_eval: "both_members_eligible_skin_audit and pair_demog_complete"
+
+exclusion_precedence:
+  - corrupt_file
+  - decode_failure
+  - label_parse_failure
+  - missing_required_label
+  - low_confidence_label
+  - zero_detection
+  - multi_detection_unresolved
+  - alignment_failure
+  - invalid_skin_roi
+  - greyscale_no_chroma
+  - ita_undefined
+  - cross_dataset_duplicate_confirmed
+  - near_duplicate_confirmed
+  - exact_duplicate
+  - thin_cell
+
+exclusion_reason_vocabulary:
+  - corrupt_file
+  - decode_failure
+  - label_parse_failure
+  - missing_required_label
+  - low_confidence_label
+  - zero_detection
+  - multi_detection_unresolved
+  - alignment_failure
+  - invalid_skin_roi
+  - greyscale_no_chroma
+  - ita_undefined
+  - exact_duplicate
+  - near_duplicate_confirmed
+  - cross_dataset_duplicate_confirmed
+  - thin_cell

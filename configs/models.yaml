@@ -1,0 +1,87 @@
+meta:
+  issue: GOV-008
+  version: 1.0.1
+  frozen: false
+  frozen_date: null
+  frozen_commit: null
+seeds:
+  project_seed: 26041
+  applied_to:
+  - python_random
+  - numpy
+  - torch_cpu
+  - torch_cuda
+determinism:
+  cudnn_benchmark: false
+  torch_use_deterministic_algorithms: true
+  non_deterministic_ops_permitted: []
+  bit_for_bit_across_hardware_claimed: false
+libraries:
+  python: 3.11.9
+  torch: 2.14.0
+  torchvision: 0.29.0
+  numpy: 2.4.6
+  pandas: 3.0.6
+  scipy: 1.17.1
+  statsmodels: null
+  scikit_learn: 1.9.1
+  scikit_image: 0.26.0
+  pillow: 12.3.0
+  opencv: 5.0.0.93
+  tensorflow: 2.21.0
+  tf_keras: 2.21.0
+  retina_face: 0.0.18
+  imagehash: 4.3.2
+  fairlearn: null
+  aif360: null
+checkpoints:
+  retinaface:
+    model_name: RetinaFace
+    framework: pytorch
+    implementation: project_native
+    backbone: mobilenet0.25
+
+    weights_file: mobilenet0.25_Final.pth
+    weights_sha256: 2979b33ffafda5d74b6948cd7a5b9a7a62f62b949cef24e95fd15d2883a65220
+    file_size_bytes: 1789735
+    file_location: ~/.cache/torch/hub/checkpoints/mobilenet0.25_Final.pth
+
+    confidence_threshold: 0.90
+    nms_threshold: 0.40
+    top_k: 5000
+    keep_top_k: 750
+
+    device: cpu
+
+    alignment_output_size: 224
+
+    demographic_evaluation_published: false
+
+    superseded:
+      - package: retina-face
+        package_version: "0.0.18"
+        backend: tensorflow
+        reason: switched to a PyTorch implementation, see docs/protocol_amendments/AMEND-20260919-01.md
+      - package: face-detection
+        package_version: "1.0.5"
+        package_source: git+https://github.com/elliottzheng/face-detection.git@master
+        backend: pytorch
+        reason: intermediate PyPI-wrapper step, replaced by the project-native implementation, see docs/protocol_amendments/AMEND-20260919-01.md
+smoke_test:
+  required_before_bulk: true
+  n_images: 20
+  coverage:
+  - lfw
+  - fairface
+  - utkface
+  checks:
+  - decode
+  - exif
+  - colour_conversion
+  - detection
+  - alignment
+  - skin_measurement
+  - table_write
+  - rerun_identical
+  passed: false
+  passed_date: null

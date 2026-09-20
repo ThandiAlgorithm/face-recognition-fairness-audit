@@ -7,191 +7,204 @@ import cv2
 import numpy as np
 from skimage.color import rgb2lab
 
-# BT 601 luma weights for RGB values.
-LUMA_WEIGHTS = np.array([0.299, 0.587, 0.114])
+
+def _lab(rgb: np.ndarray) -> np.ndarray:
+    return rgb2lab(rgb[..., :3].astype(np.float64) / 255.0)
 
 
-def brightness(rgb: np.ndarray) -> float:
-    luma = rgb[..., :3].astype(np.float64) @ LUMA_WEIGHTS
-    return float(luma.mean())
+def brightness(rgb: np.ndarray, valid_mask: Optional[np.ndarray] = None) -> float:
+    l_star = _lab(rgb)[..., 0]
+    values = l_star[valid_mask] if valid_mask is not None else l_star.reshape(-1)
+    return float(values.mean())
 
 
-def contrast(rgb: np.ndarray) -> float:
-    luma = rgb[..., :3].astype(np.float64) @ LUMA_WEIGHTS
-    return float(luma.std())
+def contrast(rgb: np.ndarray, valid_mask: Optional[np.ndarray] = None) -> float:
+    l_star = _lab(rgb)[..., 0]
+    values = l_star[valid_mask] if valid_mask is not None else l_star.reshape(-1)
+    return float(values.std())
 
 
-def sharpness(rgb: np.ndarray) -> float:
+def sharpness(rgb: np.ndarray, valid_mask: Optional[np.ndarray] = None) -> float:
     grey = cv2.cvtColor(rgb[..., :3].astype(np.uint8), cv2.COLOR_RGB2GRAY)
-    return float(cv2.Laplacian(grey, cv2.CV_64F).var())
+    laplacian = cv2.Laplacian(grey, cv2.CV_64F)
+    values = laplacian[valid_mask] if valid_mask is not None else laplacian.reshape(-1)
+    return float(values.var())
 
 
 def face_size(bbox: list[float], image_width: int, image_height: int) -> dict:
-    x1, y1, x2, y2 = [float(v) for v in bbox]
-
+    x1, y1, x2, y2 = [float(value) for value in bbox]
     width = float(image_width)
     height = float(image_height)
-
     x1 = min(max(x1, 0.0), width)
     x2 = min(max(x2, 0.0), width)
     y1 = min(max(y1, 0.0), height)
     y2 = min(max(y2, 0.0), height)
-
-    bbox_area = max(0.0, x2 - x1) * max(0.0, y2 - y1)
+    area = max(0.0, x2 - x1) * max(0.0, y2 - y1)
     image_area = width * height
-    ratio = bbox_area / image_area if image_area > 0 else None
     return {
-        "face_bbox_area_px": bbox_area,
-        "face_area_ratio": ratio,
+        "face_px_area": float(area),
+        "face_area_ratio": float(area / image_area) if image_area > 0 else None,
     }
 
 
-def _clip_fraction_range(lower: float, upper: float) -> tuple[float, float]:
-    clipped_lower = min(1.0, max(0.0, float(lower)))
-    clipped_upper = min(1.0, max(0.0, float(upper)))
-    if clipped_upper < clipped_lower:
-        clipped_lower, clipped_upper = clipped_upper, clipped_lower
-    return clipped_lower, clipped_upper
+def _clip_fraction_pair(values: list[float]) -> tuple[float, float]:
+    lower = min(1.0, max(0.0, float(values[0])))
+    upper = min(1.0, max(0.0, float(values[1])))
+    return (lower, upper) if lower <= upper else (upper, lower)
 
 
-def extract_skin_roi(aligned_rgb: np.ndarray, roi_patches: dict, skin_filter: dict) -> dict:
+def extract_skin_roi(
+    aligned_rgb: np.ndarray,
+    preprocessing_cfg: dict,
+    valid_mask: Optional[np.ndarray] = None,
+) -> dict:
+    skin_cfg = preprocessing_cfg["skin_measurement"]
+    patches = skin_cfg["roi_patches"]
+    filter_cfg = skin_cfg["roi_skin_filter"]
     height, width = aligned_rgb.shape[:2]
 
     ycrcb = cv2.cvtColor(aligned_rgb[..., :3].astype(np.uint8), cv2.COLOR_RGB2YCrCb)
-    cb = ycrcb[..., 2].astype(np.int16)
     cr = ycrcb[..., 1].astype(np.int16)
+    cb = ycrcb[..., 2].astype(np.int16)
+    cb_low, cb_high = filter_cfg["cb_range"]
+    cr_low, cr_high = filter_cfg["cr_range"]
+    skin_mask = (
+        (cb >= int(cb_low))
+        & (cb <= int(cb_high))
+        & (cr >= int(cr_low))
+        & (cr <= int(cr_high))
+    )
+    if valid_mask is not None:
+        skin_mask &= valid_mask
 
-    cb_low, cb_high = skin_filter["cb_range"]
-    cr_low, cr_high = skin_filter["cr_range"]
-    skin_mask = (cb >= cb_low) & (cb <= cb_high) & (cr >= cr_low) & (cr <= cr_high)
-
-    valid_chunks = []
+    pixels = []
     total_roi_pixels = 0
+    valid_pixel_count = 0
 
-    for patch in roi_patches.values():
-        x_low, x_high = _clip_fraction_range(patch["x"][0], patch["x"][1])
-        y_low, y_high = _clip_fraction_range(patch["y"][0], patch["y"][1])
-
+    for patch in patches.values():
+        x_low, x_high = _clip_fraction_pair(patch["x"])
+        y_low, y_high = _clip_fraction_pair(patch["y"])
         x1 = min(max(int(round(x_low * width)), 0), width)
         x2 = min(max(int(round(x_high * width)), 0), width)
         y1 = min(max(int(round(y_low * height)), 0), height)
         y2 = min(max(int(round(y_high * height)), 0), height)
-
         if x2 <= x1 or y2 <= y1:
             continue
 
         region_rgb = aligned_rgb[y1:y2, x1:x2, :3]
         region_mask = skin_mask[y1:y2, x1:x2]
-
-        total_roi_pixels += int(region_mask.size)
-
+        if valid_mask is None:
+            total_roi_pixels += int(region_mask.size)
+        else:
+            total_roi_pixels += int(valid_mask[y1:y2, x1:x2].sum())
         selected = region_rgb[region_mask]
+        valid_pixel_count += int(len(selected))
         if len(selected):
-            valid_chunks.append(selected)
+            pixels.append(selected)
 
-    if valid_chunks:
-        valid_pixels = np.concatenate(valid_chunks, axis=0)
-    else:
-        valid_pixels = np.empty((0, 3), dtype=np.uint8)
-
-    valid_count = int(len(valid_pixels))
-    valid_fraction = valid_count / total_roi_pixels if total_roi_pixels > 0 else 0.0
-
+    combined = np.concatenate(pixels, axis=0) if pixels else np.empty((0, 3), dtype=np.uint8)
+    valid_fraction = valid_pixel_count / total_roi_pixels if total_roi_pixels > 0 else 0.0
     return {
-        "pixels": valid_pixels,
-        "total_roi_pixels": total_roi_pixels,
-        "valid_pixel_count": valid_count,
+        "pixels": combined,
+        "total_roi_pixels": int(total_roi_pixels),
+        "valid_pixel_count": int(valid_pixel_count),
         "valid_fraction": float(valid_fraction),
     }
-
-
-def extract_skin_roi_pixels(aligned_rgb: np.ndarray, roi_patches: dict, skin_filter: dict) -> np.ndarray:
-    return extract_skin_roi(aligned_rgb, roi_patches, skin_filter)["pixels"]
 
 
 def cielab_median(rgb_pixels: np.ndarray) -> Optional[tuple[float, float, float]]:
     if len(rgb_pixels) == 0:
         return None
     lab = rgb2lab((rgb_pixels.astype(np.float64) / 255.0).reshape(-1, 1, 3)).reshape(-1, 3)
-    return float(np.median(lab[:, 0])), float(np.median(lab[:, 1])), float(np.median(lab[:, 2]))
+    return (
+        float(np.median(lab[:, 0])),
+        float(np.median(lab[:, 1])),
+        float(np.median(lab[:, 2])),
+    )
 
 
-def compute_ita(l_star: float, b_star: float, b_star_min_abs: float) -> dict:
-    if abs(float(b_star)) < float(b_star_min_abs):
-        return {"ita": None, "ita_undefined": True}
-    ita = math.degrees(math.atan((float(l_star) - 50.0) / float(b_star)))
-    return {"ita": float(ita), "ita_undefined": False}
+def compute_ita(l_star: float, b_star: float, tolerance: float) -> tuple[Optional[float], bool]:
+    if abs(float(b_star)) < float(tolerance):
+        return None, True
+    value = math.degrees(math.atan((float(l_star) - 50.0) / float(b_star)))
+    return float(value), False
 
 
 def compute_hue(a_star: float, b_star: float) -> float:
     return float(math.degrees(math.atan2(float(b_star), float(a_star))) % 360.0)
 
 
-def measure_face_crop(
-    rgb: np.ndarray,
-    source_achromatic: bool,
-    roi_patches: dict,
-    skin_filter: dict,
-    roi_min_valid_pixels: int,
-    b_star_min_abs: float,
-    bbox: Optional[list[float]] = None,
-    original_width: Optional[int] = None,
-    original_height: Optional[int] = None,
-) -> dict:
-    row = {
-        "brightness": brightness(rgb),
-        "contrast": contrast(rgb),
-        "sharpness": sharpness(rgb),
-        "face_bbox_area_px": None,
+def measure_aligned_face(
+    aligned_rgb: np.ndarray,
+    preprocessing_cfg: dict,
+    is_greyscale: bool,
+    valid_mask: Optional[np.ndarray],
+    bbox: Optional[list[float]],
+    original_width: Optional[int],
+    original_height: Optional[int],
+) -> tuple[dict, dict]:
+    result = {
+        "brightness": brightness(aligned_rgb, valid_mask),
+        "contrast": contrast(aligned_rgb, valid_mask),
+        "sharpness": sharpness(aligned_rgb, valid_mask),
+        "face_px_area": None,
         "face_area_ratio": None,
         "yaw": None,
         "pitch": None,
         "roll": None,
-        "source_achromatic": bool(source_achromatic),
-        "skin_roi_total_pixel_count": None,
-        "skin_roi_valid_pixel_count": None,
-        "skin_valid_fraction": None,
         "skin_roi_valid": False,
-        "skin_roi_invalid_reason": None,
         "L_star": None,
         "a_star": None,
         "b_star": None,
         "ITA": None,
-        "ita_undefined": None,
         "hue_angle": None,
+        "ita_group": None,
+        "ita_ordinal": None,
+        "fitz_classifier": None,
+        "fitz_classifier_conf": None,
+        "fitz_ordinal": None,
+        "skin_group_ita": None,
+        "skin_group_fitz": None,
+        "ita_undefined": False,
+    }
+    diagnostics = {
+        "skin_roi_total_pixel_count": None,
+        "skin_roi_valid_pixel_count": None,
+        "skin_valid_fraction": None,
+        "skin_invalid_reason": None,
     }
 
     if bbox is not None and original_width is not None and original_height is not None:
-        row.update(face_size(bbox, int(original_width), int(original_height)))
+        result.update(face_size(bbox, original_width, original_height))
 
-    if source_achromatic:
-        row["skin_roi_invalid_reason"] = "source image is achromatic"
-        return row
+    if is_greyscale:
+        diagnostics["skin_invalid_reason"] = "greyscale_no_chroma"
+        return result, diagnostics
 
-    skin = extract_skin_roi(rgb, roi_patches, skin_filter)
+    skin = extract_skin_roi(aligned_rgb, preprocessing_cfg, valid_mask)
+    diagnostics["skin_roi_total_pixel_count"] = skin["total_roi_pixels"]
+    diagnostics["skin_roi_valid_pixel_count"] = skin["valid_pixel_count"]
+    diagnostics["skin_valid_fraction"] = skin["valid_fraction"]
 
-    row["skin_roi_total_pixel_count"] = skin["total_roi_pixels"]
-    row["skin_roi_valid_pixel_count"] = skin["valid_pixel_count"]
-    row["skin_valid_fraction"] = skin["valid_fraction"]
-
-    if skin["valid_pixel_count"] < int(roi_min_valid_pixels):
-        row["skin_roi_invalid_reason"] = "too few valid skin pixels"
-        return row
-
-    row["skin_roi_valid"] = True
+    minimum = int(preprocessing_cfg["skin_measurement"]["roi_min_valid_pixels"])
+    if skin["valid_pixel_count"] < minimum:
+        diagnostics["skin_invalid_reason"] = "invalid_skin_roi"
+        return result, diagnostics
 
     lab = cielab_median(skin["pixels"])
     if lab is None:
-        row["skin_roi_valid"] = False
-        row["skin_roi_invalid_reason"] = "cielab conversion returned no value"
-        return row
+        diagnostics["skin_invalid_reason"] = "invalid_skin_roi"
+        return result, diagnostics
 
-    row["L_star"], row["a_star"], row["b_star"] = lab
-
-    ita_result = compute_ita(row["L_star"], row["b_star"], b_star_min_abs)
-    row["ITA"] = ita_result["ita"]
-    row["ita_undefined"] = ita_result["ita_undefined"]
-
-    row["hue_angle"] = compute_hue(row["a_star"], row["b_star"])
-
-    return row
+    result["skin_roi_valid"] = True
+    result["L_star"], result["a_star"], result["b_star"] = lab
+    tolerance = float(preprocessing_cfg["skin_measurement"]["ita_guard"]["b_star_min_abs"])
+    result["ITA"], result["ita_undefined"] = compute_ita(
+        result["L_star"],
+        result["b_star"],
+        tolerance,
+    )
+    result["hue_angle"] = compute_hue(result["a_star"], result["b_star"])
+    if result["ita_undefined"]:
+        diagnostics["skin_invalid_reason"] = "ita_undefined"
+    return result, diagnostics

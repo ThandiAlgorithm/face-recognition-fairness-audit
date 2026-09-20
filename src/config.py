@@ -8,17 +8,54 @@ import yaml
 from src import paths
 
 
+CONFIG_FILES = {
+    "categories": "categories.yaml",
+    "preprocessing": "preprocessing.yaml",
+    "models": "models.yaml",
+    "exclusions": "exclusions.yaml",
+    "statistics": "statistics.yaml",
+    "reporting": "reporting.yaml",
+}
+
+
 def load_yaml(path: Path) -> dict:
     if not path.exists():
         raise FileNotFoundError(f"Config not found: {path}")
-
     with open(path, "r", encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
-
     if not isinstance(data, dict):
         raise RuntimeError(f"Config must contain a mapping: {path}")
-
     return data
+
+
+def load_config(name: str) -> dict:
+    if name not in CONFIG_FILES:
+        raise KeyError(f"Unknown config: {name}")
+    return load_yaml(paths.CONFIGS_DIR / CONFIG_FILES[name])
+
+
+def load_categories() -> dict:
+    return load_config("categories")
+
+
+def load_preprocessing() -> dict:
+    return load_config("preprocessing")
+
+
+def load_models() -> dict:
+    return load_config("models")
+
+
+def load_exclusions() -> dict:
+    return load_config("exclusions")
+
+
+def load_statistics() -> dict:
+    return load_config("statistics")
+
+
+def load_reporting() -> dict:
+    return load_config("reporting")
 
 
 def require_key(mapping: dict, key: str, context: str) -> Any:
@@ -27,98 +64,64 @@ def require_key(mapping: dict, key: str, context: str) -> Any:
     return mapping[key]
 
 
-def load_gov002() -> dict:
-    path = paths.CONFIGS_DIR / "GOV-002_categories.yaml"
-    data = load_yaml(path)
+def validate_preprocessing(cfg: dict) -> None:
+    for key in [
+        "datasets",
+        "integrity",
+        "colour",
+        "greyscale",
+        "detector",
+        "alignment",
+        "skin_measurement",
+        "splits",
+        "duplicates",
+    ]:
+        require_key(cfg, key, "preprocessing.yaml")
 
-    required = [
+    for dataset in ["lfw", "fairface", "utkface"]:
+        item = require_key(cfg["datasets"], dataset, "preprocessing datasets")
+        for key in [
+            "dataset_version",
+            "variant",
+            "image_roots",
+            "source_preprocessed",
+            "project_detection_required",
+            "project_alignment_required",
+        ]:
+            require_key(item, key, f"preprocessing datasets.{dataset}")
+
+    detector = cfg["detector"]
+    for key in [
+        "name",
+        "implementation",
+        "confidence_threshold",
+        "nms_threshold",
+        "top_k",
+        "keep_top_k",
+        "resize",
+        "preserve_all_detections",
+        "primary_face_rule",
+    ]:
+        require_key(detector, key, "preprocessing detector")
+
+    if detector["implementation"] != "project_native":
+        raise RuntimeError(
+            "The current frozen preprocessing config expects project_native "
+            "(see docs/protocol_amendments/AMEND-20260919-01.md). "
+            "Use GOV-010 before changing the RetinaFace implementation again."
+        )
+
+    points = cfg["alignment"].get("canonical_landmark_fractions")
+    if not isinstance(points, list) or len(points) != 5:
+        raise RuntimeError("Alignment must contain five canonical landmark points.")
+
+
+def validate_categories(cfg: dict) -> None:
+    for key in [
         "gender",
-        "age_bands_fine",
-        "age_bands_coarse",
+        "age_bands",
         "ita_groups",
         "skin_binary",
         "race",
-    ]
-
-    for key in required:
-        require_key(data, key, "GOV-002")
-
-    return data
-
-
-def load_gov006() -> dict:
-    return load_yaml(
-        paths.CONFIGS_DIR / "GOV-006_preprocessing.yaml"
-    )
-
-
-def detector_config(gov006: dict) -> dict:
-    section = require_key(gov006, "detector", "GOV-006")
-
-    required = [
-        "confidence_threshold",
-        "allow_upscaling",
-        "primary_face_rule",
-        "preserve_all_detections",
-    ]
-
-    for key in required:
-        require_key(section, key, "GOV-006 detector")
-
-    return section
-
-
-def alignment_config(gov006: dict) -> dict:
-    section = require_key(gov006, "alignment", "GOV-006")
-
-    required = [
-        "output_size",
-        "canonical_landmark_fractions",
-    ]
-
-    for key in required:
-        require_key(section, key, "GOV-006 alignment")
-
-    points = section["canonical_landmark_fractions"]
-
-    if not isinstance(points, list) or len(points) != 5:
-        raise ValueError(
-            "GOV-006 alignment canonical_landmark_fractions "
-            "must contain five points."
-        )
-
-    return section
-
-
-def skin_config(gov006: dict) -> dict:
-    section = require_key(gov006, "skin_measurement", "GOV-006")
-
-    required = [
-        "roi_patches",
-        "roi_skin_filter",
-        "roi_min_valid_pixels",
-        "ita_guard",
-    ]
-
-    for key in required:
-        require_key(section, key, "GOV-006 skin_measurement")
-
-    require_key(
-        section["ita_guard"],
-        "b_star_min_abs",
-        "GOV-006 ita_guard",
-    )
-
-    require_key(
-        section["roi_skin_filter"],
-        "cb_range",
-        "GOV-006 roi_skin_filter",
-    )
-
-    require_key(
-        section["roi_skin_filter"],
-        "cr_range",
-        "GOV-006 roi_skin_filter",
-    )
-
-    return section
+    ]:
+        require_key(cfg, key, "categories.yaml")
