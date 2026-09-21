@@ -1,0 +1,7 @@
+dataset,field,category,n_images,dataset_total,percentage
+fairface,gender,female,45920,97698,47.001985711068805
+fairface,gender,male,51778,97698,52.998014288931195
+lfw,gender,unknown,13233,13233,100.0
+utkface,gender,female,11522,24108,47.793263646922185
+utkface,gender,male,12582,24108,52.1901443504231
+utkface,gender,unknown,4,24108,0.016592002654720425

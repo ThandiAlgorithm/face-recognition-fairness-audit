@@ -1,0 +1,13 @@
+dataset,field,category,n_images,dataset_total,percentage
+fairface,gender_source,native,97698,97698,100.0
+lfw,gender_source,unavailable,13233,13233,100.0
+utkface,gender_source,native,24104,24108,99.98340799734528
+utkface,gender_source,unavailable,4,24108,0.016592002654720425
+fairface,race_source,native,97698,97698,100.0
+lfw,race_source,unavailable,13233,13233,100.0
+utkface,race_source,native,24104,24108,99.98340799734528
+utkface,race_source,unavailable,4,24108,0.016592002654720425
+fairface,age_source,native,97698,97698,100.0
+lfw,age_source,unavailable,13233,13233,100.0
+utkface,age_source,native,24104,24108,99.98340799734528
+utkface,age_source,unavailable,4,24108,0.016592002654720425

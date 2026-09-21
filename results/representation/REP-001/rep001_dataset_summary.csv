@@ -1,0 +1,4 @@
+dataset,n_images,pct_all_images,total_images_all_datasets
+fairface,97698,72.34798835891854,135039
+lfw,13233,9.799391286961544,135039
+utkface,24108,17.85262035411992,135039
