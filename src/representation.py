@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from itertools import product
 from pathlib import Path
 from typing import Iterable
 
@@ -9,18 +10,9 @@ import yaml
 
 
 # =====================================================================
-# REP-001 configuration
+# SHARED CONFIGURATION
 # =====================================================================
 
-# Native/source demographic fields used for descriptive composition.
-REP001_FIELDS = [
-    "gender",
-    "race",
-    "age_band",
-]
-
-# Values that should be represented as "unknown" for reporting.
-# The source master table itself is never modified.
 MISSING_TOKENS = {
     "",
     "unknown",
@@ -32,12 +24,52 @@ MISSING_TOKENS = {
     "null",
 }
 
+REP001_FIELDS = [
+    "gender",
+    "race",
+    "age_band",
+]
+
+REP002_DEMOGRAPHIC_FIELDS = [
+    "gender",
+    "race",
+    "age_band",
+]
+
+REP003_SUBGROUP_FIELDS = [
+    "gender",
+    "race",
+    "age_band_harmonised",
+]
+
+REP004_INTERSECTIONS = {
+    "gender_x_race": [
+        "gender",
+        "race",
+    ],
+    "gender_x_age": [
+        "gender",
+        "age_band_harmonised",
+    ],
+    "race_x_age": [
+        "race",
+        "age_band_harmonised",
+    ],
+    "gender_x_race_x_age": [
+        "gender",
+        "race",
+        "age_band_harmonised",
+    ],
+}
+
 
 # =====================================================================
-# Master-table loading and structural validation
+# SHARED — MASTER TABLE LOADING
 # =====================================================================
 
-def load_master_table(path: str | Path) -> pd.DataFrame:
+def load_master_table(
+    path: str | Path,
+) -> pd.DataFrame:
     """
     Load the Phase 0 master annotation table.
 
@@ -100,20 +132,23 @@ def load_master_table(path: str | Path) -> pd.DataFrame:
 
 
 # =====================================================================
-# Missing / unknown handling
+# SHARED — MISSING / UNKNOWN HANDLING
 # =====================================================================
 
 def normalise_reporting_category(
     series: pd.Series,
 ) -> pd.Series:
     """
-    Create a reporting-only version of a categorical column.
+    Convert missing/unknown-like values to the reporting label
+    'unknown'.
 
-    Missing/null/unknown-like values are represented as "unknown".
-
-    The original Series and master table are not modified.
+    The original master-table column is never modified.
     """
-    out = series.astype("string").str.strip()
+    out = (
+        series
+        .astype("string")
+        .str.strip()
+    )
 
     lower = out.str.lower()
 
@@ -132,28 +167,28 @@ def missing_mask(
     series: pd.Series,
 ) -> pd.Series:
     """
-    Return True for values treated as missing/unknown
-    for reporting purposes.
+    True where a value is considered missing/unknown.
     """
     reported = normalise_reporting_category(
         series
     )
 
-    return reported.str.lower().eq(
-        "unknown"
+    return (
+        reported
+        .str.lower()
+        .eq("unknown")
     )
 
 
 # =====================================================================
-# Frozen age-governance handling
+# SHARED — FROZEN AGE GOVERNANCE
 # =====================================================================
 
 def load_frozen_age_bands(
     config_path: str | Path = "configs/categories.yaml",
 ) -> list[dict]:
     """
-    Load the frozen harmonised age-band definitions
-    from the governance configuration.
+    Load frozen GOV-002 age-band definitions.
     """
     config_path = Path(config_path)
 
@@ -173,14 +208,22 @@ def load_frozen_age_bands(
             "Category configuration is not a valid mapping."
         )
 
-    meta = config.get("meta", {})
+    meta = config.get(
+        "meta",
+        {},
+    )
 
-    if not meta.get("frozen", False):
+    if not meta.get(
+        "frozen",
+        False,
+    ):
         raise ValueError(
-            "The category configuration is not marked as frozen."
+            "Category configuration is not marked as frozen."
         )
 
-    bands = config.get("age_bands")
+    bands = config.get(
+        "age_bands"
+    )
 
     if not bands:
         raise ValueError(
@@ -195,8 +238,7 @@ def _numeric_age_to_band(
     bands: list[dict],
 ) -> str:
     """
-    Map an exact numeric age to one of the frozen GOV-002
-    harmonised age bands.
+    Map an exact numeric age to a frozen GOV-002 age band.
     """
     if pd.isna(age):
         return "unknown"
@@ -208,7 +250,6 @@ def _numeric_age_to_band(
         return "unknown"
 
     for band in bands:
-
         low = float(
             band["min"]
         )
@@ -222,7 +263,10 @@ def _numeric_age_to_band(
         if age_value < low:
             continue
 
-        if high is None or age_value <= high:
+        if (
+            high is None
+            or age_value <= high
+        ):
             return str(
                 band["name"]
             )
@@ -234,26 +278,21 @@ def _parse_source_age_band(
     value,
 ) -> tuple[float, float] | None:
     """
-    Parse native/source age-band strings.
-
-    Supported examples:
+    Parse source/native age bands such as:
         0-2
-        3-9
         10-19
-        20-29
-        0-19
+        20-39
         60+
         70+
-
-    Returns:
-        (lower_bound, upper_bound)
-
-    Open-ended upper bounds use positive infinity.
     """
     if pd.isna(value):
         return None
 
-    text = str(value).strip().lower()
+    text = (
+        str(value)
+        .strip()
+        .lower()
+    )
 
     if text in MISSING_TOKENS:
         return None
@@ -264,15 +303,10 @@ def _parse_source_age_band(
     )
 
     if range_match:
-        lower = float(
-            range_match.group(1)
+        return (
+            float(range_match.group(1)),
+            float(range_match.group(2)),
         )
-
-        upper = float(
-            range_match.group(2)
-        )
-
-        return lower, upper
 
     plus_match = re.fullmatch(
         r"(\d+)\s*\+",
@@ -280,11 +314,10 @@ def _parse_source_age_band(
     )
 
     if plus_match:
-        lower = float(
-            plus_match.group(1)
+        return (
+            float(plus_match.group(1)),
+            float("inf"),
         )
-
-        return lower, float("inf")
 
     return None
 
@@ -294,11 +327,8 @@ def _source_band_to_frozen_band(
     bands: list[dict],
 ) -> str:
     """
-    Map a native/source categorical age interval into one
-    frozen GOV-002 age band.
-
-    A source interval is mapped only if it lies completely
-    inside a single frozen target interval.
+    Map a source age interval into a frozen GOV-002 band
+    only when it lies completely inside one target band.
     """
     interval = _parse_source_age_band(
         source_band
@@ -310,7 +340,6 @@ def _source_band_to_frozen_band(
     source_low, source_high = interval
 
     for band in bands:
-
         target_low = float(
             band["min"]
         )
@@ -340,12 +369,9 @@ def harmonise_age_band(
     Create a reporting-only harmonised age-band field.
 
     Priority:
-        1. Exact numeric age where available.
-        2. Native/source age_band where the interval nests
-           completely inside a frozen GOV-002 age band.
-        3. "unknown".
-
-    This function does not modify the master table.
+      1. exact numeric age where available;
+      2. source/native age band;
+      3. unknown.
     """
     required = {
         "age",
@@ -372,25 +398,18 @@ def harmonise_age_band(
         df["age"],
         df["age_band"],
     ):
-
-        # Prefer exact age where available.
         if pd.notna(age):
-
-            harmonised = _numeric_age_to_band(
+            value = _numeric_age_to_band(
                 age,
                 bands,
             )
-
         else:
-
-            harmonised = _source_band_to_frozen_band(
+            value = _source_band_to_frozen_band(
                 source_band,
                 bands,
             )
 
-        values.append(
-            harmonised
-        )
+        values.append(value)
 
     return pd.Series(
         values,
@@ -401,14 +420,14 @@ def harmonise_age_band(
 
 
 # =====================================================================
-# REP-001 composition tables
+# REP-001 — IMAGE-LEVEL COMPOSITION
 # =====================================================================
 
 def dataset_summary(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Overall image counts and percentages by dataset.
+    Image counts and percentages by dataset.
     """
     counts = (
         df.groupby(
@@ -444,10 +463,7 @@ def composition_table(
     field: str,
 ) -> pd.DataFrame:
     """
-    Calculate image-level counts and percentages for
-    one categorical field within each dataset.
-
-    All rows remain in the denominator.
+    Image-level categorical composition within each dataset.
     """
     if field not in df.columns:
         raise KeyError(
@@ -530,20 +546,12 @@ def composition_table(
     )
 
 
-# =====================================================================
-# Demographic availability
-# =====================================================================
-
 def demographic_availability_table(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Distinguish demographic-label availability from
-    exact numeric-age availability.
-
-    This prevents a dataset such as FairFace from being
-    incorrectly described as having no age information
-    simply because exact numeric ages are unavailable.
+    Distinguish demographic-label availability from exact
+    numeric-age availability.
     """
     specifications = [
         (
@@ -570,9 +578,7 @@ def demographic_availability_table(
         "dataset",
         dropna=False,
     ):
-
         for measure, field in specifications:
-
             if field not in group.columns:
                 continue
 
@@ -628,18 +634,12 @@ def demographic_availability_table(
     )
 
 
-# =====================================================================
-# Optional generic missingness helper
-# =====================================================================
-
 def missingness_table(
     df: pd.DataFrame,
     fields: Iterable[str],
 ) -> pd.DataFrame:
     """
-    Generic descriptive missing/unknown summary.
-
-    Retained as a reusable helper for later REP analyses.
+    Generic descriptive missingness helper.
     """
     rows: list[dict] = []
 
@@ -647,9 +647,7 @@ def missingness_table(
         "dataset",
         dropna=False,
     ):
-
         for field in fields:
-
             if field not in group.columns:
                 continue
 
@@ -704,18 +702,11 @@ def missingness_table(
     )
 
 
-# =====================================================================
-# Label provenance
-# =====================================================================
-
 def provenance_summary(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Summarise demographic provenance.
-
-    This distinguishes native, derived and unavailable
-    demographic information.
+    Summarise demographic label provenance.
     """
     source_fields = [
         "gender_source",
@@ -726,17 +717,14 @@ def provenance_summary(
     frames: list[pd.DataFrame] = []
 
     for field in source_fields:
-
         if field not in df.columns:
             continue
 
-        table = composition_table(
-            df,
-            field,
-        )
-
         frames.append(
-            table
+            composition_table(
+                df,
+                field,
+            )
         )
 
     if not frames:
@@ -748,19 +736,13 @@ def provenance_summary(
     )
 
 
-# =====================================================================
-# Phase 0 flag summary
-# =====================================================================
-
 def audit_flag_summary(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
     Summarise Phase 0 flags relevant to representation.
 
-    Missing/null flag values remain distinct from False.
-
-    REP-001 does not use these flags to delete rows.
+    Null flag values remain distinct from False.
     """
     flag_fields = [
         "corrupt",
@@ -777,9 +759,7 @@ def audit_flag_summary(
         "dataset",
         dropna=False,
     ):
-
         for field in flag_fields:
-
             if field not in group.columns:
                 continue
 
@@ -856,31 +836,25 @@ def audit_flag_summary(
         .reset_index(drop=True)
     )
 
-# =====================================================================
-# REP-002 — Identity-level representation
-# =====================================================================
 
-REP002_DEMOGRAPHIC_FIELDS = [
-    "gender",
-    "race",
-    "age_band",
-]
-
+# =====================================================================
+# REP-002 — IDENTITY-LEVEL REPRESENTATION
+# =====================================================================
 
 def subject_id_present_mask(
     series: pd.Series,
 ) -> pd.Series:
     """
-    Return True where a usable subject/identity identifier exists.
-
-    Missing and unknown-like values are treated as unavailable.
+    True where a usable identity identifier exists.
     """
     reported = normalise_reporting_category(
         series
     )
 
-    return ~reported.str.lower().eq(
-        "unknown"
+    return (
+        reported
+        .str.lower()
+        .ne("unknown")
     )
 
 
@@ -888,10 +862,7 @@ def identity_support_summary(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Summarise identity-ID availability by dataset.
-
-    This function reports what the Phase 0 hand-off contains.
-    It does not infer or manufacture identities.
+    Summarise subject-ID availability by dataset.
     """
     if "subject_id" not in df.columns:
         raise KeyError(
@@ -908,28 +879,51 @@ def identity_support_summary(
             group["subject_id"]
         )
 
-        present = ~subject.str.lower().eq(
-            "unknown"
+        present = (
+            subject
+            .str.lower()
+            .ne("unknown")
         )
 
-        valid_subjects = subject[present]
+        valid_subjects = subject[
+            present
+        ]
 
-        counts = valid_subjects.value_counts()
+        counts = (
+            valid_subjects
+            .value_counts()
+        )
 
         n_rows = len(group)
-        n_present = int(present.sum())
-        n_missing = n_rows - n_present
+
+        n_present = int(
+            present.sum()
+        )
+
+        n_missing = (
+            n_rows
+            - n_present
+        )
+
         n_identities = int(
             valid_subjects.nunique()
         )
 
-        n_singletons = int(
-            (counts == 1).sum()
-        ) if not counts.empty else 0
+        n_singletons = (
+            int(
+                (counts == 1).sum()
+            )
+            if not counts.empty
+            else 0
+        )
 
-        n_repeated = int(
-            (counts > 1).sum()
-        ) if not counts.empty else 0
+        n_repeated = (
+            int(
+                (counts > 1).sum()
+            )
+            if not counts.empty
+            else 0
+        )
 
         max_images = (
             int(counts.max())
@@ -941,8 +935,10 @@ def identity_support_summary(
             {
                 "dataset": dataset,
                 "n_images": n_rows,
-                "n_images_with_subject_id": n_present,
-                "n_images_without_subject_id": n_missing,
+                "n_images_with_subject_id":
+                    n_present,
+                "n_images_without_subject_id":
+                    n_missing,
                 "pct_images_with_subject_id": (
                     n_present
                     / n_rows
@@ -950,16 +946,18 @@ def identity_support_summary(
                     if n_rows
                     else 0.0
                 ),
-                "n_unique_identities": n_identities,
-                "n_singleton_identities": n_singletons,
-                "n_repeated_identities": n_repeated,
-                "max_images_per_identity": max_images,
-                "subject_id_available": (
-                    n_present > 0
-                ),
-                "repeated_identity_structure_present": (
-                    n_repeated > 0
-                ),
+                "n_unique_identities":
+                    n_identities,
+                "n_singleton_identities":
+                    n_singletons,
+                "n_repeated_identities":
+                    n_repeated,
+                "max_images_per_identity":
+                    max_images,
+                "subject_id_available":
+                    n_present > 0,
+                "repeated_identity_structure_present":
+                    n_repeated > 0,
             }
         )
 
@@ -975,21 +973,12 @@ def build_identity_attribute_table(
     fields: list[str] | None = None,
 ) -> pd.DataFrame:
     """
-    Construct an in-memory identity-level demographic assessment.
+    Build one demographic-status row per identity and field.
 
-    For each identity and demographic field:
-
-      unavailable:
-          no usable demographic value occurs on any image
-
-      consistent:
-          exactly one non-missing demographic value occurs
-
-      conflicting:
-          more than one non-missing demographic value occurs
-
-    This table is intended as an intermediate analysis object.
-    It does not modify the image-level master table.
+    status:
+        unavailable
+        consistent
+        conflicting
     """
     if fields is None:
         fields = REP002_DEMOGRAPHIC_FIELDS
@@ -1007,14 +996,14 @@ def build_identity_attribute_table(
     ):
         work = group.copy()
 
-        work["_subject_rep002"] = (
+        work["_subject_rep"] = (
             normalise_reporting_category(
                 work["subject_id"]
             )
         )
 
         work = work[
-            work["_subject_rep002"]
+            work["_subject_rep"]
             .str.lower()
             .ne("unknown")
         ]
@@ -1022,8 +1011,11 @@ def build_identity_attribute_table(
         if work.empty:
             continue
 
-        for subject_id, subject_group in work.groupby(
-            "_subject_rep002",
+        for (
+            subject_id,
+            subject_group,
+        ) in work.groupby(
+            "_subject_rep",
             dropna=False,
         ):
             n_images = len(
@@ -1031,7 +1023,6 @@ def build_identity_attribute_table(
             )
 
             for field in fields:
-
                 if field not in subject_group.columns:
                     continue
 
@@ -1066,14 +1057,16 @@ def build_identity_attribute_table(
                 rows.append(
                     {
                         "dataset": dataset,
-                        "subject_id": subject_id,
+                        "subject_id":
+                            subject_id,
                         "field": field,
-                        "n_images_for_identity": n_images,
+                        "n_images_for_identity":
+                            n_images,
                         "status": status,
-                        "category": category,
-                        "n_unique_observed_values": len(
-                            observed
-                        ),
+                        "category":
+                            category,
+                        "n_unique_observed_values":
+                            len(observed),
                     }
                 )
 
@@ -1087,11 +1080,6 @@ def build_identity_attribute_table(
         "n_unique_observed_values",
     ]
 
-    if not rows:
-        return pd.DataFrame(
-            columns=columns
-        )
-
     return pd.DataFrame(
         rows,
         columns=columns,
@@ -1104,10 +1092,8 @@ def identity_demographic_availability(
     fields: list[str] | None = None,
 ) -> pd.DataFrame:
     """
-    Summarise whether demographic identity-level composition
-    can actually be estimated.
-
-    Datasets without subject IDs remain explicitly represented.
+    Determine whether identity-level demographic analysis
+    is supported for each dataset and field.
     """
     if fields is None:
         fields = REP002_DEMOGRAPHIC_FIELDS
@@ -1119,8 +1105,9 @@ def identity_demographic_availability(
     rows: list[dict] = []
 
     for _, support_row in support.iterrows():
-
-        dataset = support_row["dataset"]
+        dataset = support_row[
+            "dataset"
+        ]
 
         n_identities = int(
             support_row[
@@ -1129,9 +1116,7 @@ def identity_demographic_availability(
         )
 
         for field in fields:
-
             if n_identities == 0:
-
                 rows.append(
                     {
                         "dataset": dataset,
@@ -1151,23 +1136,40 @@ def identity_demographic_availability(
                 continue
 
             subset = identity_table[
-                (identity_table["dataset"] == dataset)
-                & (identity_table["field"] == field)
+                (
+                    identity_table[
+                        "dataset"
+                    ]
+                    == dataset
+                )
+                &
+                (
+                    identity_table[
+                        "field"
+                    ]
+                    == field
+                )
             ]
 
             n_consistent = int(
-                (subset["status"] == "consistent")
-                .sum()
+                (
+                    subset["status"]
+                    == "consistent"
+                ).sum()
             )
 
             n_unavailable = int(
-                (subset["status"] == "unavailable")
-                .sum()
+                (
+                    subset["status"]
+                    == "unavailable"
+                ).sum()
             )
 
             n_conflicting = int(
-                (subset["status"] == "conflicting")
-                .sum()
+                (
+                    subset["status"]
+                    == "conflicting"
+                ).sum()
             )
 
             total_checked = (
@@ -1202,10 +1204,14 @@ def identity_demographic_availability(
                 {
                     "dataset": dataset,
                     "field": field,
-                    "n_total_identities": n_identities,
-                    "n_consistent": n_consistent,
-                    "n_unavailable": n_unavailable,
-                    "n_conflicting": n_conflicting,
+                    "n_total_identities":
+                        n_identities,
+                    "n_consistent":
+                        n_consistent,
+                    "n_unavailable":
+                        n_unavailable,
+                    "n_conflicting":
+                        n_conflicting,
                     "pct_consistent": (
                         n_consistent
                         / n_identities
@@ -1226,15 +1232,15 @@ def identity_demographic_availability(
                 }
             )
 
-    return pd.DataFrame(
-        rows
-    ).sort_values(
-        [
-            "dataset",
-            "field",
-        ]
-    ).reset_index(
-        drop=True
+    return (
+        pd.DataFrame(rows)
+        .sort_values(
+            [
+                "dataset",
+                "field",
+            ]
+        )
+        .reset_index(drop=True)
     )
 
 
@@ -1242,14 +1248,8 @@ def identity_demographic_composition(
     identity_table: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Calculate identity-level demographic composition only
-    from identities with one consistent observed label.
-
-    Both labelled-identity and all-identity denominators
-    are retained.
-
-    Current LFW results may legitimately be empty if the
-    Phase 0 hand-off contains no demographic annotations.
+    Identity-level demographic composition using only
+    consistently labelled identities.
     """
     output_columns = [
         "dataset",
@@ -1283,7 +1283,9 @@ def identity_demographic_composition(
     )
 
     labelled = identity_table[
-        identity_table["status"]
+        identity_table[
+            "status"
+        ]
         == "consistent"
     ].copy()
 
@@ -1317,9 +1319,7 @@ def identity_demographic_composition(
             dropna=False,
         )
         .size()
-        .rename(
-            "n_identities"
-        )
+        .rename("n_identities")
         .reset_index()
     )
 
@@ -1375,26 +1375,16 @@ def identity_demographic_composition(
         .reset_index(drop=True)
     )
 
-# =====================================================================
-# REP-003 — Images-per-identity distribution
-# =====================================================================
 
-REP003_SUBGROUP_FIELDS = [
-    "gender",
-    "race",
-    "age_band_harmonised",
-]
-
+# =====================================================================
+# REP-003 — IMAGES-PER-IDENTITY DISTRIBUTION
+# =====================================================================
 
 def identity_image_counts(
     df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Build one row per available identity with its number of images.
-
-    Datasets without usable subject IDs do not appear in this
-    identity-level table. Their unsupported status is retained
-    separately in identity_support_summary().
+    One row per usable identity with the number of images.
     """
     if "subject_id" not in df.columns:
         raise KeyError(
@@ -1423,9 +1413,9 @@ def identity_image_counts(
         work = pd.DataFrame(
             {
                 "dataset": dataset,
-                "subject_id": subject[present],
-            },
-            index=subject[present].index,
+                "subject_id":
+                    subject[present],
+            }
         )
 
         counts = (
@@ -1441,9 +1431,7 @@ def identity_image_counts(
             .reset_index()
         )
 
-        frames.append(
-            counts
-        )
+        frames.append(counts)
 
     columns = [
         "dataset",
@@ -1482,10 +1470,7 @@ def identity_depth_summary(
     identity_counts: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Summarise the number of images per identity for each dataset.
-
-    Datasets without subject IDs remain explicitly represented
-    with analysis_status='subject_id_unavailable'.
+    Summary statistics for images per identity.
     """
     support = identity_support_summary(
         df
@@ -1494,46 +1479,63 @@ def identity_depth_summary(
     rows: list[dict] = []
 
     for _, support_row in support.iterrows():
-
         dataset = support_row[
             "dataset"
         ]
 
         subset = identity_counts[
-            identity_counts["dataset"]
+            identity_counts[
+                "dataset"
+            ]
             == dataset
         ]
 
         if subset.empty:
-
             rows.append(
                 {
-                    "dataset": dataset,
+                    "dataset":
+                        dataset,
                     "analysis_status":
                         "subject_id_unavailable",
-                    "n_identities": 0,
-                    "n_images_with_identity": 0,
-                    "min_images_per_identity": None,
-                    "q25_images_per_identity": None,
-                    "median_images_per_identity": None,
-                    "mean_images_per_identity": None,
-                    "q75_images_per_identity": None,
-                    "p90_images_per_identity": None,
-                    "p95_images_per_identity": None,
-                    "p99_images_per_identity": None,
-                    "max_images_per_identity": None,
-                    "n_singleton_identities": 0,
-                    "pct_singleton_identities": None,
-                    "n_repeated_identities": 0,
-                    "pct_repeated_identities": None,
+                    "n_identities":
+                        0,
+                    "n_images_with_identity":
+                        0,
+                    "min_images_per_identity":
+                        None,
+                    "q25_images_per_identity":
+                        None,
+                    "median_images_per_identity":
+                        None,
+                    "mean_images_per_identity":
+                        None,
+                    "q75_images_per_identity":
+                        None,
+                    "p90_images_per_identity":
+                        None,
+                    "p95_images_per_identity":
+                        None,
+                    "p99_images_per_identity":
+                        None,
+                    "max_images_per_identity":
+                        None,
+                    "n_singleton_identities":
+                        0,
+                    "pct_singleton_identities":
+                        None,
+                    "n_repeated_identities":
+                        0,
+                    "pct_repeated_identities":
+                        None,
                 }
             )
 
             continue
 
-        values = subset[
-            "n_images"
-        ].astype(float)
+        values = (
+            subset["n_images"]
+            .astype(float)
+        )
 
         n_identities = len(
             subset
@@ -1549,7 +1551,8 @@ def identity_depth_summary(
 
         rows.append(
             {
-                "dataset": dataset,
+                "dataset":
+                    dataset,
                 "analysis_status":
                     "identity_distribution_available",
                 "n_identities":
@@ -1602,14 +1605,7 @@ def identity_depth_distribution(
     identity_counts: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Exact empirical distribution of images-per-identity.
-
-    Example:
-        n_images_per_identity = 1
-        n_identities = number of singleton identities
-
-    The table also reports the number and percentage of dataset images
-    contributed by each identity-depth level.
+    Exact empirical images-per-identity distribution.
     """
     columns = [
         "dataset",
@@ -1651,7 +1647,9 @@ def identity_depth_distribution(
             "dataset"
         )
         .size()
-        .rename("total_identities")
+        .rename(
+            "total_identities"
+        )
         .reset_index()
     )
 
@@ -1730,11 +1728,8 @@ def identity_depth_subgroup_summary(
     identity_table: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Summarise images-per-identity by demographic subgroup where a
-    consistent identity-level demographic label is available.
-
-    With the current Phase 0 hand-off this may legitimately be empty,
-    because LFW has identity IDs but no demographic annotations.
+    Images-per-identity summary by demographic subgroup
+    where consistent identity-level labels exist.
     """
     columns = [
         "dataset",
@@ -1762,7 +1757,9 @@ def identity_depth_subgroup_summary(
         )
 
     labels = identity_table[
-        identity_table["status"]
+        identity_table[
+            "status"
+        ]
         == "consistent"
     ][
         [
@@ -1802,10 +1799,10 @@ def identity_depth_subgroup_summary(
         ],
         dropna=False,
     ):
-
-        values = group[
-            "n_images"
-        ].astype(float)
+        values = (
+            group["n_images"]
+            .astype(float)
+        )
 
         n_identities = len(
             group
@@ -1817,9 +1814,12 @@ def identity_depth_subgroup_summary(
 
         rows.append(
             {
-                "dataset": dataset,
-                "field": field,
-                "category": category,
+                "dataset":
+                    dataset,
+                "field":
+                    field,
+                "category":
+                    category,
                 "n_identities":
                     n_identities,
                 "n_images":
@@ -1869,8 +1869,7 @@ def identity_depth_subgroup_distribution(
     identity_table: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Exact images-per-identity distribution within each demographic
-    subgroup where consistent identity-level labels are available.
+    Exact images-per-identity distribution by subgroup.
     """
     columns = [
         "dataset",
@@ -1891,7 +1890,9 @@ def identity_depth_subgroup_distribution(
         )
 
     labels = identity_table[
-        identity_table["status"]
+        identity_table[
+            "status"
+        ]
         == "consistent"
     ][
         [
@@ -1985,7 +1986,681 @@ def identity_depth_subgroup_distribution(
                 "field",
                 "category",
                 "n_images_per_identity",
+            ]
+        )
+        .reset_index(drop=True)
+    )
 
+
+# =====================================================================
+# REP-004 — INTERSECTIONAL COMPOSITION
+# =====================================================================
+
+def load_image_cell_thresholds(
+    config_path: str | Path = "configs/reporting.yaml",
+) -> dict:
+    """
+    Load frozen GOV-003 image-level cell-size rules.
+    """
+    config_path = Path(
+        config_path
+    )
+
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"Reporting config not found: {config_path}"
+        )
+
+    with config_path.open(
+        "r",
+        encoding="utf-8",
+    ) as f:
+        config = yaml.safe_load(f)
+
+    if not isinstance(
+        config,
+        dict,
+    ):
+        raise ValueError(
+            "Reporting configuration is not a valid mapping."
+        )
+
+    meta = config.get(
+        "meta",
+        {},
+    )
+
+    if not meta.get(
+        "frozen",
+        False,
+    ):
+        raise ValueError(
+            "Reporting configuration is not marked as frozen."
+        )
+
+    minimum = (
+        config
+        .get(
+            "minimum_cell_size",
+            {},
+        )
+        .get(
+            "image",
+            {},
+        )
+    )
+
+    suppress_below = minimum.get(
+        "suppress_below"
+    )
+
+    low_confidence_below = minimum.get(
+        "low_confidence_below"
+    )
+
+    if (
+        suppress_below is None
+        or low_confidence_below is None
+    ):
+        raise ValueError(
+            "Image minimum-cell-size thresholds "
+            "are missing."
+        )
+
+    suppress_below = int(
+        suppress_below
+    )
+
+    low_confidence_below = int(
+        low_confidence_below
+    )
+
+    if suppress_below < 0:
+        raise ValueError(
+            "suppress_below must be non-negative."
+        )
+
+    if (
+        low_confidence_below
+        < suppress_below
+    ):
+        raise ValueError(
+            "low_confidence_below cannot be "
+            "smaller than suppress_below."
+        )
+
+    return {
+        "suppress_below":
+            suppress_below,
+        "low_confidence_below":
+            low_confidence_below,
+    }
+
+
+def _analysis_boolean_mask(
+    series: pd.Series,
+) -> pd.Series:
+    """
+    Convert a boolean-like eligibility column into
+    a strict analysis mask.
+
+    Null values are treated as False.
+    """
+    if pd.api.types.is_bool_dtype(
+        series.dtype
+    ):
+        return (
+            series
+            .fillna(False)
+            .astype(bool)
+        )
+
+    text = (
+        series
+        .astype("string")
+        .str.strip()
+        .str.lower()
+    )
+
+    true_values = {
+        "true",
+        "1",
+        "yes",
+    }
+
+    false_values = {
+        "false",
+        "0",
+        "no",
+        "",
+        "unknown",
+        "nan",
+        "none",
+        "null",
+    }
+
+    known = (
+        text.isna()
+        | text.isin(
+            true_values
+        )
+        | text.isin(
+            false_values
+        )
+    )
+
+    if not known.all():
+        bad = sorted(
+            text[
+                ~known
+            ]
+            .dropna()
+            .unique()
+            .tolist()
+        )
+
+        raise ValueError(
+            "Unexpected boolean encoding: "
+            + ", ".join(
+                map(str, bad)
+            )
+        )
+
+    return text.isin(
+        true_values
+    )
+
+
+def demographic_eligibility_summary(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Summarise Phase 0 demographic-analysis eligibility.
+    """
+    field = (
+        "eligible_demographic_audit"
+    )
+
+    if field not in df.columns:
+        raise KeyError(
+            f"Master table does not contain {field}."
+        )
+
+    rows: list[dict] = []
+
+    for dataset, group in df.groupby(
+        "dataset",
+        dropna=False,
+    ):
+        eligible = (
+            _analysis_boolean_mask(
+                group[field]
+            )
+        )
+
+        n_total = len(group)
+
+        n_eligible = int(
+            eligible.sum()
+        )
+
+        n_ineligible = (
+            n_total
+            - n_eligible
+        )
+
+        rows.append(
+            {
+                "dataset":
+                    dataset,
+                "n_total_images":
+                    n_total,
+                "n_eligible_images":
+                    n_eligible,
+                "n_ineligible_images":
+                    n_ineligible,
+                "pct_eligible_images": (
+                    n_eligible
+                    / n_total
+                    * 100.0
+                    if n_total
+                    else 0.0
+                ),
+                "analysis_status": (
+                    "available"
+                    if n_eligible > 0
+                    else
+                    "no_eligible_demographic_rows"
+                ),
+            }
+        )
+
+    return (
+        pd.DataFrame(rows)
+        .sort_values("dataset")
+        .reset_index(drop=True)
+    )
+
+
+def _reporting_status(
+    n: int,
+    suppress_below: int,
+    low_confidence_below: int,
+) -> tuple[str, bool, bool]:
+    """
+    Apply frozen GOV-003 image-cell reporting rules.
+
+    n < suppress_below
+        -> suppressed
+
+    suppress_below <= n < low_confidence_below
+        -> low confidence
+
+    n >= low_confidence_below
+        -> reportable
+    """
+    if n < suppress_below:
+        return (
+            "suppressed",
+            True,
+            False,
+        )
+
+    if n < low_confidence_below:
+        return (
+            "low_confidence",
+            False,
+            True,
+        )
+
+    return (
+        "reportable",
+        False,
+        False,
+    )
+
+
+def intersectional_composition(
+    df: pd.DataFrame,
+    intersection_name: str,
+    fields: list[str],
+    reporting_config_path: str | Path = "configs/reporting.yaml",
+) -> pd.DataFrame:
+    """
+    Calculate one pre-specified intersectional composition table.
+
+    Only rows eligible for demographic analysis contribute
+    to the denominator.
+
+    Zero-count cells remain represented.
+
+    Raw percentages are retained for reproducibility.
+    percentage_reported is blank for suppressed cells.
+    """
+    required = {
+        "dataset",
+        "eligible_demographic_audit",
+        *fields,
+    }
+
+    missing = sorted(
+        required - set(df.columns)
+    )
+
+    if missing:
+        raise KeyError(
+            f"Cannot calculate {intersection_name}. "
+            "Missing fields: "
+            + ", ".join(missing)
+        )
+
+    thresholds = (
+        load_image_cell_thresholds(
+            reporting_config_path
+        )
+    )
+
+    suppress_below = thresholds[
+        "suppress_below"
+    ]
+
+    low_confidence_below = thresholds[
+        "low_confidence_below"
+    ]
+
+    rows: list[dict] = []
+
+    for dataset, group in df.groupby(
+        "dataset",
+        dropna=False,
+    ):
+        eligible_mask = (
+            _analysis_boolean_mask(
+                group[
+                    "eligible_demographic_audit"
+                ]
+            )
+        )
+
+        eligible = group[
+            eligible_mask
+        ].copy()
+
+        if eligible.empty:
+            continue
+
+        for field in fields:
+            eligible[field] = (
+                normalise_reporting_category(
+                    eligible[field]
+                )
+            )
+
+        category_levels: list[
+            list[str]
+        ] = []
+
+        for field in fields:
+            values = sorted(
+                eligible[field]
+                .dropna()
+                .astype(str)
+                .unique()
+                .tolist()
+            )
+
+            if not values:
+                values = [
+                    "unknown"
+                ]
+
+            category_levels.append(
+                values
+            )
+
+        counts = (
+            eligible.groupby(
+                fields,
+                dropna=False,
+            )
+            .size()
+            .rename("n_images")
+        )
+
+        dataset_eligible_n = len(
+            eligible
+        )
+
+        for combination in product(
+            *category_levels
+        ):
+            if len(fields) == 1:
+                lookup_key = (
+                    combination[0]
+                )
+            else:
+                lookup_key = tuple(
+                    combination
+                )
+
+            n_images = int(
+                counts.get(
+                    lookup_key,
+                    0,
+                )
+            )
+
+            (
+                status,
+                thin_cell,
+                low_confidence,
+            ) = _reporting_status(
+                n_images,
+                suppress_below,
+                low_confidence_below,
+            )
+
+            percentage_raw = (
+                n_images
+                / dataset_eligible_n
+                * 100.0
+                if dataset_eligible_n
+                else 0.0
+            )
+
+            percentage_reported = (
+                None
+                if status == "suppressed"
+                else percentage_raw
+            )
+
+            row = {
+                "dataset":
+                    dataset,
+                "intersection":
+                    intersection_name,
+                "n_images":
+                    n_images,
+                "dataset_eligible_n":
+                    dataset_eligible_n,
+                "percentage":
+                    percentage_raw,
+                "percentage_reported":
+                    percentage_reported,
+                "suppress_below":
+                    suppress_below,
+                "low_confidence_below":
+                    low_confidence_below,
+                "thin_cell":
+                    thin_cell,
+                "low_confidence":
+                    low_confidence,
+                "reporting_status":
+                    status,
+            }
+
+            labels: list[str] = []
+
+            for field, value in zip(
+                fields,
+                combination,
+            ):
+                row[field] = value
+
+                labels.append(
+                    f"{field}={value}"
+                )
+
+            row["cell_label"] = (
+                " | ".join(
+                    labels
+                )
+            )
+
+            rows.append(
+                row
+            )
+
+    base_columns = [
+        "dataset",
+        "intersection",
+        "cell_label",
+    ]
+
+    category_columns = [
+        "gender",
+        "race",
+        "age_band_harmonised",
+    ]
+
+    result_columns = [
+        "n_images",
+        "dataset_eligible_n",
+        "percentage",
+        "percentage_reported",
+        "suppress_below",
+        "low_confidence_below",
+        "thin_cell",
+        "low_confidence",
+        "reporting_status",
+    ]
+
+    columns = (
+        base_columns
+        + category_columns
+        + result_columns
+    )
+
+    if not rows:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    result = pd.DataFrame(
+        rows
+    )
+
+    for column in category_columns:
+        if column not in result.columns:
+            result[column] = pd.NA
+
+    return (
+        result[
+            columns
+        ]
+        .sort_values(
+            [
+                "dataset",
+                "intersection",
+                "cell_label",
+            ]
+        )
+        .reset_index(drop=True)
+    )
+
+
+def all_intersectional_composition(
+    df: pd.DataFrame,
+    reporting_config_path: str | Path = "configs/reporting.yaml",
+) -> pd.DataFrame:
+    """
+    Run all pre-specified REP-004 intersections.
+    """
+    frames: list[pd.DataFrame] = []
+
+    for (
+        intersection_name,
+        fields,
+    ) in REP004_INTERSECTIONS.items():
+
+        frames.append(
+            intersectional_composition(
+                df,
+                intersection_name,
+                fields,
+                reporting_config_path,
+            )
+        )
+
+    if not frames:
+        return pd.DataFrame()
+
+    return pd.concat(
+        frames,
+        ignore_index=True,
+    )
+
+
+def intersection_reporting_summary(
+    composition: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Count reportable, low-confidence, suppressed and zero
+    cells for each dataset/intersection.
+    """
+    columns = [
+        "dataset",
+        "intersection",
+        "n_cells",
+        "n_reportable_cells",
+        "n_low_confidence_cells",
+        "n_suppressed_cells",
+        "n_zero_cells",
+    ]
+
+    if composition.empty:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    rows: list[dict] = []
+
+    for (
+        dataset,
+        intersection,
+    ), group in composition.groupby(
+        [
+            "dataset",
+            "intersection",
+        ],
+        dropna=False,
+    ):
+        rows.append(
+            {
+                "dataset":
+                    dataset,
+                "intersection":
+                    intersection,
+                "n_cells":
+                    len(group),
+                "n_reportable_cells":
+                    int(
+                        (
+                            group[
+                                "reporting_status"
+                            ]
+                            == "reportable"
+                        ).sum()
+                    ),
+                "n_low_confidence_cells":
+                    int(
+                        (
+                            group[
+                                "reporting_status"
+                            ]
+                            == "low_confidence"
+                        ).sum()
+                    ),
+                "n_suppressed_cells":
+                    int(
+                        (
+                            group[
+                                "reporting_status"
+                            ]
+                            == "suppressed"
+                        ).sum()
+                    ),
+                "n_zero_cells":
+                    int(
+                        (
+                            group[
+                                "n_images"
+                            ]
+                            == 0
+                        ).sum()
+                    ),
+            }
+        )
+
+    return (
+        pd.DataFrame(
+            rows,
+            columns=columns,
+        )
+        .sort_values(
+            [
+                "dataset",
+                "intersection",
             ]
         )
         .reset_index(drop=True)
