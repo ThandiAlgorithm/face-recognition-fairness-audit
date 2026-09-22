@@ -1,0 +1,13 @@
+dataset,label,source_column,n_total,n_available,n_missing_or_unknown,pct_available,pct_missing_or_unknown,missingness_status
+fairface,age_label,age_band_harmonised,97698,97698,0,100.0,0.0,complete
+fairface,exact_numeric_age,age,97698,0,97698,0.0,100.0,unavailable
+fairface,gender,gender,97698,97698,0,100.0,0.0,complete
+fairface,race,race,97698,97698,0,100.0,0.0,complete
+lfw,age_label,age_band_harmonised,13233,0,13233,0.0,100.0,unavailable
+lfw,exact_numeric_age,age,13233,0,13233,0.0,100.0,unavailable
+lfw,gender,gender,13233,0,13233,0.0,100.0,unavailable
+lfw,race,race,13233,0,13233,0.0,100.0,unavailable
+utkface,age_label,age_band_harmonised,24108,24104,4,99.98340799734528,0.016592002654720425,partial_missingness
+utkface,exact_numeric_age,age,24108,24104,4,99.98340799734528,0.016592002654720425,partial_missingness
+utkface,gender,gender,24108,24104,4,99.98340799734528,0.016592002654720425,partial_missingness
+utkface,race,race,24108,24104,4,99.98340799734528,0.016592002654720425,partial_missingness
