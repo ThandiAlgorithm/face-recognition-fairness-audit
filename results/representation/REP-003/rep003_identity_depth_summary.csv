@@ -1,0 +1,4 @@
+dataset,analysis_status,n_identities,n_images_with_identity,min_images_per_identity,q25_images_per_identity,median_images_per_identity,mean_images_per_identity,q75_images_per_identity,p90_images_per_identity,p95_images_per_identity,p99_images_per_identity,max_images_per_identity,n_singleton_identities,pct_singleton_identities,n_repeated_identities,pct_repeated_identities
+fairface,subject_id_unavailable,0,0,,,,,,,,,,0,,0,
+lfw,identity_distribution_available,5749,13233,1.0,1.0,1.0,2.301791615933206,2.0,4.0,6.0,20.0,530.0,4069,70.7775265263524,1680,29.222473473647593
+utkface,subject_id_unavailable,0,0,,,,,,,,,,0,,0,
