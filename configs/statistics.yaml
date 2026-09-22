@@ -1,0 +1,11 @@
+global:
+  alpha: 0.05
+  ci_level: 0.95
+  seed: 26041
+bootstrap:
+  iterations: 5000
+  seed: 26041
+  method: percentile
+multiple_testing:
+  method: benjamini_hochberg
+  q: 0.05

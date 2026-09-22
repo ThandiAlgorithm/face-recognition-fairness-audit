@@ -1,0 +1,4 @@
+minimum_cell_size:
+  image: {suppress_below: 30, low_confidence_below: 100}
+  identity: {suppress_below: 30, low_confidence_below: 100}
+  verification_pair: {suppress_below: 100, low_confidence_below: 300}
