@@ -1374,3 +1374,619 @@ def identity_demographic_composition(
         )
         .reset_index(drop=True)
     )
+
+# =====================================================================
+# REP-003 — Images-per-identity distribution
+# =====================================================================
+
+REP003_SUBGROUP_FIELDS = [
+    "gender",
+    "race",
+    "age_band_harmonised",
+]
+
+
+def identity_image_counts(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Build one row per available identity with its number of images.
+
+    Datasets without usable subject IDs do not appear in this
+    identity-level table. Their unsupported status is retained
+    separately in identity_support_summary().
+    """
+    if "subject_id" not in df.columns:
+        raise KeyError(
+            "Master table does not contain subject_id."
+        )
+
+    frames: list[pd.DataFrame] = []
+
+    for dataset, group in df.groupby(
+        "dataset",
+        dropna=False,
+    ):
+        subject = normalise_reporting_category(
+            group["subject_id"]
+        )
+
+        present = (
+            subject
+            .str.lower()
+            .ne("unknown")
+        )
+
+        if not present.any():
+            continue
+
+        work = pd.DataFrame(
+            {
+                "dataset": dataset,
+                "subject_id": subject[present],
+            },
+            index=subject[present].index,
+        )
+
+        counts = (
+            work.groupby(
+                [
+                    "dataset",
+                    "subject_id",
+                ],
+                dropna=False,
+            )
+            .size()
+            .rename("n_images")
+            .reset_index()
+        )
+
+        frames.append(
+            counts
+        )
+
+    columns = [
+        "dataset",
+        "subject_id",
+        "n_images",
+    ]
+
+    if not frames:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    return (
+        pd.concat(
+            frames,
+            ignore_index=True,
+        )
+        .sort_values(
+            [
+                "dataset",
+                "n_images",
+                "subject_id",
+            ],
+            ascending=[
+                True,
+                False,
+                True,
+            ],
+        )
+        .reset_index(drop=True)
+    )
+
+
+def identity_depth_summary(
+    df: pd.DataFrame,
+    identity_counts: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Summarise the number of images per identity for each dataset.
+
+    Datasets without subject IDs remain explicitly represented
+    with analysis_status='subject_id_unavailable'.
+    """
+    support = identity_support_summary(
+        df
+    )
+
+    rows: list[dict] = []
+
+    for _, support_row in support.iterrows():
+
+        dataset = support_row[
+            "dataset"
+        ]
+
+        subset = identity_counts[
+            identity_counts["dataset"]
+            == dataset
+        ]
+
+        if subset.empty:
+
+            rows.append(
+                {
+                    "dataset": dataset,
+                    "analysis_status":
+                        "subject_id_unavailable",
+                    "n_identities": 0,
+                    "n_images_with_identity": 0,
+                    "min_images_per_identity": None,
+                    "q25_images_per_identity": None,
+                    "median_images_per_identity": None,
+                    "mean_images_per_identity": None,
+                    "q75_images_per_identity": None,
+                    "p90_images_per_identity": None,
+                    "p95_images_per_identity": None,
+                    "p99_images_per_identity": None,
+                    "max_images_per_identity": None,
+                    "n_singleton_identities": 0,
+                    "pct_singleton_identities": None,
+                    "n_repeated_identities": 0,
+                    "pct_repeated_identities": None,
+                }
+            )
+
+            continue
+
+        values = subset[
+            "n_images"
+        ].astype(float)
+
+        n_identities = len(
+            subset
+        )
+
+        n_singletons = int(
+            (values == 1).sum()
+        )
+
+        n_repeated = int(
+            (values > 1).sum()
+        )
+
+        rows.append(
+            {
+                "dataset": dataset,
+                "analysis_status":
+                    "identity_distribution_available",
+                "n_identities":
+                    n_identities,
+                "n_images_with_identity":
+                    int(values.sum()),
+                "min_images_per_identity":
+                    int(values.min()),
+                "q25_images_per_identity":
+                    float(values.quantile(0.25)),
+                "median_images_per_identity":
+                    float(values.median()),
+                "mean_images_per_identity":
+                    float(values.mean()),
+                "q75_images_per_identity":
+                    float(values.quantile(0.75)),
+                "p90_images_per_identity":
+                    float(values.quantile(0.90)),
+                "p95_images_per_identity":
+                    float(values.quantile(0.95)),
+                "p99_images_per_identity":
+                    float(values.quantile(0.99)),
+                "max_images_per_identity":
+                    int(values.max()),
+                "n_singleton_identities":
+                    n_singletons,
+                "pct_singleton_identities": (
+                    n_singletons
+                    / n_identities
+                    * 100.0
+                ),
+                "n_repeated_identities":
+                    n_repeated,
+                "pct_repeated_identities": (
+                    n_repeated
+                    / n_identities
+                    * 100.0
+                ),
+            }
+        )
+
+    return (
+        pd.DataFrame(rows)
+        .sort_values("dataset")
+        .reset_index(drop=True)
+    )
+
+
+def identity_depth_distribution(
+    identity_counts: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Exact empirical distribution of images-per-identity.
+
+    Example:
+        n_images_per_identity = 1
+        n_identities = number of singleton identities
+
+    The table also reports the number and percentage of dataset images
+    contributed by each identity-depth level.
+    """
+    columns = [
+        "dataset",
+        "n_images_per_identity",
+        "n_identities",
+        "total_identities",
+        "pct_identities",
+        "images_contributed",
+        "total_images_with_identity",
+        "pct_images_contributed",
+    ]
+
+    if identity_counts.empty:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    distribution = (
+        identity_counts.groupby(
+            [
+                "dataset",
+                "n_images",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename("n_identities")
+        .reset_index()
+        .rename(
+            columns={
+                "n_images":
+                    "n_images_per_identity"
+            }
+        )
+    )
+
+    identity_totals = (
+        identity_counts.groupby(
+            "dataset"
+        )
+        .size()
+        .rename("total_identities")
+        .reset_index()
+    )
+
+    image_totals = (
+        identity_counts.groupby(
+            "dataset"
+        )["n_images"]
+        .sum()
+        .rename(
+            "total_images_with_identity"
+        )
+        .reset_index()
+    )
+
+    distribution = distribution.merge(
+        identity_totals,
+        on="dataset",
+        how="left",
+        validate="many_to_one",
+    )
+
+    distribution = distribution.merge(
+        image_totals,
+        on="dataset",
+        how="left",
+        validate="many_to_one",
+    )
+
+    distribution[
+        "pct_identities"
+    ] = (
+        distribution["n_identities"]
+        / distribution["total_identities"]
+        * 100.0
+    )
+
+    distribution[
+        "images_contributed"
+    ] = (
+        distribution[
+            "n_images_per_identity"
+        ]
+        * distribution[
+            "n_identities"
+        ]
+    )
+
+    distribution[
+        "pct_images_contributed"
+    ] = (
+        distribution[
+            "images_contributed"
+        ]
+        / distribution[
+            "total_images_with_identity"
+        ]
+        * 100.0
+    )
+
+    return (
+        distribution[
+            columns
+        ]
+        .sort_values(
+            [
+                "dataset",
+                "n_images_per_identity",
+            ]
+        )
+        .reset_index(drop=True)
+    )
+
+
+def identity_depth_subgroup_summary(
+    identity_counts: pd.DataFrame,
+    identity_table: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Summarise images-per-identity by demographic subgroup where a
+    consistent identity-level demographic label is available.
+
+    With the current Phase 0 hand-off this may legitimately be empty,
+    because LFW has identity IDs but no demographic annotations.
+    """
+    columns = [
+        "dataset",
+        "field",
+        "category",
+        "n_identities",
+        "n_images",
+        "min_images_per_identity",
+        "q25_images_per_identity",
+        "median_images_per_identity",
+        "mean_images_per_identity",
+        "q75_images_per_identity",
+        "p90_images_per_identity",
+        "max_images_per_identity",
+        "n_singleton_identities",
+        "pct_singleton_identities",
+    ]
+
+    if (
+        identity_counts.empty
+        or identity_table.empty
+    ):
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    labels = identity_table[
+        identity_table["status"]
+        == "consistent"
+    ][
+        [
+            "dataset",
+            "subject_id",
+            "field",
+            "category",
+        ]
+    ].copy()
+
+    if labels.empty:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    merged = labels.merge(
+        identity_counts,
+        on=[
+            "dataset",
+            "subject_id",
+        ],
+        how="inner",
+        validate="many_to_one",
+    )
+
+    rows: list[dict] = []
+
+    for (
+        dataset,
+        field,
+        category,
+    ), group in merged.groupby(
+        [
+            "dataset",
+            "field",
+            "category",
+        ],
+        dropna=False,
+    ):
+
+        values = group[
+            "n_images"
+        ].astype(float)
+
+        n_identities = len(
+            group
+        )
+
+        n_singletons = int(
+            (values == 1).sum()
+        )
+
+        rows.append(
+            {
+                "dataset": dataset,
+                "field": field,
+                "category": category,
+                "n_identities":
+                    n_identities,
+                "n_images":
+                    int(values.sum()),
+                "min_images_per_identity":
+                    int(values.min()),
+                "q25_images_per_identity":
+                    float(values.quantile(0.25)),
+                "median_images_per_identity":
+                    float(values.median()),
+                "mean_images_per_identity":
+                    float(values.mean()),
+                "q75_images_per_identity":
+                    float(values.quantile(0.75)),
+                "p90_images_per_identity":
+                    float(values.quantile(0.90)),
+                "max_images_per_identity":
+                    int(values.max()),
+                "n_singleton_identities":
+                    n_singletons,
+                "pct_singleton_identities": (
+                    n_singletons
+                    / n_identities
+                    * 100.0
+                ),
+            }
+        )
+
+    return (
+        pd.DataFrame(
+            rows,
+            columns=columns,
+        )
+        .sort_values(
+            [
+                "dataset",
+                "field",
+                "category",
+            ]
+        )
+        .reset_index(drop=True)
+    )
+
+
+def identity_depth_subgroup_distribution(
+    identity_counts: pd.DataFrame,
+    identity_table: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Exact images-per-identity distribution within each demographic
+    subgroup where consistent identity-level labels are available.
+    """
+    columns = [
+        "dataset",
+        "field",
+        "category",
+        "n_images_per_identity",
+        "n_identities",
+        "total_identities_in_subgroup",
+        "pct_identities_in_subgroup",
+    ]
+
+    if (
+        identity_counts.empty
+        or identity_table.empty
+    ):
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    labels = identity_table[
+        identity_table["status"]
+        == "consistent"
+    ][
+        [
+            "dataset",
+            "subject_id",
+            "field",
+            "category",
+        ]
+    ].copy()
+
+    if labels.empty:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    merged = labels.merge(
+        identity_counts,
+        on=[
+            "dataset",
+            "subject_id",
+        ],
+        how="inner",
+        validate="many_to_one",
+    )
+
+    counts = (
+        merged.groupby(
+            [
+                "dataset",
+                "field",
+                "category",
+                "n_images",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename("n_identities")
+        .reset_index()
+        .rename(
+            columns={
+                "n_images":
+                    "n_images_per_identity"
+            }
+        )
+    )
+
+    totals = (
+        merged.groupby(
+            [
+                "dataset",
+                "field",
+                "category",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename(
+            "total_identities_in_subgroup"
+        )
+        .reset_index()
+    )
+
+    counts = counts.merge(
+        totals,
+        on=[
+            "dataset",
+            "field",
+            "category",
+        ],
+        how="left",
+        validate="many_to_one",
+    )
+
+    counts[
+        "pct_identities_in_subgroup"
+    ] = (
+        counts["n_identities"]
+        / counts[
+            "total_identities_in_subgroup"
+        ]
+        * 100.0
+    )
+
+    return (
+        counts[
+            columns
+        ]
+        .sort_values(
+            [
+                "dataset",
+                "field",
+                "category",
+                "n_images_per_identity",
+
+            ]
+        )
+        .reset_index(drop=True)
+    )
