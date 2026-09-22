@@ -855,3 +855,522 @@ def audit_flag_summary(
         )
         .reset_index(drop=True)
     )
+
+# =====================================================================
+# REP-002 — Identity-level representation
+# =====================================================================
+
+REP002_DEMOGRAPHIC_FIELDS = [
+    "gender",
+    "race",
+    "age_band",
+]
+
+
+def subject_id_present_mask(
+    series: pd.Series,
+) -> pd.Series:
+    """
+    Return True where a usable subject/identity identifier exists.
+
+    Missing and unknown-like values are treated as unavailable.
+    """
+    reported = normalise_reporting_category(
+        series
+    )
+
+    return ~reported.str.lower().eq(
+        "unknown"
+    )
+
+
+def identity_support_summary(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Summarise identity-ID availability by dataset.
+
+    This function reports what the Phase 0 hand-off contains.
+    It does not infer or manufacture identities.
+    """
+    if "subject_id" not in df.columns:
+        raise KeyError(
+            "Master table does not contain subject_id."
+        )
+
+    rows: list[dict] = []
+
+    for dataset, group in df.groupby(
+        "dataset",
+        dropna=False,
+    ):
+        subject = normalise_reporting_category(
+            group["subject_id"]
+        )
+
+        present = ~subject.str.lower().eq(
+            "unknown"
+        )
+
+        valid_subjects = subject[present]
+
+        counts = valid_subjects.value_counts()
+
+        n_rows = len(group)
+        n_present = int(present.sum())
+        n_missing = n_rows - n_present
+        n_identities = int(
+            valid_subjects.nunique()
+        )
+
+        n_singletons = int(
+            (counts == 1).sum()
+        ) if not counts.empty else 0
+
+        n_repeated = int(
+            (counts > 1).sum()
+        ) if not counts.empty else 0
+
+        max_images = (
+            int(counts.max())
+            if not counts.empty
+            else 0
+        )
+
+        rows.append(
+            {
+                "dataset": dataset,
+                "n_images": n_rows,
+                "n_images_with_subject_id": n_present,
+                "n_images_without_subject_id": n_missing,
+                "pct_images_with_subject_id": (
+                    n_present
+                    / n_rows
+                    * 100.0
+                    if n_rows
+                    else 0.0
+                ),
+                "n_unique_identities": n_identities,
+                "n_singleton_identities": n_singletons,
+                "n_repeated_identities": n_repeated,
+                "max_images_per_identity": max_images,
+                "subject_id_available": (
+                    n_present > 0
+                ),
+                "repeated_identity_structure_present": (
+                    n_repeated > 0
+                ),
+            }
+        )
+
+    return (
+        pd.DataFrame(rows)
+        .sort_values("dataset")
+        .reset_index(drop=True)
+    )
+
+
+def build_identity_attribute_table(
+    df: pd.DataFrame,
+    fields: list[str] | None = None,
+) -> pd.DataFrame:
+    """
+    Construct an in-memory identity-level demographic assessment.
+
+    For each identity and demographic field:
+
+      unavailable:
+          no usable demographic value occurs on any image
+
+      consistent:
+          exactly one non-missing demographic value occurs
+
+      conflicting:
+          more than one non-missing demographic value occurs
+
+    This table is intended as an intermediate analysis object.
+    It does not modify the image-level master table.
+    """
+    if fields is None:
+        fields = REP002_DEMOGRAPHIC_FIELDS
+
+    if "subject_id" not in df.columns:
+        raise KeyError(
+            "Master table does not contain subject_id."
+        )
+
+    rows: list[dict] = []
+
+    for dataset, group in df.groupby(
+        "dataset",
+        dropna=False,
+    ):
+        work = group.copy()
+
+        work["_subject_rep002"] = (
+            normalise_reporting_category(
+                work["subject_id"]
+            )
+        )
+
+        work = work[
+            work["_subject_rep002"]
+            .str.lower()
+            .ne("unknown")
+        ]
+
+        if work.empty:
+            continue
+
+        for subject_id, subject_group in work.groupby(
+            "_subject_rep002",
+            dropna=False,
+        ):
+            n_images = len(
+                subject_group
+            )
+
+            for field in fields:
+
+                if field not in subject_group.columns:
+                    continue
+
+                values = (
+                    normalise_reporting_category(
+                        subject_group[field]
+                    )
+                )
+
+                observed = (
+                    values[
+                        values
+                        .str.lower()
+                        .ne("unknown")
+                    ]
+                    .drop_duplicates()
+                    .tolist()
+                )
+
+                if len(observed) == 0:
+                    status = "unavailable"
+                    category = "unknown"
+
+                elif len(observed) == 1:
+                    status = "consistent"
+                    category = observed[0]
+
+                else:
+                    status = "conflicting"
+                    category = "conflicting"
+
+                rows.append(
+                    {
+                        "dataset": dataset,
+                        "subject_id": subject_id,
+                        "field": field,
+                        "n_images_for_identity": n_images,
+                        "status": status,
+                        "category": category,
+                        "n_unique_observed_values": len(
+                            observed
+                        ),
+                    }
+                )
+
+    columns = [
+        "dataset",
+        "subject_id",
+        "field",
+        "n_images_for_identity",
+        "status",
+        "category",
+        "n_unique_observed_values",
+    ]
+
+    if not rows:
+        return pd.DataFrame(
+            columns=columns
+        )
+
+    return pd.DataFrame(
+        rows,
+        columns=columns,
+    )
+
+
+def identity_demographic_availability(
+    df: pd.DataFrame,
+    identity_table: pd.DataFrame,
+    fields: list[str] | None = None,
+) -> pd.DataFrame:
+    """
+    Summarise whether demographic identity-level composition
+    can actually be estimated.
+
+    Datasets without subject IDs remain explicitly represented.
+    """
+    if fields is None:
+        fields = REP002_DEMOGRAPHIC_FIELDS
+
+    support = identity_support_summary(
+        df
+    )
+
+    rows: list[dict] = []
+
+    for _, support_row in support.iterrows():
+
+        dataset = support_row["dataset"]
+
+        n_identities = int(
+            support_row[
+                "n_unique_identities"
+            ]
+        )
+
+        for field in fields:
+
+            if n_identities == 0:
+
+                rows.append(
+                    {
+                        "dataset": dataset,
+                        "field": field,
+                        "n_total_identities": 0,
+                        "n_consistent": 0,
+                        "n_unavailable": 0,
+                        "n_conflicting": 0,
+                        "pct_consistent": None,
+                        "pct_unavailable": None,
+                        "pct_conflicting": None,
+                        "analysis_status":
+                            "subject_id_unavailable",
+                    }
+                )
+
+                continue
+
+            subset = identity_table[
+                (identity_table["dataset"] == dataset)
+                & (identity_table["field"] == field)
+            ]
+
+            n_consistent = int(
+                (subset["status"] == "consistent")
+                .sum()
+            )
+
+            n_unavailable = int(
+                (subset["status"] == "unavailable")
+                .sum()
+            )
+
+            n_conflicting = int(
+                (subset["status"] == "conflicting")
+                .sum()
+            )
+
+            total_checked = (
+                n_consistent
+                + n_unavailable
+                + n_conflicting
+            )
+
+            if total_checked != n_identities:
+                raise ValueError(
+                    f"Identity accounting mismatch for "
+                    f"{dataset}/{field}: "
+                    f"{total_checked} != {n_identities}"
+                )
+
+            if n_consistent == n_identities:
+                analysis_status = (
+                    "fully_available"
+                )
+
+            elif n_consistent > 0:
+                analysis_status = (
+                    "partially_available"
+                )
+
+            else:
+                analysis_status = (
+                    "demographic_label_unavailable"
+                )
+
+            rows.append(
+                {
+                    "dataset": dataset,
+                    "field": field,
+                    "n_total_identities": n_identities,
+                    "n_consistent": n_consistent,
+                    "n_unavailable": n_unavailable,
+                    "n_conflicting": n_conflicting,
+                    "pct_consistent": (
+                        n_consistent
+                        / n_identities
+                        * 100.0
+                    ),
+                    "pct_unavailable": (
+                        n_unavailable
+                        / n_identities
+                        * 100.0
+                    ),
+                    "pct_conflicting": (
+                        n_conflicting
+                        / n_identities
+                        * 100.0
+                    ),
+                    "analysis_status":
+                        analysis_status,
+                }
+            )
+
+    return pd.DataFrame(
+        rows
+    ).sort_values(
+        [
+            "dataset",
+            "field",
+        ]
+    ).reset_index(
+        drop=True
+    )
+
+
+def identity_demographic_composition(
+    identity_table: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Calculate identity-level demographic composition only
+    from identities with one consistent observed label.
+
+    Both labelled-identity and all-identity denominators
+    are retained.
+
+    Current LFW results may legitimately be empty if the
+    Phase 0 hand-off contains no demographic annotations.
+    """
+    output_columns = [
+        "dataset",
+        "field",
+        "category",
+        "n_identities",
+        "n_consistently_labelled_identities",
+        "n_total_identities",
+        "pct_of_labelled_identities",
+        "pct_of_all_identities",
+    ]
+
+    if identity_table.empty:
+        return pd.DataFrame(
+            columns=output_columns
+        )
+
+    totals = (
+        identity_table.groupby(
+            [
+                "dataset",
+                "field",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename(
+            "n_total_identities"
+        )
+        .reset_index()
+    )
+
+    labelled = identity_table[
+        identity_table["status"]
+        == "consistent"
+    ].copy()
+
+    if labelled.empty:
+        return pd.DataFrame(
+            columns=output_columns
+        )
+
+    labelled_totals = (
+        labelled.groupby(
+            [
+                "dataset",
+                "field",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename(
+            "n_consistently_labelled_identities"
+        )
+        .reset_index()
+    )
+
+    counts = (
+        labelled.groupby(
+            [
+                "dataset",
+                "field",
+                "category",
+            ],
+            dropna=False,
+        )
+        .size()
+        .rename(
+            "n_identities"
+        )
+        .reset_index()
+    )
+
+    counts = counts.merge(
+        labelled_totals,
+        on=[
+            "dataset",
+            "field",
+        ],
+        how="left",
+        validate="many_to_one",
+    )
+
+    counts = counts.merge(
+        totals,
+        on=[
+            "dataset",
+            "field",
+        ],
+        how="left",
+        validate="many_to_one",
+    )
+
+    counts[
+        "pct_of_labelled_identities"
+    ] = (
+        counts["n_identities"]
+        / counts[
+            "n_consistently_labelled_identities"
+        ]
+        * 100.0
+    )
+
+    counts[
+        "pct_of_all_identities"
+    ] = (
+        counts["n_identities"]
+        / counts["n_total_identities"]
+        * 100.0
+    )
+
+    return (
+        counts[
+            output_columns
+        ]
+        .sort_values(
+            [
+                "dataset",
+                "field",
+                "category",
+            ]
+        )
+        .reset_index(drop=True)
+    )
