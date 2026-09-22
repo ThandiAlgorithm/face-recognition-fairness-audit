@@ -97,3 +97,6 @@ Thumbs.db
 *.out
 *.synctex.gz
 *.toc
+
+# Generated REP report pack
+results/representation/report_pack/*
