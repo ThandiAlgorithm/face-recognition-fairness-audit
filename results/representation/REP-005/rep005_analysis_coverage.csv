@@ -1,0 +1,7 @@
+dataset,subgroup_axis,n_total_images,n_eligible_demographic,n_binary_target_known,n_subgroup_known,n_complete_cases,n_target_unknown_among_eligible,n_subgroup_unknown_among_eligible,analysis_status
+fairface,age,97698,97698,97698,97698,97698,0,0,available
+fairface,race,97698,97698,97698,97698,97698,0,0,available
+lfw,age,13233,0,0,0,0,0,0,no_eligible_demographic_rows
+lfw,race,13233,0,0,0,0,0,0,no_eligible_demographic_rows
+utkface,age,24108,24104,24104,24104,24104,0,0,available
+utkface,race,24108,24104,24104,24104,24104,0,0,available

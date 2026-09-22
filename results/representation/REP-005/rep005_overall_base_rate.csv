@@ -1,0 +1,4 @@
+dataset,target_field,positive_class,n,n_y1,n_y0,base_rate_raw,base_rate_pct_raw,base_rate_reported,base_rate_pct_reported,thin_cell,low_confidence,reporting_status,analysis_status
+fairface,gender,female,97698,45920,51778,0.47001985711068806,47.001985711068805,0.47001985711068806,47.001985711068805,False,False,reportable,available
+lfw,gender,female,0,0,0,,,,,False,False,not_available,no_eligible_demographic_rows
+utkface,gender,female,24104,11522,12582,0.4780119482243611,47.80119482243611,0.4780119482243611,47.80119482243611,False,False,reportable,available
