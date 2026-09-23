@@ -1,39 +1,152 @@
-# Limitations draft
+# Phase 0 methodology limitations
 
-Running notes on methodology limitations, to be incorporated into the final report. Each entry records the limitation and which decision/section it traces back to.
+These limitations describe the completed Phase 0 pipeline.
+Historical pilot implementations are distinguished from the
+final implementation.
 
-## LFW: original vs. deep-funneled
+## LFW: original unaligned images
 
-LFW is processed from the original unaligned images so that the detection and alignment stage can be audited. Most published LFW results use the deep-funneled variant, so accuracy figures here are not directly comparable to those in the literature.
+The canonical LFW source is the original unaligned variant,
+not the deep-funneled variant. Results are not automatically
+comparable with studies using different LFW preprocessing
+variants.
 
-**Source:** Task 2 (data-preparation pipeline), 2026-09-15. Original archive downloaded via a Figshare mirror after the official `vis-www.cs.umass.edu` host failed to resolve from this network on both 2026-09-14 and 2026-09-15; checksum verified against the official MD5 documented in `torchvision.datasets.lfw` (see `metadata/acquisition_manifest.csv`).
+The original LFW archive was obtained through a Figshare
+mirror. Its MD5 was verified against the checksum documented
+by torchvision, and its actual SHA-256 is pinned in the
+acquisition and preprocessing records.
 
-## LFW: pre-filtered by Viola-Jones, in either variant
+## LFW: prior face-detection filtering
 
-LFW was constructed by retaining only images in which the Viola-Jones detector found a face. Detection failure rates measured on LFW are therefore conditioned on prior successful detection and cannot be read as detector performance. Switching to the original unaligned variant removes a second, deep-funneling alignment pass but does not remove this filtering. The cross-dataset detection comparison is therefore reported on FairFace and UTKFace, which were not filtered this way; LFW detection results are reported separately with this caveat attached.
+LFW was originally constructed using a face-detection
+selection process. Consequently, RetinaFace detection
+outcomes measured on LFW describe this selected image
+population, not performance on arbitrary photographs.
 
-**Source:** Task 2 code review (data-preparation pipeline), 2026-09-15.
+The project reports LFW and UTKFace detector outcomes
+separately, with this limitation attached to LFW.
 
-## Section 12 pilot briefly used SCRFD, not RetinaFace (superseded)
+FairFace cannot be included in the project RetinaFace
+detection-failure denominator, because its images were not
+processed by the project detector.
 
-GOV-006 specifies `model_ref: retinaface`. For a short while the Section 12 pilot ran on InsightFace's `buffalo_sc` pack instead, whose detector is SCRFD, not RetinaFace. This was a practical substitution while the environment was on Python 3.14 (no TensorFlow/PyTorch wheels available at all). Once the venv was rebuilt on Python 3.11 and the user installed the real `retina-face` package by hand, the pilot switched over to actual RetinaFace. This entry is kept for the record; see `configs/GOV-008_models.yaml` checkpoint `detection_pilot_scrfd_superseded`.
+## Final dataset-specific preprocessing
 
-## RetinaFace only runs on genuinely raw images
+LFW: original unaligned images.
 
-FairFace and UTKFace are both already publisher-cropped to tight face-only crops (confirmed in section 1). RetinaFace is trained on natural scene photos and barely detects anything on these crops even at very low confidence thresholds, while it detects LFW's original (raw) photos cleanly at 0.99+ confidence. Rather than force FairFace/UTKFace through the detector by dropping the threshold until something appears (which would just be a second, undocumented preprocessing stage stacked on the publisher's own crop), the pilot only runs RetinaFace on LFW. FairFace and UTKFace get a supplied-crop validation pass instead and go straight into feature engineering on the crop as given.
+UTKFace: in-the-wild images, not the aligned or crop_part1
+variants.
 
-## RetinaFace model-build bug found and fixed
+Both datasets underwent EXIF-orientation and colour handling,
+followed by project-native PyTorch RetinaFace using the
+MobileNetV1 0.25 backbone. The configured detection threshold
+was 0.90. All detections were retained in the diagnostics;
+the primary face was selected by largest bounding-box area,
+with confidence as the tie-breaker.
 
-`retina-face` needs the legacy `tf.keras` behaviour, but TensorFlow 2.16+ defaults to Keras 3. If tensorflow gets imported anywhere before that's sorted out, model building fails with a `KerasTensor cannot be used as input to a TensorFlow function` error, on every single call, not just sometimes. First found this because `get_model_info()` did a plain `import tensorflow as tf` to log the version, before the first real detection call.
+Successful primary detections were aligned using five
+landmarks and a similarity transformation to produce
+224 x 224 images. The transformation was preserved.
 
-The proper fix: `os.environ.setdefault("TF_USE_LEGACY_KERAS", "1")` at the very top of `src/detection.py`, before tensorflow can be imported by anything, plus a `_check_retinaface_runtime()` guard that raises loudly if tensorflow somehow got imported first anyway (only fix at that point is restarting the kernel). Package versions get read via `importlib.metadata` rather than a real import, since importing tensorflow just to check its version is the exact mistake that breaks everything. Worth remembering if this resurfaces on the Wits cluster with a different TensorFlow version.
+FairFace: official publisher-preprocessed dlib face chips
+with padding 0.25. These images were used directly.
+Project RetinaFace was not run on FairFace.
 
-**Source:** Section 12 pilot (data-preparation pipeline), 2026-09-17.
+These different source-processing routes limit direct
+cross-dataset comparisons of detector outcomes.
 
-## image_id format and master table path drifted from GOV-005 (open, needs a decision)
+## Historical detector implementations
 
-`docs/GOV-005_data_dictionary.md` specifies `image_id = "<DATASET>-" + sha256(dataset_version + "|" + original_path)[:16]`, written to a single `metadata/master_annotations.parquet`. The implementation in `src/master_table.py` (`stable_image_id`) instead hashes `dataset::relative_path` with plain sha256, no dataset prefix, no truncation, and writes three files (`data/processed/master_annotations_base.parquet`, `_pilot.parquet`, `_features.parquet`) rather than one. `dataset_version` as named in GOV-005 does not exist anywhere in the codebase; it was never built as a real manifest field.
+An early pilot briefly used SCRFD. Later intermediate work
+used TensorFlow RetinaFace and a PyTorch wrapper. Those
+implementations were superseded.
 
-Neither GOV-005 nor GOV-006 has a filled-in `frozen_date`, so nothing has been broken that was actually locked, but the two disagree and one needs to change. Not resolved yet; flagged here rather than fixed silently in either direction, since 134,639 already-generated `image_id` values would change if the code moves to match the doc.
+The completed Phase 0 implementation uses project-native
+PyTorch RetinaFace with the MobileNetV1 0.25 backbone.
 
-**Source:** Reconciliation check requested by user, 2026-09-18.
+Historical TensorFlow/Keras compatibility problems do not
+describe a dependency of the final detector. The changes
+are traceable in AMEND-20260919-01.
+
+The final checkpoint passed strict state-dictionary loading
+and a forward-pass test. Its SHA-256 and file size are
+verified against the current configuration.
+
+## Stable identifiers and row retention
+
+The completed master uses the canonical GOV-005 identifier
+formula, with the dataset prefix and the first 16 characters
+of SHA-256(dataset_version + "|" + original_path).
+
+The master contains 135,039 unique image IDs. Corrupt
+images, failed detections and invalid measurements retain
+their rows and recorded outcomes.
+
+## Final detection and alignment outcomes
+
+Of the 37,341 canonical LFW and UTKFace images, 15 UTKFace
+images were corrupt and retained without inference.
+
+RetinaFace inference succeeded on all 37,326 eligible raw
+images. It returned zero faces for 39 images. The other
+37,287 images received valid project alignments.
+
+Together with 97,698 publisher-preprocessed FairFace
+images, the final master records 134,985 valid alignments.
+
+All 60 sampled production alignments passed visual QA.
+This sample result does not establish that every production
+alignment has been individually inspected.
+
+## Skin-measurement limitations
+
+Valid skin ROIs were recorded for 128,538 images.
+
+There were 4,738 invalid ROIs due to greyscale or
+insufficient chroma and 1,709 additional invalid ROIs.
+
+Another 54 images had no skin-ROI measurement:
+39 no-detection cases and 15 corrupt images.
+
+Invalid or unavailable skin measurements remain recorded
+as such. Skin-tone proxies are measurements, not
+ground-truth demographic identities or accuracy measures.
+
+## Source-archive availability
+
+The actual LFW archive is retained and its SHA-256 verified.
+
+The original FairFace and UTKFace archives are unavailable
+on the project machine. Their extracted dataset versions
+and provenance are documented, but an original-archive
+checksum verification cannot be claimed for them.
+
+## Duplicate-review limitations
+
+The 4,513 strong-evidence duplicate pairs were fully
+reviewed.
+
+The weak-evidence review contains the documented
+30,328-pair population and its reproducible, seed-26041
+sample of 1,000 pairs. The 29,328 unsampled pairs retain
+candidate status.
+
+A further 2,755 weak-evidence pairs were marked
+false_alarm in a pre-stratification bulk review. Their
+journal entries are traceable. The acceptability of that
+review method remains subject to the pending protocol
+decision documented in AMEND-20260922-01.
+
+Sampling evidence must not be interpreted as individual
+review of the 29,328 remaining candidates.
+
+## FairFace publisher-split overlap
+
+The duplicate audit identified 21 exact-duplicate groups
+and 72 confirmed near-duplicate groups crossing FairFace's
+official publisher train/validation split.
+
+The publisher's split was preserved rather than silently
+modified. This overlap must be considered when interpreting
+subsequent validation results and designing evaluation
+safeguards.

@@ -59,16 +59,32 @@ datasets:
 archives:
   - dataset: lfw
     variant: original_unaligned
-    path: data/archives/lfw.tgz
-    sha256: FILL
+    path: data/LFW/lfw_original.tgz
+    sha256: 055f7d9c632d7370e6fb4afc7468d40f970c34a80d4c6f50ffec63f5a8d536c0
+    md5: a17d05bd522c52d84eca14327a23d494
+    provenance_record: metadata/acquisition_manifest.csv
   - dataset: fairface
     variant: publisher_dlib_get_face_chip_padding_0.25
-    path: data/archives/fairface_train_val.zip
-    sha256: FILL
+    path: null
+    sha256: null
+    provenance_status: archive_not_available
+    provenance_note: >
+      No original archive file exists anywhere on this machine, only the
+      already-extracted train/val image folders. Searched the project
+      directory, Downloads, and home directory; found extracted copies
+      only, never the source zip. Documented as a recorded provenance
+      limitation, not fabricated.
   - dataset: utkface
     variant: in_the_wild
-    path: data/archives/utkface_in_the_wild.zip
-    sha256: FILL
+    path: null
+    sha256: null
+    provenance_status: archive_not_available
+    provenance_note: >
+      No original archive file exists anywhere on this machine, only the
+      already-extracted in-the-wild part1/part2/part3 folders. Searched
+      the project directory, Downloads, and home directory; found
+      extracted copies only, never the source zip. Documented as a
+      recorded provenance limitation, not fabricated.
 
 raw_data:
   read_only: true

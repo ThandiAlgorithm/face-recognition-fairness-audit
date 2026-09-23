@@ -225,21 +225,29 @@ def check_archives(preprocessing_cfg: dict) -> pd.DataFrame:
     rows = []
     archives = preprocessing_cfg.get("archives", [])
     for item in archives:
-        path = paths.PROJECT_ROOT / item["path"]
+        raw_path = item.get("path")
         expected = item.get("sha256")
-        exists = path.exists()
+
+        if raw_path is None:
+            path = None
+            exists = False
+        else:
+            path = paths.PROJECT_ROOT / raw_path
+            exists = path.exists()
+
         actual = sha256_file(path) if exists else None
         pinned = bool(expected and expected not in {"FILL", "TODO", "unknown"})
         rows.append(
             {
                 "dataset": item["dataset"],
                 "variant": item["variant"],
-                "archive_path": item["path"],
+                "archive_path": raw_path,
                 "exists": exists,
                 "expected_sha256": expected,
                 "actual_sha256": actual,
                 "checksum_pinned": pinned,
                 "checksum_matches": bool(exists and pinned and actual == expected),
+                "provenance_status": item.get("provenance_status", "archive_pinned"),
             }
         )
     return pd.DataFrame(rows)
