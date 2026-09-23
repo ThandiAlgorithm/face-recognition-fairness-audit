@@ -1,0 +1,29 @@
+{
+  "python_executable": "C:\\Users\\User1\\AppData\\Local\\Programs\\Python311\\python.exe",
+  "python_version": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "libraries": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "statsmodels": null,
+    "scikit_learn": "1.9.1",
+    "scikit_image": "0.26.0",
+    "pillow": "12.3.0",
+    "opencv": "5.0.0.93",
+    "face_detection": null,
+    "torch": "2.14.0",
+    "torchvision": "0.29.0",
+    "tensorflow": "2.21.0",
+    "tf_keras": "2.21.0",
+    "retina_face": "0.0.18",
+    "imagehash": "4.3.2",
+    "fairlearn": null,
+    "aif360": null
+  },
+  "torch_cuda_available": false,
+  "torch_cuda_version": null,
+  "torch_device_count": 0
+}

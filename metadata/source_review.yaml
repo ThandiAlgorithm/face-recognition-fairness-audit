@@ -1,0 +1,39 @@
+lfw:
+  official_source_reviewed: true
+  errata_reviewed: true
+  identity_metadata_reviewed: true
+  notes: >
+    Canonical variant is the original unaligned LFW image set.
+    LFW source documentation and protocol metadata were reviewed.
+    The published LFW errata documents known identity and pair-label errors.
+    The dataset is intentionally retained as originally released rather than
+    correcting those errors, to preserve compatibility with the published
+    evaluation protocol. Known errata therefore remain present and are
+    documented rather than modified.
+
+fairface:
+  official_source_reviewed: true
+  errata_reviewed: true
+  identity_metadata_reviewed: true
+  notes: >
+    Official FairFace release reviewed.
+    Main released images are publisher-preprocessed using dlib get_face_chip
+    with padding 0.25.
+    Train and validation demographic labels are provided.
+    No subject identity metadata is provided for project use, so identity
+    metadata review is complete as not applicable.
+
+utkface:
+  official_source_reviewed: true
+  errata_reviewed: true
+  identity_metadata_reviewed: true
+  notes: >
+    Official UTKFace release reviewed.
+    Canonical project variant is In-the-wild Faces.
+    Aligned and cropped faces are a separate publisher-provided variant and
+    are not canonical for this project.
+    Age, gender and race are encoded in the filename.
+    Four malformed filenames were retained as parse failures.
+    Fifteen truncated JPEGs were retained as corrupt source rows.
+    No subject identity metadata is provided, so identity metadata review is
+    complete as not applicable.
