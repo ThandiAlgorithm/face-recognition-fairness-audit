@@ -1,97 +1,19 @@
 meta:
-  issue: GOV-006
-  version: 1.0.1
-  frozen: false
-  frozen_date: null
-  frozen_commit: null
-  approved_by: []
-
-datasets:
-  lfw:
-    dataset_version: lfw-original-unaligned-v1
-    variant: original_unaligned
-    root: LFW
-    image_roots:
-      - LFW/lfw/lfw
-    label_files:
-      - LFW/people.csv
-      - LFW/pairs.csv
-    archive_version: original_lfw
-    source_preprocessed: false
-    project_detection_required: true
-    project_alignment_required: true
-    forbidden_path_tokens: [funneled, deepfunneled]
-
-  fairface:
-    dataset_version: fairface-train-val-padding025-v1
-    variant: publisher_dlib_get_face_chip_padding_0.25
-    root: FairFace
-    image_roots:
-      - FairFace/train
-      - FairFace/val
-    label_files:
-      - FairFace/train_labels.csv
-      - FairFace/val_labels.csv
-    labels:
-      - {path: FairFace/train_labels.csv, split: train}
-      - {path: FairFace/val_labels.csv, split: val}
-    archive_version: official_train_val_labelled
-    source_preprocessed: true
-    project_detection_required: false
-    project_alignment_required: false
-    forbidden_path_tokens: []
-
-  utkface:
-    dataset_version: utkface-in-the-wild-v1
-    variant: in_the_wild
-    root: UTKFace
-    image_roots:
-      - UTKFace/in_the_wild/part1
-      - UTKFace/in_the_wild/part2
-      - UTKFace/in_the_wild/part3
-    label_files: []
-    archive_version: official_in_the_wild
-    source_preprocessed: false
-    project_detection_required: true
-    project_alignment_required: true
-    forbidden_path_tokens: [aligned, cropped, crop_part1, chip]
-
-archives:
-  - dataset: lfw
-    variant: original_unaligned
-    path: data/LFW/lfw_original.tgz
-    sha256: 055f7d9c632d7370e6fb4afc7468d40f970c34a80d4c6f50ffec63f5a8d536c0
-    md5: a17d05bd522c52d84eca14327a23d494
-    provenance_record: metadata/acquisition_manifest.csv
-  - dataset: fairface
-    variant: publisher_dlib_get_face_chip_padding_0.25
-    path: null
-    sha256: null
-    provenance_status: archive_not_available
-    provenance_note: >
-      No original archive file exists anywhere on this machine, only the
-      already-extracted train/val image folders. Searched the project
-      directory, Downloads, and home directory; found extracted copies
-      only, never the source zip. Documented as a recorded provenance
-      limitation, not fabricated.
-  - dataset: utkface
-    variant: in_the_wild
-    path: null
-    sha256: null
-    provenance_status: archive_not_available
-    provenance_note: >
-      No original archive file exists anywhere on this machine, only the
-      already-extracted in-the-wild part1/part2/part3 folders. Searched
-      the project directory, Downloads, and home directory; found
-      extracted copies only, never the source zip. Documented as a
-      recorded provenance limitation, not fabricated.
+  source_issue: GOV-006
+  version: 1.1.0
+  frozen: true
+  frozen_date: 2026-09-17
+  frozen_commit: 6a5bef9ff727c793f0e710231d98118ceffaab7d
+  approved_by: RZ and TM
 
 raw_data:
   read_only: true
   never_overwrite_source: true
+  manifest_fields: [dataset, dataset_version, original_path, file_size_bytes, file_sha256, archive_sha256]
 
 integrity:
   open_every_file: true
+  record_before_conversion: [width_px, height_px, original_mode, image_format, colour_profile]
   exif_orientation:
     apply: true
     stage: before_detection
@@ -103,68 +25,49 @@ colour:
   lab_illuminant: D65
   lab_observer: "2deg"
   library: skimage.color.rgb2lab
+  library_version_pinned_in: configs/models.yaml
   profile_policy:
     if_profile_present: convert_to_sRGB
     if_profile_absent: assume_sRGB_and_flag
     flag_field: colour_profile_assumed
 
 greyscale:
-  detect_by: [original_mode_is_L, mean_lab_chroma_within_tolerance]
+  detect_by: [original_mode_is_L, chroma_below_tolerance]
   chroma_tolerance: 2.0
-  sample_max_pixels: 10000
-  sample_seed: 26041
   eligible_for_non_colour_analyses: true
   eligible_for_skin_colour_audit: false
   replicate_grey_channel_to_rgb: false
 
-detector:
-  name: RetinaFace
-  implementation: project_native
-  framework: pytorch
-  package: none
-  backbone: mobilenet0.25
-  checkpoint: mobilenet0.25_Final.pth
-  checkpoint_sha256: 2979b33ffafda5d74b6948cd7a5b9a7a62f62b949cef24e95fd15d2883a65220
-  confidence_threshold: 0.90
-  nms_threshold: 0.40
-  top_k: 5000
-  keep_top_k: 750
-  resize: 1.0
-  preserve_all_detections: true
-  primary_face_rule: largest_bbox_then_confidence
+detection:
+  model_ref: retinaface
+  input: exif_oriented_image
+  store_all_detections: true
+  store_zero_detection_events: true
+  primary_face_rule:
+    first: largest_bbox_area
+    tie_break: highest_confidence
+    manual_override_allowed: false
+    manual_override_requires: protocol_amendment_and_logged_override
 
 alignment:
   landmarks: 5
   transform: similarity
-  output_size: 224
-  canonical_landmark_fractions:
-    - [0.35, 0.35]
-    - [0.65, 0.35]
-    - [0.50, 0.52]
-    - [0.38, 0.72]
-    - [0.62, 0.72]
+  output_size_px: 224
+  canonical_landmark_positions: [[0.35, 0.35], [0.65, 0.35], [0.50, 0.52], [0.38, 0.72], [0.62, 0.72]]
   store_transform: true
   interpolation: bilinear
-
-visual_measures:
-  brightness: mean_cielab_l_star
-  contrast: std_cielab_l_star
-  sharpness: variance_of_laplacian
-  aligned_valid_pixel_mask: true
 
 skin_measurement:
   stage: after_alignment_before_any_augmentation
   computed_on: aligned_crop
-  roi_method: fixed_patches_on_aligned_crop_with_chroma_filter
-  roi_patches:
-    forehead: {x: [0.40, 0.60], y: [0.18, 0.28]}
-    cheek_left: {x: [0.22, 0.36], y: [0.48, 0.62]}
-    cheek_right: {x: [0.64, 0.78], y: [0.48, 0.62]}
-  roi_skin_filter:
-    space: YCbCr
-    cb_range: [77, 127]
-    cr_range: [133, 173]
+  roi_method: null
+  roi_method_status: deferred_to_MEA-001_decision_gate
+  roi_method_note: "Handbook requires one deterministic method, exact geometry, erosion/outlier handling and invalid-ROI rule to be frozen and visually validated before MEA-002. Do not silently invent it here."
   roi_min_valid_pixels: 200
+  store_once: [L_star, a_star, b_star]
+  derive_from_stored: [ITA, hue_angle]
+  ita_formula: "arctan((L_star - 50) / b_star) * 180 / pi"
+  hue_formula: "degrees(atan2(b_star, a_star)) mod 360"
   ita_guard:
     b_star_min_abs: 1.0
     on_guard_trip: set_ita_null_and_flag
@@ -173,39 +76,43 @@ skin_measurement:
 augmentation:
   audit_datasets: [lfw, fairface, utkface]
   photometric_augmentation_before_measurement: false
+  forbidden_before_measurement: [brightness_jitter, contrast_jitter, colour_jitter, hue_jitter, saturation_jitter]
+
+soft_attributes:
+  model_ref: celeba_attribute_classifier
+  store: probabilities
+  excluded_from_skin_tone_use: [Pale_Skin]
 
 splits:
-  lock_before_any_development_analysis: true
+  lock_before_any_confirmatory_or_model_development_analysis: true
+  exploratory_phase0_qa_allowed: true
+  exploratory_phase0_qa_must_be_rerun_after_split_lock: true
   lfw:
-    image_level_split: none
     view1: development
     view2: sealed_until_final_reporting
-    view2_access_requires: GOV-010_amendment
+    view2_access_requires: protocol_amendment
   fairface: official_train_val
   utkface:
     method: deterministic_project_split
     seed: 26041
-    fractions: {train: 0.70, val: 0.15, test: 0.15}
-    committed_file: metadata/utkface_split.csv
+    committed_file: manifests/splits/utkface_split.csv
 
-duplicates:
-  exact:
-    method: sha256
-  near:
-    action: flag_for_review
-    phash_size: 8
-    phash_hamming_threshold: 6
-    crop_resistant:
-      limit_segments: 8
-      min_segment_size: 500
-      segmentation_image_size: 300
-      segment_hamming_cutoff: 4
-      region_cutoff: 2
-  cross_dataset:
-    include_exact: true
-    include_perceptual: true
-
-alignment_qa:
-  seed: 26041
-  per_dataset: 30
-  required_status: pass
+stage_order:
+  1: read_raw_archive
+  2: build_file_manifest
+  3: decode_and_integrity_check
+  4: apply_exif_orientation
+  5: colour_handling
+  6: parse_native_labels
+  7: duplicate_checks
+  8: create_stable_image_id
+  9: write_master_row
+  10: lock_splits
+  11: run_detection
+  12: resolve_primary_face
+  13: align
+  14: visual_measures
+  15: skin_colour
+  16: soft_attributes
+  17: build_derived_tables
+  18: statistical_audit
