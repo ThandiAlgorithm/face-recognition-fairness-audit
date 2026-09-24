@@ -1,11 +1,11 @@
-# REP-002 — Identity-Level Representation Audit
+﻿# REP-002 â€” Identity-Level Representation Audit
 
 ## Status
 
 These results are provisional Phase 1 representation-audit outputs generated
 from the Phase 0 snapshot at commit:
 
-`99efe8f`
+`f072db1c5906690a6ff10b711ccc5b42f8585037`
 
 They must be regenerated and revalidated against the final canonical Phase 0
 hand-off once it is merged into `main`.
@@ -58,4 +58,3 @@ Run:
 ```powershell
 python run_rep002.py `
     --master "<path-to-master_annotations.parquet>"
-    

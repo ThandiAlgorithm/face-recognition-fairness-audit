@@ -1,4 +1,4 @@
-# REP-001 — Image-Level Representation Audit
+﻿# REP-001 â€” Image-Level Representation Audit
 
 ## Status
 
@@ -16,7 +16,7 @@ Phase 0 source branch:
 
 Phase 0 source commit:
 
-`99efe8f`
+`f072db1c5906690a6ff10b711ccc5b42f8585037`
 
 Source commit message:
 
@@ -24,7 +24,7 @@ Source commit message:
 
 Input master table snapshot:
 
-`master_annotations_99efe8f.parquet`
+`metadata/master_annotations.parquet`
 
 Master-table dimensions:
 
@@ -59,4 +59,3 @@ Run:
 ```powershell
 python run_rep001.py `
     --master "<path-to-master_annotations.parquet>"
-    
