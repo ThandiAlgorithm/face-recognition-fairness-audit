@@ -1,0 +1,17 @@
+dataset,intersection,cell_label,gender,race,age_band_harmonised,n_images,dataset_eligible_n,percentage,percentage_reported,suppress_below,low_confidence_below,thin_cell,low_confidence,reporting_status
+fairface,gender_x_age,gender=female | age_band_harmonised=0-19,female,,0-19,11651,97698,11.925525599295788,11.925525599295788,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=20-39,female,,20-39,25533,97698,26.134618927716026,26.134618927716026,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=40-59,female,,40-59,7085,97698,7.251939650760507,7.251939650760507,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=60+,female,,60+,1651,97698,1.689901533296485,1.689901533296485,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=0-19,male,,0-19,12388,97698,12.679891092959938,12.679891092959938,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=20-39,male,,20-39,24945,97698,25.532764232635262,25.532764232635262,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=40-59,male,,40-59,12036,97698,12.319597125836761,12.319597125836761,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=60+,male,,60+,2409,97698,2.4657618374992323,2.4657618374992323,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=0-19,female,,0-19,2635,24104,10.931795552605376,10.931795552605376,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=20-39,female,,20-39,6354,24104,26.36076999668105,26.36076999668105,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=40-59,female,,40-59,1367,24104,5.671257882509127,5.671257882509127,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=60+,female,,60+,1166,24104,4.837371390640557,4.837371390640557,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=0-19,male,,0-19,2254,24104,9.351145038167939,9.351145038167939,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=20-39,male,,20-39,5556,24104,23.0501161632924,23.0501161632924,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=40-59,male,,40-59,3191,24104,13.238466644540326,13.238466644540326,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=60+,male,,60+,1581,24104,6.559077331563226,6.559077331563226,30,100,False,False,reportable

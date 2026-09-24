@@ -1,0 +1,25 @@
+dataset,intersection,cell_label,gender,race,age_band_harmonised,n_images,dataset_eligible_n,percentage,percentage_reported,suppress_below,low_confidence_below,thin_cell,low_confidence,reporting_status
+fairface,gender_x_race,gender=female | race=Black,female,Black,,6894,97698,7.056439231099921,7.056439231099921,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=East Asian,female,East Asian,,6914,97698,7.076910479231918,7.076910479231918,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Indian,female,Indian,,6672,97698,6.829208376834736,6.829208376834736,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Latino_Hispanic,female,Latino_Hispanic,,7545,97698,7.722778357796475,7.722778357796475,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Middle Eastern,female,Middle Eastern,,3243,97698,3.3194128846035746,3.3194128846035746,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Southeast Asian,female,Southeast Asian,,5863,97698,6.001146389895392,6.001146389895392,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=White,female,White,,8789,97698,8.99608999160679,8.99608999160679,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Black,male,Black,,6895,97698,7.057462793506521,7.057462793506521,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=East Asian,male,East Asian,,6923,97698,7.086122540891318,7.086122540891318,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Indian,male,Indian,,7163,97698,7.3317775184753025,7.3317775184753025,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Latino_Hispanic,male,Latino_Hispanic,,7445,97698,7.620422117136481,7.620422117136481,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Middle Eastern,male,Middle Eastern,,7182,97698,7.351225204200699,7.351225204200699,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Southeast Asian,male,Southeast Asian,,6347,97698,6.496550594689758,6.496550594689758,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=White,male,White,,9823,97698,10.054453520031116,10.054453520031116,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Asian,female,Asian,,1942,24104,8.056754065715234,8.056754065715234,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Black,female,Black,,2221,24104,9.21423830069698,9.21423830069698,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Indian,female,Indian,,1742,24104,7.227016262860936,7.227016262860936,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Others,female,Others,,943,24104,3.9122137404580157,3.9122137404580157,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=White,female,White,,4674,24104,19.390972452704947,19.390972452704947,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Asian,male,Asian,,1644,24104,6.82044473946233,6.82044473946233,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Black,male,Black,,2337,24104,9.695486226352473,9.695486226352473,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Indian,male,Indian,,2285,24104,9.479754397610355,9.479754397610355,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Others,male,Others,,768,24104,3.1861931629605045,3.1861931629605045,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=White,male,White,,5548,24104,23.016926651178228,23.016926651178228,30,100,False,False,reportable

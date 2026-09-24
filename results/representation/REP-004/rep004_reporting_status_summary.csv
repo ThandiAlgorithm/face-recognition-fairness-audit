@@ -1,0 +1,9 @@
+dataset,intersection,n_cells,n_reportable_cells,n_low_confidence_cells,n_suppressed_cells,n_zero_cells
+fairface,gender_x_age,8,8,0,0,0
+fairface,gender_x_race,14,14,0,0,0
+fairface,gender_x_race_x_age,56,56,0,0,0
+fairface,race_x_age,28,28,0,0,0
+utkface,gender_x_age,8,8,0,0,0
+utkface,gender_x_race,10,10,0,0,0
+utkface,gender_x_race_x_age,40,34,4,2,0
+utkface,race_x_age,20,19,0,1,0

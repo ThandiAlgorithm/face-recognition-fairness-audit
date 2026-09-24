@@ -1,0 +1,2 @@
+target_field,positive_class,positive_code,negative_classes,binary_classes,config_version,frozen_commit
+gender,female,1,male,female;male,1.1.0,6a5bef9ff727c793f0e710231d98118ceffaab7d
