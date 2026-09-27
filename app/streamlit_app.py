@@ -1,86 +1,109 @@
 import streamlit as st
 
+from ui import apply_wits_theme
+
 
 st.set_page_config(
     page_title="Facial Recognition Fairness Audit",
     page_icon="🔎",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
+apply_wits_theme()
 
-st.title("Facial Recognition Fairness Audit")
 
-st.subheader("Wits EIE Investigation Project")
+# ---------------------------------------------------------
+# Sidebar identity
+# ---------------------------------------------------------
 
-st.write(
-    """
-    This project investigates whether demographic and visual skews
-    in facial-recognition datasets are associated with unequal
-    recognition performance, and whether those disparities can
-    be reduced through technical mitigation.
-    """
+with st.sidebar:
+    st.markdown(
+        """
+        <div style="
+            padding: 0.45rem 0 1.1rem 0;
+        ">
+            <div style="
+                color:#F4C542;
+                font-size:0.76rem;
+                font-weight:800;
+                letter-spacing:0.11em;
+                text-transform:uppercase;
+            ">
+                University of the Witwatersrand
+            </div>
+
+            <div style="
+                color:white;
+                font-size:1.35rem;
+                font-weight:800;
+                line-height:1.2;
+                margin-top:0.45rem;
+            ">
+                Facial Recognition<br>
+                Fairness Audit
+            </div>
+
+            <div style="
+                color:rgba(255,255,255,0.68);
+                font-size:0.78rem;
+                line-height:1.45;
+                margin-top:0.55rem;
+            ">
+                School of Electrical and<br>
+                Information Engineering
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+# ---------------------------------------------------------
+# Explicit app navigation
+# ---------------------------------------------------------
+
+pages = {
+    "Investigation": [
+        st.Page(
+            "pages/overview.py",
+            title="Project Overview",
+            icon="🏠",
+            default=True,
+        ),
+        st.Page(
+            "pages/dataset_audit.py",
+            title="Dataset Audit",
+            icon="📊",
+        ),
+        st.Page(
+            "pages/baseline_model.py",
+            title="Baseline Model",
+            icon="🧠",
+        ),
+        st.Page(
+            "pages/fairness_evaluation.py",
+            title="Fairness Evaluation",
+            icon="⚖️",
+        ),
+        st.Page(
+            "pages/mitigation.py",
+            title="Mitigation",
+            icon="🛠️",
+        ),
+    ],
+    "Demonstration": [
+        st.Page(
+            "pages/live_demo.py",
+            title="Live Verification Demo",
+            icon="📷",
+        ),
+    ],
+}
+
+navigation = st.navigation(
+    pages,
+    position="sidebar",
 )
 
-st.divider()
-
-st.subheader("Investigation Pipeline")
-
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.markdown("### 1. Dataset Audit")
-    st.write(
-        """
-        What biases, imbalances and measurement issues exist
-        in the datasets?
-        """
-    )
-
-with col2:
-    st.markdown("### 2. Baseline Model")
-    st.write(
-        """
-        How well does a baseline facial-recognition system perform?
-        """
-    )
-
-with col3:
-    st.markdown("### 3. Fairness Audit")
-    st.write(
-        """
-        Are recognition errors different across demographic
-        and intersectional groups?
-        """
-    )
-
-with col4:
-    st.markdown("### 4. Mitigation")
-    st.write(
-        """
-        Can we reduce those disparities without unacceptable
-        loss of recognition performance?
-        """
-    )
-
-st.divider()
-
-st.subheader("Core Research Question")
-
-st.info(
-    """
-    How do demographic and visual skews in facial-recognition
-    datasets affect recognition performance, and can mitigation
-    reduce the resulting disparities?
-    """
-)
-
-st.subheader("Current Project Status")
-
-st.success("Representation audit completed.")
-
-st.info(
-    """
-    Measurement audit, baseline model evaluation and fairness
-    analysis are currently in progress.
-    """
-)
+navigation.run()
