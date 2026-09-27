@@ -5,10 +5,26 @@ import plotly.express as px
 import streamlit as st
 
 from data import (
-    category_counts,
     dataset_label,
     load_master,
-    load_results_registry,
+)
+from representation_data import (
+    load_rep001_age,
+    load_rep001_availability,
+    load_rep001_dataset_summary,
+    load_rep001_gender,
+    load_rep001_race,
+    load_rep002_identity_support,
+    load_rep003_identity_distribution,
+    load_rep003_identity_summary,
+    load_rep004_intersections,
+    load_rep004_status_summary,
+    load_rep005_age,
+    load_rep005_overall,
+    load_rep005_race,
+    load_rep006_affected_analyses,
+    load_rep006_missingness,
+    load_rep006_patterns,
 )
 from ui import (
     apply_wits_theme,
@@ -20,7 +36,7 @@ from ui import (
 
 
 # ============================================================
-# PAGE STYLE
+# STYLE
 # ============================================================
 
 apply_wits_theme()
@@ -29,11 +45,18 @@ WITS_BLUE = "#0067B1"
 WITS_NAVY = "#002B5C"
 WITS_GOLD = "#F4C542"
 LIGHT_BLUE = "#5DADE2"
+GREY = "#9AA5B1"
 
 DATASET_COLOURS = {
     "LFW": WITS_NAVY,
     "FairFace": WITS_BLUE,
     "UTKFace": WITS_GOLD,
+}
+
+DATASET_LABELS = {
+    "lfw": "LFW",
+    "fairface": "FairFace",
+    "utkface": "UTKFace",
 }
 
 PALETTE = [
@@ -49,7 +72,7 @@ PALETTE = [
 
 
 # ============================================================
-# LOAD PROJECT DATA
+# LOAD DATA
 # ============================================================
 
 try:
@@ -60,142 +83,133 @@ except Exception as exc:
 
 master["Dataset"] = master["dataset"].map(dataset_label)
 
-registry = load_results_registry()
+rep001_summary = load_rep001_dataset_summary()
+rep001_gender = load_rep001_gender()
+rep001_age = load_rep001_age()
+rep001_race = load_rep001_race()
+rep001_availability = load_rep001_availability()
+
+rep002_identity = load_rep002_identity_support()
+
+rep003_summary = load_rep003_identity_summary()
+rep003_distribution = load_rep003_identity_distribution()
+
+rep004_intersections = load_rep004_intersections()
+rep004_status = load_rep004_status_summary()
+
+rep005_overall = load_rep005_overall()
+rep005_race = load_rep005_race()
+rep005_age = load_rep005_age()
+
+rep006_missingness = load_rep006_missingness()
+rep006_patterns = load_rep006_patterns()
+rep006_affected = load_rep006_affected_analyses()
 
 
 # ============================================================
 # HELPERS
 # ============================================================
 
-def bool_count(frame: pd.DataFrame, column: str) -> int:
-    """Count rows explicitly marked True."""
+def pretty_dataset(value: str) -> str:
+    return DATASET_LABELS.get(
+        str(value).lower(),
+        str(value),
+    )
 
+
+def bool_count(frame: pd.DataFrame, column: str) -> int:
     if column not in frame.columns:
         return 0
 
-    return int(frame[column].eq(True).sum())
-
-
-def missing_count(frame: pd.DataFrame, column: str) -> int:
-    """Count missing values for a column."""
-
-    if column not in frame.columns:
-        return len(frame)
-
-    return int(frame[column].isna().sum())
-
-
-def percentage(value: int, denominator: int) -> str:
-    """Return a formatted percentage."""
-
-    if denominator == 0:
-        return "—"
-
-    return f"{100.0 * value / denominator:.2f}%"
-
-
-def distribution_chart(
-    frame: pd.DataFrame,
-    column: str,
-    title: str,
-) -> None:
-    """Render a categorical distribution."""
-
-    if column not in frame.columns:
-        st.info(f"{column} is not available in the current table.")
-        return
-
-    counts = category_counts(frame[column])
-
-    if counts.empty:
-        st.info("No values are available for this distribution.")
-        return
-
-    fig = px.bar(
-        counts,
-        x="Category",
-        y="Count",
-        text="Count",
-        title=title,
-        color="Category",
-        color_discrete_sequence=PALETTE,
+    return int(
+        frame[column]
+        .eq(True)
+        .sum()
     )
 
-    fig.update_layout(
-        showlegend=False,
-        xaxis_title="",
-        yaxis_title="Images",
-        margin=dict(l=10, r=10, t=55, b=10),
-        height=390,
-    )
 
-    fig.update_traces(
-        textposition="outside",
-    )
+def format_pct(value) -> str:
+    if pd.isna(value):
+        return "Unavailable"
 
-    st.plotly_chart(
-        fig,
-        use_container_width=True,
+    return f"{float(value):.2f}%"
+
+
+def prepare_rep_dataset_names(frame: pd.DataFrame) -> pd.DataFrame:
+    output = frame.copy()
+
+    if "dataset" in output.columns:
+        output["Dataset"] = (
+            output["dataset"]
+            .map(pretty_dataset)
+        )
+
+    return output
+
+
+def source_caption(issue: str, filename: str) -> None:
+    st.caption(
+        f"Source: results/representation/{issue}/{filename}"
     )
 
 
 # ============================================================
-# HEADER
+# PAGE HEADER
 # ============================================================
 
 hero(
     "Forensic Dataset Audit",
     """
-    A consolidated view of the Phase 1 investigation across
-    representation, data integrity, duplicate structure,
-    face detection and alignment, visual conditions and
-    skin-colour measurement.
+    Phase 1 examines the datasets and preprocessing pipeline before
+    evaluating recognition performance. The objective is to identify
+    plausible sources of bias, measurement uncertainty and technical
+    failure that can later be tested against model error.
     """,
     eyebrow="Stage 1 · Evidence before model evaluation",
 )
 
 gold_callout(
     """
-    <strong>Why this audit exists:</strong> the purpose is not simply
-    to count demographic groups. The audit identifies plausible
-    sources of bias before model evaluation so that the baseline
-    recognition experiment can test whether those conditions
-    propagate into unequal recognition errors.
+    <strong>The audit is not the final fairness result.</strong>
+    Representation imbalance, image-quality differences and measurement
+    limitations identify hypotheses. The baseline recognition experiment
+    must determine whether those conditions actually correspond to
+    unequal false-match or false-non-match rates.
     """
 )
 
 
 # ============================================================
-# TOP-LEVEL METRICS
+# PROJECT-LEVEL SUMMARY
 # ============================================================
 
-section_label("Audit population")
+section_label("Current audit evidence")
 
-metric_1, metric_2, metric_3, metric_4 = st.columns(4)
+top_1, top_2, top_3, top_4 = st.columns(4)
 
-metric_1.metric(
-    "Total images",
+top_1.metric(
+    "Images audited",
     f"{len(master):,}",
 )
 
-metric_2.metric(
+top_2.metric(
     "Datasets",
     f"{master['dataset'].nunique():,}",
 )
 
-metric_3.metric(
+top_3.metric(
     "LFW identities",
     f"{master.loc[master['dataset'].eq('lfw'), 'subject_id'].nunique():,}",
 )
 
-metric_4.metric(
-    "Valid skin ROIs",
+top_4.metric(
+    "Valid Phase 0 skin ROIs",
     f"{bool_count(master, 'skin_roi_valid'):,}",
 )
 
 
 # ============================================================
-# MAIN AUDIT TABS
+# MAIN TABS
 # ============================================================
 
 (
@@ -218,560 +232,1045 @@ metric_4.metric(
 
 
 # ============================================================
-# OVERVIEW TAB
+# OVERVIEW
 # ============================================================
 
 with overview_tab:
 
-    st.subheader("Dataset composition")
+    section_label("Phase 1 map")
+    st.subheader("Where the project currently stands")
 
-    dataset_counts = (
-        master["Dataset"]
-        .value_counts()
-        .rename_axis("Dataset")
-        .reset_index(name="Images")
-    )
-
-    fig = px.bar(
-        dataset_counts,
-        x="Dataset",
-        y="Images",
-        text="Images",
-        color="Dataset",
-        color_discrete_map=DATASET_COLOURS,
-    )
-
-    fig.update_layout(
-        showlegend=False,
-        xaxis_title="",
-        yaxis_title="Images",
-        height=380,
-        margin=dict(l=10, r=10, t=20, b=10),
-    )
-
-    fig.update_traces(
-        texttemplate="%{text:,}",
-        textposition="outside",
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True,
-    )
-
-    roles = pd.DataFrame(
+    audit_matrix = pd.DataFrame(
         {
-            "Dataset": [
-                "LFW",
-                "FairFace",
-                "UTKFace",
+            "Audit layer": [
+                "Representation",
+                "Image / label integrity",
+                "Duplicate screening",
+                "Detection & alignment",
+                "Visual conditions",
+                "Skin measurement",
+                "Baseline recognition",
+                "Model fairness audit",
+                "Mitigation",
             ],
-            "Images": [
-                int(master["dataset"].eq("lfw").sum()),
-                int(master["dataset"].eq("fairface").sum()),
-                int(master["dataset"].eq("utkface").sum()),
+            "Status": [
+                "Complete",
+                "Available",
+                "Available",
+                "Available",
+                "Available",
+                "Validation in progress",
+                "Next stage",
+                "Pending baseline",
+                "Pending fairness result",
             ],
-            "Primary audit role": [
-                "Primary facial-verification benchmark",
-                "Demographic comparison dataset",
-                "Age and demographic comparison dataset",
+            "Primary evidence": [
+                "REP-001 to REP-006",
+                "Canonical Phase 0 metadata",
+                "Duplicate metadata and review records",
+                "Detection/alignment diagnostics",
+                "Master annotation table",
+                "Phase 0 values + MEA-001 validation",
+                "Not yet generated",
+                "Not yet generated",
+                "Not yet selected",
             ],
         }
     )
 
     st.dataframe(
-        roles,
+        audit_matrix,
         hide_index=True,
         use_container_width=True,
     )
 
     st.divider()
 
-    st.subheader("What does the forensic audit cover?")
+    section_label("Dataset composition")
+    st.subheader("135,039 images across three datasets")
 
-    layer_1, layer_2, layer_3 = st.columns(3)
+    dataset_summary = prepare_rep_dataset_names(
+        rep001_summary
+    )
 
-    with layer_1:
-        st.markdown(
-            """
-            ### Representation
+    if not dataset_summary.empty:
 
-            **Who is present?**
-
-            - dataset composition
-            - identity representation
-            - gender
-            - age
-            - native race labels
-            - intersectional cells
-            - missing demographic information
-            """
+        fig = px.bar(
+            dataset_summary,
+            x="Dataset",
+            y="n_images",
+            text="n_images",
+            color="Dataset",
+            color_discrete_map=DATASET_COLOURS,
         )
 
-    with layer_2:
-        st.markdown(
-            """
-            ### Technical pipeline
-
-            **What can affect the image before recognition?**
-
-            - corrupt files
-            - duplicate images
-            - face detection
-            - multiple detections
-            - alignment
-            - image quality
-            """
+        fig.update_layout(
+            showlegend=False,
+            xaxis_title="",
+            yaxis_title="Images",
+            height=380,
         )
 
-    with layer_3:
-        st.markdown(
-            """
-            ### Measurement
-
-            **What can be measured reliably?**
-
-            - skin-region validity
-            - CIELAB values
-            - L*
-            - ITA
-            - hue angle
-            - skin-tone proxies
-            - measurement uncertainty
-            """
+        fig.update_traces(
+            texttemplate="%{text:,}",
+            textposition="outside",
         )
 
-    if not registry.empty:
+        st.plotly_chart(
+            fig,
+            use_container_width=True,
+        )
 
-        st.divider()
-        st.subheader("Registered project results")
+        summary_display = dataset_summary[
+            [
+                "Dataset",
+                "n_images",
+                "pct_all_images",
+            ]
+        ].copy()
+
+        summary_display.columns = [
+            "Dataset",
+            "Images",
+            "Share of combined audit (%)",
+        ]
 
         st.dataframe(
-            registry,
+            summary_display,
             hide_index=True,
             use_container_width=True,
         )
 
+        source_caption(
+            "REP-001",
+            "rep001_dataset_summary.csv",
+        )
+
+    st.divider()
+
+    section_label("Key representation findings")
+    st.subheader("What has already been established?")
+
+    finding_1, finding_2 = st.columns(2)
+
+    with finding_1:
+
+        st.markdown(
+            """
+            ### Dataset composition
+
+            FairFace contributes **97,698 images**, representing
+            approximately **72.35%** of the combined three-dataset
+            audit population.
+
+            UTKFace contributes **24,108 images** and LFW contributes
+            **13,233 images**.
+
+            This combined corpus is therefore not balanced by dataset
+            size.
+            """
+        )
+
+        st.markdown(
+            """
+            ### LFW identity structure
+
+            LFW contains **5,749 identities**.
+
+            **4,069 identities (70.78%)** are represented by only one
+            image, while **1,680 identities (29.22%)** have repeated
+            images.
+
+            One identity contributes as many as **530 images**.
+            """
+        )
+
+    with finding_2:
+
+        st.markdown(
+            """
+            ### Demographic availability
+
+            FairFace provides complete gender, race and harmonised
+            age-band labels in the current audit.
+
+            UTKFace has demographic information for **24,104 of
+            24,108 images**, leaving four parsing/missing-label cases.
+
+            Standard LFW metadata in this project does **not** provide
+            gender, race or age labels.
+            """
+        )
+
+        st.markdown(
+            """
+            ### Important consequence
+
+            The LFW demographic-label gap currently prevents direct
+            LFW subgroup fairness claims based on those attributes.
+
+            A defensible demographic-provenance strategy is therefore
+            required before LFW model error can be reported by gender,
+            race, age or intersectional group.
+            """
+        )
+
 
 # ============================================================
-# REPRESENTATION TAB
+# REPRESENTATION
 # ============================================================
 
 with representation_tab:
 
-    st.subheader("Representation audit")
+    section_label("REP-001 to REP-006")
+    st.subheader("Registered representation audit")
 
-    selected_label = st.selectbox(
-        "Select dataset",
+    (
+        composition_subtab,
+        identity_subtab,
+        intersections_subtab,
+        base_rate_subtab,
+        missingness_subtab,
+    ) = st.tabs(
         [
-            "LFW",
-            "FairFace",
-            "UTKFace",
-        ],
-        key="representation_dataset",
+            "Composition",
+            "Identity",
+            "Intersections",
+            "Base Rates",
+            "Missingness",
+        ]
     )
 
-    dataset_key_map = {
-        "LFW": "lfw",
-        "FairFace": "fairface",
-        "UTKFace": "utkface",
-    }
-
-    selected_key = dataset_key_map[selected_label]
-
-    subset = master[
-        master["dataset"].eq(selected_key)
-    ].copy()
-
-    rep_1, rep_2, rep_3, rep_4 = st.columns(4)
-
-    rep_1.metric(
-        "Images",
-        f"{len(subset):,}",
-    )
-
-    if subset["subject_id"].notna().any():
-        identity_display = f"{subset['subject_id'].nunique():,}"
-    else:
-        identity_display = "Unavailable"
-
-    rep_2.metric(
-        "Identities available",
-        identity_display,
-    )
-
-    demographic_eligible = bool_count(
-        subset,
-        "eligible_demographic_audit",
-    )
-
-    rep_3.metric(
-        "Demographic-audit eligible",
-        f"{demographic_eligible:,}",
-    )
-
-    rep_4.metric(
-        "Demographic exclusions",
-        f"{len(subset) - demographic_eligible:,}",
-    )
-
-    st.divider()
-
-    chart_left, chart_right = st.columns(2)
-
-    with chart_left:
-        distribution_chart(
-            subset,
-            "gender",
-            f"{selected_label}: gender labels",
-        )
-
-    with chart_right:
-        distribution_chart(
-            subset,
-            "age_band",
-            f"{selected_label}: age bands",
-        )
-
-    distribution_chart(
-        subset,
-        "race",
-        f"{selected_label}: native race labels",
-    )
-
-    st.divider()
 
     # --------------------------------------------------------
-    # Identity representation
+    # COMPOSITION
     # --------------------------------------------------------
 
-    st.subheader("Identity representation")
+    with composition_subtab:
 
-    if subset["subject_id"].notna().any():
+        st.subheader("Image-level demographic composition")
 
-        identity_counts = (
-            subset["subject_id"]
-            .dropna()
-            .value_counts()
-        )
-
-        singletons = int(
-            identity_counts.eq(1).sum()
-        )
-
-        repeated = int(
-            identity_counts.gt(1).sum()
-        )
-
-        identity_1, identity_2, identity_3, identity_4 = st.columns(4)
-
-        identity_1.metric(
-            "Identities",
-            f"{len(identity_counts):,}",
-        )
-
-        identity_2.metric(
-            "Singleton identities",
-            f"{singletons:,}",
-            percentage(
-                singletons,
-                len(identity_counts),
-            ),
-        )
-
-        identity_3.metric(
-            "Repeated identities",
-            f"{repeated:,}",
-        )
-
-        identity_4.metric(
-            "Maximum images / identity",
-            f"{int(identity_counts.max()):,}",
-        )
-
-        bins = [
-            0,
-            1,
-            2,
-            5,
-            10,
-            20,
-            float("inf"),
-        ]
-
-        labels = [
-            "1",
-            "2",
-            "3–5",
-            "6–10",
-            "11–20",
-            "21+",
-        ]
-
-        depth_categories = pd.cut(
-            identity_counts.to_numpy(),
-            bins=bins,
-            labels=labels,
-            include_lowest=True,
-        )
-
-        depth_counts = (
-            pd.Series(
-                depth_categories,
-                name="depth_category",
-            )
-            .value_counts()
-            .reindex(
-                labels,
-                fill_value=0,
-            )
-        )
-
-        depth = pd.DataFrame(
-            {
-                "Images per identity": labels,
-                "Identities": [
-                    int(depth_counts.get(label, 0))
-                    for label in labels
-                ],
-            }
-        )
-
-        fig = px.bar(
-            depth,
-            x="Images per identity",
-            y="Identities",
-            text="Identities",
-            color_discrete_sequence=[
-                WITS_BLUE
+        selected_dataset = st.selectbox(
+            "Dataset",
+            [
+                "FairFace",
+                "LFW",
+                "UTKFace",
             ],
-            title="Identity-depth distribution",
+            key="rep_composition_dataset",
         )
 
-        fig.update_layout(
-            showlegend=False,
-            height=390,
-            margin=dict(
-                l=10,
-                r=10,
-                t=55,
-                b=10,
-            ),
-        )
+        selected_key = {
+            "FairFace": "fairface",
+            "LFW": "lfw",
+            "UTKFace": "utkface",
+        }[selected_dataset]
 
-        fig.update_traces(
-            textposition="outside",
-        )
+        composition_left, composition_right = st.columns(2)
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True,
-        )
+        with composition_left:
 
-        if selected_key == "lfw":
-            blue_callout(
-                """
-                LFW has a strongly long-tailed identity structure.
-                Many identities appear only once while a small number
-                contribute substantially more images. Image-level
-                representation therefore does not imply equal
-                identity-level representation.
-                """
+            gender = rep001_gender[
+                rep001_gender["dataset"].eq(
+                    selected_key
+                )
+            ].copy()
+
+            if not gender.empty:
+
+                fig = px.bar(
+                    gender,
+                    x="category",
+                    y="n_images",
+                    text="n_images",
+                    color="category",
+                    color_discrete_sequence=PALETTE,
+                    title=f"{selected_dataset}: gender composition",
+                )
+
+                fig.update_layout(
+                    showlegend=False,
+                    xaxis_title="",
+                    yaxis_title="Images",
+                    height=390,
+                )
+
+                fig.update_traces(
+                    textposition="outside",
+                )
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True,
+                )
+
+        with composition_right:
+
+            age = rep001_age[
+                rep001_age["dataset"].eq(
+                    selected_key
+                )
+            ].copy()
+
+            if not age.empty:
+
+                fig = px.bar(
+                    age,
+                    x="category",
+                    y="n_images",
+                    text="n_images",
+                    color="category",
+                    color_discrete_sequence=PALETTE,
+                    title=f"{selected_dataset}: harmonised age bands",
+                )
+
+                fig.update_layout(
+                    showlegend=False,
+                    xaxis_title="",
+                    yaxis_title="Images",
+                    height=390,
+                )
+
+                fig.update_traces(
+                    textposition="outside",
+                )
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True,
+                )
+
+        race = rep001_race[
+            rep001_race["dataset"].eq(
+                selected_key
             )
-
-    else:
-
-        st.info(
-            """
-            Stable identity labels are not available for this
-            dataset in the current audit.
-            """
-        )
-
-    st.divider()
-
-    # --------------------------------------------------------
-    # Intersectional representation
-    # --------------------------------------------------------
-
-    st.subheader("Intersectional representation")
-
-    if "eligible_demographic_audit" in subset.columns:
-
-        eligible_mask = (
-            subset["eligible_demographic_audit"]
-            .fillna(False)
-            .astype(bool)
-        )
-
-        eligible = subset.loc[
-            eligible_mask
         ].copy()
 
-    else:
-        eligible = subset.copy()
+        if not race.empty:
 
-    available_dimensions = [
-        column
-        for column in [
-            "gender",
-            "race",
-            "age_band",
-        ]
-        if (
-            column in eligible.columns
-            and eligible[column].notna().any()
-        )
-    ]
-
-    if len(available_dimensions) >= 2:
-
-        intersection = (
-            eligible
-            .groupby(
-                available_dimensions,
-                dropna=False,
+            fig = px.bar(
+                race,
+                x="category",
+                y="n_images",
+                text="n_images",
+                color="category",
+                color_discrete_sequence=PALETTE,
+                title=f"{selected_dataset}: native race labels",
             )
-            .size()
-            .rename("n")
-            .reset_index()
+
+            fig.update_layout(
+                showlegend=False,
+                xaxis_title="",
+                yaxis_title="Images",
+                height=420,
+            )
+
+            fig.update_traces(
+                textposition="outside",
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
+
+        availability = rep001_availability[
+            rep001_availability[
+                "dataset"
+            ].eq(selected_key)
+        ].copy()
+
+        if not availability.empty:
+
+            st.subheader("Demographic availability")
+
+            availability_display = availability[
+                [
+                    "measure",
+                    "n_total",
+                    "n_available",
+                    "n_missing_or_unknown",
+                    "pct_available",
+                    "pct_missing_or_unknown",
+                ]
+            ].copy()
+
+            availability_display.columns = [
+                "Measure",
+                "Total images",
+                "Available",
+                "Missing / unknown",
+                "Available (%)",
+                "Missing / unknown (%)",
+            ]
+
+            st.dataframe(
+                availability_display,
+                hide_index=True,
+                use_container_width=True,
+            )
+
+        if selected_dataset == "LFW":
+
+            gold_callout(
+                """
+                LFW's native project metadata does not currently
+                provide the demographic attributes required for the
+                intended subgroup fairness analysis. Missing labels
+                must not be silently inferred or treated as known.
+                """
+            )
+
+        source_caption(
+            "REP-001",
+            "composition and availability outputs",
         )
 
-        def cell_status(n: int) -> str:
-            if n < 30:
-                return "Suppressed"
 
-            if n < 100:
-                return "Low confidence"
+    # --------------------------------------------------------
+    # IDENTITY
+    # --------------------------------------------------------
 
-            return "Reportable"
+    with identity_subtab:
 
-        intersection["Status"] = (
-            intersection["n"]
-            .apply(cell_status)
+        st.subheader("Identity availability across datasets")
+
+        support = prepare_rep_dataset_names(
+            rep002_identity
         )
+
+        if not support.empty:
+
+            support_display = support[
+                [
+                    "Dataset",
+                    "n_images",
+                    "n_unique_identities",
+                    "n_singleton_identities",
+                    "n_repeated_identities",
+                    "max_images_per_identity",
+                    "subject_id_available",
+                ]
+            ].copy()
+
+            support_display.columns = [
+                "Dataset",
+                "Images",
+                "Unique identities",
+                "Singleton identities",
+                "Repeated identities",
+                "Maximum images / identity",
+                "Identity labels available",
+            ]
+
+            st.dataframe(
+                support_display,
+                hide_index=True,
+                use_container_width=True,
+            )
+
+            source_caption(
+                "REP-002",
+                "rep002_identity_support.csv",
+            )
+
+        lfw_summary = rep003_summary[
+            rep003_summary[
+                "dataset"
+            ].eq("lfw")
+        ]
+
+        if not lfw_summary.empty:
+
+            row = lfw_summary.iloc[0]
+
+            st.divider()
+            st.subheader("LFW identity-depth audit")
+
+            identity_1, identity_2, identity_3, identity_4 = st.columns(4)
+
+            identity_1.metric(
+                "Identities",
+                f"{int(row['n_identities']):,}",
+            )
+
+            identity_2.metric(
+                "Singletons",
+                f"{int(row['n_singleton_identities']):,}",
+                f"{row['pct_singleton_identities']:.2f}%",
+            )
+
+            identity_3.metric(
+                "Median images / identity",
+                f"{row['median_images_per_identity']:.0f}",
+            )
+
+            identity_4.metric(
+                "Maximum images / identity",
+                f"{int(row['max_images_per_identity']):,}",
+            )
+
+            st.markdown(
+                f"""
+                **Depth statistics**
+
+                - Mean: **{row['mean_images_per_identity']:.2f}**
+                - 75th percentile: **{row['q75_images_per_identity']:.0f}**
+                - 90th percentile: **{row['p90_images_per_identity']:.0f}**
+                - 95th percentile: **{row['p95_images_per_identity']:.0f}**
+                - 99th percentile: **{row['p99_images_per_identity']:.0f}**
+                """
+            )
+
+        lfw_depth = rep003_distribution[
+            rep003_distribution[
+                "dataset"
+            ].eq("lfw")
+        ].copy()
+
+        if not lfw_depth.empty:
+
+            fig = px.scatter(
+                lfw_depth,
+                x="n_images_per_identity",
+                y="n_identities",
+                size="images_contributed",
+                hover_data=[
+                    "pct_identities",
+                    "pct_images_contributed",
+                ],
+                color_discrete_sequence=[
+                    WITS_BLUE
+                ],
+                title="LFW identity-depth distribution",
+            )
+
+            fig.update_xaxes(
+                type="log",
+                title="Images per identity (log scale)",
+            )
+
+            fig.update_yaxes(
+                title="Number of identities",
+            )
+
+            fig.update_layout(
+                height=430,
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
+
+        blue_callout(
+            """
+            <strong>Interpretation:</strong> LFW has a pronounced
+            identity long tail. More than 70% of identities contribute
+            a single image, while a small number contribute many images.
+            Therefore image-level counts should not be interpreted as
+            uniform identity coverage.
+            """
+        )
+
+        source_caption(
+            "REP-003",
+            "identity-depth outputs",
+        )
+
+
+    # --------------------------------------------------------
+    # INTERSECTIONS
+    # --------------------------------------------------------
+
+    with intersections_subtab:
+
+        st.subheader("Intersectional cell reliability")
+
+        status = prepare_rep_dataset_names(
+            rep004_status
+        )
+
+        if not status.empty:
+
+            melted = status.melt(
+                id_vars=[
+                    "Dataset",
+                    "intersection",
+                ],
+                value_vars=[
+                    "n_reportable_cells",
+                    "n_low_confidence_cells",
+                    "n_suppressed_cells",
+                ],
+                var_name="Status",
+                value_name="Cells",
+            )
+
+            status_names = {
+                "n_reportable_cells": "Reportable",
+                "n_low_confidence_cells": "Low confidence",
+                "n_suppressed_cells": "Suppressed",
+            }
+
+            melted["Status"] = (
+                melted["Status"]
+                .map(status_names)
+            )
+
+            fig = px.bar(
+                melted,
+                x="intersection",
+                y="Cells",
+                color="Status",
+                facet_col="Dataset",
+                barmode="stack",
+                color_discrete_map={
+                    "Reportable": WITS_BLUE,
+                    "Low confidence": WITS_GOLD,
+                    "Suppressed": GREY,
+                },
+                title="Intersectional reporting status",
+            )
+
+            fig.update_layout(
+                height=470,
+                xaxis_title="",
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
+
+        st.markdown(
+            """
+            **Project reporting thresholds**
+
+            - **n ≥ 100:** reportable
+            - **30 ≤ n < 100:** low confidence
+            - **n < 30:** suppressed
+            """
+        )
+
+        selected_intersection_dataset = st.selectbox(
+            "Inspect dataset",
+            [
+                "FairFace",
+                "UTKFace",
+            ],
+            key="intersection_dataset",
+        )
+
+        selected_intersection_key = (
+            "fairface"
+            if selected_intersection_dataset == "FairFace"
+            else "utkface"
+        )
+
+        detail = rep004_intersections[
+            rep004_intersections[
+                "dataset"
+            ].eq(selected_intersection_key)
+        ].copy()
+
+        if not detail.empty:
+
+            status_filter = st.multiselect(
+                "Reporting status",
+                sorted(
+                    detail[
+                        "reporting_status"
+                    ]
+                    .dropna()
+                    .unique()
+                    .tolist()
+                ),
+                default=sorted(
+                    detail[
+                        "reporting_status"
+                    ]
+                    .dropna()
+                    .unique()
+                    .tolist()
+                ),
+            )
+
+            if status_filter:
+                detail = detail[
+                    detail[
+                        "reporting_status"
+                    ].isin(status_filter)
+                ]
+
+            st.dataframe(
+                detail[
+                    [
+                        "intersection",
+                        "cell_label",
+                        "n_images",
+                        "percentage_reported",
+                        "reporting_status",
+                    ]
+                ].sort_values(
+                    [
+                        "intersection",
+                        "n_images",
+                    ],
+                    ascending=[
+                        True,
+                        False,
+                    ],
+                ),
+                hide_index=True,
+                use_container_width=True,
+                height=480,
+            )
+
+        fairface_status = rep004_status[
+            rep004_status["dataset"].eq(
+                "fairface"
+            )
+        ]
+
+        utk_status = rep004_status[
+            rep004_status["dataset"].eq(
+                "utkface"
+            )
+        ]
+
+        fairface_flagged = int(
+            fairface_status[
+                "n_low_confidence_cells"
+            ].sum()
+            + fairface_status[
+                "n_suppressed_cells"
+            ].sum()
+        )
+
+        utk_flagged = int(
+            utk_status[
+                "n_low_confidence_cells"
+            ].sum()
+            + utk_status[
+                "n_suppressed_cells"
+            ].sum()
+        )
+
+        gold_callout(
+            f"""
+            <strong>Finding:</strong> all tested FairFace
+            intersectional cells are reportable under the frozen
+            thresholds. UTKFace contains <strong>{utk_flagged}
+            flagged cells</strong> across the tested intersections,
+            while FairFace contains <strong>{fairface_flagged}</strong>.
+            Thin cells should not be converted into apparently precise
+            subgroup percentages.
+            """
+        )
+
+        source_caption(
+            "REP-004",
+            "intersectional composition and reporting-status outputs",
+        )
+
+
+    # --------------------------------------------------------
+    # BASE RATES
+    # --------------------------------------------------------
+
+    with base_rate_subtab:
+
+        st.subheader("Target prevalence")
+
+        blue_callout(
+            """
+            REP-005 uses the frozen binary gender target coding:
+            <strong>female = 1</strong> and <strong>male = 0</strong>.
+            These values describe target prevalence. They are
+            <strong>not</strong> recognition accuracy or fairness
+            metrics.
+            """
+        )
+
+        overall = prepare_rep_dataset_names(
+            rep005_overall
+        )
+
+        available_overall = overall[
+            overall[
+                "base_rate_pct_reported"
+            ].notna()
+        ].copy()
+
+        if not available_overall.empty:
+
+            fig = px.bar(
+                available_overall,
+                x="Dataset",
+                y="base_rate_pct_reported",
+                text="base_rate_pct_reported",
+                color="Dataset",
+                color_discrete_map=DATASET_COLOURS,
+                title="Female prevalence among eligible images",
+            )
+
+            fig.update_yaxes(
+                title="Female prevalence (%)",
+                range=[
+                    0,
+                    max(
+                        55,
+                        available_overall[
+                            "base_rate_pct_reported"
+                        ].max()
+                        + 5,
+                    ),
+                ],
+            )
+
+            fig.update_traces(
+                texttemplate="%{text:.2f}%",
+                textposition="outside",
+            )
+
+            fig.update_layout(
+                showlegend=False,
+                height=390,
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
 
         st.dataframe(
-            intersection.sort_values(
-                "n",
-                ascending=False,
-            ),
+            overall[
+                [
+                    "Dataset",
+                    "n",
+                    "n_y1",
+                    "n_y0",
+                    "base_rate_pct_reported",
+                    "reporting_status",
+                    "analysis_status",
+                ]
+            ],
             hide_index=True,
             use_container_width=True,
-            height=480,
         )
 
-        status_counts = (
-            intersection["Status"]
-            .value_counts()
-            .rename_axis("Status")
-            .reset_index(name="Cells")
+        st.markdown(
+            """
+            **Overall results**
+
+            - FairFace female prevalence: **47.00%**
+            - UTKFace female prevalence: **47.80%**
+            - LFW: **not available**, because eligible demographic
+              labels are unavailable.
+            """
         )
 
-        fig = px.bar(
-            status_counts,
-            x="Status",
-            y="Cells",
-            text="Cells",
-            color="Status",
-            color_discrete_map={
-                "Reportable": WITS_BLUE,
-                "Low confidence": WITS_GOLD,
-                "Suppressed": "#9AA5B1",
-            },
+        st.divider()
+
+        subgroup_choice = st.radio(
+            "Subgroup analysis",
+            [
+                "Race",
+                "Age",
+            ],
+            horizontal=True,
         )
 
-        fig.update_layout(
-            showlegend=False,
-            height=340,
-            xaxis_title="",
+        if subgroup_choice == "Race":
+            subgroup_data = prepare_rep_dataset_names(
+                rep005_race
+            )
+        else:
+            subgroup_data = prepare_rep_dataset_names(
+                rep005_age
+            )
+
+        subgroup_available = subgroup_data[
+            subgroup_data[
+                "base_rate_pct_reported"
+            ].notna()
+        ].copy()
+
+        if not subgroup_available.empty:
+
+            fig = px.bar(
+                subgroup_available,
+                x="subgroup",
+                y="base_rate_pct_reported",
+                color="Dataset",
+                barmode="group",
+                color_discrete_map=DATASET_COLOURS,
+                title=f"Female prevalence by {subgroup_choice.lower()}",
+            )
+
+            fig.update_yaxes(
+                title="Female prevalence (%)",
+            )
+
+            fig.update_xaxes(
+                title="",
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
+
+        source_caption(
+            "REP-005",
+            "target coding and base-rate outputs",
         )
 
-        fig.update_traces(
-            textposition="outside",
+
+    # --------------------------------------------------------
+    # MISSINGNESS
+    # --------------------------------------------------------
+
+    with missingness_subtab:
+
+        st.subheader("Label availability and missingness")
+
+        missingness = prepare_rep_dataset_names(
+            rep006_missingness
         )
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True,
+        if not missingness.empty:
+
+            missingness_display = missingness[
+                [
+                    "Dataset",
+                    "label",
+                    "n_total",
+                    "n_available",
+                    "n_missing_or_unknown",
+                    "pct_available",
+                    "pct_missing_or_unknown",
+                    "missingness_status",
+                ]
+            ].copy()
+
+            missingness_display.columns = [
+                "Dataset",
+                "Label",
+                "Total",
+                "Available",
+                "Missing / unknown",
+                "Available (%)",
+                "Missing / unknown (%)",
+                "Status",
+            ]
+
+            st.dataframe(
+                missingness_display,
+                hide_index=True,
+                use_container_width=True,
+                height=480,
+            )
+
+            heatmap_data = (
+                missingness
+                .pivot(
+                    index="label",
+                    columns="Dataset",
+                    values="pct_missing_or_unknown",
+                )
+            )
+
+            fig = px.imshow(
+                heatmap_data,
+                text_auto=".1f",
+                aspect="auto",
+                color_continuous_scale=[
+                    [0.0, "#EAF3FA"],
+                    [0.5, WITS_GOLD],
+                    [1.0, WITS_NAVY],
+                ],
+                title="Missing / unknown labels (%)",
+            )
+
+            fig.update_layout(
+                height=400,
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+            )
+
+        st.markdown(
+            """
+            **Key findings**
+
+            - FairFace has complete gender, race and harmonised
+              age-band labels, but does not provide exact numeric age.
+            - LFW has no available gender, race or age labels in the
+              current project metadata.
+            - UTKFace has **4 rows** with missing demographic labels
+              out of 24,108 images.
+            """
         )
 
         gold_callout(
             """
-            Intersectional cells follow the project thresholds:
-            <strong>n &lt; 30</strong> is suppressed,
-            <strong>30–99</strong> is treated as low confidence,
-            and <strong>n ≥ 100</strong> is reportable.
+            Missing demographic information is not merely a data-cleaning
+            inconvenience. It determines which fairness questions can
+            actually be answered. In particular, the current LFW
+            metadata cannot support demographic subgroup error analysis
+            without an additional defensible label/provenance strategy.
             """
         )
 
-    else:
+        if not rep006_patterns.empty:
 
-        st.info(
-            """
-            This dataset does not contain enough native demographic
-            dimensions for a defensible intersectional
-            representation analysis.
-            """
+            st.subheader("Missingness patterns")
+
+            patterns = prepare_rep_dataset_names(
+                rep006_patterns
+            )
+
+            st.dataframe(
+                patterns,
+                hide_index=True,
+                use_container_width=True,
+            )
+
+        if not rep006_affected.empty:
+
+            with st.expander(
+                "Analyses affected by label availability"
+            ):
+
+                affected = prepare_rep_dataset_names(
+                    rep006_affected
+                )
+
+                st.dataframe(
+                    affected,
+                    hide_index=True,
+                    use_container_width=True,
+                    height=500,
+                )
+
+        source_caption(
+            "REP-006",
+            "missingness and affected-analysis outputs",
         )
-
-    st.divider()
-
-    # --------------------------------------------------------
-    # Missingness
-    # --------------------------------------------------------
-
-    st.subheader("Demographic missingness")
-
-    missing_rows = []
-
-    for dataset_key, frame in master.groupby(
-        "dataset"
-    ):
-
-        missing_rows.append(
-            {
-                "Dataset": dataset_label(dataset_key),
-                "Images": len(frame),
-                "Gender unavailable": missing_count(
-                    frame,
-                    "gender",
-                ),
-                "Race unavailable": missing_count(
-                    frame,
-                    "race",
-                ),
-                "Age unavailable": missing_count(
-                    frame,
-                    "age_band",
-                ),
-                "Eligible demographic audit": bool_count(
-                    frame,
-                    "eligible_demographic_audit",
-                ),
-            }
-        )
-
-    missing_table = pd.DataFrame(
-        missing_rows
-    )
-
-    st.dataframe(
-        missing_table,
-        hide_index=True,
-        use_container_width=True,
-    )
 
 
 # ============================================================
-# INTEGRITY & DUPLICATES TAB
+# INTEGRITY & DUPLICATES
 # ============================================================
 
 with integrity_tab:
 
-    st.subheader(
-        "Data integrity and duplicate structure"
-    )
+    section_label("Canonical Phase 0 metadata")
+    st.subheader("Data integrity and duplicate structure")
 
     integrity_rows = []
 
@@ -779,27 +1278,9 @@ with integrity_tab:
         "dataset"
     ):
 
-        exact_rows = int(
-            frame["exact_dup_group"]
-            .notna()
-            .sum()
-        )
-
-        exact_groups = int(
-            frame["exact_dup_group"]
-            .dropna()
-            .nunique()
-        )
-
-        near_rows = int(
-            frame["near_dup_group"]
-            .notna()
-            .sum()
-        )
-
         integrity_rows.append(
             {
-                "Dataset": dataset_label(
+                "Dataset": pretty_dataset(
                     dataset_key
                 ),
                 "Images": len(frame),
@@ -811,9 +1292,21 @@ with integrity_tab:
                     frame,
                     "parse_failed",
                 ),
-                "Rows in exact-duplicate groups": exact_rows,
-                "Exact-duplicate groups": exact_groups,
-                "Rows in confirmed near-duplicate groups": near_rows,
+                "Rows with exact-duplicate group": int(
+                    frame[
+                        "exact_dup_group"
+                    ].notna().sum()
+                ),
+                "Exact-duplicate groups": int(
+                    frame[
+                        "exact_dup_group"
+                    ].dropna().nunique()
+                ),
+                "Rows with confirmed near-duplicate group": int(
+                    frame[
+                        "near_dup_group"
+                    ].notna().sum()
+                ),
                 "Cross-dataset duplicate flagged": bool_count(
                     frame,
                     "cross_dataset_dup",
@@ -831,18 +1324,14 @@ with integrity_tab:
         use_container_width=True,
     )
 
-    st.divider()
+    left, right = st.columns(2)
 
-    duplicate_left, duplicate_right = st.columns(2)
-
-    with duplicate_left:
-
-        st.subheader(
-            "Near-duplicate review status"
-        )
+    with left:
 
         near_status = (
-            master["near_dup_status"]
+            master[
+                "near_dup_status"
+            ]
             .astype("string")
             .fillna("Not applicable")
             .value_counts()
@@ -858,12 +1347,13 @@ with integrity_tab:
             color_discrete_sequence=[
                 WITS_BLUE
             ],
+            title="Near-duplicate status",
         )
 
         fig.update_layout(
             showlegend=False,
-            height=380,
             xaxis_title="",
+            height=390,
         )
 
         st.plotly_chart(
@@ -871,11 +1361,7 @@ with integrity_tab:
             use_container_width=True,
         )
 
-    with duplicate_right:
-
-        st.subheader(
-            "Cross-dataset duplicate status"
-        )
+    with right:
 
         cross_status = (
             master[
@@ -896,12 +1382,13 @@ with integrity_tab:
             color_discrete_sequence=[
                 WITS_GOLD
             ],
+            title="Cross-dataset duplicate status",
         )
 
         fig.update_layout(
             showlegend=False,
-            height=380,
             xaxis_title="",
+            height=390,
         )
 
         st.plotly_chart(
@@ -911,23 +1398,22 @@ with integrity_tab:
 
     blue_callout(
         """
-        Duplicate analysis is important because repeated or
-        near-identical images can artificially inflate apparent
-        dataset diversity and may introduce leakage between
-        evaluation groups if they are not identified.
+        Duplicate screening protects the later experiment from
+        artificially inflated diversity and from possible leakage
+        between evaluation groups. Candidate duplicate status is not
+        equivalent to a human-confirmed duplicate.
         """
     )
 
 
 # ============================================================
-# DETECTION & ALIGNMENT TAB
+# DETECTION & ALIGNMENT
 # ============================================================
 
 with detection_tab:
 
-    st.subheader(
-        "Face detection and alignment audit"
-    )
+    section_label("Canonical Phase 0 metadata")
+    st.subheader("Face detection and alignment")
 
     detection_rows = []
 
@@ -936,9 +1422,9 @@ with detection_tab:
     ):
 
         alignment_known = int(
-            frame["alignment_valid"]
-            .notna()
-            .sum()
+            frame[
+                "alignment_valid"
+            ].notna().sum()
         )
 
         alignment_valid = bool_count(
@@ -947,7 +1433,9 @@ with detection_tab:
         )
 
         confidence = (
-            frame["det_confidence"]
+            frame[
+                "det_confidence"
+            ]
             .dropna()
         )
 
@@ -959,17 +1447,17 @@ with detection_tab:
             )
 
         if alignment_known:
-            alignment_success = (
+            success_pct = (
                 100.0
                 * alignment_valid
                 / alignment_known
             )
         else:
-            alignment_success = None
+            success_pct = None
 
         detection_rows.append(
             {
-                "Dataset": dataset_label(
+                "Dataset": pretty_dataset(
                     dataset_key
                 ),
                 "Images": len(frame),
@@ -983,8 +1471,7 @@ with detection_tab:
                 ),
                 "Median detection confidence": median_confidence,
                 "Alignment valid": alignment_valid,
-                "Alignment known": alignment_known,
-                "Alignment success (%)": alignment_success,
+                "Alignment success (%)": success_pct,
             }
         )
 
@@ -997,8 +1484,6 @@ with detection_tab:
         hide_index=True,
         use_container_width=True,
     )
-
-    st.divider()
 
     plot_detection = (
         detection_summary[
@@ -1022,7 +1507,10 @@ with detection_tab:
         )
 
         fig.update_yaxes(
-            range=[0, 100]
+            range=[
+                0,
+                100,
+            ]
         )
 
         fig.update_traces(
@@ -1033,7 +1521,6 @@ with detection_tab:
         fig.update_layout(
             showlegend=False,
             height=390,
-            xaxis_title="",
         )
 
         st.plotly_chart(
@@ -1041,11 +1528,7 @@ with detection_tab:
             use_container_width=True,
         )
 
-    st.subheader(
-        "Detection-confidence distribution"
-    )
-
-    detection_values = (
+    confidence_values = (
         master[
             [
                 "Dataset",
@@ -1055,22 +1538,23 @@ with detection_tab:
         .dropna()
     )
 
-    if not detection_values.empty:
+    if not confidence_values.empty:
 
         fig = px.histogram(
-            detection_values,
+            confidence_values,
             x="det_confidence",
             color="Dataset",
             nbins=40,
-            opacity=0.72,
+            opacity=0.7,
             color_discrete_map=DATASET_COLOURS,
+            title="Detection-confidence distribution",
         )
 
         fig.update_layout(
             barmode="overlay",
+            height=400,
             xaxis_title="Detection confidence",
             yaxis_title="Images",
-            height=390,
         )
 
         st.plotly_chart(
@@ -1080,23 +1564,22 @@ with detection_tab:
 
     blue_callout(
         """
-        Detection and alignment are audited because performance
-        differences can arise before the recognition network itself.
-        A face that is not detected or is poorly aligned does not reach
-        the recogniser under the same conditions as a successful case.
+        Detection and alignment are part of the fairness pipeline.
+        A recognition error may originate before the recognition
+        network if a face is missed, the wrong face is selected, or
+        the crop is poorly aligned.
         """
     )
 
 
 # ============================================================
-# VISUAL CONDITIONS TAB
+# VISUAL CONDITIONS
 # ============================================================
 
 with visual_tab:
 
-    st.subheader(
-        "Visual and image-condition audit"
-    )
+    section_label("Canonical Phase 0 measurements")
+    st.subheader("Visual and capture conditions")
 
     visual_metrics = {
         "Brightness (mean L*)": "brightness",
@@ -1109,7 +1592,7 @@ with visual_tab:
     }
 
     selected_metric_label = st.selectbox(
-        "Select visual metric",
+        "Metric",
         list(
             visual_metrics.keys()
         ),
@@ -1133,7 +1616,7 @@ with visual_tab:
     if visual_data.empty:
 
         st.info(
-            "No measurements are currently available for this metric."
+            "No populated values are available for this metric."
         )
 
     else:
@@ -1143,16 +1626,14 @@ with visual_tab:
             visual_plot = (
                 visual_data
                 .sample(
-                    n=30000,
+                    30000,
                     random_state=26041,
                 )
             )
 
         else:
 
-            visual_plot = (
-                visual_data.copy()
-            )
+            visual_plot = visual_data
 
         fig = px.box(
             visual_plot,
@@ -1176,7 +1657,7 @@ with visual_tab:
             use_container_width=True,
         )
 
-        visual_summary = (
+        summary = (
             visual_data
             .groupby("Dataset")[metric]
             .agg(
@@ -1190,31 +1671,29 @@ with visual_tab:
         )
 
         st.dataframe(
-            visual_summary,
+            summary,
             hide_index=True,
             use_container_width=True,
         )
 
     gold_callout(
         """
-        Image-condition differences are possible confounders.
-        If one demographic group is systematically darker, blurrier,
-        smaller or more difficult to align, later recognition
-        disparities cannot automatically be attributed solely to
-        identity representation.
+        Visual conditions are potential confounders. If image quality,
+        lighting, scale or pose differ systematically between groups,
+        later subgroup error differences should not automatically be
+        attributed only to demographic representation.
         """
     )
 
 
 # ============================================================
-# MEASUREMENT TAB
+# MEASUREMENT
 # ============================================================
 
 with measurement_tab:
 
-    st.subheader(
-        "Skin-colour measurement audit"
-    )
+    section_label("MEA-001 validation in progress")
+    st.subheader("Skin-colour measurement")
 
     valid_skin = bool_count(
         master,
@@ -1224,17 +1703,13 @@ with measurement_tab:
     invalid_skin = int(
         master[
             "skin_roi_valid"
-        ]
-        .eq(False)
-        .sum()
+        ].eq(False).sum()
     )
 
     unavailable_skin = int(
         master[
             "skin_roi_valid"
-        ]
-        .isna()
-        .sum()
+        ].isna().sum()
     )
 
     ita_undefined = bool_count(
@@ -1242,15 +1717,21 @@ with measurement_tab:
         "ita_undefined",
     )
 
-    measure_1, measure_2, measure_3, measure_4 = st.columns(4)
+    fitz_available = int(
+        master[
+            "fitz_classifier"
+        ].notna().sum()
+    )
+
+    measure_1, measure_2, measure_3, measure_4, measure_5 = st.columns(5)
 
     measure_1.metric(
-        "Valid skin ROIs",
+        "Valid ROI",
         f"{valid_skin:,}",
     )
 
     measure_2.metric(
-        "Invalid skin ROIs",
+        "Invalid ROI",
         f"{invalid_skin:,}",
     )
 
@@ -1264,26 +1745,30 @@ with measurement_tab:
         f"{ita_undefined:,}",
     )
 
+    measure_5.metric(
+        "Classifier outputs",
+        f"{fitz_available:,}",
+    )
+
     gold_callout(
         """
-        <strong>Validation status:</strong> these are Phase 0
-        measurement outputs. The recovered skin-region extraction
-        method is currently undergoing formal MEA-001 reproducibility
-        and visual validation before confirmatory measurement analysis
-        is frozen.
+        These values originate from the Phase 0 measurement pipeline.
+        The recovered skin-ROI protocol is currently being formally
+        validated under MEA-001. The automated Fitzpatrick-classifier
+        output is not yet available in the canonical table.
         """
     )
 
     measurement_metrics = {
-        "L* (lightness)": "L_star",
+        "L* lightness": "L_star",
         "ITA": "ITA",
         "Hue angle": "hue_angle",
         "a*": "a_star",
         "b*": "b_star",
     }
 
-    selected_measurement_label = st.selectbox(
-        "Select continuous measurement",
+    measurement_label = st.selectbox(
+        "Continuous measurement",
         list(
             measurement_metrics.keys()
         ),
@@ -1292,7 +1777,7 @@ with measurement_tab:
 
     measurement_column = (
         measurement_metrics[
-            selected_measurement_label
+            measurement_label
         ]
     )
 
@@ -1306,20 +1791,14 @@ with measurement_tab:
         .dropna()
     )
 
-    if measurement_data.empty:
-
-        st.info(
-            "No values are currently available for this measurement."
-        )
-
-    else:
+    if not measurement_data.empty:
 
         if len(measurement_data) > 40000:
 
             measurement_plot = (
                 measurement_data
                 .sample(
-                    n=40000,
+                    40000,
                     random_state=26041,
                 )
             )
@@ -1327,7 +1806,7 @@ with measurement_tab:
         else:
 
             measurement_plot = (
-                measurement_data.copy()
+                measurement_data
             )
 
         fig = px.histogram(
@@ -1335,14 +1814,14 @@ with measurement_tab:
             x=measurement_column,
             color="Dataset",
             nbins=60,
-            opacity=0.60,
+            opacity=0.6,
             color_discrete_map=DATASET_COLOURS,
+            title=measurement_label,
         )
 
         fig.update_layout(
             barmode="overlay",
             height=420,
-            xaxis_title=selected_measurement_label,
             yaxis_title="Images",
         )
 
@@ -1374,21 +1853,15 @@ with measurement_tab:
 
     st.divider()
 
-    st.subheader(
-        "Provisional ITA categories"
-    )
+    st.subheader("Provisional ITA grouping")
 
     ita_available = master[
-        master["ita_group"].notna()
+        master[
+            "ita_group"
+        ].notna()
     ].copy()
 
-    if ita_available.empty:
-
-        st.info(
-            "No ITA categories are currently available."
-        )
-
-    else:
+    if not ita_available.empty:
 
         ita_counts = (
             ita_available
@@ -1416,7 +1889,6 @@ with measurement_tab:
         fig.update_layout(
             height=420,
             xaxis_title="ITA group",
-            yaxis_title="Images",
         )
 
         st.plotly_chart(
@@ -1426,10 +1898,9 @@ with measurement_tab:
 
     st.caption(
         """
-        Continuous L*, ITA and hue values remain the primary
-        measurements. Discrete skin-tone groupings are derived
-        analytical categories and should not be interpreted as
-        ground-truth demographic identity.
+        Continuous L*, ITA and hue remain the primary measurement
+        quantities. Discrete skin-tone categories are derived proxies,
+        not ground-truth demographic identities.
         """
     )
     
