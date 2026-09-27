@@ -20,44 +20,21 @@ apply_wits_theme()
 with st.sidebar:
     st.markdown(
         """
-        <div style="
-            padding: 0.45rem 0 1.1rem 0;
-        ">
-            <div style="
-                color:#F4C542;
-                font-size:0.76rem;
-                font-weight:800;
-                letter-spacing:0.11em;
-                text-transform:uppercase;
-            ">
-                University of the Witwatersrand
-            </div>
-
-            <div style="
-                color:white;
-                font-size:1.35rem;
-                font-weight:800;
-                line-height:1.2;
-                margin-top:0.45rem;
-            ">
-                Facial Recognition<br>
-                Fairness Audit
-            </div>
-
-            <div style="
-                color:rgba(255,255,255,0.68);
-                font-size:0.78rem;
-                line-height:1.45;
-                margin-top:0.55rem;
-            ">
-                School of Electrical and<br>
-                Information Engineering
-            </div>
-        </div>
+<div style="padding:0.45rem 0 1.1rem 0;">
+<div style="color:#F4C542;font-size:0.76rem;font-weight:800;letter-spacing:0.11em;text-transform:uppercase;">
+University of the Witwatersrand
+</div>
+<div style="color:white;font-size:1.35rem;font-weight:800;line-height:1.2;margin-top:0.45rem;">
+Facial Recognition<br>Fairness Audit
+</div>
+<div style="color:rgba(255,255,255,0.68);font-size:0.78rem;line-height:1.45;margin-top:0.55rem;">
+School of Electrical and<br>Information Engineering
+</div>
+</div>
         """,
         unsafe_allow_html=True,
     )
-
+    
 
 # ---------------------------------------------------------
 # Explicit app navigation
