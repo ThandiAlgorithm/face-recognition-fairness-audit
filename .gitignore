@@ -100,3 +100,14 @@ Thumbs.db
 
 # Generated REP report pack
 results/representation/report_pack/*
+
+.venv-deepface/
+
+# Model-audit local artefacts
+.venv-deepface/
+results/model_audit/**/predictions.csv
+results/model_audit/**/report_pack/examples/
+results/model_audit/**/utkface_smoke_100/
+results/model_audit/**/utkface_aligned_smoke_100/
+results/model_audit/**/lfw_smoke_100/
+results/model_audit/**/smoke_*/

@@ -1,0 +1,11 @@
+finding,display_value,group
+LFW images processed,13233.0,
+Largest predicted race category,63.9%,White
+Largest predicted gender category,78.3%,Male
+Mean race confidence,81.7%,
+Mean gender confidence,98.4%,
+Mean age confidence,57.5%,
+Repeated identities,1680.0,
+Mean repeated-identity race consistency,86.9%,
+Mean repeated-identity gender consistency,98.3%,
+Mean repeated-identity age consistency,78.2%,

@@ -1,0 +1,2 @@
+dataset,task,n,accuracy,precision_macro,recall_macro,f1_macro,f1_weighted
+FairFace validation,race_harmonised_4class,8122,0.8362472297463679,0.929481459786498,0.8207672523288765,0.8700630345757185,0.8807259804185903

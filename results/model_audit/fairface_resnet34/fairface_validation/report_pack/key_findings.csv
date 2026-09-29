@@ -1,0 +1,11 @@
+finding,value,group
+Overall race accuracy,0.7199196640496622,
+Overall race macro F1,0.7154671867348853,
+Overall gender accuracy,0.9438561256162132,
+Overall gender macro F1,0.9436888635407744,
+Best race×gender race accuracy,0.8639365918097754,Black Female
+Lowest race×gender race accuracy,0.4772727272727273,Middle Eastern Female
+Intersectional race-accuracy range,0.38666386453704815,
+Gender-classification TPR range across race,0.06316308828444561,
+Gender-classification FPR range across race,0.0742733459875274,
+Largest race one-vs-rest gender disparity,0.2398244436989823,Middle Eastern
