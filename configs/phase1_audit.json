@@ -1,0 +1,60 @@
+{
+  "master_table": "metadata/master_annotations.parquet",
+  "outputs_root": "outputs/phase1",
+  "dependency_configs": {
+    "preprocessing": "configs/phase1_preprocessing.yaml",
+    "categories": "configs/phase1_categories.yaml"
+  },
+  "workers": 4,
+  "stats": {
+    "min_n": {"image": 20, "identity": 10, "pair": 20},
+    "bh_alpha": 0.05,
+    "bh_family": ["dataset", "group_variable"],
+    "bootstrap": {"reps": 1000, "seed": 26041, "ci_level": 0.95, "max_n_for_bootstrap": 5000}
+  },
+  "dedup": {"keep_one_per_exact_group": true, "keep_one_per_confirmed_near_group": true},
+  "axes": {
+    "within_dataset": ["gender", "race", "age_band"],
+    "skin": ["skin_group_ita", "ita_group"]
+  },
+  "mea": {"boundary_margin_deg": 5.0},
+  "vis": {
+    "ellipse_width_fraction": 0.72,
+    "ellipse_height_fraction": 0.82,
+    "ellipse_centre_y": 0.5,
+    "mask_erode_px": 3,
+    "min_roi_px": 500,
+    "shadow_clip_level": 10,
+    "highlight_clip_level": 245,
+    "eye_band_y": [0.30, 0.50],
+    "outlier_robust_z": 5.0,
+    "pose_max_abs_deg": 90,
+    "compare_metrics": ["brightness_L_mean", "contrast_L_sd", "illumination_asymmetry", "sharpness_lapvar",
+                        "face_short_side_px", "face_area_ratio", "yaw_deg", "pitch_deg", "roll_deg"]
+  },
+  "shift": {
+    "categorical_axes": ["skin_group_ita", "ita_group", "gender", "age_band"],
+    "continuous_axes": ["skin_ITA_deg", "skin_L_star", "skin_hue_deg", "brightness_L_mean", "contrast_L_sd", "sharpness_lapvar"],
+    "within_dataset_only": ["race"],
+    "gender_rule": "Binary native labels (FairFace, UTKFace) normalised to male/female; LFW gender only from a documented external label file, otherwise unknown and excluded from gender comparisons.",
+    "age_rule": "FairFace native bands and UTKFace ages bucketed into the same categories.yaml bands; LFW has no age labels.",
+    "nominal_balance_axes": ["race", "gender", "age_band", "skin_group_ita", "ita_group"],
+    "intersections": [["race", "gender"], ["skin_group_ita", "gender"]],
+    "effective_balance_groups": ["skin_group_ita", "gender", "race"],
+    "effective_balance_dimensions": ["brightness_L_mean", "contrast_L_sd", "sharpness_lapvar", "face_short_side_px", "yaw_deg"],
+    "identity_datasets": ["lfw"],
+    "identity_skin_threshold_deg": 28
+  },
+  "lfw": {
+    "pair_files": [
+      {"view": "view1", "split": "train", "match_path": "data/lfw/matchpairsDevTrain.csv", "mismatch_path": "data/lfw/mismatchpairsDevTrain.csv"},
+      {"view": "view1", "split": "test", "match_path": "data/lfw/matchpairsDevTest.csv", "mismatch_path": "data/lfw/mismatchpairsDevTest.csv"},
+      {"view": "view2", "split": "10fold", "path": "data/lfw/pairs.csv"}
+    ],
+    "allow_view2_metadata": false,
+    "declared_training_paradigm": "Unrestricted, labeled outside data (pretrained ArcFace/FaceNet in Phase 2)",
+    "external_gender_labels": null,
+    "yoking_axes": ["skin_group_ita", "gender"],
+    "visual_difference_metrics": ["brightness_L_mean", "contrast_L_sd", "sharpness_lapvar", "face_short_side_px", "yaw_deg"]
+  }
+}

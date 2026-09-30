@@ -1,0 +1,6 @@
+dataset,route,detection_status,n
+fairface,publisher_preprocessing,not_applicable_publisher_route,97698
+lfw,project_retinaface,face_detected,13233
+utkface,project_retinaface,face_detected,24054
+utkface,project_retinaface,no_detection,39
+utkface,project_retinaface,pre_inference_or_colour_failure,15
