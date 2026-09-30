@@ -1,0 +1,5 @@
+view,split,variable,comparison,test,statistic,p_value,dof,effect_name,effect_size,min_expected,p_bh,bh_family,significant_bh
+view1,test,skin_group_ita,images in pair list vs not,chi-square,1.2246226636873476,0.2684553565180711,1.0,cramers_v,0.009745949460365317,678.9321337159699,0.2684553565180711,view|split,False
+view1,test,gender,images in pair list vs not,chi-square,,,,cramers_v,,,,view|split,False
+view1,train,skin_group_ita,images in pair list vs not,chi-square,0.3168289724881428,0.5735195772834214,1.0,cramers_v,0.004957188723557287,1520.0310245869853,0.5735195772834214,view|split,False
+view1,train,gender,images in pair list vs not,chi-square,,,,cramers_v,,,,view|split,False

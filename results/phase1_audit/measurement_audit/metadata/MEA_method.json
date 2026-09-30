@@ -1,0 +1,13 @@
+{
+  "manual_review": false,
+  "roi": "frozen preprocessing.yaml skin_measurement.roi_patches on the aligned crop, same for all datasets",
+  "pixel_filter": "preprocessing.yaml roi_skin_filter YCrCb Cb/Cr ranges, restricted to the warped source-extent mask",
+  "image_loading": "src.image_integrity.load_rgb_for_analysis (EXIF applied, ICC converted to sRGB)",
+  "colour_space": "scikit-image rgb2lab, sRGB D65; per-channel median of valid ROI pixels, computed once",
+  "ITA": "degrees(atan((L* - 50) / b*)), range -90 to 90; null and flagged when |b*| < ita_guard.b_star_min_abs",
+  "hue": "degrees(atan2(b*, a*)) mod 360, range 0 to 360; not independent of ITA because both use b*",
+  "groups": "categories.yaml ita_groups and skin_binary threshold, applied after the continuous value",
+  "greyscale": "not measured, status greyscale_no_chroma",
+  "reliability": "per-patch ITA, mean-based ITA and Phase 0 ITA agreement; Lin CCC, Bland-Altman, kappa",
+  "fitzpatrick_classifier": "not used"
+}

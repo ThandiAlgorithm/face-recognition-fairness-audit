@@ -1,0 +1,9 @@
+view,split,is_genuine,resolved,both_measured,n
+view1,test,False,True,False,45
+view1,test,False,True,True,455
+view1,test,True,True,False,19
+view1,test,True,True,True,481
+view1,train,False,True,False,65
+view1,train,False,True,True,1035
+view1,train,True,True,False,36
+view1,train,True,True,True,1064

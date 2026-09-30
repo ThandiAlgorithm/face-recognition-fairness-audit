@@ -1,0 +1,5 @@
+view,split,axis,n_impostor_known,n_missing,n_same,observed_same_pct,ci_low,ci_high,expected_same_pct_random_pairing,p_value,risk_difference_pp,p_bh,bh_family,significant_bh
+view1,test,skin_group_ita,455,45,221,48.57142857142857,44.0102863625948,53.156491017676736,50.46623056543971,0.4257639595465039,-1.8948019940111394,0.4257639595465039,view|split,False
+view1,train,skin_group_ita,1035,65,534,51.594202898550726,48.549358798426724,54.627256816959104,50.46623056543971,0.4747490463572817,1.1279723331110176,0.4747490463572817,view|split,False
+view1,test,gender,0,500,0,,,,,,,,view|split,False
+view1,train,gender,0,1100,0,,,,,,,,view|split,False

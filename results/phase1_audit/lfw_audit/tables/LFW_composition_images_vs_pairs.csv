@@ -1,0 +1,31 @@
+stratum,variable,category,n,denominator,pct,pct_ci_low,pct_ci_high,denominator_rule,thin_cell,view,split
+all_lfw_images,skin_group_ita,darker,7069,12893,54.82820134956953,53.967863006121775,55.68566343269858,rows with known label,False,view1,test
+all_lfw_images,skin_group_ita,lighter,5824,12893,45.17179865043047,44.314336567301424,46.03213699387824,rows with known label,False,view1,test
+images_in_pair_list,skin_group_ita,darker,804,1503,53.49301397205589,50.965709383832284,56.00250876449081,rows with known label,False,view1,test
+images_in_pair_list,skin_group_ita,lighter,699,1503,46.50698602794411,43.99749123550919,49.034290616167716,rows with known label,False,view1,test
+images_not_in_pair_list,skin_group_ita,darker,6265,11390,55.004389815627746,54.08922583262006,55.91617931646997,rows with known label,False,view1,test
+images_not_in_pair_list,skin_group_ita,lighter,5125,11390,44.995610184372254,44.083820683530035,45.910774167379934,rows with known label,False,view1,test
+genuine_pair_slots,skin_group_ita,darker,496,980,50.61224489795919,47.48576748591222,53.73394122756119,rows with known label,False,view1,test
+genuine_pair_slots,skin_group_ita,lighter,484,980,49.38775510204081,46.26605877243881,52.51423251408778,rows with known label,False,view1,test
+impostor_pair_slots,skin_group_ita,darker,518,954,54.297693920335426,51.12568927573076,57.435226442091626,rows with known label,False,view1,test
+impostor_pair_slots,skin_group_ita,lighter,436,954,45.702306079664574,42.56477355790837,48.87431072426925,rows with known label,False,view1,test
+all_lfw_images,gender,unknown,12893,12893,100.0,99.97021395639423,100.0,all rows,False,view1,test
+images_in_pair_list,gender,unknown,1503,1503,100.0,99.74506549456765,100.0,all rows,False,view1,test
+images_not_in_pair_list,gender,unknown,11390,11390,100.0,99.96628477906614,100.0,all rows,False,view1,test
+genuine_pair_slots,gender,unknown,980,980,100.0,99.60954493366252,100.0,all rows,False,view1,test
+impostor_pair_slots,gender,unknown,954,954,100.0,99.59894627807991,100.0,all rows,False,view1,test
+all_lfw_images,skin_group_ita,darker,7069,12893,54.82820134956953,53.967863006121775,55.68566343269858,rows with known label,False,view1,train
+all_lfw_images,skin_group_ita,lighter,5824,12893,45.17179865043047,44.314336567301424,46.03213699387824,rows with known label,False,view1,train
+images_in_pair_list,skin_group_ita,darker,1831,3365,54.41307578008915,52.72621577123464,56.089871409785985,rows with known label,False,view1,train
+images_in_pair_list,skin_group_ita,lighter,1534,3365,45.58692421991085,43.910128590214,47.27378422876535,rows with known label,False,view1,train
+images_not_in_pair_list,skin_group_ita,darker,5238,9528,54.97481108312343,53.97402532108981,55.97158701515741,rows with known label,False,view1,train
+images_not_in_pair_list,skin_group_ita,lighter,4290,9528,45.02518891687657,44.02841298484258,46.02597467891018,rows with known label,False,view1,train
+genuine_pair_slots,skin_group_ita,darker,1191,2161,55.11337343822304,53.00909693373374,57.199502827672845,rows with known label,False,view1,train
+genuine_pair_slots,skin_group_ita,lighter,970,2161,44.88662656177696,42.800497172327155,46.99090306626626,rows with known label,False,view1,train
+impostor_pair_slots,skin_group_ita,darker,1141,2135,53.442622950819676,51.32247000009742,55.550409679402165,rows with known label,False,view1,train
+impostor_pair_slots,skin_group_ita,lighter,994,2135,46.557377049180324,44.44959032059784,48.67752999990258,rows with known label,False,view1,train
+all_lfw_images,gender,unknown,12893,12893,100.0,99.97021395639423,100.0,all rows,False,view1,train
+images_in_pair_list,gender,unknown,3365,3365,100.0,99.88597092301166,100.0,all rows,False,view1,train
+images_not_in_pair_list,gender,unknown,9528,9528,100.0,99.95969867063684,100.0,all rows,False,view1,train
+genuine_pair_slots,gender,unknown,2161,2161,100.0,99.82255241809777,99.99999999999997,all rows,False,view1,train
+impostor_pair_slots,gender,unknown,2135,2135,100.0,99.82039534511304,100.0,all rows,False,view1,train

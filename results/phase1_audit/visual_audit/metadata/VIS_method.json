@@ -1,0 +1,14 @@
+{
+  "manual_review": false,
+  "face_region": "central ellipse on the aligned crop (width 0.72, height 0.82 of crop), intersected with the warped source-extent mask eroded by 3 px so alignment padding is never measured",
+  "image_loading": "src.image_integrity.load_rgb_for_analysis (EXIF applied, ICC converted to sRGB)",
+  "brightness": "mean CIELAB L* (scikit-image rgb2lab, D65) in the face region; 0 black to 100 white; higher is brighter",
+  "contrast": "SD of L* in the face region; higher is more contrast",
+  "sharpness_primary": "variance of the 3x3 Laplacian of 8-bit grey inside the face region; higher is sharper",
+  "sharpness_secondary": "mean Sobel gradient energy (Tenengrad); higher is sharper; exploratory",
+  "face_size": "RetinaFace bbox from the original image, clipped to image bounds: area px^2, shorter side px, area/image area",
+  "pose": "solvePnP (EPnP then iterative) with a generic 5-point head model in OpenCV camera axes (x right, y down, z forward), focal = max(W, H), principal point = image centre, on original-image landmarks. Euler angles in degrees: yaw about y, pitch about x, roll about z. Approximate.",
+  "pose_proxies": "yaw_proxy = (nose x - eye midpoint x) / interocular; pitch_proxy = (nose y - eye mid y) / (mouth mid y - eye mid y)",
+  "fairface": "publisher crops; no project detection, so geometry and pose are missing by design",
+  "qc": "robust z > outlier_robust_z within dataset, pose beyond pose_max_abs_deg, PnP failures; flagged, not removed"
+}

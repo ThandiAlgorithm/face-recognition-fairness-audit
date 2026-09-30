@@ -1,0 +1,13 @@
+{
+  "source": "Huang, Ramesh, Berg and Learned-Miller (2007), UMass Amherst Technical Report 07-49; Huang and Learned-Miller (2014), UMass Amherst Technical Report UM-CS-2014-003",
+  "view1": "development only: pairsDevTrain (1100 genuine + 1100 impostor) and pairsDevTest (500 + 500)",
+  "view2": "reporting only: 10 folds, each 300 genuine + 300 impostor; results reported as mean over folds",
+  "view2_metadata_opened_in_phase1": false,
+  "declared_training_paradigm": "Unrestricted, labeled outside data (pretrained ArcFace/FaceNet in Phase 2)",
+  "project_rules": [
+    "No model is tuned, selected or thresholded on View 2.",
+    "Yoking categories are frozen here, before any matcher score exists.",
+    "Pairs that do not resolve to master rows are kept and flagged, not dropped."
+  ],
+  "optional_stage": true
+}

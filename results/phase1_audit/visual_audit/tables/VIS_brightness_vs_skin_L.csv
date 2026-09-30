@@ -1,0 +1,4 @@
+dataset,n,spearman_rho_brightness_vs_skin_L,p_value
+fairface,93305,0.9146597166386845,0.0
+lfw,12886,0.8730823691154666,0.0
+utkface,21642,0.8979483856909094,0.0
