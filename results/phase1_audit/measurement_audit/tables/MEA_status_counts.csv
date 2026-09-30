@@ -1,0 +1,14 @@
+dataset,status,n
+fairface,greyscale_no_chroma,2826
+fairface,invalid_skin_roi,1175
+fairface,ita_undefined,158
+fairface,ok,93539
+lfw,greyscale_no_chroma,322
+lfw,invalid_skin_roi,10
+lfw,ita_undefined,8
+lfw,ok,12893
+utkface,greyscale_no_chroma,1590
+utkface,invalid_skin_roi,149
+utkface,ita_undefined,38
+utkface,not_eligible_measurement_audit,54
+utkface,ok,22277

@@ -1,0 +1,23 @@
+{
+  "categorical_axes": [
+    "skin_group_ita",
+    "ita_group",
+    "gender",
+    "age_band"
+  ],
+  "continuous_axes": [
+    "skin_ITA_deg",
+    "skin_L_star",
+    "skin_hue_deg",
+    "brightness_L_mean",
+    "contrast_L_sd",
+    "sharpness_lapvar"
+  ],
+  "within_dataset_only": [
+    "race"
+  ],
+  "gender_rule": "Binary native labels (FairFace, UTKFace) normalised to male/female; LFW gender only from a documented external label file, otherwise unknown and excluded from gender comparisons.",
+  "age_rule": "FairFace native bands and UTKFace ages bucketed into the same categories.yaml bands; LFW has no age labels.",
+  "skin_rule": "ITA, L*, hue and skin groups use one pixel pipeline (MEA) for every dataset",
+  "visual_rule": "visual measures use one pipeline (VIS) for every dataset"
+}

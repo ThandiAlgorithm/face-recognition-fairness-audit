@@ -1,0 +1,13 @@
+variable,comparison,test,statistic,p_value,dof,effect_name,effect_size,min_expected,p_bh,bh_family,significant_bh
+skin_group_ita,all datasets,chi-square,16878.41664803119,0.0,2,cramers_v,0.3636492210556182,3460.5954839619535,0.0,variable,True
+skin_group_ita,fairface vs lfw,chi-square,5386.244219253502,0.0,1,cramers_v,0.22538794704133958,2657.72945137651,0.0,variable,True
+skin_group_ita,fairface vs utkface,chi-square,15205.616561447512,0.0,1,cramers_v,0.36401083967315667,5362.090043222141,0.0,variable,True
+skin_group_ita,lfw vs utkface,chi-square,489.7492434878129,1.6157490367544735e-108,1,cramers_v,0.11917478190769251,6068.715018994867,1.6157490367544735e-108,variable,True
+ita_group,all datasets,chi-square,26688.347333437396,0.0,10,cramers_v,0.32334239638571727,1035.6158390397543,0.0,variable,True
+ita_group,fairface vs lfw,chi-square,10967.562416597764,0.0,5,cramers_v,0.32161976081209603,707.2460741872507,0.0,variable,True
+ita_group,fairface vs utkface,chi-square,19395.85354158548,0.0,5,cramers_v,0.41111824158099075,1713.248109031336,0.0,variable,True
+ita_group,lfw vs utkface,chi-square,1337.5312830832695,4.72085490154093e-287,5,cramers_v,0.1969470377854538,767.0855784009512,4.72085490154093e-287,variable,True
+gender,all datasets,chi-square,11.772105309523525,0.0006012493783263773,1,cramers_v,0.010128497964897246,10256.116737688775,0.0006012493783263773,variable,True
+gender,fairface vs utkface,chi-square,11.772105309523525,0.0006012493783263773,1,cramers_v,0.010128497964897246,10256.116737688775,0.0006012493783263773,variable,True
+age_band,all datasets,chi-square,114753.0,0.0,12,cramers_v,1.0,163.02259635913657,0.0,variable,True
+age_band,fairface vs utkface,chi-square,114753.0,0.0,12,cramers_v,1.0,163.02259635913657,0.0,variable,True

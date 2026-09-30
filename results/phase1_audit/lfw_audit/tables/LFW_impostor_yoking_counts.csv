@@ -1,0 +1,7 @@
+view,split,yoking,n,pct
+view1,test,cross_demographic,234,46.8
+view1,test,unknown,45,9.0
+view1,test,yoked_on_known_axes,221,44.2
+view1,train,cross_demographic,501,45.54545454545455
+view1,train,unknown,65,5.909090909090909
+view1,train,yoked_on_known_axes,534,48.54545454545455

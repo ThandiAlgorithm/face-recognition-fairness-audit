@@ -1,0 +1,7 @@
+dataset,shift_exclusion,n
+fairface,not_in_mea_analysis,4547
+fairface,,93151
+lfw,not_in_mea_analysis,355
+lfw,,12878
+utkface,not_in_mea_analysis,2503
+utkface,,21605

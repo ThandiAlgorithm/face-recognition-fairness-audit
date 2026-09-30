@@ -26,6 +26,66 @@ from representation_data import (
     load_rep006_missingness,
     load_rep006_patterns,
 )
+from phase1_audit_data import (
+    alignment_qa_artifact,
+    alignment_qa_sample,
+    detection_figure,
+    load_alignment_failures_by_subgroup,
+    load_alignment_qa_manifest,
+    load_brightness_vs_skin_tone,
+    load_confidence_histogram,
+    load_confidence_summary,
+    load_detection_integrity_by_dataset,
+    load_detector_limitations_text,
+    load_lfw_composition_images_vs_pairs,
+    load_lfw_composition_tests,
+    load_lfw_genuine_visual_difference_by_skin_group,
+    load_lfw_genuine_visual_difference_tests,
+    load_lfw_impostor_same_group_vs_random,
+    load_lfw_impostor_yoking_counts,
+    load_lfw_pair_file_checks,
+    load_lfw_pair_resolution_counts,
+    load_lfw_protocol_rules,
+    load_lfw_status,
+    load_lfw_visual_difference_median_by_yoking,
+    load_mea_boundary_sensitivity,
+    load_mea_limitations_text,
+    load_mea_method,
+    load_mea_reliability_agreement,
+    load_mea_roi_failure_by_group,
+    load_mea_roi_failure_tests,
+    load_mea_skin_group_distribution,
+    load_mea_status_counts,
+    load_mea_subgroup_omnibus,
+    load_mea_subgroup_pairwise,
+    load_mea_subgroup_summary,
+    load_mea_summary_by_dataset,
+    load_shift_analysis_set_counts,
+    load_shift_categorical_distributions,
+    load_shift_categorical_tests,
+    load_shift_continuous_summary,
+    load_shift_continuous_tests,
+    load_shift_effective_balance_summary,
+    load_shift_effective_balance_tests,
+    load_shift_frozen_axes,
+    load_shift_identity_depth,
+    load_shift_ita_within_native_race,
+    load_shift_limitations_text,
+    load_shift_nominal_balance,
+    load_subgroup_detection_failures,
+    load_vis_brightness_vs_skin,
+    load_vis_qc_flag_counts,
+    load_vis_status_counts,
+    load_vis_subgroup_omnibus,
+    load_vis_subgroup_pairwise,
+    load_vis_subgroup_summary,
+    load_vis_summary_by_dataset,
+    mea_figure,
+    mea_qa_image,
+    shift_figure,
+    vis_figure,
+    vis_qa_image,
+)
 from ui import (
     apply_wits_theme,
     blue_callout,
@@ -128,6 +188,30 @@ def bool_count(frame: pd.DataFrame, column: str) -> int:
     )
 
 
+def phase1_table(df: pd.DataFrame, empty_message: str = "Not available.") -> None:
+    if df.empty:
+        st.info(empty_message)
+    else:
+        st.dataframe(df, hide_index=True, use_container_width=True)
+
+
+def show_phase1_image(path, caption: str | None = None) -> None:
+    if path.exists():
+        st.image(str(path), caption=caption, use_container_width=True)
+    else:
+        st.info(f"Figure not available: {path.name}")
+
+
+def phase1_image_grid(paths: list, columns: int = 5) -> None:
+    rows = [paths[i:i + columns] for i in range(0, len(paths), columns)]
+    for row in rows:
+        cols = st.columns(columns)
+        for col, path in zip(cols, row):
+            with col:
+                if path.exists():
+                    st.image(str(path), use_container_width=True, caption=path.stem.replace(".aligned", ""))
+
+
 def format_pct(value) -> str:
     if pd.isna(value):
         return "Unavailable"
@@ -219,6 +303,8 @@ top_4.metric(
     detection_tab,
     visual_tab,
     measurement_tab,
+    shift_tab,
+    lfw_protocol_tab,
 ) = st.tabs(
     [
         "Overview",
@@ -227,6 +313,8 @@ top_4.metric(
         "Detection & Alignment",
         "Visual Conditions",
         "Measurement",
+        "Cross-dataset shift",
+        "LFW protocol",
     ]
 )
 
@@ -1571,6 +1659,101 @@ with detection_tab:
         """
     )
 
+    st.divider()
+
+    section_label("DET-001 to DET-005")
+    st.subheader("Detector limitations audit")
+
+    phase1_table(load_detection_integrity_by_dataset(), "Detection integrity table not available.")
+
+    subgroup_failures = load_subgroup_detection_failures()
+    if not subgroup_failures.empty:
+        dataset_wide = subgroup_failures[subgroup_failures["attribute"].eq("ALL")]
+        if not dataset_wide.empty:
+            fig = px.bar(
+                dataset_wide, x="dataset", y="failure_rate", color="dataset",
+                color_discrete_map={k.lower(): v for k, v in DATASET_COLOURS.items()},
+                title="Detection failure rate by dataset",
+            )
+            fig.update_layout(showlegend=False, height=380, yaxis_tickformat=".1%")
+            st.plotly_chart(fig, use_container_width=True)
+
+    with st.expander("Confidence distribution"):
+        phase1_table(load_confidence_summary())
+        phase1_table(load_confidence_histogram())
+
+    with st.expander("Subgroup detection failures"):
+        phase1_table(subgroup_failures)
+
+    with st.expander("Alignment failures by subgroup"):
+        phase1_table(load_alignment_failures_by_subgroup())
+
+    st.markdown("**Detector figures**")
+    detection_figure_files = [
+        "alignment_outcomes.png", "confidence_distributions.png", "detector_stage_funnel.png",
+        "failure_examples_contact_sheet.png", "utkface_age_band_confidence.png",
+        "utkface_age_band_failure_rates.png", "utkface_gender_confidence.png",
+        "utkface_gender_failure_rates.png", "utkface_race_confidence.png",
+        "utkface_race_failure_rates.png", "visual_review_categories.png",
+    ]
+    chosen_detection_figure = st.selectbox("Figure", detection_figure_files, key="det_figure_choice")
+    show_phase1_image(detection_figure(chosen_detection_figure))
+
+    limitations_text = load_detector_limitations_text()
+    if limitations_text:
+        with st.expander("Detector limitations (draft)"):
+            st.markdown(limitations_text)
+
+    st.divider()
+
+    st.subheader("Phase 0 alignment QA")
+    st.write(
+        "A curated sample of aligned face crops across all three datasets, "
+        "plus composite contact sheets and per-stage QA images from Phase 0 "
+        "preprocessing. This is a curated sample, not the full 37,000+ "
+        "production aligned-crop set."
+    )
+
+    qa_manifest = load_alignment_qa_manifest()
+    if qa_manifest.empty:
+        st.info("Alignment QA manifest not available.")
+    else:
+        phase1_table(qa_manifest["dataset"].value_counts().rename_axis("dataset").reset_index(name="n"))
+
+        qa_dataset_choice = st.selectbox(
+            "Dataset", sorted(qa_manifest["dataset"].unique()), key="alignment_qa_dataset",
+        )
+        qa_subset = qa_manifest[qa_manifest["dataset"].eq(qa_dataset_choice)]
+        qa_paths = [alignment_qa_sample(name) for name in qa_subset["filename"]]
+        st.caption(f"Showing {len(qa_paths)} curated {qa_dataset_choice} samples")
+        phase1_image_grid(qa_paths, columns=5)
+
+        with st.expander("Full sample list"):
+            phase1_table(qa_subset)
+
+    st.markdown("**Composite alignment contact sheets**")
+    sheet_choice = st.radio(
+        "Contact sheet", ["Full sample", "20-image smoke test"], horizontal=True, key="alignment_sheet_choice",
+    )
+    sheet_file = "alignment_contact_sheet.png" if sheet_choice == "Full sample" else "alignment_contact_sheet_smoke20.png"
+    show_phase1_image(alignment_qa_artifact("contact_sheets", sheet_file))
+
+    qa_col1, qa_col2 = st.columns(2)
+    with qa_col1:
+        st.markdown("**Detector pilot QA**")
+        show_phase1_image(alignment_qa_artifact("detector_pilot", "detection_alignment_qa.png"))
+        show_phase1_image(alignment_qa_artifact("detector_pilot", "supplied_crop_qa.png"))
+    with qa_col2:
+        st.markdown("**Skin-ROI measurement QA**")
+        show_phase1_image(alignment_qa_artifact("measurement_examples", "skin_roi_qa.png"))
+
+    st.markdown("**Greyscale / achromatic detection QA**")
+    achromatic_cols = st.columns(3)
+    achromatic_files = ["achromatic_chroma_distribution.png", "achromatic_sample.png", "mean_rule_only_flagged_sample.png"]
+    for col, filename in zip(achromatic_cols, achromatic_files):
+        with col:
+            show_phase1_image(alignment_qa_artifact("achromatic", filename))
+
 
 # ============================================================
 # VISUAL CONDITIONS
@@ -1682,6 +1865,133 @@ with visual_tab:
         lighting, scale or pose differ systematically between groups,
         later subgroup error differences should not automatically be
         attributed only to demographic representation.
+        """
+    )
+
+    st.divider()
+
+    section_label("VIS-001")
+    st.subheader("Visual quality audit: reliability, QC flags & subgroup tests")
+
+    phase1_table(load_vis_status_counts(), "Status counts not available.")
+
+    st.markdown("**Summary by dataset**")
+    phase1_table(load_vis_summary_by_dataset())
+
+    with st.expander("Subgroup summary"):
+        phase1_table(load_vis_subgroup_summary())
+    with st.expander("Subgroup omnibus tests"):
+        phase1_table(load_vis_subgroup_omnibus())
+    with st.expander("Subgroup pairwise comparisons"):
+        phase1_table(load_vis_subgroup_pairwise())
+
+    st.markdown("**Automated QC flag counts** (statistical outlier flags, not exclusions)")
+    phase1_table(load_vis_qc_flag_counts())
+
+    st.markdown("**VIS figures**")
+    vis_phase1_metrics = [
+        "brightness_L_mean", "contrast_L_sd", "face_area_ratio", "face_short_side_px",
+        "illumination_asymmetry", "pitch_deg", "roll_deg", "sharpness_lapvar", "yaw_deg",
+    ]
+    vis_figure_kind = st.radio(
+        "Figure type", ["Histogram", "Boxplot by skin-tone group"], horizontal=True, key="vis_figure_kind",
+    )
+    vis_metric_choice = st.selectbox("Metric", vis_phase1_metrics, key="vis_phase1_metric")
+    if vis_figure_kind == "Histogram":
+        show_phase1_image(vis_figure(f"VIS_hist_{vis_metric_choice}.png"))
+    else:
+        show_phase1_image(vis_figure(f"VIS_box_{vis_metric_choice}_by_skin_group_ita.png"))
+
+    st.markdown("**Extreme-value QA contact sheets**")
+    vis_extreme_choice = st.selectbox(
+        "Metric", ["brightness_L_mean", "sharpness_lapvar", "yaw_deg"], key="vis_extreme_metric",
+    )
+    show_phase1_image(vis_qa_image(f"VIS_extremes_{vis_extreme_choice}.png"))
+
+    st.divider()
+
+    section_label("MEA x VIS")
+    st.subheader("Does image brightness change which skin-tone group someone is assigned to?")
+
+    blue_callout(
+        """
+        Skin-tone measurement is derived from pixel values in the same
+        photograph whose lighting is measured separately here. If a photo's
+        brightness shifts the measured L*/ITA enough to move someone across
+        a skin-tone group boundary, that is a <strong>lighting artefact being
+        read as a skin-tone difference</strong> — the confound this section is
+        designed to surface, not a claim about anyone's actual skin tone.
+        """
+    )
+
+    combined_brightness = load_brightness_vs_skin_tone()
+
+    if combined_brightness.empty:
+        st.info("Combined brightness/skin-tone table not available. Run scripts/sync_phase1_results.py.")
+    else:
+        st.markdown("**Brightness vs. measured skin lightness**")
+
+        brightness_sample = combined_brightness.sample(n=min(8000, len(combined_brightness)), random_state=26041)
+        scatter_fig = px.scatter(
+            brightness_sample,
+            x="brightness_L_mean",
+            y="skin_L_star",
+            color="skin_group_ita",
+            facet_col="dataset",
+            opacity=0.35,
+            height=430,
+            labels={
+                "brightness_L_mean": "Image brightness (L* mean)",
+                "skin_L_star": "Measured skin lightness (L*)",
+                "skin_group_ita": "Skin-tone group (ITA)",
+            },
+        )
+        st.plotly_chart(scatter_fig, use_container_width=True)
+
+        st.markdown("**Skin-tone group assignment by brightness quartile**")
+        st.write(
+            "Images are split into four brightness quartiles (Q1 = darkest photos, "
+            "Q4 = brightest photos) within each dataset. If skin-tone group shares "
+            "shift noticeably across quartiles, brightness is influencing the "
+            "assigned group independently of the metric's intended meaning."
+        )
+
+        quartile_source = combined_brightness.dropna(subset=["skin_group_ita"]).copy()
+        quartile_source["brightness_quartile"] = quartile_source.groupby("dataset")["brightness_L_mean"].transform(
+            lambda s: pd.qcut(s, 4, labels=["Q1 (darkest)", "Q2", "Q3", "Q4 (brightest)"], duplicates="drop")
+        )
+        quartile_share = (
+            quartile_source.groupby(["dataset", "brightness_quartile", "skin_group_ita"], observed=True)
+            .size().reset_index(name="n")
+        )
+        quartile_share["pct"] = 100 * quartile_share["n"] / quartile_share.groupby(
+            ["dataset", "brightness_quartile"], observed=True
+        )["n"].transform("sum")
+
+        brightness_dataset_choice = st.selectbox(
+            "Dataset", sorted(quartile_source["dataset"].unique()), key="brightness_quartile_dataset",
+        )
+        quartile_fig = px.bar(
+            quartile_share[quartile_share["dataset"].eq(brightness_dataset_choice)],
+            x="brightness_quartile",
+            y="pct",
+            color="skin_group_ita",
+            barmode="stack",
+            height=420,
+            labels={"brightness_quartile": "Image brightness quartile", "pct": "Share of images (%)", "skin_group_ita": "Skin-tone group (ITA)"},
+        )
+        st.plotly_chart(quartile_fig, use_container_width=True)
+
+    st.markdown("**Correlation summary** (Spearman rank correlation, brightness vs. skin L*, by dataset)")
+    phase1_table(load_vis_brightness_vs_skin())
+
+    gold_callout(
+        """
+        A significant positive correlation here does not by itself mean the
+        skin-tone measurement is invalid — brighter photographs and lighter
+        skin can be correlated for real demographic-composition reasons too.
+        What this section is for is making the relationship visible so it can
+        be checked against subgroup composition, rather than assumed away.
         """
     )
 
@@ -1903,4 +2213,190 @@ with measurement_tab:
         not ground-truth demographic identities.
         """
     )
+
+    st.divider()
+
+    section_label("MEA-001 to MEA-005")
+    st.subheader("Skin-tone measurement reliability audit")
+
+    phase1_table(load_mea_status_counts(), "Status counts not available.")
+
+    st.markdown("**Summary by dataset**")
+    phase1_table(load_mea_summary_by_dataset())
+
+    with st.expander("Subgroup summary"):
+        phase1_table(load_mea_subgroup_summary())
+    with st.expander("Subgroup omnibus tests"):
+        phase1_table(load_mea_subgroup_omnibus())
+    with st.expander("Subgroup pairwise comparisons"):
+        phase1_table(load_mea_subgroup_pairwise())
+
+    st.markdown("**Reliability agreement** (Lin's CCC, Bland-Altman bias/limits, kappa)")
+    phase1_table(load_mea_reliability_agreement())
+
+    with st.expander("Boundary sensitivity"):
+        phase1_table(load_mea_boundary_sensitivity())
+
+    skin_group_distribution = load_mea_skin_group_distribution()
+    with st.expander("Skin-tone group distribution"):
+        phase1_table(skin_group_distribution)
+
+    if not skin_group_distribution.empty and {"dataset", "category", "pct"}.issubset(skin_group_distribution.columns):
+        dist_fig = px.bar(
+            skin_group_distribution, x="category", y="pct", color="dataset", barmode="group",
+            color_discrete_map={k.lower(): v for k, v in DATASET_COLOURS.items()},
+            title="Skin-tone group distribution by dataset",
+            labels={"pct": "Share of images (%)", "category": "Skin-tone group"},
+        )
+        dist_fig.update_layout(height=400)
+        st.plotly_chart(dist_fig, use_container_width=True)
+
+    with st.expander("ROI failure by group"):
+        phase1_table(load_mea_roi_failure_by_group())
+        phase1_table(load_mea_roi_failure_tests())
+
+    st.markdown("**MEA figures**")
+    mea_figure_kind = st.radio(
+        "Figure type", ["Histogram", "Bland-Altman reliability"], horizontal=True, key="mea_figure_kind",
+    )
+    if mea_figure_kind == "Histogram":
+        mea_hist_metric = st.selectbox(
+            "Metric", ["ITA", "skin_L_star", "skin_chroma", "skin_hue_deg"], key="mea_hist_metric",
+        )
+        show_phase1_image(mea_figure(f"MEA_hist_{mea_hist_metric}.png"))
+    else:
+        ba_col1, ba_col2 = st.columns(2)
+        with ba_col1:
+            ba_dataset = st.selectbox("Dataset", ["fairface", "lfw", "utkface"], key="mea_ba_dataset")
+        with ba_col2:
+            ba_comparison = st.selectbox(
+                "Comparison",
+                [
+                    "rel_ITA_forehead_vs_rel_ITA_left_cheek",
+                    "rel_ITA_forehead_vs_rel_ITA_right_cheek",
+                    "rel_ITA_left_cheek_vs_rel_ITA_right_cheek",
+                    "skin_ITA_deg_vs_phase0_ITA",
+                    "skin_ITA_deg_vs_rel_ITA_mean_based",
+                ],
+                key="mea_ba_comparison",
+            )
+        show_phase1_image(mea_figure(f"MEA_BA_{ba_dataset}_{ba_comparison}.png"))
+
+    st.markdown("**QA sample**")
+    show_phase1_image(mea_qa_image("MEA_roi_overlay_sample.png"), "Skin-tone ROI overlay sample")
+
+    mea_method = load_mea_method()
+    if mea_method:
+        with st.expander("Methodology"):
+            st.json(mea_method)
+
+    mea_limitations = load_mea_limitations_text()
+    if mea_limitations:
+        with st.expander("Limitations (draft)"):
+            st.markdown(mea_limitations)
+
+
+# ============================================================
+# CROSS-DATASET SHIFT
+# ============================================================
+
+with shift_tab:
+
+    section_label("SHIFT-001")
+    st.subheader("How comparable are FairFace, UTKFace and LFW after measurement?")
+
+    phase1_table(load_shift_analysis_set_counts(), "Analysis set counts not available.")
+
+    categorical_dist = load_shift_categorical_distributions()
+    with st.expander("Categorical distributions & tests", expanded=True):
+        phase1_table(categorical_dist)
+        phase1_table(load_shift_categorical_tests())
+
+    if not categorical_dist.empty and {"dataset", "variable", "category", "pct"}.issubset(categorical_dist.columns):
+        shift_variable_choice = st.selectbox(
+            "Variable", sorted(categorical_dist["variable"].unique()), key="shift_categorical_variable",
+        )
+        shift_bar_fig = px.bar(
+            categorical_dist[categorical_dist["variable"].eq(shift_variable_choice)],
+            x="category", y="pct", color="dataset", barmode="group",
+            color_discrete_map={k.lower(): v for k, v in DATASET_COLOURS.items()},
+            labels={"pct": "Share of images (%)", "category": shift_variable_choice},
+            title=f"{shift_variable_choice} distribution by dataset",
+        )
+        shift_bar_fig.update_layout(height=400)
+        st.plotly_chart(shift_bar_fig, use_container_width=True)
+
+    with st.expander("Continuous summary & tests"):
+        phase1_table(load_shift_continuous_summary())
+        phase1_table(load_shift_continuous_tests())
+    with st.expander("Nominal & effective balance"):
+        phase1_table(load_shift_nominal_balance())
+        phase1_table(load_shift_effective_balance_summary())
+        phase1_table(load_shift_effective_balance_tests())
+    with st.expander("Identity depth"):
+        phase1_table(load_shift_identity_depth())
+    with st.expander("ITA within native race"):
+        phase1_table(load_shift_ita_within_native_race())
+
+    st.markdown("**Skin-tone group composition by dataset**")
+    show_phase1_image(shift_figure("SHIFT_skin_group_by_dataset.png"))
+
+    shift_axes = load_shift_frozen_axes()
+    if shift_axes:
+        with st.expander("Frozen comparison axes"):
+            st.json(shift_axes)
+
+    shift_limitations = load_shift_limitations_text()
+    if shift_limitations:
+        with st.expander("Interpretation limits (draft)"):
+            st.markdown(shift_limitations)
+
+
+# ============================================================
+# LFW PROTOCOL
+# ============================================================
+
+with lfw_protocol_tab:
+
+    section_label("LFW protocol")
+    st.subheader("Official pair-list integrity, composition and skin-tone yoking")
+
+    phase1_table(load_lfw_pair_file_checks(), "Pair-file checks not available.")
+
+    st.markdown("**Pair resolution**")
+    phase1_table(load_lfw_pair_resolution_counts())
+
+    with st.expander("Composition: images vs. pairs"):
+        phase1_table(load_lfw_composition_images_vs_pairs())
+        phase1_table(load_lfw_composition_tests())
+
+    st.markdown("**Impostor-pair skin-tone yoking**")
+    lfw_yoking = load_lfw_impostor_yoking_counts()
+    phase1_table(lfw_yoking)
+    if not lfw_yoking.empty:
+        lfw_yoking_fig = px.bar(
+            lfw_yoking, x="view", y="pct", color="yoking", barmode="stack", facet_col="split",
+            labels={"pct": "Share of impostor pairs (%)", "view": "View", "yoking": "Yoking"},
+            height=420,
+        )
+        st.plotly_chart(lfw_yoking_fig, use_container_width=True)
+
+    with st.expander("Impostor same-skin-group vs. random pairing"):
+        phase1_table(load_lfw_impostor_same_group_vs_random())
+
+    with st.expander("Genuine-pair visual difference by skin-tone group"):
+        phase1_table(load_lfw_genuine_visual_difference_by_skin_group())
+        phase1_table(load_lfw_genuine_visual_difference_tests())
+
+    with st.expander("Visual difference, median by yoking category"):
+        phase1_table(load_lfw_visual_difference_median_by_yoking())
+
+    lfw_status = load_lfw_status()
+    lfw_rules = load_lfw_protocol_rules()
+    if lfw_status or lfw_rules:
+        with st.expander("Protocol status & rules"):
+            if lfw_status:
+                st.json(lfw_status)
+            if lfw_rules:
+                st.json(lfw_rules)
     

@@ -1,0 +1,4 @@
+view,split,n_genuine,n_impostor,expected,counts_match_protocol,parse_errors,status
+view1,train,1100.0,1100.0,"(1100, 1100)",True,0.0,parsed
+view1,test,500.0,500.0,"(500, 500)",True,0.0,parsed
+view2,10fold,,,,,,"sealed, not opened (allow_view2_metadata=false)"

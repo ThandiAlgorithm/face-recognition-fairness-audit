@@ -1,0 +1,4 @@
+dataset,outlier_brightness_L_mean,outlier_brightness_L_median,outlier_lstar_p5_p95_range,outlier_contrast_L_sd,outlier_illumination_asymmetry,outlier_shadow_clip_fraction,outlier_highlight_clip_fraction,outlier_sharpness_lapvar,outlier_sharpness_tenengrad,outlier_noise_residual_sd,outlier_eye_band_L_mean,outlier_eye_band_lapvar,outlier_face_px_area,outlier_face_short_side_px,outlier_face_area_ratio,outlier_interocular_px,flag_pose_implausible,flag_pose_failed,flag_face_ratio_invalid
+fairface,0,0,0,3,266,39176,0,9197,1328,986,0,9642,0,0,0,0,0,0,0
+lfw,0,0,0,1,38,0,0,330,51,31,0,502,36,18,36,55,7,0,0
+utkface,0,0,0,1,38,8541,0,2143,210,297,0,2233,897,1,26,0,16,0,0
