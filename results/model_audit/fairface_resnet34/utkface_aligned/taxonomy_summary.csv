@@ -1,0 +1,5 @@
+measure,n,proportion
+All aligned UTKFace images,24054,1.0
+Race-comparable UTKFace images,22340,0.9287436600981126
+Comparable images predicted outside the harmonised taxonomy,3940,0.17636526410026857
+UTKFace native Others images,1710,0.07109004739336493

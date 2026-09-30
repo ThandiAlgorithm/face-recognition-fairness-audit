@@ -1,0 +1,36 @@
+{
+  "architecture": "FairFace ResNet-34",
+  "checkpoint": "models\\fairface\\res34_fair_align_multi_7_20190809.pt",
+  "checkpoint_sha256": "37F2E74C0E7DA196F8EDD7DAE0C88CFFDBEF7923BEEBEBCC27381F0AD0FDB2C1",
+  "device": "cpu",
+  "hardware": "CPU",
+  "batch_size": 16,
+  "n_images": 10954,
+  "elapsed_seconds": 821.2480202000006,
+  "images_per_second": 13.338236112072872,
+  "seed": 26041,
+  "race_classes": [
+    "White",
+    "Black",
+    "Latino_Hispanic",
+    "East Asian",
+    "Southeast Asian",
+    "Indian",
+    "Middle Eastern"
+  ],
+  "gender_classes": [
+    "Male",
+    "Female"
+  ],
+  "age_classes": [
+    "0-2",
+    "3-9",
+    "10-19",
+    "20-29",
+    "30-39",
+    "40-49",
+    "50-59",
+    "60-69",
+    "70+"
+  ]
+}

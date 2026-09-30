@@ -1,0 +1,7 @@
+fairface_resnet34_prediction,White,Black,Asian,Indian,Latino_Hispanic,Middle Eastern
+White,7333,29,299,40,383,370
+Black,10,648,33,10,38,5
+Asian,47,5,833,14,49,4
+Indian,10,17,13,64,29,10
+Latino_Hispanic,120,23,64,26,221,44
+Middle Eastern,1125,27,94,68,340,788
