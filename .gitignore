@@ -60,6 +60,7 @@ dist/
 .eggs/
 venv/
 .venv/
+.venv-audit/
 env/
 .conda/
 .python-version

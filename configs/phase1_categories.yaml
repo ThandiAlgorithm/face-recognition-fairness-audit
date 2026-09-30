@@ -1,0 +1,42 @@
+ita_groups:
+  - name: very_light
+    min_exclusive: 55
+    max_inclusive: null
+    ordinal_rank: 1
+  - name: light
+    min_exclusive: 41
+    max_inclusive: 55
+    ordinal_rank: 2
+  - name: intermediate
+    min_exclusive: 28
+    max_inclusive: 41
+    ordinal_rank: 3
+  - name: tan
+    min_exclusive: 10
+    max_inclusive: 28
+    ordinal_rank: 4
+  - name: brown
+    min_exclusive: -30
+    max_inclusive: 10
+    ordinal_rank: 5
+  - name: dark
+    min_exclusive: null
+    max_inclusive: -30
+    ordinal_rank: 6
+
+skin_binary:
+  ita:
+    threshold_degrees: 28
+    above_label: lighter
+    at_or_below_label: darker
+
+# Optional shared age bands if you later derive UTKFace age_band from exact age.
+age_bands:
+  - {name: "0-9", min_inclusive: 0, max_inclusive: 9}
+  - {name: "10-19", min_inclusive: 10, max_inclusive: 19}
+  - {name: "20-29", min_inclusive: 20, max_inclusive: 29}
+  - {name: "30-39", min_inclusive: 30, max_inclusive: 39}
+  - {name: "40-49", min_inclusive: 40, max_inclusive: 49}
+  - {name: "50-59", min_inclusive: 50, max_inclusive: 59}
+  - {name: "60-69", min_inclusive: 60, max_inclusive: 69}
+  - {name: "70+", min_inclusive: 70, max_inclusive: null}

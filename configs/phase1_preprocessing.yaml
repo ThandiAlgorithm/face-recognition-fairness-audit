@@ -1,0 +1,21 @@
+skin_measurement:
+  # Fixed relative patches on the aligned face crop. These are intentionally simple
+  # and identical across datasets in the close-out audit.
+  roi_patches:
+    forehead:
+      x: [0.38, 0.62]
+      y: [0.20, 0.32]
+    left_cheek:
+      x: [0.25, 0.40]
+      y: [0.50, 0.66]
+    right_cheek:
+      x: [0.60, 0.75]
+      y: [0.50, 0.66]
+  roi_skin_filter:
+    # OpenCV RGB->YCrCb ranges. These are a simple pixel-quality filter, not a
+    # demographic classifier and not a ground-truth skin detector.
+    cb_range: [77, 127]
+    cr_range: [133, 173]
+  roi_min_valid_pixels: 150
+  ita_guard:
+    b_star_min_abs: 1.0
