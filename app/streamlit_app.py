@@ -34,7 +34,7 @@ School of Electrical and<br>Information Engineering
         """,
         unsafe_allow_html=True,
     )
-    
+
 
 # ---------------------------------------------------------
 # Explicit app navigation
@@ -55,8 +55,13 @@ pages = {
         ),
         st.Page(
             "pages/baseline_model.py",
-            title="Baseline Model",
+            title="Model Audit",
             icon="🧠",
+        ),
+        st.Page(
+            "pages/report_packs.py",
+            title="Evidence & Report Packs",
+            icon="📑",
         ),
         st.Page(
             "pages/fairness_evaluation.py",
