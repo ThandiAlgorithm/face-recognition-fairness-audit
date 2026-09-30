@@ -1,0 +1,15 @@
+{
+  "library": "DeepFace",
+  "dataset": "LFW",
+  "audit_type": "prediction_only",
+  "ground_truth_demographics_available": false,
+  "input_preprocessing": "project five-point alignment reconstructed from stored landmarks; DeepFace detector skipped",
+  "n_images": 13233,
+  "excluded_before_inference": 0,
+  "repeated_identities": 1680,
+  "elapsed_seconds": 4115.970274000021,
+  "images_per_second": 3.2150377964561394,
+  "batch_size": 16,
+  "tensorflow_version": "2.21.0",
+  "seed": 26041
+}

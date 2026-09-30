@@ -1,0 +1,8 @@
+{
+  "task": "gender classification",
+  "positive_class": "Female",
+  "sensitive_feature": "UTKFace native race",
+  "tpr_difference": 0.19223577377291412,
+  "fpr_difference": 0.11658664328955344,
+  "equalized_odds_difference": 0.19223577377291412
+}

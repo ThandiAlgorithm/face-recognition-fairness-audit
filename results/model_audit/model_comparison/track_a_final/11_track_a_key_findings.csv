@@ -1,0 +1,19 @@
+domain,dataset,measure,value
+classification performance,FairFace validation,FairFace ResNet-34 gender accuracy,0.9438561256162132
+classification performance,FairFace validation,DeepFace gender accuracy,0.7016614935183495
+fairness,FairFace validation,FairFace ResNet-34 gender EO difference,0.07427334598752745
+fairness,FairFace validation,DeepFace gender EO difference,0.3403032410551022
+classification performance,UTKFace aligned,FairFace ResNet-34 gender accuracy,0.9435343035343036
+classification performance,UTKFace aligned,DeepFace gender accuracy,0.8622869022869023
+fairness,UTKFace aligned,FairFace ResNet-34 gender EO difference,0.06178165743383135
+fairness,UTKFace aligned,DeepFace gender EO difference,0.19223577377291412
+measurement sensitivity,LFW,race image-level cross-model agreement,0.7471472833068843
+measurement sensitivity,LFW,gender image-level cross-model agreement,0.9536764150230485
+measurement sensitivity,LFW,race distribution total variation distance,0.09226932668329182
+measurement sensitivity,LFW,gender distribution total variation distance,0.036046248016322835
+measurement stability,LFW,race repeated-identity modal cross-model agreement,0.75
+measurement stability,LFW,gender repeated-identity modal cross-model agreement,0.9648809523809524
+measurement stability,LFW,FairFace ResNet-34 mean race consistency,0.8725928772424512
+measurement stability,LFW,FairFace ResNet-34 mean gender consistency,0.9825200910563123
+measurement stability,LFW,DeepFace mean race consistency,0.8721727444353886
+measurement stability,LFW,DeepFace mean gender consistency,0.9730691044650948

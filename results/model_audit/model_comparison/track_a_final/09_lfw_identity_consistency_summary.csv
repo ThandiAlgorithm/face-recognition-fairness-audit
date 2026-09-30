@@ -1,0 +1,3 @@
+model,repeated_identities,images_in_repeated_identities,mean_race_consistency,median_race_consistency,mean_gender_consistency,median_gender_consistency
+FairFace ResNet-34,1680,9164,0.8725928772424512,1.0,0.9825200910563123,1.0
+DeepFace,1680,9164,0.8721727444353886,1.0,0.9730691044650948,1.0

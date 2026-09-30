@@ -1,0 +1,1681 @@
+subject_id,n_images,fairface_modal_race,deepface_modal_race,race_modal_agreement,fairface_race_consistency,deepface_race_consistency,fairface_modal_gender,deepface_modal_gender,gender_modal_agreement,fairface_gender_consistency,deepface_gender_consistency
+Aaron_Peirsol,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Aaron_Sorkin,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Abdel_Nasser_Assidi,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Abdoulaye_Wade,4,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Abdullah,4,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Abdullah_Gul,19,Middle Eastern,Middle Eastern,True,0.9473684210526315,0.5263157894736842,Male,Male,True,1.0,1.0
+Abdullah_al-Attiyah,3,Indian,Indian,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Abdullatif_Sener,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Abel_Pacheco,4,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Male,Male,True,1.0,1.0
+Abid_Hamid_Mahmud_Al-Tikriti,3,Middle Eastern,Middle Eastern,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Adam_Sandler,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Adam_Scott,2,Asian,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Adel_Al-Jubeir,3,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Adolfo_Aguilar_Zinser,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Adolfo_Rodriguez_Saa,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Adrian_McPherson,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Adrian_Nastase,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Adrien_Brody,12,Middle Eastern,White,False,0.8333333333333334,0.6666666666666666,Male,Male,True,0.9166666666666666,1.0
+Ahmad_Masood,2,Middle Eastern,Indian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Ahmed_Chalabi,5,Middle Eastern,Middle Eastern,True,0.8,0.6,Male,Male,True,1.0,1.0
+Ahmet_Necdet_Sezer,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ai_Sugiyama,5,Asian,Asian,True,1.0,1.0,Female,Male,False,1.0,0.8
+Aicha_El_Ouafi,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,0.6666666666666666
+Aitor_Gonzalez,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Akbar_Hashemi_Rafsanjani,3,White,Middle Eastern,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Akhmed_Zakayev,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Al_Davis,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Al_Gore,8,White,White,True,1.0,0.875,Male,Male,True,1.0,1.0
+Al_Pacino,3,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Al_Sharpton,7,Black,Black,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+Alan_Ball,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Alan_Greenspan,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Alan_Mulally,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Alastair_Campbell,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Albert_Costa,6,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Alberto_Fujimori,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Alberto_Ruiz_Gallardon,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Albrecht_Mentz,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Aldo_Paredes,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Alec_Baldwin,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Alejandro_Atchugarry,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Alejandro_Avila,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Alejandro_Toledo,39,Middle Eastern,Latino_Hispanic,False,0.4358974358974359,0.6153846153846154,Male,Male,True,0.9743589743589743,1.0
+Aleksander_Kwasniewski,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Alex_Barros,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Alex_Penelas,2,Latino_Hispanic,Latino_Hispanic,True,1.0,0.5,Male,Male,True,1.0,1.0
+Alex_Sink,3,White,White,True,1.0,0.6666666666666666,Female,Male,False,1.0,1.0
+Alexander_Downer,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Alexander_Losyukov,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Alexander_Rumyantsev,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Alexandra_Stevenson,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Alexandra_Vodjanikova,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ali_Abbas,2,Middle Eastern,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Ali_Khamenei,3,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ali_Naimi,8,Latino_Hispanic,Latino_Hispanic,True,0.5,0.375,Male,Male,True,1.0,1.0
+Alice_Fisher,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Alicia_Silverstone,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Alimzhan_Tokhtakhounov,2,Asian,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Alison_Lohman,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Allen_Iverson,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Allison_Janney,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Allyson_Felix,5,Black,Black,True,1.0,0.6,Female,Male,False,0.6,0.8
+Alvaro_Noboa,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Alvaro_Silva_Calderon,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Alvaro_Uribe,35,White,White,True,0.6571428571428571,0.9714285714285714,Male,Male,True,1.0,1.0
+Amanda_Beard,2,Latino_Hispanic,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Amanda_Bynes,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Amanda_Coetzer,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Amber_Tamblyn,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Amelia_Vega,7,Latino_Hispanic,White,False,0.5714285714285714,0.5714285714285714,Female,Female,True,1.0,1.0
+Amelie_Mauresmo,21,White,White,True,0.8571428571428571,1.0,Male,Male,True,0.7142857142857143,0.9523809523809523
+Amer_al-Saadi,4,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Amram_Mitzna,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Ana_Guevara,7,Middle Eastern,White,False,0.7142857142857143,0.5714285714285714,Male,Male,True,0.7142857142857143,1.0
+Ana_Palacio,8,White,White,True,0.75,0.875,Female,Female,True,1.0,0.875
+Anastasia_Myskina,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Female,Female,True,0.6666666666666666,0.6666666666666666
+Anders_Ebbeson,3,White,Black,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+Anders_Fogh_Rasmussen,4,Middle Eastern,White,False,0.5,0.75,Male,Male,True,1.0,1.0
+Andre_Agassi,36,Middle Eastern,Middle Eastern,True,0.75,0.5277777777777778,Male,Male,True,1.0,1.0
+Andrei_Mikhnevich,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Andrew_Bunner,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Andrew_Cuomo,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Andrew_Niccol,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Andrew_Weissmann,3,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Andy_Hebb,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Andy_Roddick,15,White,White,True,0.7333333333333333,0.9333333333333333,Male,Male,True,1.0,1.0
+Angela_Bassett,6,Black,Black,True,1.0,0.6666666666666666,Female,Female,True,1.0,0.8333333333333334
+Angela_Lansbury,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Angela_Merkel,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Angelina_Jolie,20,Middle Eastern,White,False,0.5,0.6,Female,Female,True,1.0,1.0
+Angelo_Reyes,4,Asian,Asian,True,0.75,0.75,Male,Male,True,1.0,1.0
+Anibal_Ibarra,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,0.6666666666666666,1.0
+Ann_Veneman,11,White,White,True,1.0,1.0,Female,Female,True,0.9090909090909091,0.5454545454545454
+Anna_Kournikova,12,White,Asian,False,0.75,0.5833333333333334,Female,Female,True,0.75,0.75
+Anna_Nicole_Smith,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Anne_Krueger,3,White,Latino_Hispanic,False,1.0,1.0,Female,Male,False,1.0,0.6666666666666666
+Anne_McLellan,3,White,Asian,False,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Anneli_Jaatteenmaki,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Annette_Bening,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Annette_Lu,3,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,0.6666666666666666
+Anthony_Fauci,2,White,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Anthony_Hopkins,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Anthony_LaPaglia,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Antonio_Banderas,5,Middle Eastern,White,False,0.4,0.6,Male,Male,True,0.8,0.8
+Antonio_Palocci,8,Middle Eastern,White,False,0.625,0.5,Male,Male,True,1.0,1.0
+Antonio_Trillanes,3,Asian,Asian,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Antony_Leung,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Anwar_Ibrahim,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Arantxa_Sanchez-Vicario,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,0.5
+Ari_Fleischer,13,White,White,True,1.0,0.9230769230769231,Male,Male,True,1.0,1.0
+Arianna_Huffington,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ariel_Sharon,77,Middle Eastern,Middle Eastern,True,0.8831168831168831,0.6623376623376623,Male,Male,True,1.0,1.0
+Arlen_Specter,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Arminio_Fraga,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Arnaud_Clement,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Arnold_Palmer,3,White,Asian,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+Arnold_Schwarzenegger,42,White,White,True,0.6428571428571429,0.4523809523809524,Male,Male,True,1.0,1.0
+Arnoldo_Aleman,5,Latino_Hispanic,Latino_Hispanic,True,0.6,0.8,Male,Male,True,1.0,1.0
+Aron_Ralston,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Arsinee_Khanjian,2,Middle Eastern,White,False,0.5,1.0,Male,Female,False,1.0,0.5
+Art_Hoffmann,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Art_Howe,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Arturo_Gatti,3,White,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Arye_Mekel,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Asa_Hutchinson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ashanti,5,Black,Black,True,0.8,0.8,Female,Female,True,1.0,0.8
+Ashton_Kutcher,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Atal_Bihari_Vajpayee,24,Indian,Indian,True,0.6666666666666666,0.75,Male,Male,True,0.9166666666666666,1.0
+Augustin_Calleri,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Augusto_Pinochet,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Augusto_Roa_Bastos,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Aung_San_Suu_Kyi,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,0.5
+Azra_Akin,4,Middle Eastern,White,False,0.75,0.75,Female,Female,True,1.0,1.0
+Barbara_Brezigar,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Barbara_Walters,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Barbra_Streisand,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Barrett_Jackman,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Barry_Alvarez,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Barry_Zito,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bashar_Assad,4,Middle Eastern,White,False,0.75,0.5,Male,Male,True,1.0,1.0
+Begum_Khaleda_Zia,2,Indian,Indian,True,0.5,1.0,Female,Female,True,1.0,0.5
+Ben_Affleck,7,White,White,True,0.5714285714285714,1.0,Male,Male,True,1.0,1.0
+Ben_Curtis,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Ben_Glisan,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Ben_Howland,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Benazir_Bhutto,5,White,White,True,0.6,1.0,Female,Female,True,1.0,1.0
+Benjamin_Netanyahu,5,Middle Eastern,Middle Eastern,True,0.6,0.6,Male,Male,True,1.0,1.0
+Bernard_Landry,4,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Bernard_Law,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bernard_Lord,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Bernardo_Segura,2,Indian,Latino_Hispanic,False,0.5,1.0,Male,Male,True,1.0,1.0
+Bertie_Ahern,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Bertrand_Bonello,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Beth_Jones,2,White,Asian,False,1.0,0.5,Female,Female,True,1.0,0.5
+Betsy_Smith,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Bijan_Darvish,3,White,Middle Eastern,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Bijan_Namdar_Zangeneh,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Biljana_Plavsic,3,White,White,True,1.0,1.0,Female,Male,False,1.0,0.6666666666666666
+Bill_Belichick,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+Bill_Callahan,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bill_Clinton,29,White,White,True,0.9655172413793104,0.9655172413793104,Male,Male,True,1.0,1.0
+Bill_Frist,9,White,White,True,0.8888888888888888,0.8888888888888888,Male,Male,True,1.0,1.0
+Bill_Gates,17,White,White,True,0.9411764705882353,0.8823529411764706,Male,Male,True,1.0,1.0
+Bill_Graham,9,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bill_McBride,10,White,White,True,1.0,0.9,Male,Male,True,1.0,1.0
+Bill_Nelson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bill_Parcells,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bill_Paxton,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bill_Simon,15,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Bill_Sizemore,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Billy_Crystal,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Billy_Graham,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Billy_Sollie,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Binyamin_Ben-Eliezer,7,White,Latino_Hispanic,False,0.5714285714285714,1.0,Male,Male,True,1.0,1.0
+Blythe_Danner,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Blythe_Hartley,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Bo_Pelini,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bo_Ryan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bob_Beauprez,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bob_Colvin,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bob_Dole,3,Latino_Hispanic,White,False,0.3333333333333333,1.0,Male,Male,True,1.0,1.0
+Bob_Geldof,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Bob_Graham,6,White,White,True,1.0,0.5,Male,Male,True,1.0,1.0
+Bob_Hope,8,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bob_Huggins,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Bob_Stoops,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bobby_Goldwater,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Bobby_Robson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bode_Miller,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bono,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Boris_Becker,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Boris_Berezovsky,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Boris_Yeltsin,2,Middle Eastern,Asian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Brad_Garrett,4,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Brad_Johnson,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Branko_Crvenkovski,3,Middle Eastern,Indian,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Brendan_Hansen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Brian_Cowen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Brian_Griese,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Brian_Heidik,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Brian_Mulroney,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Brian_Wells,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Bridget_Fonda,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Bridgette_Wilson-Sampras,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Brigitte_Boisselier,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Female,Female,True,1.0,1.0
+Britney_Spears,14,White,White,True,1.0,0.9285714285714286,Female,Female,True,1.0,1.0
+Brooke_Shields,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Bruce_Springsteen,4,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+Bruce_Van_De_Velde,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Bruce_Weber,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bud_Selig,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Bulent_Ecevit,6,Middle Eastern,Middle Eastern,True,0.8333333333333334,0.6666666666666666,Male,Male,True,1.0,1.0
+Butch_Davis,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Byron_Scott,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Calista_Flockhart,6,White,White,True,1.0,0.8333333333333334,Female,Female,True,1.0,1.0
+Cameron_Diaz,6,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Camilla_Parker_Bowles,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Candice_Bergen,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Candie_Kung,4,Asian,Asian,True,1.0,1.0,Male,Male,True,0.75,1.0
+Carl_Reiner,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Carla_Del_Ponte,5,White,White,True,1.0,1.0,Female,Male,False,0.6,1.0
+Carla_Myers,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Carlo_Ancelotti,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Carlos_Bianchi,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Carlos_Ghosn,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Carlos_Manuel_Pruneda,3,Middle Eastern,White,False,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Carlos_Menem,21,Middle Eastern,White,False,0.5714285714285714,0.47619047619047616,Male,Male,True,1.0,1.0
+Carlos_Mesa,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Carlos_Moya,19,White,White,True,0.7368421052631579,0.9473684210526315,Male,Male,True,1.0,1.0
+Carlos_Ortega,3,Middle Eastern,Middle Eastern,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Carlos_Quintanilla_Schmidt,2,Middle Eastern,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Carlos_Ruiz,3,Middle Eastern,Asian,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Carlos_Vives,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Carly_Fiorina,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Carmen_Electra,6,White,White,True,0.8333333333333334,1.0,Female,Female,True,1.0,1.0
+Carol_Burnett,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Carol_Moseley_Braun,2,Black,Asian,False,1.0,1.0,Female,Female,True,1.0,1.0
+Carolina_Kluft,3,White,White,True,1.0,1.0,Female,Female,True,0.6666666666666666,0.6666666666666666
+Carolina_Moraes,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Caroline_Kennedy,3,White,White,True,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Carolyn_Dawn_Johnson,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Carrie-Anne_Moss,5,Middle Eastern,White,False,0.6,1.0,Female,Female,True,1.0,1.0
+Carson_Daly,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Carson_Palmer,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Cate_Blanchett,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Catherine_Deneuve,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Catherine_Zeta-Jones,11,White,White,True,0.5454545454545454,0.9090909090909091,Female,Female,True,1.0,1.0
+Cathy_Freeman,2,Black,Asian,False,0.5,0.5,Female,Male,False,0.5,1.0
+Cecilia_Bolocco,3,White,White,True,1.0,1.0,Female,Female,True,0.6666666666666666,0.6666666666666666
+Celine_Dion,8,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Celso_Amorim,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Cesar_Gaviria,8,White,White,True,0.875,0.875,Male,Male,True,1.0,1.0
+Cesar_Maia,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Chakib_Khelil,2,Middle Eastern,Asian,False,0.5,1.0,Male,Male,True,1.0,1.0
+Chan_Gailey,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chanda_Rubin,5,Black,Black,True,1.0,1.0,Female,Male,False,1.0,1.0
+Chang_Dae-whan,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Charles_Bronson,3,Asian,White,False,0.3333333333333333,0.6666666666666666,Male,Male,True,1.0,1.0
+Charles_Grassley,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Charles_Kartman,2,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Male,Male,True,1.0,1.0
+Charles_Mathews,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Charles_Moose,13,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Charles_Schumer,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Charles_Taylor,9,Black,Black,True,0.8888888888888888,0.8888888888888888,Male,Male,True,1.0,1.0
+Charlie_Zaa,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Charlotte_Rampling,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Charlton_Heston,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chen_Liang_Yu,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Chen_Shui-bian,5,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Cherie_Blair,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Chick_Hearn,3,White,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Chita_Rivera,2,Latino_Hispanic,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Choi_Sung-hong,5,Asian,Asian,True,0.6,1.0,Male,Male,True,1.0,1.0
+Chok_Tong_Goh,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Chris_Bell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chris_Byrd,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chris_Cooper,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chris_Rock,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chris_Tucker,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Christian_Fittipaldi,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Christian_Longo,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Christian_Wulff,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Christina_Aguilera,4,White,White,True,0.75,1.0,Female,Female,True,1.0,1.0
+Christine_Baumgartner,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Christine_Ebersole,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Christine_Gregoire,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.75
+Christine_Todd_Whitman,6,White,White,True,1.0,1.0,Female,Female,True,1.0,0.8333333333333334
+Christopher_Patten,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Christopher_Reeve,4,White,White,True,1.0,1.0,Male,Male,True,0.75,1.0
+Christopher_Walken,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chuck_Amato,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Chuck_Yeager,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chung_Mong-hun,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Chung_Mong-joon,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Cindy_Crawford,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Cindy_Margolis,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ciro_Gomes,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Claire_Danes,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Claire_Hentzen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Claire_Leger,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Clara_Harris,5,White,White,True,1.0,0.6,Female,Female,True,1.0,1.0
+Clare_Short,4,White,Asian,False,1.0,0.5,Female,Female,True,1.0,0.75
+Claudia_Pechstein,5,White,White,True,0.8,0.8,Female,Female,True,0.6,0.6
+Claudia_Schiffer,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Clay_Aiken,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Clint_Eastwood,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Colin_Farrell,9,Middle Eastern,White,False,1.0,0.5555555555555556,Male,Male,True,1.0,1.0
+Colin_Jackson,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Colin_Montgomerie,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Colin_Powell,236,White,Asian,False,0.7245762711864406,0.6228813559322034,Male,Male,True,1.0,1.0
+Conan_OBrien,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Conchita_Martinez,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,0.6666666666666666
+Condoleezza_Rice,11,Black,Black,True,0.6363636363636364,0.5454545454545454,Female,Female,True,1.0,0.5454545454545454
+Constance_Marie,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,1.0
+Coretta_Scott_King,3,Asian,Asian,True,0.6666666666666666,1.0,Female,Female,True,1.0,0.6666666666666666
+Corinne_Coman,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Costas_Simitis,6,White,White,True,0.8333333333333334,1.0,Male,Male,True,1.0,1.0
+Courtney_Love,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Cristina_Fernandez,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Cristina_Saralegui,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Cruz_Bustamante,5,Latino_Hispanic,Latino_Hispanic,True,0.4,0.8,Male,Male,True,1.0,1.0
+Cyndi_Thompson,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Dai_Bachtiar,2,Asian,Black,False,0.5,0.5,Male,Male,True,1.0,1.0
+Daisy_Fuentes,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Dalai_Lama,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Dale_Earnhardt_Jr,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Damon_van_Dam,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Dan_Morales,3,White,Latino_Hispanic,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Dan_Wheldon,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Daniel_Day-Lewis,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Daniel_Radcliffe,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Daniela_Hantuchova,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Darrell_Issa,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Darrell_Porter,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Darren_Clarke,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Daryl_Hannah,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Dave_Campo,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Anderson,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+David_Beckham,31,White,White,True,0.9032258064516129,1.0,Male,Male,True,1.0,1.0
+David_Bell,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+David_Caraway,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Caruso,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Coulthard,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Dodge,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Heyman,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+David_Heymann,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Hyde_Pierce,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Kelley,2,White,Asian,False,1.0,0.5,Female,Male,False,0.5,1.0
+David_Leahy,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Myers,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+David_Nalbandian,14,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Spade,2,White,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+David_Stern,4,White,Middle Eastern,False,0.75,0.5,Male,Male,True,1.0,1.0
+David_Trimble,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+David_Wells,7,White,White,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+David_Wolf,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Dean_Barkley,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Debbie_Reynolds,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Debra_Brown,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Debra_Messing,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Demetrius_Ferraciu,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Demi_Moore,4,Middle Eastern,White,False,0.75,1.0,Female,Female,True,1.0,1.0
+Denise_Johnson,2,Black,Asian,False,0.5,0.5,Female,Male,False,1.0,1.0
+Dennis_Erickson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Dennis_Hastert,6,White,White,True,1.0,0.5,Male,Male,True,1.0,1.0
+Dennis_Kozlowski,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Dennis_Kucinich,7,White,Latino_Hispanic,False,0.5714285714285714,0.5714285714285714,Male,Male,True,1.0,1.0
+Dennis_Powell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Denzel_Washington,5,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Derek_Jeter,4,White,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Derek_Lowe,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Desiree_Lemosi,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Dexter_Jackson,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Diana_Krall,6,White,White,True,1.0,1.0,Female,Female,True,0.8333333333333334,0.8333333333333334
+Diana_Munz,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Diana_Taurasi,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Diane_Green,2,White,White,True,1.0,1.0,Female,Female,True,0.5,0.5
+Dianne_Feinstein,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Dick_Cheney,14,White,White,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+Dick_Clark,3,White,Latino_Hispanic,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Dick_Latessa,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Dick_Vermeil,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+Dino_de_Laurentis,2,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Male,Male,True,1.0,1.0
+Dolly_Parton,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Dolma_Tsering,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Dominik_Garcia-Lorido,2,White,Middle Eastern,False,1.0,0.5,Female,Female,True,1.0,1.0
+Dominique_de_Villepin,15,Middle Eastern,White,False,0.5333333333333333,0.8,Male,Male,True,1.0,1.0
+Don_Nickles,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Don_Siegelman,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Donald_Evans,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Donald_Fehr,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Donald_Pettit,3,Middle Eastern,White,False,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Donald_Rumsfeld,121,White,White,True,0.859504132231405,0.9586776859504132,Male,Male,True,1.0,1.0
+Donatella_Versace,3,White,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,1.0
+Donna_Shalala,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Female,Male,False,1.0,1.0
+Doris_Roberts,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Doris_Schroeder,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.75
+Dorthy_Moxley,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Doug_Collins,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Doug_Duncan,2,Black,Black,True,0.5,0.5,Male,Male,True,1.0,1.0
+Doug_Melvin,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Drew_Barrymore,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Duane_Lee_Chapman,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Dwayne_Johnson,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Ed_Rosenthal,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Ed_Smart,3,White,Latino_Hispanic,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+Eddie_Sutton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Eddy_Merckx,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Edie_Falco,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Edmund_Hillary,3,White,White,True,1.0,1.0,Male,Male,True,0.6666666666666666,1.0
+Edmund_Stoiber,13,White,White,True,0.6153846153846154,0.6923076923076923,Male,Male,True,1.0,1.0
+Eduard_Shevardnadze,5,White,White,True,0.8,0.8,Male,Male,True,1.0,1.0
+Eduardo_Duhalde,14,Middle Eastern,Latino_Hispanic,False,0.5714285714285714,0.8571428571428571,Male,Male,True,1.0,1.0
+Edward_James_Olmos,2,Latino_Hispanic,Asian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Edward_Kennedy,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Edward_Lu,6,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Edward_Norton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Edward_Said,2,Middle Eastern,Indian,False,1.0,1.0,Male,Male,True,1.0,1.0
+Edwin_Edwards,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Edwina_Currie,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Eileen_Coparropa,3,Black,Black,True,1.0,1.0,Female,Female,True,0.6666666666666666,0.6666666666666666
+Elena_Bovina,3,White,Latino_Hispanic,False,1.0,0.6666666666666666,Female,Male,False,0.6666666666666666,0.6666666666666666
+Eliane_Karp,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Elijah_Wood,3,White,White,True,1.0,1.0,Male,Male,True,0.6666666666666666,1.0
+Elin_Nordegren,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Elinor_Caplan,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Elisabeth_Schumacher,2,White,White,True,1.0,1.0,Female,Female,True,0.5,1.0
+Elizabeth_Dole,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Elizabeth_Hurley,5,White,White,True,0.8,1.0,Female,Female,True,1.0,0.8
+Elizabeth_Shue,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Elizabeth_Smart,5,White,White,True,1.0,1.0,Female,Female,True,0.6,0.8
+Elizabeth_Taylor,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ellen_DeGeneres,2,White,White,True,1.0,1.0,Female,Female,True,0.5,0.5
+Ellen_Engleman,2,White,Middle Eastern,False,1.0,0.5,Female,Female,True,1.0,1.0
+Elsa_Zylberstein,6,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Elton_John,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Elvis_Presley,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Emanuel_Ginobili,5,Middle Eastern,Middle Eastern,True,0.8,0.8,Male,Male,True,1.0,1.0
+Emile_Lahoud,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Emily_Robison,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Emma_Thompson,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Emma_Watson,5,White,White,True,1.0,1.0,Female,Female,True,0.8,1.0
+Emmanuelle_Beart,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Emmit_Smith,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Enrique_Bolanos,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Eric_Clapton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Eric_Hinske,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Eric_Robert_Rudolph,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Eric_Rosser,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Erik_Morales,3,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Erika_Christensen,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Erika_Harold,5,Black,White,False,0.4,0.6,Female,Female,True,1.0,1.0
+Erin_Runnion,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ernesto_Zedillo,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ernie_Els,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Ernie_Eves,2,White,White,True,1.0,1.0,Male,Female,False,1.0,0.5
+Ernie_Fletcher,2,White,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Ethan_Hawke,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Eunice_Barber,2,Black,Black,True,1.0,1.0,Female,Male,False,1.0,1.0
+Eva_Dimas,2,White,Latino_Hispanic,False,1.0,1.0,Female,Female,True,1.0,0.5
+Evan_Rachel_Wood,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Evander_Holyfield,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Eve_Pelletier,2,White,Indian,False,1.0,0.5,Female,Male,False,0.5,1.0
+Fabiola_Zuluaga,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Female,Male,False,1.0,1.0
+Fabrice_Santoro,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Farouk_al-Sharaa,3,Indian,White,False,0.3333333333333333,1.0,Male,Male,True,1.0,1.0
+Faye_Dunaway,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Fayssal_Mekdad,4,Middle Eastern,Latino_Hispanic,False,0.75,0.5,Male,Male,True,1.0,1.0
+Federico_Trillo,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Felipe_Perez_Roque,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Felix_Mantilla,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Ferenc_Madl,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Fernando_Gonzalez,9,Middle Eastern,White,False,0.5555555555555556,0.8888888888888888,Male,Male,True,1.0,1.0
+Fernando_Henrique_Cardoso,8,Middle Eastern,Latino_Hispanic,False,0.5,0.375,Male,Male,True,1.0,1.0
+Fernando_Vargas,4,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Fidel_Castro,18,Middle Eastern,Middle Eastern,True,0.8888888888888888,0.7777777777777778,Male,Male,True,1.0,1.0
+Filippo_Inzaghi,3,Latino_Hispanic,White,False,0.3333333333333333,0.6666666666666666,Male,Male,True,1.0,1.0
+Flavia_Delaroli,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Flor_Montulo,2,Asian,Asian,True,1.0,1.0,Female,Male,False,1.0,1.0
+Fran_Drescher,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Frances_Fisher,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Francis_Ford_Coppola,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Francis_George,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Francis_Mer,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Francisco_Flores,4,Latino_Hispanic,Latino_Hispanic,True,0.5,0.75,Male,Male,True,1.0,1.0
+Franco_Dragone,2,Latino_Hispanic,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Frank_Cassell,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Frank_Dunham_Jr,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Frank_Griswold,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Frank_Lautenberg,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Frank_Solich,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Frank_Stallone,2,Middle Eastern,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Franko_Simatovic,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Franz_Beckenbauer,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Franz_Fischler,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Franz_Muentefering,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Fred_Eckhard,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Fred_Funk,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Fred_Thompson,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Freddy_Garcia,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Fujio_Cho,6,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+GL_Peiris,4,Indian,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Gabriel_Batistuta,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gabriel_Valdes,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gao_Qiang,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Garry_Kasparov,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Garry_Trudeau,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Gary_Bergeron,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Gary_Carter,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gary_Doer,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gary_Forsee,2,Middle Eastern,Latino_Hispanic,False,0.5,1.0,Male,Male,True,1.0,1.0
+Gary_Locke,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gary_Williams,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gary_Winnick,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gene_Robinson,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Geno_Auriemma,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Geoff_Hoon,7,White,White,True,0.8571428571428571,0.5714285714285714,Male,Male,True,1.0,1.0
+George_Brumley,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+George_Clooney,9,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+George_Foreman,2,Black,Black,True,1.0,1.0,Female,Male,False,0.5,1.0
+George_Galloway,4,Middle Eastern,White,False,0.5,0.75,Male,Male,True,1.0,1.0
+George_HW_Bush,13,White,White,True,0.9230769230769231,1.0,Male,Male,True,1.0,1.0
+George_Karl,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+George_Lopez,5,Latino_Hispanic,Latino_Hispanic,True,0.4,0.8,Male,Male,True,1.0,1.0
+George_P_Bush,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+George_Papandreou,4,Middle Eastern,White,False,0.75,0.75,Male,Male,True,1.0,1.0
+George_Pataki,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+George_Robertson,22,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+George_Roy_Hill,2,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Male,Male,True,1.0,1.0
+George_Ryan,4,Middle Eastern,Middle Eastern,True,0.75,0.75,Male,Male,True,1.0,1.0
+George_Tenet,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+George_Voinovich,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+George_W_Bush,530,White,White,True,0.9660377358490566,0.9188679245283019,Male,Male,True,1.0,1.0
+Georgi_Parvanov,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Geraldine_Chaplin,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Gerard_Depardieu,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gerardo_Gambala,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gerhard_Schroeder,109,White,White,True,0.8715596330275229,0.6697247706422018,Male,Male,True,1.0,1.0
+Gerry_Adams,8,White,White,True,0.875,0.875,Male,Male,True,1.0,1.0
+Gerry_Parsky,2,Latino_Hispanic,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Gian_Marco,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gianna_Angelopoulos-Daskalaki,3,Middle Eastern,White,False,1.0,1.0,Female,Female,True,0.6666666666666666,0.6666666666666666
+Gil_de_Ferran,5,Middle Eastern,White,False,0.6,0.8,Male,Male,True,1.0,1.0
+Gilberto_Rodriguez_Orejuela,4,White,Middle Eastern,False,0.75,1.0,Male,Male,True,1.0,1.0
+Gillian_Anderson,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Gisele_Bundchen,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Giuseppe_Gibilisco,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Glafcos_Clerides,4,White,White,True,0.75,0.75,Male,Male,True,1.0,1.0
+Gloria_Allred,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Gloria_Macapagal_Arroyo,44,Asian,Asian,True,0.75,0.5227272727272727,Female,Female,True,1.0,0.9545454545454546
+Gloria_Trevi,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Goh_Kun,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Goldie_Hawn,7,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Gonzalo_Sanchez_de_Lozada,12,White,Latino_Hispanic,False,0.8333333333333334,0.3333333333333333,Male,Male,True,0.9166666666666666,1.0
+Goran_Persson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gordon_Brown,13,White,White,True,0.7692307692307693,0.9230769230769231,Male,Male,True,1.0,1.0
+Gordon_Campbell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Grady_Irvin_Jr,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Grant_Hackett,5,White,White,True,0.8,0.6,Male,Male,True,1.0,1.0
+Gray_Davis,26,White,White,True,1.0,0.9615384615384616,Male,Male,True,1.0,1.0
+Greg_Gilbert,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Greg_Ostertag,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Greg_Owen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Greg_Rusedski,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gregg_Popovich,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gregory_Geoffroy,2,Asian,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Gregory_Hines,2,Black,Latino_Hispanic,False,0.5,1.0,Male,Male,True,1.0,1.0
+Gro_Harlem_Brundtland,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Guido_Westerwelle,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Guillaume_Soro,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Guillermo_Canas,4,Latino_Hispanic,Latino_Hispanic,True,0.5,0.75,Male,Male,True,1.0,1.0
+Guillermo_Coria,30,White,White,True,0.7666666666666667,0.9333333333333333,Male,Male,True,1.0,1.0
+Guillermo_Ortiz,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gunter_Pleuger,7,White,White,True,0.5714285714285714,1.0,Male,Male,True,1.0,1.0
+Gus_Van_Sant,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gustavo_Kuerten,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Guy_Hemmings,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Guy_Ritchie,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Gwendal_Peizerat,3,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Gwyneth_Paltrow,6,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Habib_Rizieq,5,Latino_Hispanic,Latino_Hispanic,True,1.0,0.6,Male,Male,True,1.0,1.0
+Hal_Gehman,5,White,White,True,1.0,1.0,Male,Male,True,0.8,1.0
+Hal_Sutton,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Halle_Berry,16,Black,Latino_Hispanic,False,0.5,0.8125,Female,Female,True,1.0,1.0
+Hamid_Karzai,22,Middle Eastern,Middle Eastern,True,0.9545454545454546,0.9090909090909091,Male,Male,True,1.0,1.0
+Hamzah_Haz,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hanan_Ashrawi,2,Middle Eastern,White,False,1.0,1.0,Female,Male,False,1.0,1.0
+Hannah_Stockbauer,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Hans_Blix,39,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hans_Eichel,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Harbhajan_Singh,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Harrison_Ford,12,White,White,True,0.9166666666666666,1.0,Male,Male,True,1.0,1.0
+Harry_Belafonte,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Harry_Kalas,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Harry_Schmidt,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Harvey_Weinstein,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Hashim_Thaci,2,Middle Eastern,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Hassan_Nasrallah,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hassan_Wirajuda,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Hayley_Tullett,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Heath_Ledger,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Heather_Mills,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Hector_Babenco,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Hee-Won_Han,3,Asian,Asian,True,1.0,1.0,Female,Female,True,0.6666666666666666,1.0
+Heidi_Fleiss,4,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Heidi_Klum,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Heinz_Feldmann,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Heizo_Takenaka,9,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Helen_Clark,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Henrique_Meirelles,2,Middle Eastern,Asian,False,0.5,1.0,Male,Male,True,1.0,1.0
+Herb_Sendek,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Hermann_Maier,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Herta_Daeubler-Gmelin,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Hichiro_Naemura,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hideki_Matsui,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hilary_Duff,3,White,Asian,False,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Hillary_Clinton,14,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Hilmi_Ozkok,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hipolito_Mejia,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hisao_Oguchi,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hitomi_Soga,5,Asian,White,False,1.0,0.6,Female,Female,True,1.0,0.8
+Holly_Hunter,7,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Hootie_Johnson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Horst_Koehler,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Hosni_Mubarak,9,Middle Eastern,Asian,False,0.5555555555555556,0.6666666666666666,Male,Male,True,0.8888888888888888,1.0
+Howard_Dean,12,White,White,True,1.0,0.9166666666666666,Male,Male,True,1.0,1.0
+Howard_Schultz,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Howard_Smith,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hu_Jintao,15,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hugh_Grant,9,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Hugo_Chavez,71,Latino_Hispanic,Latino_Hispanic,True,0.5774647887323944,0.647887323943662,Male,Male,True,1.0,1.0
+Hun_Sen,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Iain_Duncan_Smith,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Ian_McKellen,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Ian_Thorpe,10,White,White,True,0.8,0.7,Male,Male,True,1.0,1.0
+Iban_Mayo,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ibrahim_Jaafari,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Igor_Ivanov,20,Middle Eastern,Latino_Hispanic,False,0.75,0.35,Male,Male,True,1.0,1.0
+Ilan_Ramon,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Imad_Moustapha,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Inam-ul-Haq,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Inocencio_Arias,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Intisar_Ajouri,3,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Isabella_Rossellini,3,White,White,True,1.0,1.0,Female,Female,True,0.6666666666666666,1.0
+Isabelle_Huppert,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Isaiah_Washington,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ishaq_Shahryar,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Ismail_Merchant,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Iva_Majoli,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+JJ_Redick,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+JK_Rowling,6,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jack_Grubman,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Jack_Nicholson,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Jack_Straw,28,White,White,True,0.8214285714285714,0.8928571428571429,Male,Male,True,1.0,1.0
+Jackie_Chan,13,Asian,Asian,True,0.9230769230769231,1.0,Male,Male,True,0.7692307692307693,1.0
+Jacqueline_Obradors,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jacques_Chirac,52,White,White,True,0.6538461538461539,0.7692307692307693,Male,Male,True,1.0,1.0
+Jacques_Rogge,10,White,White,True,0.9,1.0,Male,Male,True,1.0,1.0
+Jada_Pinkett_Smith,2,Black,Asian,False,1.0,0.5,Female,Female,True,1.0,0.5
+Jake_Gyllenhaal,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Blake,14,White,White,True,0.42857142857142855,0.5714285714285714,Male,Male,True,1.0,1.0
+James_Butts,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Caan,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Cameron,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Cunningham,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+James_Franco,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+James_Gandolfini,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+James_Ivory,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+James_Jones,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Kelly,11,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Kopp,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Maguire,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_McGreevey,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+James_Morris,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Parker,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+James_Schultz,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+James_Smith,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+James_Traficant,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+James_Wolfensohn,5,Middle Eastern,White,False,0.6,0.8,Male,Male,True,1.0,1.0
+Jamie_Villafane,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jamling_Norgay,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jan-Michael_Gambill,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jan_Ullrich,6,White,White,True,0.8333333333333334,1.0,Male,Male,True,1.0,1.0
+Jane_Fonda,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jane_Kaczmarek,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Jane_Pauley,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Janet_Napolitano,4,White,White,True,0.75,1.0,Female,Female,True,1.0,0.5
+Janet_Thorpe,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Janica_Kostelic,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Jason_Alexander,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jason_Jennings,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jason_Kidd,10,Middle Eastern,White,False,0.4,0.7,Male,Male,True,1.0,1.0
+Jason_Lezak,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Javier_Solana,10,White,Latino_Hispanic,False,0.9,0.5,Male,Male,True,1.0,1.0
+Javier_Weber,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jay_Garner,6,White,Middle Eastern,False,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Jay_Leno,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,0.6666666666666666,1.0
+Jay_Rasulo,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jayson_Williams,3,Black,Latino_Hispanic,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Jean-Claude_Braquet,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jean-Claude_Juncker,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jean-Claude_Trichet,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jean-David_Levitte,10,White,White,True,0.7,0.8,Male,Male,True,1.0,1.0
+Jean-Francois_Pontal,3,Latino_Hispanic,White,False,0.3333333333333333,0.6666666666666666,Male,Male,True,1.0,1.0
+Jean-Marc_de_La_Sabliere,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jean-Pierre_Raffarin,7,Middle Eastern,Middle Eastern,True,0.5714285714285714,0.5714285714285714,Male,Male,True,1.0,1.0
+Jean-Sebastien_Giguere,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jean_Brumley,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jean_Carnahan,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jean_Charest,17,White,White,True,0.9411764705882353,0.9411764705882353,Male,Male,True,1.0,1.0
+Jean_Chretien,55,White,White,True,0.8545454545454545,0.7636363636363637,Male,Male,True,1.0,1.0
+Jeanne_Moreau,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jeb_Bush,12,White,White,True,1.0,0.8333333333333334,Male,Male,True,1.0,1.0
+Jeff_Van_Gundy,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jefferson_Perez,2,Indian,Indian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Jeffrey_Archer,2,White,Indian,False,1.0,1.0,Male,Male,True,1.0,1.0
+Jeffrey_Immelt,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jeffrey_Jones,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jeffrey_Scott_Postell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jelena_Dokic,8,White,White,True,0.875,1.0,Female,Female,True,0.625,0.875
+Jennifer_Aniston,21,White,White,True,0.9523809523809523,1.0,Female,Female,True,0.9523809523809523,0.6190476190476191
+Jennifer_Capriati,42,White,White,True,0.6190476190476191,0.5952380952380952,Female,Female,True,0.8571428571428571,0.5
+Jennifer_Connelly,4,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Jennifer_Garner,12,White,White,True,1.0,0.9166666666666666,Female,Female,True,1.0,0.8333333333333334
+Jennifer_Keller,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.75
+Jennifer_Lopez,21,White,White,True,0.5714285714285714,0.42857142857142855,Female,Female,True,1.0,1.0
+Jennifer_Reilly,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jennifer_Rodriguez,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,0.5
+Jennifer_Thompson,2,White,White,True,1.0,1.0,Female,Male,False,0.5,1.0
+Jeong_Se-hyun,9,Asian,Asian,True,0.8888888888888888,0.8888888888888888,Male,Male,True,1.0,1.0
+Jeremy_Greenstock,24,White,White,True,0.7916666666666666,0.9166666666666666,Male,Male,True,1.0,1.0
+Jeremy_Shockey,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jerry_Falwell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jerry_Regier,4,White,White,True,1.0,1.0,Male,Male,True,0.75,1.0
+Jerry_Springer,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jesse_Harris,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Jesse_Jackson,9,Indian,Black,False,0.5555555555555556,0.8888888888888888,Male,Male,True,1.0,1.0
+Jesse_James_Leija,2,Latino_Hispanic,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jesse_Ventura,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jessica_Alba,2,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Female,Female,True,1.0,1.0
+Jessica_Lange,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Jessica_Lynch,2,White,White,True,1.0,1.0,Female,Female,True,0.5,0.5
+Jia_Qinglin,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jiang_Zemin,20,Asian,Asian,True,0.85,0.7,Male,Male,True,1.0,1.0
+Jim_Carrey,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Jim_Edmonds,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jim_Furyk,6,White,White,True,1.0,0.8333333333333334,Male,Male,True,1.0,1.0
+Jim_Hahn,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jim_Harrick,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Jim_OBrien,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jim_Tressel,4,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jimmy_Carter,9,White,Asian,False,1.0,0.4444444444444444,Male,Male,True,1.0,1.0
+Jimmy_Kimmel,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jiri_Novak,11,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jo_Dee_Messina,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Joan_Claybrook,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Joan_Laporta,9,Middle Eastern,White,False,0.5555555555555556,1.0,Male,Male,True,1.0,1.0
+Job_Cohen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jodie_Foster,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Joe_Calzaghe,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Joe_Dumars,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Joe_Gatti,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Joe_Lieberman,13,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Joe_Mantello,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Joe_Nichols,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Joe_Torre,4,White,Middle Eastern,False,0.5,0.5,Male,Male,True,1.0,1.0
+Joerg_Haider,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Abizaid,9,White,White,True,0.8888888888888888,0.7777777777777778,Male,Male,True,1.0,1.0
+John_Allen_Muhammad,11,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Ashcroft,53,White,White,True,0.9056603773584906,0.8301886792452831,Male,Male,True,1.0,1.0
+John_Banko,2,White,Asian,False,1.0,1.0,Male,Male,True,1.0,1.0
+John_Blaney,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Bolton,17,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Brady,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+John_Cusack,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+John_Edwards,8,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_F_Kennedy_Jr,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+John_Garamendi,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+John_Howard,19,White,White,True,0.8947368421052632,0.7894736842105263,Male,Male,True,1.0,1.0
+John_Jumper,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Kerry,17,White,White,True,0.8235294117647058,1.0,Male,Male,True,1.0,1.0
+John_Malkovich,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Manley,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Mayer,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+John_McCain,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_McCallum,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+John_McCormack,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_McEnroe,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Negroponte,31,White,White,True,0.7096774193548387,0.8709677419354839,Male,Male,True,1.0,1.0
+John_Paul_II,11,White,White,True,0.9090909090909091,0.9090909090909091,Male,Male,True,1.0,1.0
+John_Reid,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Reilly,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Rigas,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+John_Rosa,3,Latino_Hispanic,White,False,0.3333333333333333,0.6666666666666666,Male,Male,True,1.0,1.0
+John_Rowland,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+John_Ruiz,2,Latino_Hispanic,Latino_Hispanic,True,0.5,1.0,Male,Male,True,1.0,1.0
+John_Snow,17,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Spencer,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Stallworth,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Stockton,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+John_Swofford,3,White,Asian,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+John_Taylor,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Timoney,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Travolta,7,White,White,True,0.5714285714285714,0.42857142857142855,Male,Male,True,1.0,1.0
+John_Walsh,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Warner,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+John_Wolf,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Johnny_Carson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Johnny_Depp,2,Black,Latino_Hispanic,False,0.5,0.5,Female,Male,False,0.5,1.0
+Johnny_Tapia,3,Middle Eastern,Latino_Hispanic,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+Johnny_Unitas,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Johnson_Panjaitan,2,Latino_Hispanic,Asian,False,1.0,1.0,Male,Male,True,1.0,1.0
+Jolanta_Kwasniewski,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Jon_Corzine,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jon_Gruden,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jon_Voight,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,0.6666666666666666,1.0
+Jonathan_Edwards,8,White,White,True,1.0,0.5,Male,Male,True,1.0,1.0
+Jonathan_Mostow,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jong_Thae_Hwa,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jong_Wook_Lee,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jorge_Arce,2,Asian,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jorge_Batlle,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Jorge_Castaneda,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jorge_Rodolfo_Canicoba_Corral,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jorge_Valdano,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Joschka_Fischer,19,White,White,True,0.8947368421052632,0.7368421052631579,Male,Male,True,1.0,1.0
+Jose_Canseco,3,Middle Eastern,Indian,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Jose_Dirceu,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jose_Manuel_Durao_Barroso,6,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Jose_Maria_Aznar,23,Middle Eastern,White,False,0.7391304347826086,0.4782608695652174,Male,Male,True,1.0,1.0
+Jose_Mourinho,2,Middle Eastern,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Jose_Sarney,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jose_Serra,9,White,White,True,0.6666666666666666,0.5555555555555556,Male,Male,True,1.0,1.0
+Jose_Theodore,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jose_Viegas_Filho,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Joseph_Biden,5,Middle Eastern,Middle Eastern,True,0.6,0.4,Male,Male,True,1.0,1.0
+Joseph_Blatter,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Joseph_Deiss,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Joseph_Estrada,4,Latino_Hispanic,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Joseph_Ralston,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Juan_Carlos_Ferrero,28,White,White,True,1.0,0.8571428571428571,Male,Male,True,1.0,1.0
+Juan_Ignacio_Chela,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Juan_Manuel_Marquez,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Juan_Pablo_Montoya,8,Middle Eastern,Latino_Hispanic,False,1.0,0.375,Male,Male,True,1.0,1.0
+Juan_Valencia_Osorio,2,Middle Eastern,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Juanes,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Jude_Law,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Judi_Dench,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Judy_Genshaft,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Juergen_Peters,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Julia_Tymoshenko,3,White,White,True,1.0,1.0,Female,Female,True,1.0,0.6666666666666666
+Julianna_Margulies,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,0.5,0.5
+Julianne_Moore,19,White,White,True,1.0,1.0,Female,Female,True,0.8421052631578947,0.8421052631578947
+Julie_Gerberding,15,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Julie_Taymor,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Julio_Iglesias_Jr,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Junichiro_Koizumi,60,Asian,Asian,True,0.9833333333333333,0.9833333333333333,Male,Male,True,1.0,1.0
+Justin_Gatlin,2,Black,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Justin_Guarini,3,Black,Black,True,0.6666666666666666,0.3333333333333333,Female,Male,False,0.6666666666666666,0.6666666666666666
+Justin_Leonard,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Justin_Timberlake,8,White,White,True,0.75,0.875,Male,Male,True,1.0,1.0
+Justine_Henin,3,White,Asian,False,1.0,0.6666666666666666,Female,Female,True,0.6666666666666666,1.0
+Justine_Pasek,7,White,White,True,0.7142857142857143,0.7142857142857143,Female,Female,True,1.0,1.0
+Kalpana_Chawla,5,Indian,Latino_Hispanic,False,0.8,0.6,Female,Female,True,1.0,0.6
+Kamal_Kharrazi,6,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Karen_Mok,2,Asian,Asian,True,0.5,1.0,Female,Female,True,1.0,0.5
+Karin_Stoiber,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kate_Capshaw,2,White,White,True,1.0,1.0,Female,Female,True,0.5,0.5
+Kate_Hudson,9,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kate_Winslet,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Katherine_Harris,4,White,White,True,1.0,0.75,Female,Female,True,1.0,1.0
+Kathleen_Glynn,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kathleen_Kennedy_Townsend,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kathryn_Bigelow,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kathy_Winters,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Katie_Harman,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Keanu_Reeves,12,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Keira_Knightley,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Keith_Bogans,3,Black,Black,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Kelli_White,2,Black,Black,True,1.0,1.0,Female,Female,True,0.5,0.5
+Kelly_Clarkson,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Kelvin_Sampson,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Kemal_Dervis,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ken_Macha,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ken_Watanabe,2,Asian,Asian,True,1.0,0.5,Male,Male,True,1.0,1.0
+Kenneth_Bowersox,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Kenneth_Branagh,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kenneth_Evans,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kent_Rominger,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Kevin_Costner,8,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Kevin_Spacey,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Kevin_Stallings,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Kieran_Prendergast,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kifah_Ajouri,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kiki_Vandeweghe,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Kim_Clijsters,14,White,White,True,1.0,1.0,Female,Female,True,0.8571428571428571,0.5714285714285714
+Kim_Dae-jung,8,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kim_Jin-sun,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kim_Jong-Il,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kim_Ryong-sung,11,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kim_Yong-il,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kimi_Raikkonen,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+King_Abdullah_II,5,Middle Eastern,White,False,0.8,0.8,Male,Male,True,1.0,1.0
+Kirk_Ferentz,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kirk_Johnson,3,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kjell_Magne_Bondevik,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Klaus_Zwickel,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Kobe_Bryant,3,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kofi_Annan,32,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kosuke_Kitajima,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Kristanna_Loken,5,White,White,True,0.8,0.8,Female,Female,True,1.0,1.0
+Kristen_Breitweiser,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Kristin_Davis,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Kurt_Busch,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Kurt_Russell,2,White,Latino_Hispanic,False,1.0,0.5,Female,Male,False,0.5,1.0
+Kurt_Warner,5,Middle Eastern,White,False,0.6,0.6,Male,Male,True,1.0,1.0
+Kwon_Yang-sook,3,Asian,Asian,True,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+LK_Advani,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Laila_Ali,3,Black,Black,True,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,1.0
+Lana_Clarkson,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lance_Armstrong,18,White,White,True,1.0,0.8888888888888888,Male,Male,True,1.0,1.0
+Lance_Bass,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Bowa,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Brown,7,Middle Eastern,White,False,0.5714285714285714,0.8571428571428571,Male,Male,True,1.0,1.0
+Larry_Coker,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Ellison,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Johnson,2,Black,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Lindsey,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Lucchino,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Larry_Thompson,4,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lars_Von_Trier,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Latrell_Sprewell,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Laura_Bush,41,White,White,True,1.0,0.975609756097561,Female,Female,True,0.9512195121951219,0.9512195121951219
+Laura_Hernandez,2,Latino_Hispanic,Latino_Hispanic,True,0.5,1.0,Female,Female,True,1.0,1.0
+Laura_Linney,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lauren_Hutton,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lauren_Killian,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Laurent_Gbagbo,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Laurent_Jalabert,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Lawrence_MacAulay,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+LeAnn_Rimes,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+LeBron_James,5,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lea_Fastow,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Leander_Paes,2,Indian,Indian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lech_Walesa,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lee_Hoi-chang,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lee_Jun,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lee_Soo-hyuck,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lee_Tae-sik,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Leland_Chapman,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Len_Jenoff,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Lennox_Lewis,3,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lenny_Wilkens,3,Asian,Asian,True,0.3333333333333333,0.3333333333333333,Male,Male,True,1.0,1.0
+Leon_LaPorte,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Leonard_Hamilton,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Leonardo_DiCaprio,9,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Leonid_Kuchma,6,White,White,True,1.0,0.8333333333333334,Male,Male,True,1.0,1.0
+Lesley_McCulloch,3,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Leslie_Ann_Woodward,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Leslie_Caldwell,3,White,White,True,1.0,1.0,Female,Female,True,0.6666666666666666,0.6666666666666666
+Leslie_Moonves,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Leszek_Miller,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Li_Peng,9,Asian,Asian,True,0.7777777777777778,1.0,Male,Male,True,1.0,1.0
+Li_Zhaoxing,8,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Liam_Neeson,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lili_Taylor,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Lily_Tomlin,2,Latino_Hispanic,White,False,0.5,1.0,Female,Female,True,1.0,0.5
+Lim_Dong-won,2,Asian,Asian,True,1.0,0.5,Male,Male,True,1.0,1.0
+Lina_Krasnoroutskaya,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lindsay_Benko,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lindsay_Davenport,22,White,White,True,0.8636363636363636,0.6818181818181818,Female,Female,True,0.8636363636363636,0.6363636363636364
+Lindsey_Graham,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lino_Oviedo,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Lionel_Richie,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lisa_Gottsegen,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Lisa_Ling,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lisa_Marie_Presley,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lisa_Raymond,2,Latino_Hispanic,Asian,False,0.5,0.5,Male,Female,False,1.0,1.0
+Liu_Mingkang,2,Asian,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Liza_Minnelli,7,White,White,True,0.8571428571428571,1.0,Female,Female,True,1.0,1.0
+Lleyton_Hewitt,41,White,White,True,0.9024390243902439,0.8536585365853658,Male,Male,True,1.0,1.0
+Lloyd_Ward,2,Latino_Hispanic,Black,False,0.5,1.0,Male,Male,True,1.0,1.0
+Lon_Kruger,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Lord_Hutton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lou_Piniella,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Luciano_Pavarotti,3,Middle Eastern,Middle Eastern,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Lucio_Gutierrez,13,Latino_Hispanic,Latino_Hispanic,True,0.46153846153846156,0.6923076923076923,Male,Male,True,1.0,1.0
+Lucy_Liu,5,Asian,Asian,True,0.6,0.8,Female,Female,True,1.0,1.0
+Ludivine_Sagnier,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Luis_Ernesto_Derbez_Bautista,6,White,White,True,0.8333333333333334,0.6666666666666666,Male,Male,True,1.0,1.0
+Luis_Figo,4,Middle Eastern,White,False,0.5,0.5,Male,Male,True,1.0,1.0
+Luis_Gonzalez_Macchi,5,White,White,True,1.0,0.6,Male,Male,True,1.0,1.0
+Luis_Horna,6,White,White,True,0.8333333333333334,0.8333333333333334,Male,Male,True,1.0,1.0
+Luiz_Felipe_Scolari,2,Middle Eastern,Middle Eastern,True,0.5,1.0,Male,Male,True,1.0,1.0
+Luiz_Inacio_Lula_da_Silva,48,White,White,True,0.875,0.5208333333333334,Male,Male,True,1.0,1.0
+Luke_Walton,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Lyle_Vanclief,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Lynn_Abraham,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lynn_Redgrave,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Lynne_Cheney,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mack_Brown,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Madeleine_Albright,3,White,White,True,1.0,0.6666666666666666,Female,Female,True,1.0,0.6666666666666666
+Madonna,5,White,White,True,0.8,1.0,Female,Female,True,1.0,1.0
+Magdalena_Maleeva,3,Middle Eastern,White,False,0.6666666666666666,1.0,Female,Female,True,0.6666666666666666,1.0
+Maggie_Smith,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Magui_Serna,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Mahathir_Mohamad,14,Latino_Hispanic,Asian,False,0.5,0.35714285714285715,Male,Male,True,1.0,1.0
+Mahmoud_Abbas,29,Middle Eastern,Middle Eastern,True,0.9310344827586207,0.7586206896551724,Male,Male,True,1.0,1.0
+Makhdoom_Amin_Fahim,3,Indian,Indian,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Manfred_Stolpe,2,White,Middle Eastern,False,1.0,1.0,Male,Male,True,1.0,1.0
+Manuel_Poggiali,2,Middle Eastern,Middle Eastern,True,0.5,1.0,Male,Male,True,1.0,1.0
+Marat_Safin,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Marc-Andre_Fleury,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Marc_Grossman,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Marcelo_Ebrard,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Marcelo_Rios,5,Middle Eastern,Indian,False,0.6,0.6,Male,Male,True,1.0,1.0
+Marcelo_Salas,3,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Marco_Antonio_Barrera,6,Latino_Hispanic,Latino_Hispanic,True,0.3333333333333333,0.5,Male,Male,True,1.0,1.0
+Marcus_Gronholm,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Margaret_Thatcher,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Maria_Luisa_Mendonca,2,White,White,True,1.0,1.0,Female,Female,True,0.5,0.5
+Maria_Shriver,8,White,White,True,1.0,1.0,Female,Female,True,1.0,0.875
+Maria_Soledad_Alvear_Valenzuela,5,Middle Eastern,White,False,0.4,1.0,Female,Female,True,1.0,1.0
+Mariah_Carey,7,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mariana_Pollack,3,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Mariangel_Ruiz_Torrealba,3,White,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,1.0
+Marie-Reine_Le_Gougne,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Marieta_Chrousala,3,White,Black,False,1.0,0.3333333333333333,Female,Female,True,1.0,1.0
+Marilyn_Monroe,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Marina_Anissina,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mario_Cipollini,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mario_Dumont,2,Middle Eastern,Asian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Mario_Kreutzberger,2,Latino_Hispanic,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Marisa_Tomei,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Marissa_Jaret_Winokur,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Mark_Cuban,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Mark_Dacey,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mark_Geragos,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Mark_Gottfried,3,White,Latino_Hispanic,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Mark_Hamister,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Mark_Heller,2,Middle Eastern,Middle Eastern,True,0.5,1.0,Male,Male,True,1.0,1.0
+Mark_Hurlbert,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mark_Philippoussis,11,Middle Eastern,White,False,0.36363636363636365,0.6363636363636364,Male,Male,True,1.0,1.0
+Mark_Richt,3,White,White,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Mark_Schweiker,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Mark_Wahlberg,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mark_Warner,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Markus_Naslund,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Marlene_Weingartner,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Martha_Beatriz_Roque,2,Latino_Hispanic,Latino_Hispanic,True,0.5,1.0,Female,Female,True,1.0,1.0
+Martha_Bowen,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Martha_Burk,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Martha_Lucia_Ramirez,4,White,White,True,0.75,1.0,Female,Female,True,1.0,1.0
+Martha_Stewart,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Martin_Brodeur,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Martin_Cauchon,2,Middle Eastern,Middle Eastern,True,0.5,1.0,Male,Male,True,1.0,1.0
+Martin_Hoellwarth,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Martin_McCauley,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Martin_McGuinness,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Martin_Scorsese,7,Middle Eastern,Middle Eastern,True,0.7142857142857143,0.7142857142857143,Male,Male,True,1.0,1.0
+Martin_Sheen,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Martin_Verkerk,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Martina_Hingis,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Martina_McBride,5,White,White,True,0.8,1.0,Female,Female,True,1.0,1.0
+Marty_Mornhinweg,3,White,Asian,False,1.0,0.3333333333333333,Male,Male,True,0.6666666666666666,1.0
+Marwan_Barghouthi,2,Indian,Middle Eastern,False,0.5,1.0,Male,Male,True,1.0,1.0
+Mary-Kate_Olsen,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mary_Carey,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mary_Landrieu,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Mary_Steenburgen,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Mary_Tyler_Moore,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Masahiko_Nagasawa,2,Asian,Asian,True,1.0,1.0,Female,Male,False,0.5,1.0
+Masum_Turker,3,Middle Eastern,Middle Eastern,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Mathias_Reichhold,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Matt_Damon,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Matt_Dillon,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Matt_Doherty,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Matthew_Broderick,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Matthew_Perry,7,White,White,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+Maureen_Fanning,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Max_Mayfield,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Megan_Mullally,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Megawati_Sukarnoputri,33,Asian,Asian,True,0.9090909090909091,0.6363636363636364,Female,Female,True,1.0,0.7575757575757576
+Meghann_Shaughnessy,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Mel_Brooks,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Mel_Gibson,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Melanie_Griffith,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Melissa_Etheridge,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Meryl_Streep,15,White,White,True,1.0,0.9333333333333333,Female,Female,True,1.0,0.9333333333333333
+Mesut_Yilmaz,2,Middle Eastern,Indian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Mian_Khursheed_Mehmood_Kasuri,4,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Michael_Ballack,3,Middle Eastern,Asian,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Michael_Bloomberg,20,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Caine,4,White,White,True,0.75,0.75,Male,Male,True,1.0,1.0
+Michael_Capellas,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Chang,8,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Chiklis,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Michael_Douglas,6,White,White,True,1.0,0.8333333333333334,Male,Male,True,1.0,1.0
+Michael_J_Sheehan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Jackson,12,White,White,True,0.5833333333333334,0.6666666666666666,Female,Female,True,1.0,0.5833333333333334
+Michael_Jordan,4,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Keaton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Kostelnik,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Leavitt,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Michael_Moore,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Patrick_King,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Michael_Phelps,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Michael_Powell,5,Latino_Hispanic,Latino_Hispanic,True,0.8,0.6,Male,Male,True,1.0,1.0
+Michael_Schumacher,18,White,White,True,0.8333333333333334,0.8888888888888888,Male,Male,True,0.9444444444444444,0.9444444444444444
+Michael_Sullivan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michael_Winterbottom,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Michel_Duclos,2,White,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Michel_Temer,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Michel_Therrien,2,White,Middle Eastern,False,1.0,1.0,Male,Male,True,1.0,1.0
+Michelle_Branch,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Michelle_Collins,2,Black,Asian,False,1.0,0.5,Female,Male,False,1.0,1.0
+Michelle_Kwan,8,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Michelle_Pfeiffer,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Michelle_Rodriguez,2,Latino_Hispanic,Latino_Hispanic,True,1.0,1.0,Female,Female,True,1.0,1.0
+Michelle_Yeoh,5,Asian,Asian,True,1.0,0.8,Female,Female,True,1.0,1.0
+Mick_Jagger,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Miguel_Contreras,2,Latino_Hispanic,Indian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Miguel_Estrada,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Mike_Babcock,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Brey,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Mike_Helton,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Mike_Holmgren,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Krzyzewski,6,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Mike_Martz,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Miller,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Mike_Montgomery,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Myers,7,White,White,True,0.8571428571428571,0.8571428571428571,Male,Male,True,1.0,1.0
+Mike_Price,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Scioscia,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Tyson,4,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mike_Weir,11,White,White,True,0.9090909090909091,0.6363636363636364,Male,Male,True,1.0,1.0
+Mikhail_Gorbachev,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Mikhail_Kasyanov,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mikhail_Wehbe,4,Middle Eastern,White,False,0.75,0.75,Male,Male,True,1.0,1.0
+Mikhail_Youzhny,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Mikulas_Dzurinda,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Milo_Djukanovic,3,Middle Eastern,White,False,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Milo_Maestrecampo,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Minnie_Driver,2,Middle Eastern,White,False,1.0,1.0,Female,Female,True,1.0,1.0
+Mireya_Moscoso,5,White,White,True,1.0,1.0,Female,Female,True,1.0,0.8
+Miroljub,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Mitchell_Daniels,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mitoji_Yabunaka,2,Asian,Asian,True,1.0,0.5,Male,Male,True,1.0,1.0
+Miyako_Miyazaki,2,Asian,Asian,True,1.0,0.5,Female,Female,True,1.0,1.0
+Mohamed_Benaissa,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Mohamed_ElBaradei,8,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Mohammad_Khatami,10,Middle Eastern,White,False,0.6,0.7,Male,Male,True,1.0,1.0
+Mohammed_Al-Douri,15,White,Latino_Hispanic,False,0.6,0.4666666666666667,Male,Male,True,1.0,1.0
+Mohammed_Baqir_al-Hakim,3,Middle Eastern,White,False,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Monica_Bellucci,4,Middle Eastern,White,False,0.75,1.0,Female,Female,True,1.0,1.0
+Monica_Lewinsky,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Monica_Seles,6,White,White,True,0.6666666666666666,0.8333333333333334,Female,Female,True,0.5,0.5
+Monique_Garbrecht-Enfeldt,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Morgan_Freeman,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Moshe_Katsav,4,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Muammar_Gaddafi,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Muhammad_Ali,10,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+Muhammad_Saeed_al-Sahhaf,5,Middle Eastern,Middle Eastern,True,0.6,0.6,Male,Male,True,1.0,1.0
+Mukesh_Ambani,3,Middle Eastern,Indian,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Munir_Akram,2,Latino_Hispanic,Middle Eastern,False,0.5,1.0,Male,Male,True,1.0,1.0
+Nabil_Shaath,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Nadia_Petrova,5,White,White,True,1.0,0.8,Female,Male,False,1.0,0.6
+Nadine_Vinzens,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Naji_Sabri,8,Middle Eastern,Middle Eastern,True,0.625,0.625,Male,Male,True,1.0,1.0
+Nan_Wang,4,Asian,Asian,True,1.0,1.0,Female,Male,False,0.75,0.75
+Nancy_Demme,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Nancy_Pelosi,15,White,White,True,0.8666666666666667,1.0,Female,Female,True,1.0,1.0
+Nancy_Reagan,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Nancy_Sinatra,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Nanni_Moretti,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Naomi_Campbell,2,Black,Black,True,1.0,1.0,Female,Female,True,1.0,1.0
+Naomi_Watts,22,White,White,True,0.9545454545454546,1.0,Female,Female,True,1.0,1.0
+Naoto_Kan,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nasser_al-Kidwa,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Nastassia_Kinski,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Natalie_Cole,3,Black,Black,True,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Natalie_Coughlin,6,White,White,True,1.0,0.8333333333333334,Female,Female,True,1.0,1.0
+Natalie_Maines,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Natasha_McElhone,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Nathalie_Baye,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Nathan_Lane,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nebojsa_Pavkovic,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Nelson_Mandela,4,Black,Black,True,0.75,0.75,Male,Male,True,1.0,1.0
+Neri_Marcore,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Nestor_Kirchner,37,White,White,True,0.9459459459459459,1.0,Male,Male,True,1.0,1.0
+Nia_Vardalos,5,White,White,True,1.0,0.8,Female,Female,True,0.8,0.8
+Nicanor_Duarte_Frutos,11,Middle Eastern,Latino_Hispanic,False,0.45454545454545453,0.5454545454545454,Male,Male,True,1.0,1.0
+Nicholas_Byron,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Nicholas_Tse,2,Asian,Asian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Nick_Nolte,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nicolas_Cage,4,White,Latino_Hispanic,False,0.75,0.5,Male,Male,True,1.0,1.0
+Nicolas_Escude,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nicolas_Lapentti,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nicole_Kidman,19,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Nikki_Reed,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Noah_Wyle,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Noelle_Bush,4,White,White,True,0.75,0.75,Female,Female,True,0.75,0.75
+Nora_Bendijo,2,Asian,Asian,True,0.5,0.5,Female,Female,True,0.5,0.5
+Norah_Jones,15,Latino_Hispanic,White,False,0.7333333333333333,0.6,Female,Female,True,1.0,1.0
+Norm_Coleman,7,White,Asian,False,0.8571428571428571,0.42857142857142855,Male,Male,True,1.0,1.0
+Norman_Jewison,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Norodom_Sihanouk,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Nursultan_Nazarbayev,2,Asian,Asian,True,0.5,0.5,Male,Male,True,1.0,1.0
+OJ_Simpson,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Oleksandr_Moroz,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Olesya_Bonabarenko,2,Middle Eastern,White,False,0.5,1.0,Female,Female,True,1.0,1.0
+Olivia_Newton-John,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Omar_Sharif,4,White,Middle Eastern,False,0.75,0.5,Male,Male,True,1.0,1.0
+Oprah_Winfrey,4,Black,Black,True,0.75,0.75,Female,Female,True,1.0,0.75
+Orlando_Bloom,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Orrin_Hatch,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Osama_bin_Laden,4,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Oscar_De_La_Hoya,7,White,White,True,0.7142857142857143,1.0,Male,Male,True,1.0,1.0
+Oscar_Elias_Biscet,2,Indian,Black,False,0.5,0.5,Male,Male,True,1.0,1.0
+Oswaldo_Paya,5,White,White,True,0.6,1.0,Male,Male,True,1.0,1.0
+Owen_Wilson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Oxana_Fedorova,4,Middle Eastern,White,False,0.5,0.75,Female,Female,True,1.0,1.0
+Ozzy_Osbourne,3,White,White,True,0.6666666666666666,1.0,Female,Male,False,1.0,0.6666666666666666
+Padraig_Harrington,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Pamela_Anderson,5,White,White,True,0.8,1.0,Female,Female,True,0.8,0.8
+Paradorn_Srichaphan,10,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paris_Hilton,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Parris_Glendening,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Pascal_Lamy,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Pascal_Quignard,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Pat_Burns,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Pat_Cox,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patrice_Chereau,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patricia_Clarkson,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Patricia_Heaton,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Patrick_Ewing,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patrick_Leahy,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patrick_McEnroe,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patrick_Roy,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Patrick_Stewart,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Patti_Labelle,3,Black,Black,True,1.0,1.0,Female,Female,True,1.0,0.6666666666666666
+Patty_Schnyder,4,White,White,True,1.0,0.5,Female,Female,True,1.0,0.5
+Paul-Henri_Mathieu,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Paul_Bremer,20,White,White,True,0.95,1.0,Male,Male,True,1.0,1.0
+Paul_Burrell,11,White,White,True,0.8181818181818182,0.9090909090909091,Male,Male,True,1.0,1.0
+Paul_Byrd,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Coppin,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Male,Male,True,1.0,1.0
+Paul_Gascoigne,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Hogan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Kagame,2,Black,Black,True,0.5,0.5,Male,Male,True,1.0,1.0
+Paul_Martin,8,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Paul_McCartney,7,White,White,True,1.0,0.8571428571428571,Male,Male,True,0.5714285714285714,1.0
+Paul_McNulty,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_ONeill,9,White,White,True,0.8888888888888888,0.8888888888888888,Male,Male,True,1.0,1.0
+Paul_Patton,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Paul_Pierce,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Sarbanes,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Shanley,3,White,Middle Eastern,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Paul_Tagliabue,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Paul_Wellstone,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Paul_William_Hurley,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Paul_Wolfowitz,10,White,White,True,0.9,0.8,Male,Male,True,1.0,1.0
+Paula_Radcliffe,6,White,White,True,1.0,1.0,Female,Male,False,0.8333333333333334,0.6666666666666666
+Paula_Zahn,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Paulo_Cesar_Pinheiro,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Pedro_Almodovar,7,White,White,True,1.0,0.5714285714285714,Male,Male,True,1.0,1.0
+Pedro_Malan,5,Middle Eastern,Latino_Hispanic,False,0.4,0.4,Male,Male,True,1.0,1.0
+Pedro_Solbes,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Penelope_Ann_Miller,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Penelope_Cruz,3,Middle Eastern,White,False,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Pervez_Musharraf,18,Latino_Hispanic,Indian,False,0.3888888888888889,0.5,Male,Male,True,1.0,1.0
+Pete_Carroll,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Pete_Rose,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Pete_Sampras,22,Middle Eastern,Middle Eastern,True,1.0,0.6818181818181818,Male,Male,True,1.0,1.0
+Peter_Arnett,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Peter_Bacanovic,2,White,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Peter_Costello,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Peter_Greenaway,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Peter_Harrison,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Peter_Hillary,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Peter_Struck,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Petria_Thomas,3,White,White,True,1.0,1.0,Female,Male,False,0.6666666666666666,0.6666666666666666
+Petro_Symonenko,2,Middle Eastern,Latino_Hispanic,False,0.5,1.0,Male,Male,True,1.0,1.0
+Phan_Van_Khai,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Phil_Gramm,2,White,Asian,False,1.0,1.0,Male,Male,True,1.0,1.0
+Phil_Mickelson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Phil_Vassar,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Philippe_Noiret,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Pierce_Brosnan,15,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Pierre_Boulanger,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Pierre_Pettigrew,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Placido_Domingo,3,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Prince_Charles,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Prince_Claus,4,White,White,True,1.0,1.0,Male,Male,True,0.75,1.0
+Prince_Edward,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Prince_Harry,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Prince_Naruhito,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Prince_Willem-Alexander,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Prince_William,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Princess_Aiko,2,Asian,Asian,True,1.0,1.0,Female,Male,False,1.0,1.0
+Princess_Anne,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Princess_Caroline,5,White,White,True,1.0,1.0,Female,Female,True,1.0,0.8
+Princess_Elisabeth,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Princess_Masako,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Priscilla_Owen,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Priscilla_Presley,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Pupi_Avati,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Queen_Beatrix,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Queen_Elizabeth_II,13,White,White,True,1.0,1.0,Female,Male,False,1.0,0.6923076923076923
+Queen_Latifah,4,Asian,Asian,True,0.5,0.75,Female,Female,True,1.0,0.75
+Queen_Rania,5,Latino_Hispanic,White,False,0.4,1.0,Female,Female,True,1.0,1.0
+Rachel_Griffiths,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Rachel_Hunter,4,White,White,True,1.0,1.0,Female,Female,True,1.0,0.75
+Rafael_Ramirez,4,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Raghad_Saddam_Hussein,2,Middle Eastern,Latino_Hispanic,False,1.0,1.0,Female,Female,True,1.0,1.0
+Rainer_Schuettler,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Ralf_Schumacher,8,White,White,True,0.875,1.0,Male,Male,True,1.0,0.875
+Ralph_Firman,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Ralph_Klein,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ralph_Lauren,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Ranil_Wickremasinghe,3,Indian,Indian,True,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Raoul_Ruiz,4,White,Asian,False,1.0,0.75,Male,Male,True,1.0,1.0
+Raquel_Welch,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Ray_Allen,3,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ray_Nagin,2,Black,Black,True,0.5,1.0,Male,Male,True,1.0,1.0
+Ray_Romano,9,Middle Eastern,White,False,0.4444444444444444,0.4444444444444444,Male,Male,True,1.0,1.0
+Raymond_Odierno,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rebecca_Romijn-Stamos,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Rebekah_Chantay_Revels,4,Latino_Hispanic,Latino_Hispanic,True,0.5,0.5,Female,Female,True,1.0,1.0
+Recep_Tayyip_Erdogan,30,Middle Eastern,Middle Eastern,True,0.9,0.6333333333333333,Male,Male,True,1.0,1.0
+Reese_Witherspoon,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Reggie_Miller,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Renee_Zellweger,17,White,White,True,1.0,0.9411764705882353,Female,Female,True,1.0,0.9411764705882353
+Ricardo_Lagos,27,Middle Eastern,Asian,False,0.48148148148148145,0.4074074074074074,Male,Male,True,1.0,1.0
+Ricardo_Lopez_Murphy,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Ricardo_Maduro,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Ricardo_Monasterio,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ricardo_Sanchez,6,Latino_Hispanic,Asian,False,0.3333333333333333,0.5,Male,Male,True,1.0,1.0
+Rich_Gannon,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Armitage,9,White,White,True,1.0,0.8888888888888888,Male,Male,True,1.0,1.0
+Richard_Branson,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Butler,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Richard_Crenna,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Richard_Gephardt,11,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Gere,10,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Haass,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Krajicek,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Richard_Myers,18,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Norton-Taylor,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Sambrook,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Shelby,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Richard_Virenque,8,White,White,True,0.625,1.0,Male,Male,True,1.0,1.0
+Richie_Adubato,2,White,White,True,1.0,1.0,Male,Female,False,1.0,0.5
+Rick_Barnes,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rick_Carlisle,4,Middle Eastern,White,False,0.5,0.75,Male,Male,True,1.0,1.0
+Rick_Dinse,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rick_Perry,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rick_Pitino,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Rick_Romley,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rick_Santorum,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rick_Stansbury,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Rick_Wagoner,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ricky_Barnes,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ricky_Martin,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Ricky_Ponting,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rio_Ferdinand,2,Black,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Rita_Grande,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Rita_Moreno,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Female,Female,True,1.0,1.0
+Rita_Wilson,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Rob_Lowe,4,White,White,True,1.0,1.0,Male,Male,True,0.75,1.0
+Rob_Marshall,6,White,White,True,1.0,0.8333333333333334,Male,Male,True,1.0,1.0
+Rob_Schneider,2,Asian,Asian,True,0.5,0.5,Female,Female,True,0.5,0.5
+Robbie_Fowler,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robbie_Williams,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Robby_Ginepri,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Robert_Blackwill,2,White,White,True,1.0,1.0,Male,Female,False,1.0,0.5
+Robert_Blake,8,Middle Eastern,Asian,False,0.75,0.375,Male,Male,True,1.0,1.0
+Robert_Bonner,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Bullock,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_DeFraites,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_De_Niro,6,White,White,True,0.6666666666666666,0.8333333333333334,Male,Male,True,1.0,1.0
+Robert_Duvall,8,White,White,True,0.875,0.875,Male,Male,True,1.0,1.0
+Robert_Ehrlich,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Evans,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Robert_Fico,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Horan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Kocharian,5,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Mueller,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Robert_Mugabe,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Redford,8,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Stack,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Torricelli,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robert_Witt,2,Latino_Hispanic,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Robert_Zoellick,7,White,White,True,1.0,1.0,Male,Male,True,0.8571428571428571,1.0
+Roberto_Benigni,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Roberto_Carlos,4,Black,Latino_Hispanic,False,0.75,0.75,Male,Male,True,1.0,1.0
+Roberto_Marinho,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Robin_Cook,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Robin_McLaurin_Williams,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Robinson_Stevenin,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Rod_Blagojevich,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Rod_Stewart,3,White,White,True,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Rodrigo_Borja,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Roger_Clemens,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Roger_Federer,14,Middle Eastern,Middle Eastern,True,0.7142857142857143,0.5714285714285714,Male,Male,True,1.0,1.0
+Roger_Moore,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rogerio_Romero,2,Latino_Hispanic,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Roh_Moo-hyun,32,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rolandas_Paksas,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Rolf_Eckrodt,2,White,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Roman_Polanski,6,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Romano_Prodi,7,Middle Eastern,White,False,0.8571428571428571,0.7142857142857143,Male,Male,True,1.0,1.0
+Ron_Dittemore,8,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ron_Howard,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ronald_Reagan,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ronaldo_Luis_Nazario_de_Lima,4,Latino_Hispanic,Latino_Hispanic,True,0.75,0.5,Male,Male,True,1.0,1.0
+Roseanne_Barr,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Rosemarie_Stack,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Roy_Jones_Jr,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Roy_Moore,6,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Roy_Williams,4,White,White,True,0.75,1.0,Male,Male,True,1.0,1.0
+Ruben_Studdard,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rubens_Barrichello,12,White,White,True,0.6666666666666666,0.75,Male,Male,True,1.0,1.0
+Rudolph_Giuliani,26,White,White,True,0.8461538461538461,1.0,Male,Male,True,1.0,1.0
+Rupert_Grint,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Rupert_Murdoch,2,Latino_Hispanic,Middle Eastern,False,0.5,1.0,Male,Male,True,1.0,1.0
+Russell_Coutts,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Russell_Crowe,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Russell_Simmons,5,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ruth_Dreifuss,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Ruth_Harlow,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+S_Jayakumar,2,Indian,Black,False,0.5,1.0,Male,Male,True,1.0,1.0
+Saburo_Kawabuchi,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sachiko_Yamada,4,Asian,Asian,True,1.0,1.0,Female,Male,False,0.75,0.75
+Saddam_Hussein,23,Latino_Hispanic,Latino_Hispanic,True,0.4782608695652174,0.5217391304347826,Male,Male,True,1.0,1.0
+Sadie_Frost,3,White,White,True,0.6666666666666666,1.0,Female,Female,True,1.0,1.0
+Saeb_Erekat,2,Middle Eastern,Indian,False,0.5,0.5,Male,Male,True,1.0,1.0
+Sally_Field,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sally_Kirkland,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sally_Ride,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Salma_Hayek,13,Middle Eastern,White,False,1.0,0.46153846153846156,Female,Female,True,1.0,0.9230769230769231
+Salman_Rushdie,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sam_Bith,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sam_Mendes,2,Middle Eastern,White,False,1.0,1.0,Male,Male,True,1.0,1.0
+Sam_Torrance,3,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Samira_Makhmalbaf,2,Middle Eastern,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Sammy_Sosa,2,Black,Black,True,0.5,1.0,Male,Male,True,1.0,1.0
+Samuel_Waksal,4,Middle Eastern,Latino_Hispanic,False,1.0,0.75,Male,Male,True,1.0,1.0
+Sandra_Bullock,4,White,White,True,0.75,1.0,Female,Female,True,1.0,1.0
+Saparmurat_Niyazov,2,Middle Eastern,Asian,False,1.0,1.0,Male,Male,True,1.0,1.0
+Sarah_Hughes,6,White,White,True,0.8333333333333334,1.0,Female,Female,True,1.0,1.0
+Sarah_Jessica_Parker,6,White,White,True,1.0,1.0,Female,Female,True,1.0,0.8333333333333334
+Sarah_Michelle_Gellar,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Scott_McClellan,5,White,White,True,1.0,0.8,Male,Male,True,1.0,1.0
+Scott_McNealy,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Scott_Peterson,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Scott_Ritter,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Scott_Rudin,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Scott_Sullivan,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Scott_Wolf,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sean_Astin,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sean_Hayes,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sean_OKeefe,5,White,White,True,0.6,1.0,Male,Male,True,1.0,1.0
+Sean_Patrick_OMalley,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sean_Penn,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Sebastian_Saja,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Sebastien_Grosjean,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sepp_Blatter,4,Middle Eastern,White,False,0.75,0.5,Male,Male,True,1.0,1.0
+Serena_Williams,52,Black,Black,True,1.0,1.0,Female,Male,False,0.8846153846153846,0.8269230769230769
+Sergei_Ivanov,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Sergey_Lavrov,11,Middle Eastern,Middle Eastern,True,0.9090909090909091,0.6363636363636364,Male,Male,True,1.0,1.0
+Sergio_Garcia,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Sergio_Vieira_De_Mello,11,White,White,True,0.5454545454545454,0.5454545454545454,Male,Male,True,1.0,1.0
+Shane_Mosley,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Shane_Warne,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Shannon_OBrien,2,White,White,True,1.0,1.0,Female,Female,True,1.0,0.5
+Sharon_Davis,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sharon_Frey,2,White,White,True,1.0,1.0,Female,Male,False,1.0,1.0
+Sharon_Osbourne,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sharon_Stone,5,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Shaukat_Aziz,2,Latino_Hispanic,Indian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Shaul_Mofaz,3,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Sheila_Copps,4,White,White,True,0.75,1.0,Female,Female,True,1.0,1.0
+Sheila_Fraser,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sheila_Wellstone,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sheryl_Crow,8,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Shia_LaBeouf,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Shimon_Peres,8,Middle Eastern,Middle Eastern,True,0.875,0.75,Male,Male,True,1.0,1.0
+Sila_Calderon,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Silvan_Shalom,6,Middle Eastern,Middle Eastern,True,0.6666666666666666,0.8333333333333334,Male,Male,True,1.0,1.0
+Silvia_Farina_Elia,3,Middle Eastern,White,False,0.6666666666666666,0.6666666666666666,Female,Female,True,0.6666666666666666,0.6666666666666666
+Silvio_Berlusconi,33,Middle Eastern,Middle Eastern,True,0.696969696969697,0.36363636363636365,Male,Male,True,1.0,1.0
+Silvio_Fernandez,2,Indian,Indian,True,0.5,1.0,Male,Male,True,1.0,1.0
+Simon_Cowell,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Slobodan_Milosevic,4,White,White,True,0.75,0.75,Male,Male,True,1.0,1.0
+Sonia_Gandhi,4,Middle Eastern,Latino_Hispanic,False,0.5,0.75,Female,Female,True,1.0,1.0
+Sophia_Loren,7,Latino_Hispanic,Indian,False,0.42857142857142855,0.42857142857142855,Female,Female,True,1.0,1.0
+Sourav_Ganguly,5,Indian,Indian,True,0.4,0.8,Male,Male,True,1.0,1.0
+Spencer_Abraham,17,Middle Eastern,Middle Eastern,True,0.5882352941176471,0.5294117647058824,Male,Male,True,1.0,1.0
+Stacy_Dragila,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Female,Female,True,1.0,1.0
+Stan_Heath,2,Black,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+Stanley_McChrystal,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stanley_Tong,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stefano_Accorsi,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Steffi_Graf,5,White,White,True,1.0,0.8,Female,Female,True,1.0,0.6
+Stellan_Skarsgard,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stephen_Ambrose,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stephen_Daldry,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stephen_Friedman,2,White,Middle Eastern,False,1.0,0.5,Male,Male,True,1.0,1.0
+Steve_Backley,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Steve_Ballmer,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Steve_Lavin,6,White,White,True,0.6666666666666666,0.8333333333333334,Male,Male,True,1.0,1.0
+Steve_Mariucci,3,White,Latino_Hispanic,False,1.0,0.3333333333333333,Male,Male,True,1.0,1.0
+Steve_Nash,5,White,White,True,0.8,0.8,Male,Male,True,0.8,1.0
+Steve_Park,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Steve_Spurrier,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Steve_Waugh,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Steven_Hatfill,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Steven_Seagal,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Steven_Spielberg,7,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Stockard_Channing,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Strom_Thurmond,3,White,White,True,1.0,1.0,Male,Male,True,0.6666666666666666,1.0
+Sue_Wicks,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Surakait_Sathirathai,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Susan_Collins,2,White,Latino_Hispanic,False,1.0,0.5,Female,Female,True,1.0,1.0
+Susan_Sarandon,6,White,White,True,1.0,1.0,Female,Female,True,0.8333333333333334,0.8333333333333334
+Susie_Castillo,2,Latino_Hispanic,Latino_Hispanic,True,0.5,1.0,Female,Female,True,1.0,1.0
+Susilo_Bambang_Yudhoyono,4,Asian,Asian,True,0.75,0.5,Male,Male,True,1.0,1.0
+Suzanne_Gaudet,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Svetlana_Koroleva,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Sylvester_Stallone,9,White,White,True,0.5555555555555556,1.0,Male,Male,True,1.0,1.0
+Taha_Yassin_Ramadan,15,Middle Eastern,Middle Eastern,True,0.9333333333333333,0.8,Male,Male,True,1.0,1.0
+Takashi_Sorimachi,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tamara_Brooks,2,Black,Black,True,1.0,1.0,Female,Male,False,1.0,1.0
+Tammy_Lynn_Michaels,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Tang_Jiaxuan,11,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tariq_Aziz,6,Middle Eastern,Middle Eastern,True,0.5,0.6666666666666666,Male,Male,True,1.0,1.0
+Tassos_Papadopoulos,3,Middle Eastern,Middle Eastern,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Taufik_Hidayat,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Ted_Maher,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Terje_Roed-Larsen,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Terrell_Suggs,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Terry_McAuliffe,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Terry_Stotts,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thabo_Mbeki,5,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thaksin_Shinawatra,6,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Theo_Epstein,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Theodore_Tweed_Roosevelt,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Theresa_May,3,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Thierry_Falise,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thomas_Birmingham,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Thomas_Bjorn,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Thomas_Fargo,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thomas_Malchow,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thomas_OBrien,9,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Thomas_Rupprath,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Thomas_Wyman,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Tiger_Woods,23,Black,Black,True,0.5652173913043478,0.782608695652174,Male,Male,True,1.0,1.0
+Tim_Allen,4,White,Asian,False,1.0,0.75,Male,Male,True,1.0,1.0
+Tim_Chapman,2,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Tim_Conway,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+Tim_Curry,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Tim_Duncan,4,Black,Black,True,1.0,0.75,Male,Male,True,1.0,1.0
+Tim_Floyd,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tim_Henman,19,White,White,True,0.9473684210526315,1.0,Male,Male,True,1.0,1.0
+Tim_Robbins,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tippi_Hedren,2,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Todd_Haynes,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Tom_Brady,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tom_Coverdale,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tom_Craddick,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tom_Crean,5,White,White,True,0.8,0.8,Male,Male,True,1.0,1.0
+Tom_Cruise,10,White,White,True,0.9,1.0,Male,Male,True,1.0,1.0
+Tom_Daschle,25,White,White,True,0.88,0.84,Male,Male,True,1.0,1.0
+Tom_Glavine,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tom_Hanks,10,White,White,True,0.6,0.8,Male,Male,True,1.0,1.0
+Tom_Harkin,5,White,White,True,0.8,0.8,Male,Male,True,1.0,1.0
+Tom_Jones,2,White,Black,False,1.0,0.5,Male,Male,True,1.0,1.0
+Tom_Reilly,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tom_Ridge,33,White,White,True,0.9696969696969697,0.7878787878787878,Male,Male,True,1.0,1.0
+Tom_Watson,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tommy_Franks,16,Middle Eastern,Middle Eastern,True,0.6875,0.8125,Male,Male,True,1.0,1.0
+Tommy_Haas,6,Middle Eastern,White,False,0.5,0.6666666666666666,Male,Male,True,1.0,1.0
+Tommy_Robredo,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tommy_Thompson,10,White,Middle Eastern,False,0.9,0.6,Male,Male,True,1.0,1.0
+Tomoko_Hagiwara,2,Asian,Asian,True,1.0,0.5,Female,Female,True,0.5,1.0
+Toni_Braxton,3,Black,Indian,False,1.0,0.6666666666666666,Female,Female,True,1.0,1.0
+Tony_Bennett,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tony_Blair,144,White,White,True,0.9166666666666666,0.9861111111111112,Male,Male,True,1.0,1.0
+Tony_Curtis,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tony_Parker,2,Black,Black,True,1.0,0.5,Male,Male,True,1.0,1.0
+Tony_Shalhoub,4,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tony_Stewart,6,White,White,True,0.8333333333333334,1.0,Male,Male,True,1.0,1.0
+Torri_Edwards,2,Black,Black,True,1.0,1.0,Female,Male,False,1.0,1.0
+Toshihiko_Fukui,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tracee_Ellis_Ross,2,Black,Latino_Hispanic,False,0.5,1.0,Female,Female,True,1.0,0.5
+Tracy_McGrady,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Trent_Lott,16,White,White,True,0.75,0.6875,Male,Male,True,1.0,1.0
+Tsutomu_Takebe,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tubby_Smith,3,Latino_Hispanic,Black,False,0.6666666666666666,0.6666666666666666,Male,Male,True,1.0,1.0
+Tung_Chee-hwa,9,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tyler_Hamilton,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Tyra_Banks,2,Black,Black,True,1.0,1.0,Female,Female,True,1.0,1.0
+Tyron_Garner,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Uma_Thurman,3,White,White,True,1.0,1.0,Female,Male,False,1.0,0.6666666666666666
+Vaclav_Havel,9,White,White,True,0.7777777777777778,0.7777777777777778,Male,Male,True,1.0,1.0
+Vaclav_Klaus,2,Middle Eastern,Middle Eastern,True,1.0,0.5,Male,Male,True,1.0,1.0
+Valdas_Adamkus,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Valentino_Rossi,6,White,Latino_Hispanic,False,0.6666666666666666,0.5,Male,Male,True,1.0,1.0
+Valerie_Harper,2,Middle Eastern,Latino_Hispanic,False,0.5,0.5,Female,Female,True,1.0,1.0
+Valery_Giscard_dEstaing,6,White,White,True,0.6666666666666666,0.8333333333333334,Male,Male,True,1.0,1.0
+Vanessa_Incontrada,4,White,White,True,1.0,1.0,Female,Female,True,1.0,1.0
+Vanessa_Redgrave,5,White,White,True,1.0,1.0,Female,Female,True,1.0,0.6
+Vanessa_Williams,3,White,White,True,0.6666666666666666,0.6666666666666666,Female,Female,True,1.0,1.0
+Venus_Williams,17,Black,Black,True,1.0,1.0,Female,Male,False,0.8823529411764706,0.8823529411764706
+Vicente_Fernandez,5,Middle Eastern,Middle Eastern,True,1.0,0.8,Male,Male,True,1.0,1.0
+Vicente_Fox,32,Middle Eastern,Middle Eastern,True,0.46875,0.46875,Male,Male,True,1.0,1.0
+Vicki_Zhao_Wei,2,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Victoria_Beckham,3,White,White,True,0.6666666666666666,1.0,Female,Male,False,1.0,1.0
+Victoria_Clarke,5,White,White,True,1.0,1.0,Female,Female,True,1.0,0.8
+Vidar_Helgesen,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vin_Diesel,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vince_Carter,4,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vince_Gill,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vincent_Brooks,7,Middle Eastern,Black,False,0.42857142857142855,0.42857142857142855,Male,Male,True,1.0,1.0
+Vincent_Gallo,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vitali_Klitschko,4,Middle Eastern,White,False,0.5,0.75,Male,Male,True,1.0,1.0
+Vivica_Fox,2,Black,Black,True,1.0,1.0,Female,Female,True,1.0,0.5
+Vladimir_Putin,49,White,White,True,0.8571428571428571,0.6122448979591837,Male,Male,True,1.0,1.0
+Vladimir_Spidla,3,Middle Eastern,White,False,0.6666666666666666,1.0,Male,Male,True,1.0,1.0
+Vladimir_Voltchkov,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Vladimiro_Montesinos,3,Middle Eastern,Latino_Hispanic,False,0.6666666666666666,0.3333333333333333,Male,Male,True,1.0,1.0
+Vojislav_Kostunica,7,White,White,True,0.5714285714285714,1.0,Male,Male,True,1.0,1.0
+Walter_Mondale,10,White,White,True,1.0,0.7,Male,Male,True,1.0,1.0
+Wang_Yi,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Wang_Yingfan,3,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Warren_Beatty,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Warren_Buffett,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Wayne_Ferreira,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Wayne_Gretzky,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Wen_Jiabao,13,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Wesley_Clark,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Will_Smith,2,Black,Black,True,1.0,1.0,Male,Male,True,1.0,1.0
+William_Bratton,3,White,White,True,1.0,0.6666666666666666,Male,Male,True,1.0,1.0
+William_Bulger,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+William_Burns,2,Middle Eastern,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+William_Donaldson,7,White,White,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+William_Ford_Jr,7,White,White,True,0.8571428571428571,1.0,Male,Male,True,1.0,1.0
+William_Hochul,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+William_Macy,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+William_Martin,2,White,Asian,False,1.0,0.5,Male,Male,True,1.0,1.0
+William_Rehnquist,2,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Win_Aung,4,Asian,Asian,True,1.0,0.75,Male,Male,True,1.0,1.0
+Winona_Ryder,24,White,White,True,0.9166666666666666,0.9583333333333334,Female,Female,True,0.875,0.875
+Wolfgang_Schuessel,4,White,White,True,1.0,0.75,Male,Male,True,1.0,1.0
+Woody_Allen,5,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Wu_Yi,3,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,0.6666666666666666
+Xanana_Gusmao,5,Middle Eastern,Indian,False,1.0,0.4,Male,Male,True,1.0,1.0
+Xavier_Malisse,5,White,White,True,0.8,1.0,Male,Male,True,1.0,1.0
+Yann_Martel,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Yao_Ming,8,Asian,Asian,True,0.875,1.0,Male,Male,True,1.0,1.0
+Yasar_Yakis,4,Middle Eastern,Middle Eastern,True,0.5,0.5,Male,Male,True,1.0,1.0
+Yashwant_Sinha,7,Middle Eastern,Indian,False,0.7142857142857143,0.5714285714285714,Male,Male,True,1.0,1.0
+Yasser_Arafat,8,Middle Eastern,Middle Eastern,True,0.875,0.75,Male,Male,True,1.0,1.0
+Yevgeny_Kafelnikov,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Yoko_Ono,6,Asian,Asian,True,0.5,0.8333333333333334,Female,Male,False,1.0,0.6666666666666666
+Yoriko_Kawaguchi,14,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,0.9285714285714286
+Yossi_Beilin,2,White,Latino_Hispanic,False,1.0,0.5,Male,Male,True,1.0,1.0
+Yu_Shyi-kun,4,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Yukiko_Okudo,2,Asian,Asian,True,1.0,0.5,Female,Male,False,0.5,1.0
+Yuri_Fedotov,2,White,Latino_Hispanic,False,1.0,1.0,Male,Male,True,1.0,1.0
+Yuri_Malenchenko,2,Middle Eastern,Middle Eastern,True,1.0,1.0,Male,Male,True,1.0,1.0
+Zafarullah_Khan_Jamali,2,Indian,White,False,0.5,1.0,Male,Male,True,1.0,1.0
+Zarai_Toledo,2,Asian,Asian,True,0.5,0.5,Female,Female,True,1.0,0.5
+Zhang_Wenkang,2,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Zhang_Ziyi,4,Asian,Asian,True,1.0,1.0,Female,Female,True,1.0,1.0
+Zhu_Rongji,9,Asian,Asian,True,1.0,1.0,Male,Male,True,1.0,1.0
+Zico,3,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0
+Zinedine_Zidane,6,Middle Eastern,White,False,0.5,0.6666666666666666,Male,Male,True,1.0,1.0
+Zoran_Djindjic,4,White,White,True,1.0,1.0,Male,Male,True,1.0,1.0

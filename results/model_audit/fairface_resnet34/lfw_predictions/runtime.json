@@ -1,0 +1,14 @@
+{
+  "architecture": "FairFace ResNet-34",
+  "dataset": "LFW",
+  "analysis_type": "demographic prediction audit; no demographic ground truth used",
+  "input_preprocessing": "project five-point alignment reconstructed from stored landmarks",
+  "checkpoint_sha256": "37F2E74C0E7DA196F8EDD7DAE0C88CFFDBEF7923BEEBEBCC27381F0AD0FDB2C1",
+  "n_images": 13233,
+  "elapsed_seconds": 1002.5972795999842,
+  "images_per_second": 13.198719235782983,
+  "device": "cpu",
+  "hardware": "CPU",
+  "batch_size": 16,
+  "seed": 26041
+}

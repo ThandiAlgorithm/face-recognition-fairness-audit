@@ -1,0 +1,8 @@
+modal_predicted_race,n_identities,min_images_per_identity,median_images_per_identity,mean_images_per_identity,max_images_per_identity
+Black,437,1,1.0,1.7459954233409611,52
+East Asian,319,1,1.0,2.3636363636363638,60
+Indian,73,1,1.0,1.7123287671232876,24
+Latino_Hispanic,182,1,1.0,2.2252747252747254,71
+Middle Eastern,1045,1,1.0,2.123444976076555,77
+Southeast Asian,84,1,1.0,2.011904761904762,44
+White,3609,1,1.0,2.4377944028816847,530

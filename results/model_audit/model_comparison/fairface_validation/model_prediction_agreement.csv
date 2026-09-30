@@ -1,0 +1,3 @@
+task,n,prediction_agreement_rate,both_correct,fairface_only_correct,deepface_only_correct,neither_correct
+race,10954,0.6911630454628446,6521,1985,681,1767
+gender,10954,0.6999269673178747,7369,2970,317,298

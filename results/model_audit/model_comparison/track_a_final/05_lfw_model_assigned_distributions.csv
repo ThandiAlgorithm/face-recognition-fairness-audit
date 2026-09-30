@@ -1,0 +1,17 @@
+model,task,category,n,proportion
+FairFace ResNet-34,race,White,8454,0.6388574019496712
+FairFace ResNet-34,race,Black,744,0.05622307866696894
+FairFace ResNet-34,race,Asian,952,0.07194135872440112
+FairFace ResNet-34,race,Indian,143,0.010806317539484621
+FairFace ResNet-34,race,Latino_Hispanic,498,0.037633189752890504
+FairFace ResNet-34,race,Middle Eastern,2442,0.18453865336658354
+FairFace ResNet-34,gender,Male,10357,0.7826645507443513
+FairFace ResNet-34,gender,Female,2876,0.21733544925564877
+DeepFace,race,White,8645,0.6532910148870249
+DeepFace,race,Black,749,0.05660092193758029
+DeepFace,race,Asian,1336,0.10095972190735283
+DeepFace,race,Indian,222,0.01677624121514396
+DeepFace,race,Latino_Hispanic,1060,0.08010277336960629
+DeepFace,race,Middle Eastern,1221,0.09226932668329177
+DeepFace,gender,Male,10834,0.8187107987606741
+DeepFace,gender,Female,2399,0.18128920123932593

@@ -1,0 +1,14 @@
+{
+  "architecture": "FairFace ResNet-34",
+  "dataset": "UTKFace",
+  "input_preprocessing": "project five-point alignment reconstructed from stored landmarks",
+  "checkpoint_sha256": "37F2E74C0E7DA196F8EDD7DAE0C88CFFDBEF7923BEEBEBCC27381F0AD0FDB2C1",
+  "n_images": 24054,
+  "excluded_before_inference": 54,
+  "elapsed_seconds": 6535.01788119995,
+  "images_per_second": 3.680785643938168,
+  "device": "cpu",
+  "hardware": "CPU",
+  "batch_size": 16,
+  "seed": 26041
+}

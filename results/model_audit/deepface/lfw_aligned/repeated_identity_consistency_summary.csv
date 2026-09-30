@@ -1,0 +1,9 @@
+measure,value
+Repeated identities,1680.0
+Images belonging to repeated identities,9164.0
+Mean race consistency,0.8721727444353887
+Median race consistency,1.0
+Fully race-consistent identities,1114.0
+Mean gender consistency,0.9730691044650948
+Median gender consistency,1.0
+Fully gender-consistent identities,1549.0

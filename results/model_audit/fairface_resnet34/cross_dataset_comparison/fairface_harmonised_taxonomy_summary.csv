@@ -1,0 +1,2 @@
+dataset,comparable_n,out_of_scope_prediction_n,out_of_scope_prediction_rate
+FairFace validation,8122,854,0.10514651563654272
