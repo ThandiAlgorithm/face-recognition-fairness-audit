@@ -1,0 +1,8 @@
+{
+  "task": "gender classification",
+  "positive_class": "Female",
+  "sensitive_feature": "FairFace harmonised race",
+  "tpr_difference": 0.3403032410551022,
+  "fpr_difference": 0.028137006341834088,
+  "equalized_odds_difference": 0.3403032410551022
+}

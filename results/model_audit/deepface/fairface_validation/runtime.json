@@ -1,0 +1,16 @@
+{
+  "library": "DeepFace",
+  "dataset": "FairFace validation",
+  "tasks": [
+    "race",
+    "gender"
+  ],
+  "race_taxonomy": "6-class common taxonomy; FairFace East Asian and Southeast Asian merged to Asian",
+  "input_preprocessing": "FairFace prepared images; DeepFace detector skipped; BGR resize/pad to 224x224; pixel scale [0,1]",
+  "n_images": 10954,
+  "elapsed_seconds": 3384.3834030000144,
+  "images_per_second": 3.2366309296665565,
+  "batch_size": 16,
+  "tensorflow_version": "2.21.0",
+  "seed": 26041
+}

@@ -1,0 +1,12 @@
+{
+  "library": "DeepFace",
+  "dataset": "UTKFace",
+  "input_preprocessing": "project five-point alignment reconstructed from stored landmarks; DeepFace detector skipped",
+  "n_images": 24054,
+  "excluded_before_inference": 54,
+  "elapsed_seconds": 7621.844865099993,
+  "images_per_second": 3.1559288368806797,
+  "batch_size": 16,
+  "tensorflow_version": "2.21.0",
+  "seed": 26041
+}

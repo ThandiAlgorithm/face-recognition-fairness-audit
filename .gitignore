@@ -111,3 +111,7 @@ results/model_audit/**/utkface_smoke_100/
 results/model_audit/**/utkface_aligned_smoke_100/
 results/model_audit/**/lfw_smoke_100/
 results/model_audit/**/smoke_*/
+
+results/model_audit/**/*_smoke_*/
+
+results/model_audit/model_comparison/track_a_final/qualitative_examples/*/individual/
