@@ -1,0 +1,8 @@
+dataset,gender_missing,race_missing,age_label_missing,any_core_label_missing,all_core_labels_missing,n_images,dataset_total,percentage
+fairface,False,False,False,False,False,97698,97698,100.0
+lfw,False,False,True,True,False,11098,13233,83.86609234489534
+lfw,False,True,True,True,False,2126,13233,16.06589586639462
+lfw,True,False,True,True,False,6,13233,0.045341192473362046
+lfw,True,True,True,True,True,3,13233,0.022670596236681023
+utkface,False,False,False,False,False,24104,24108,99.98340799734528
+utkface,True,True,True,True,True,4,24108,0.016592002654720425

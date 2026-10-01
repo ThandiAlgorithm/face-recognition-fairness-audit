@@ -1,0 +1,4 @@
+dataset,n_total_images,n_eligible_images,n_ineligible_images,pct_eligible_images,analysis_status
+fairface,97698,97698,0,100.0,available
+lfw,13233,13224,9,99.93198821128996,available
+utkface,24108,24104,4,99.98340799734528,available
