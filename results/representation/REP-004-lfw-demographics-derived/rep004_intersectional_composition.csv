@@ -1,0 +1,212 @@
+dataset,intersection,cell_label,gender,race,age_band_harmonised,n_images,dataset_eligible_n,percentage,percentage_reported,suppress_below,low_confidence_below,thin_cell,low_confidence,reporting_status
+fairface,gender_x_race,gender=female | race=Black,female,Black,,6894,97698,7.056439231099921,7.056439231099921,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=East Asian,female,East Asian,,6914,97698,7.076910479231918,7.076910479231918,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Indian,female,Indian,,6672,97698,6.829208376834736,6.829208376834736,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Latino_Hispanic,female,Latino_Hispanic,,7545,97698,7.722778357796475,7.722778357796475,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Middle Eastern,female,Middle Eastern,,3243,97698,3.3194128846035746,3.3194128846035746,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=Southeast Asian,female,Southeast Asian,,5863,97698,6.001146389895392,6.001146389895392,30,100,False,False,reportable
+fairface,gender_x_race,gender=female | race=White,female,White,,8789,97698,8.99608999160679,8.99608999160679,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Black,male,Black,,6895,97698,7.057462793506521,7.057462793506521,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=East Asian,male,East Asian,,6923,97698,7.086122540891318,7.086122540891318,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Indian,male,Indian,,7163,97698,7.3317775184753025,7.3317775184753025,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Latino_Hispanic,male,Latino_Hispanic,,7445,97698,7.620422117136481,7.620422117136481,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Middle Eastern,male,Middle Eastern,,7182,97698,7.351225204200699,7.351225204200699,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=Southeast Asian,male,Southeast Asian,,6347,97698,6.496550594689758,6.496550594689758,30,100,False,False,reportable
+fairface,gender_x_race,gender=male | race=White,male,White,,9823,97698,10.054453520031116,10.054453520031116,30,100,False,False,reportable
+lfw,gender_x_race,gender=female | race=Asian,female,Asian,,233,13224,1.7619479733817303,1.7619479733817303,30,100,False,False,reportable
+lfw,gender_x_race,gender=female | race=Black,female,Black,,140,13224,1.0586811857229281,1.0586811857229281,30,100,False,False,reportable
+lfw,gender_x_race,gender=female | race=Indian,female,Indian,,33,13224,0.24954627949183303,0.24954627949183303,30,100,False,True,low_confidence
+lfw,gender_x_race,gender=female | race=White,female,White,,2077,13224,15.70629159104658,15.70629159104658,30,100,False,False,reportable
+lfw,gender_x_race,gender=female | race=unknown,female,unknown,,478,13224,3.614640048396854,3.614640048396854,30,100,False,False,reportable
+lfw,gender_x_race,gender=male | race=Asian,male,Asian,,635,13224,4.801875378100424,4.801875378100424,30,100,False,False,reportable
+lfw,gender_x_race,gender=male | race=Black,male,Black,,339,13224,2.5635208711433757,2.5635208711433757,30,100,False,False,reportable
+lfw,gender_x_race,gender=male | race=Indian,male,Indian,,159,13224,1.2023593466424682,1.2023593466424682,30,100,False,False,reportable
+lfw,gender_x_race,gender=male | race=White,male,White,,7482,13224,56.57894736842105,56.57894736842105,30,100,False,False,reportable
+lfw,gender_x_race,gender=male | race=unknown,male,unknown,,1648,13224,12.462189957652752,12.462189957652752,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Asian,female,Asian,,1942,24104,8.056754065715234,8.056754065715234,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Black,female,Black,,2221,24104,9.21423830069698,9.21423830069698,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Indian,female,Indian,,1742,24104,7.227016262860936,7.227016262860936,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=Others,female,Others,,943,24104,3.9122137404580157,3.9122137404580157,30,100,False,False,reportable
+utkface,gender_x_race,gender=female | race=White,female,White,,4674,24104,19.390972452704947,19.390972452704947,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Asian,male,Asian,,1644,24104,6.82044473946233,6.82044473946233,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Black,male,Black,,2337,24104,9.695486226352473,9.695486226352473,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Indian,male,Indian,,2285,24104,9.479754397610355,9.479754397610355,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=Others,male,Others,,768,24104,3.1861931629605045,3.1861931629605045,30,100,False,False,reportable
+utkface,gender_x_race,gender=male | race=White,male,White,,5548,24104,23.016926651178228,23.016926651178228,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=0-19,female,,0-19,11651,97698,11.925525599295788,11.925525599295788,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=20-39,female,,20-39,25533,97698,26.134618927716026,26.134618927716026,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=40-59,female,,40-59,7085,97698,7.251939650760507,7.251939650760507,30,100,False,False,reportable
+fairface,gender_x_age,gender=female | age_band_harmonised=60+,female,,60+,1651,97698,1.689901533296485,1.689901533296485,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=0-19,male,,0-19,12388,97698,12.679891092959938,12.679891092959938,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=20-39,male,,20-39,24945,97698,25.532764232635262,25.532764232635262,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=40-59,male,,40-59,12036,97698,12.319597125836761,12.319597125836761,30,100,False,False,reportable
+fairface,gender_x_age,gender=male | age_band_harmonised=60+,male,,60+,2409,97698,2.4657618374992323,2.4657618374992323,30,100,False,False,reportable
+lfw,gender_x_age,gender=female | age_band_harmonised=unknown,female,,unknown,2961,13224,22.391107078039926,22.391107078039926,30,100,False,False,reportable
+lfw,gender_x_age,gender=male | age_band_harmonised=unknown,male,,unknown,10263,13224,77.60889292196008,77.60889292196008,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=0-19,female,,0-19,2635,24104,10.931795552605376,10.931795552605376,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=20-39,female,,20-39,6354,24104,26.36076999668105,26.36076999668105,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=40-59,female,,40-59,1367,24104,5.671257882509127,5.671257882509127,30,100,False,False,reportable
+utkface,gender_x_age,gender=female | age_band_harmonised=60+,female,,60+,1166,24104,4.837371390640557,4.837371390640557,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=0-19,male,,0-19,2254,24104,9.351145038167939,9.351145038167939,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=20-39,male,,20-39,5556,24104,23.0501161632924,23.0501161632924,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=40-59,male,,40-59,3191,24104,13.238466644540326,13.238466644540326,30,100,False,False,reportable
+utkface,gender_x_age,gender=male | age_band_harmonised=60+,male,,60+,1581,24104,6.559077331563226,6.559077331563226,30,100,False,False,reportable
+fairface,race_x_age,race=Black | age_band_harmonised=0-19,,Black,0-19,4353,97698,4.455567155929497,4.455567155929497,30,100,False,False,reportable
+fairface,race_x_age,race=Black | age_band_harmonised=20-39,,Black,20-39,6530,97698,6.6838625150975455,6.6838625150975455,30,100,False,False,reportable
+fairface,race_x_age,race=Black | age_band_harmonised=40-59,,Black,40-59,2503,97698,2.5619767037196257,2.5619767037196257,30,100,False,False,reportable
+fairface,race_x_age,race=Black | age_band_harmonised=60+,,Black,60+,403,97698,0.41249564985977194,0.41249564985977194,30,100,False,False,reportable
+fairface,race_x_age,race=East Asian | age_band_harmonised=0-19,,East Asian,0-19,3734,97698,3.8219820262441404,3.8219820262441404,30,100,False,False,reportable
+fairface,race_x_age,race=East Asian | age_band_harmonised=20-39,,East Asian,20-39,8054,97698,8.24377162275584,8.24377162275584,30,100,False,False,reportable
+fairface,race_x_age,race=East Asian | age_band_harmonised=40-59,,East Asian,40-59,1648,97698,1.6868308460766854,1.6868308460766854,30,100,False,False,reportable
+fairface,race_x_age,race=East Asian | age_band_harmonised=60+,,East Asian,60+,401,97698,0.4104485250465721,0.4104485250465721,30,100,False,False,reportable
+fairface,race_x_age,race=Indian | age_band_harmonised=0-19,,Indian,0-19,3615,97698,3.700178099858748,3.700178099858748,30,100,False,False,reportable
+fairface,race_x_age,race=Indian | age_band_harmonised=20-39,,Indian,20-39,6579,97698,6.734017073020943,6.734017073020943,30,100,False,False,reportable
+fairface,race_x_age,race=Indian | age_band_harmonised=40-59,,Indian,40-59,2948,97698,3.017461974656595,3.017461974656595,30,100,False,False,reportable
+fairface,race_x_age,race=Indian | age_band_harmonised=60+,,Indian,60+,693,97698,0.7093287477737518,0.7093287477737518,30,100,False,False,reportable
+fairface,race_x_age,race=Latino_Hispanic | age_band_harmonised=0-19,,Latino_Hispanic,0-19,3799,97698,3.8885135826731356,3.8885135826731356,30,100,False,False,reportable
+fairface,race_x_age,race=Latino_Hispanic | age_band_harmonised=20-39,,Latino_Hispanic,20-39,7233,97698,7.403426886937297,7.403426886937297,30,100,False,False,reportable
+fairface,race_x_age,race=Latino_Hispanic | age_band_harmonised=40-59,,Latino_Hispanic,40-59,3473,97698,3.5548322381215582,3.5548322381215582,30,100,False,False,reportable
+fairface,race_x_age,race=Latino_Hispanic | age_band_harmonised=60+,,Latino_Hispanic,60+,485,97698,0.49642776720096626,0.49642776720096626,30,100,False,False,reportable
+fairface,race_x_age,race=Middle Eastern | age_band_harmonised=0-19,,Middle Eastern,0-19,1801,97698,1.8434358942864746,1.8434358942864746,30,100,False,False,reportable
+fairface,race_x_age,race=Middle Eastern | age_band_harmonised=20-39,,Middle Eastern,20-39,5344,97698,5.469917500870028,5.469917500870028,30,100,False,False,reportable
+fairface,race_x_age,race=Middle Eastern | age_band_harmonised=40-59,,Middle Eastern,40-59,2655,97698,2.717558189522815,2.717558189522815,30,100,False,False,reportable
+fairface,race_x_age,race=Middle Eastern | age_band_harmonised=60+,,Middle Eastern,60+,625,97698,0.6397265041249565,0.6397265041249565,30,100,False,False,reportable
+fairface,race_x_age,race=Southeast Asian | age_band_harmonised=0-19,,Southeast Asian,0-19,3546,97698,3.629552293803353,3.629552293803353,30,100,False,False,reportable
+fairface,race_x_age,race=Southeast Asian | age_band_harmonised=20-39,,Southeast Asian,20-39,6257,97698,6.404429978095765,6.404429978095765,30,100,False,False,reportable
+fairface,race_x_age,race=Southeast Asian | age_band_harmonised=40-59,,Southeast Asian,40-59,1876,97698,1.9202030747814693,1.9202030747814693,30,100,False,False,reportable
+fairface,race_x_age,race=Southeast Asian | age_band_harmonised=60+,,Southeast Asian,60+,531,97698,0.543511637904563,0.543511637904563,30,100,False,False,reportable
+fairface,race_x_age,race=White | age_band_harmonised=0-19,,White,0-19,3191,97698,3.266187639460378,3.266187639460378,30,100,False,False,reportable
+fairface,race_x_age,race=White | age_band_harmonised=20-39,,White,20-39,10481,97698,10.72795758357387,10.72795758357387,30,100,False,False,reportable
+fairface,race_x_age,race=White | age_band_harmonised=40-59,,White,40-59,4018,97698,4.112673749718521,4.112673749718521,30,100,False,False,reportable
+fairface,race_x_age,race=White | age_band_harmonised=60+,,White,60+,922,97698,0.9437245388851357,0.9437245388851357,30,100,False,False,reportable
+lfw,race_x_age,race=Asian | age_band_harmonised=unknown,,Asian,unknown,868,13224,6.563823351482154,6.563823351482154,30,100,False,False,reportable
+lfw,race_x_age,race=Black | age_band_harmonised=unknown,,Black,unknown,479,13224,3.6222020568663034,3.6222020568663034,30,100,False,False,reportable
+lfw,race_x_age,race=Indian | age_band_harmonised=unknown,,Indian,unknown,192,13224,1.4519056261343013,1.4519056261343013,30,100,False,False,reportable
+lfw,race_x_age,race=White | age_band_harmonised=unknown,,White,unknown,9559,13224,72.28523895946763,72.28523895946763,30,100,False,False,reportable
+lfw,race_x_age,race=unknown | age_band_harmonised=unknown,,unknown,unknown,2126,13224,16.076830006049605,16.076830006049605,30,100,False,False,reportable
+utkface,race_x_age,race=Asian | age_band_harmonised=0-19,,Asian,0-19,1171,24104,4.858114835711915,4.858114835711915,30,100,False,False,reportable
+utkface,race_x_age,race=Asian | age_band_harmonised=20-39,,Asian,20-39,1858,24104,7.708264188516428,7.708264188516428,30,100,False,False,reportable
+utkface,race_x_age,race=Asian | age_band_harmonised=40-59,,Asian,40-59,273,24104,1.1325921008961168,1.1325921008961168,30,100,False,False,reportable
+utkface,race_x_age,race=Asian | age_band_harmonised=60+,,Asian,60+,284,24104,1.178227680053103,1.178227680053103,30,100,False,False,reportable
+utkface,race_x_age,race=Black | age_band_harmonised=0-19,,Black,0-19,346,24104,1.4354463989379356,1.4354463989379356,30,100,False,False,reportable
+utkface,race_x_age,race=Black | age_band_harmonised=20-39,,Black,20-39,3126,24104,12.968801858612677,12.968801858612677,30,100,False,False,reportable
+utkface,race_x_age,race=Black | age_band_harmonised=40-59,,Black,40-59,730,24104,3.028542980418188,3.028542980418188,30,100,False,False,reportable
+utkface,race_x_age,race=Black | age_band_harmonised=60+,,Black,60+,356,24104,1.4769332890806504,1.4769332890806504,30,100,False,False,reportable
+utkface,race_x_age,race=Indian | age_band_harmonised=0-19,,Indian,0-19,674,24104,2.7962163956189845,2.7962163956189845,30,100,False,False,reportable
+utkface,race_x_age,race=Indian | age_band_harmonised=20-39,,Indian,20-39,2229,24104,9.247427812811152,9.247427812811152,30,100,False,False,reportable
+utkface,race_x_age,race=Indian | age_band_harmonised=40-59,,Indian,40-59,886,24104,3.6757384666445403,3.6757384666445403,30,100,False,False,reportable
+utkface,race_x_age,race=Indian | age_band_harmonised=60+,,Indian,60+,238,24104,0.9873879853966147,0.9873879853966147,30,100,False,False,reportable
+utkface,race_x_age,race=Others | age_band_harmonised=0-19,,Others,0-19,561,24104,2.327414537006306,2.327414537006306,30,100,False,False,reportable
+utkface,race_x_age,race=Others | age_band_harmonised=20-39,,Others,20-39,955,24104,3.9619980086292728,3.9619980086292728,30,100,False,False,reportable
+utkface,race_x_age,race=Others | age_band_harmonised=40-59,,Others,40-59,177,24104,0.7343179555260538,0.7343179555260538,30,100,False,False,reportable
+utkface,race_x_age,race=Others | age_band_harmonised=60+,,Others,60+,18,24104,0.07467640225688682,,30,100,True,False,suppressed
+utkface,race_x_age,race=White | age_band_harmonised=0-19,,White,0-19,2137,24104,8.865748423498175,8.865748423498175,30,100,False,False,reportable
+utkface,race_x_age,race=White | age_band_harmonised=20-39,,White,20-39,3742,24104,15.524394291403917,15.524394291403917,30,100,False,False,reportable
+utkface,race_x_age,race=White | age_band_harmonised=40-59,,White,40-59,2492,24104,10.338533023564555,10.338533023564555,30,100,False,False,reportable
+utkface,race_x_age,race=White | age_band_harmonised=60+,,White,60+,1851,24104,7.679223365416528,7.679223365416528,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=0-19,female,Black,0-19,2003,97698,2.050195500419661,2.050195500419661,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=20-39,female,Black,20-39,3474,97698,3.5558558005281586,3.5558558005281586,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=40-59,female,Black,40-59,1174,97698,1.2016622653483184,1.2016622653483184,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=60+,female,Black,60+,243,97698,0.2487256648037831,0.2487256648037831,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=East Asian | age_band_harmonised=0-19,female,East Asian,0-19,1634,97698,1.6725009723842863,1.6725009723842863,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=East Asian | age_band_harmonised=20-39,female,East Asian,20-39,4522,97698,4.628549202644885,4.628549202644885,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=East Asian | age_band_harmonised=40-59,female,East Asian,40-59,602,97698,0.6161845687731581,0.6161845687731581,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=East Asian | age_band_harmonised=60+,female,East Asian,60+,156,97698,0.15967573542958913,0.15967573542958913,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=0-19,female,Indian,0-19,1869,97698,1.91303813793527,1.91303813793527,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=20-39,female,Indian,20-39,3246,97698,3.3224835718233736,3.3224835718233736,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=40-59,female,Indian,40-59,1193,97698,1.221109951073717,1.221109951073717,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=60+,female,Indian,60+,364,97698,0.37257671600237463,0.37257671600237463,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Latino_Hispanic | age_band_harmonised=0-19,female,Latino_Hispanic,0-19,2087,97698,2.1361747425740547,2.1361747425740547,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Latino_Hispanic | age_band_harmonised=20-39,female,Latino_Hispanic,20-39,3794,97698,3.883395770640136,3.883395770640136,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Latino_Hispanic | age_band_harmonised=40-59,female,Latino_Hispanic,40-59,1428,97698,1.4616471166247007,1.4616471166247007,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Latino_Hispanic | age_band_harmonised=60+,female,Latino_Hispanic,60+,236,97698,0.24156072795758357,0.24156072795758357,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Middle Eastern | age_band_harmonised=0-19,female,Middle Eastern,0-19,709,97698,0.7257057462793507,0.7257057462793507,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Middle Eastern | age_band_harmonised=20-39,female,Middle Eastern,20-39,1879,97698,1.9232737620012694,1.9232737620012694,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Middle Eastern | age_band_harmonised=40-59,female,Middle Eastern,40-59,551,97698,0.5639828860365617,0.5639828860365617,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Middle Eastern | age_band_harmonised=60+,female,Middle Eastern,60+,104,97698,0.10645049028639277,0.10645049028639277,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Southeast Asian | age_band_harmonised=0-19,female,Southeast Asian,0-19,1690,97698,1.7298204671538822,1.7298204671538822,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Southeast Asian | age_band_harmonised=20-39,female,Southeast Asian,20-39,3157,97698,3.2313865176359804,3.2313865176359804,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Southeast Asian | age_band_harmonised=40-59,female,Southeast Asian,40-59,761,97698,0.778930991422547,0.778930991422547,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=Southeast Asian | age_band_harmonised=60+,female,Southeast Asian,60+,255,97698,0.2610084136829823,0.2610084136829823,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=0-19,female,White,0-19,1659,97698,1.6980900325492845,1.6980900325492845,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=20-39,female,White,20-39,5461,97698,5.58967430244222,5.58967430244222,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=40-59,female,White,40-59,1376,97698,1.4084218714815042,1.4084218714815042,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=60+,female,White,60+,293,97698,0.29990378513377963,0.29990378513377963,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=0-19,male,Black,0-19,2350,97698,2.405371655509837,2.405371655509837,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=20-39,male,Black,20-39,3056,97698,3.1280067145693877,3.1280067145693877,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=40-59,male,Black,40-59,1329,97698,1.3603144383713075,1.3603144383713075,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=60+,male,Black,60+,160,97698,0.16376998505598886,0.16376998505598886,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=East Asian | age_band_harmonised=0-19,male,East Asian,0-19,2100,97698,2.1494810538598537,2.1494810538598537,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=East Asian | age_band_harmonised=20-39,male,East Asian,20-39,3532,97698,3.615222420110954,3.615222420110954,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=East Asian | age_band_harmonised=40-59,male,East Asian,40-59,1046,97698,1.070646277303527,1.070646277303527,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=East Asian | age_band_harmonised=60+,male,East Asian,60+,245,97698,0.2507727896169829,0.2507727896169829,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=0-19,male,Indian,0-19,1746,97698,1.7871399619234785,1.7871399619234785,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=20-39,male,Indian,20-39,3333,97698,3.4115335011975683,3.4115335011975683,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=40-59,male,Indian,40-59,1755,97698,1.7963520235828776,1.7963520235828776,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=60+,male,Indian,60+,329,97698,0.3367520317713771,0.3367520317713771,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Latino_Hispanic | age_band_harmonised=0-19,male,Latino_Hispanic,0-19,1712,97698,1.7523388400990807,1.7523388400990807,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Latino_Hispanic | age_band_harmonised=20-39,male,Latino_Hispanic,20-39,3439,97698,3.5200311162971607,3.5200311162971607,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Latino_Hispanic | age_band_harmonised=40-59,male,Latino_Hispanic,40-59,2045,97698,2.0931851214968575,2.0931851214968575,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Latino_Hispanic | age_band_harmonised=60+,male,Latino_Hispanic,60+,249,97698,0.25486703924338266,0.25486703924338266,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Middle Eastern | age_band_harmonised=0-19,male,Middle Eastern,0-19,1092,97698,1.117730148007124,1.117730148007124,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Middle Eastern | age_band_harmonised=20-39,male,Middle Eastern,20-39,3465,97698,3.5466437388687586,3.5466437388687586,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Middle Eastern | age_band_harmonised=40-59,male,Middle Eastern,40-59,2104,97698,2.1535753034862535,2.1535753034862535,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Middle Eastern | age_band_harmonised=60+,male,Middle Eastern,60+,521,97698,0.5332760138385638,0.5332760138385638,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Southeast Asian | age_band_harmonised=0-19,male,Southeast Asian,0-19,1856,97698,1.8997318266494707,1.8997318266494707,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Southeast Asian | age_band_harmonised=20-39,male,Southeast Asian,20-39,3100,97698,3.173043460459784,3.173043460459784,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Southeast Asian | age_band_harmonised=40-59,male,Southeast Asian,40-59,1115,97698,1.1412720833589223,1.1412720833589223,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=Southeast Asian | age_band_harmonised=60+,male,Southeast Asian,60+,276,97698,0.2825032242215808,0.2825032242215808,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=0-19,male,White,0-19,1532,97698,1.5680976069110935,1.5680976069110935,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=20-39,male,White,20-39,5020,97698,5.138283281131651,5.138283281131651,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=40-59,male,White,40-59,2642,97698,2.704251878237016,2.704251878237016,30,100,False,False,reportable
+fairface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=60+,male,White,60+,629,97698,0.6438207537513562,0.6438207537513562,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=female | race=Asian | age_band_harmonised=unknown,female,Asian,unknown,233,13224,1.7619479733817303,1.7619479733817303,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=unknown,female,Black,unknown,140,13224,1.0586811857229281,1.0586811857229281,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=unknown,female,Indian,unknown,33,13224,0.24954627949183303,0.24954627949183303,30,100,False,True,low_confidence
+lfw,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=unknown,female,White,unknown,2077,13224,15.70629159104658,15.70629159104658,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=female | race=unknown | age_band_harmonised=unknown,female,unknown,unknown,478,13224,3.614640048396854,3.614640048396854,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=male | race=Asian | age_band_harmonised=unknown,male,Asian,unknown,635,13224,4.801875378100424,4.801875378100424,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=unknown,male,Black,unknown,339,13224,2.5635208711433757,2.5635208711433757,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=unknown,male,Indian,unknown,159,13224,1.2023593466424682,1.2023593466424682,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=unknown,male,White,unknown,7482,13224,56.57894736842105,56.57894736842105,30,100,False,False,reportable
+lfw,gender_x_race_x_age,gender=male | race=unknown | age_band_harmonised=unknown,male,unknown,unknown,1648,13224,12.462189957652752,12.462189957652752,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Asian | age_band_harmonised=0-19,female,Asian,0-19,575,24104,2.385496183206107,2.385496183206107,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Asian | age_band_harmonised=20-39,female,Asian,20-39,1220,24104,5.061400597411218,5.061400597411218,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Asian | age_band_harmonised=40-59,female,Asian,40-59,65,24104,0.26966478592764687,0.26966478592764687,30,100,False,True,low_confidence
+utkface,gender_x_race_x_age,gender=female | race=Asian | age_band_harmonised=60+,female,Asian,60+,82,24104,0.34019249917026223,0.34019249917026223,30,100,False,True,low_confidence
+utkface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=0-19,female,Black,0-19,188,24104,0.7799535346830402,0.7799535346830402,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=20-39,female,Black,20-39,1633,24104,6.7748091603053435,6.7748091603053435,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=40-59,female,Black,40-59,289,24104,1.1989711251244606,1.1989711251244606,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Black | age_band_harmonised=60+,female,Black,60+,111,24104,0.46050448058413546,0.46050448058413546,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=0-19,female,Indian,0-19,378,24104,1.5682044473946233,1.5682044473946233,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=20-39,female,Indian,20-39,1133,24104,4.700464653169599,4.700464653169599,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=40-59,female,Indian,40-59,167,24104,0.6928310653833388,0.6928310653833388,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Indian | age_band_harmonised=60+,female,Indian,60+,64,24104,0.2655160969133754,0.2655160969133754,30,100,False,True,low_confidence
+utkface,gender_x_race_x_age,gender=female | race=Others | age_band_harmonised=0-19,female,Others,0-19,362,24104,1.5018254231662795,1.5018254231662795,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Others | age_band_harmonised=20-39,female,Others,20-39,532,24104,2.207102555592433,2.207102555592433,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=Others | age_band_harmonised=40-59,female,Others,40-59,40,24104,0.1659475605708596,0.1659475605708596,30,100,False,True,low_confidence
+utkface,gender_x_race_x_age,gender=female | race=Others | age_band_harmonised=60+,female,Others,60+,9,24104,0.03733820112844341,,30,100,True,False,suppressed
+utkface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=0-19,female,White,0-19,1132,24104,4.6963159641553265,4.6963159641553265,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=20-39,female,White,20-39,1836,24104,7.6169930302024556,7.6169930302024556,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=40-59,female,White,40-59,806,24104,3.343843345502821,3.343843345502821,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=female | race=White | age_band_harmonised=60+,female,White,60+,900,24104,3.733820112844341,3.733820112844341,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Asian | age_band_harmonised=0-19,male,Asian,0-19,596,24104,2.4726186525058083,2.4726186525058083,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Asian | age_band_harmonised=20-39,male,Asian,20-39,638,24104,2.6468635911052107,2.6468635911052107,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Asian | age_band_harmonised=40-59,male,Asian,40-59,208,24104,0.86292731496847,0.86292731496847,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Asian | age_band_harmonised=60+,male,Asian,60+,202,24104,0.838035180882841,0.838035180882841,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=0-19,male,Black,0-19,158,24104,0.6554928642548955,0.6554928642548955,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=20-39,male,Black,20-39,1493,24104,6.193992698307335,6.193992698307335,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=40-59,male,Black,40-59,441,24104,1.8295718552937272,1.8295718552937272,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Black | age_band_harmonised=60+,male,Black,60+,245,24104,1.0164288084965152,1.0164288084965152,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=0-19,male,Indian,0-19,296,24104,1.228011948224361,1.228011948224361,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=20-39,male,Indian,20-39,1096,24104,4.546963159641553,4.546963159641553,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=40-59,male,Indian,40-59,719,24104,2.9829074012612016,2.9829074012612016,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Indian | age_band_harmonised=60+,male,Indian,60+,174,24104,0.7218718884832392,0.7218718884832392,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Others | age_band_harmonised=0-19,male,Others,0-19,199,24104,0.8255891138400264,0.8255891138400264,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Others | age_band_harmonised=20-39,male,Others,20-39,423,24104,1.7548954530368404,1.7548954530368404,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Others | age_band_harmonised=40-59,male,Others,40-59,137,24104,0.5683703949551941,0.5683703949551941,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=Others | age_band_harmonised=60+,male,Others,60+,9,24104,0.03733820112844341,,30,100,True,False,suppressed
+utkface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=0-19,male,White,0-19,1005,24104,4.169432459342848,4.169432459342848,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=20-39,male,White,20-39,1906,24104,7.907401261201461,7.907401261201461,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=40-59,male,White,40-59,1686,24104,6.994689678061733,6.994689678061733,30,100,False,False,reportable
+utkface,gender_x_race_x_age,gender=male | race=White | age_band_harmonised=60+,male,White,60+,951,24104,3.945403252572187,3.945403252572187,30,100,False,False,reportable

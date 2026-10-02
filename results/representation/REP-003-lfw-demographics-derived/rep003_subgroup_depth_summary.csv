@@ -1,0 +1,7 @@
+dataset,field,category,n_identities,n_images,min_images_per_identity,q25_images_per_identity,median_images_per_identity,mean_images_per_identity,q75_images_per_identity,p90_images_per_identity,max_images_per_identity,n_singleton_identities,pct_singleton_identities
+lfw,gender,female,1471,2961,1,1.0,1.0,2.0129163834126444,2.0,4.0,52,1029,69.9524133242692
+lfw,gender,male,4272,10266,1,1.0,1.0,2.4030898876404496,2.0,4.0,530,3034,71.02059925093633
+lfw,race,Asian,376,690,1,1.0,1.0,1.8351063829787233,1.0,3.0,33,283,75.2659574468085
+lfw,race,Black,268,403,1,1.0,1.0,1.5037313432835822,1.0,2.0,17,206,76.86567164179104
+lfw,race,Indian,103,138,1,1.0,1.0,1.3398058252427185,1.0,2.799999999999997,5,83,80.58252427184466
+lfw,race,White,4056,9033,1,1.0,1.0,2.2270710059171597,2.0,4.0,530,2776,68.44181459566076

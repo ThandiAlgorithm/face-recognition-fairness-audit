@@ -1,0 +1,10 @@
+dataset,field,n_total_identities,n_consistent,n_unavailable,n_conflicting,pct_consistent,pct_unavailable,pct_conflicting,analysis_status
+fairface,age_band,0,0,0,0,,,,subject_id_unavailable
+fairface,gender,0,0,0,0,,,,subject_id_unavailable
+fairface,race,0,0,0,0,,,,subject_id_unavailable
+lfw,age_band,5749,0,5749,0,0.0,100.0,0.0,demographic_label_unavailable
+lfw,gender,5749,5743,6,0,99.8956340233084,0.10436597669159853,0.0,partially_available
+lfw,race,5749,4803,784,162,83.54496434162463,13.637154287702208,2.8178813706731605,partially_available
+utkface,age_band,0,0,0,0,,,,subject_id_unavailable
+utkface,gender,0,0,0,0,,,,subject_id_unavailable
+utkface,race,0,0,0,0,,,,subject_id_unavailable

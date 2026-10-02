@@ -1,0 +1,11 @@
+dataset,field,category,n_images,dataset_total,percentage
+fairface,age_band_harmonised,0-19,24039,97698,24.605416692255726
+fairface,age_band_harmonised,20-39,50478,97698,51.667383160351285
+fairface,age_band_harmonised,40-59,19121,97698,19.57153677659727
+fairface,age_band_harmonised,60+,4060,97698,4.155663370795717
+lfw,age_band_harmonised,unknown,13233,13233,100.0
+utkface,age_band_harmonised,0-19,4889,24108,20.27957524473204
+utkface,age_band_harmonised,20-39,11910,24108,49.40268790443007
+utkface,age_band_harmonised,40-59,4558,24108,18.906587025053927
+utkface,age_band_harmonised,60+,2747,24108,11.394557823129253
+utkface,age_band_harmonised,unknown,4,24108,0.016592002654720425

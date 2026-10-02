@@ -513,6 +513,12 @@ with representation_tab:
     section_label("REP-001 to REP-006")
     st.subheader("Registered representation audit")
 
+    st.caption(
+        "LFW's gender and race values throughout this tab are derived "
+        "from external sources (not native project labels) -- see "
+        "build_lfw_derived_demographics.py for the full provenance."
+    )
+
     (
         composition_subtab,
         identity_subtab,
@@ -696,17 +702,6 @@ with representation_tab:
                 availability_display,
                 hide_index=True,
                 use_container_width=True,
-            )
-
-        if selected_dataset == "LFW":
-
-            gold_callout(
-                """
-                LFW's native project metadata does not currently
-                provide the demographic attributes required for the
-                intended subgroup fairness analysis. Missing labels
-                must not be silently inferred or treated as known.
-                """
             )
 
         source_caption(
@@ -945,16 +940,17 @@ with representation_tab:
             "Inspect dataset",
             [
                 "FairFace",
+                "LFW",
                 "UTKFace",
             ],
             key="intersection_dataset",
         )
 
-        selected_intersection_key = (
-            "fairface"
-            if selected_intersection_dataset == "FairFace"
-            else "utkface"
-        )
+        selected_intersection_key = {
+            "FairFace": "fairface",
+            "LFW": "lfw",
+            "UTKFace": "utkface",
+        }[selected_intersection_dataset]
 
         detail = rep004_intersections[
             rep004_intersections[
@@ -1021,6 +1017,12 @@ with representation_tab:
             )
         ]
 
+        lfw_status = rep004_status[
+            rep004_status["dataset"].eq(
+                "lfw"
+            )
+        ]
+
         utk_status = rep004_status[
             rep004_status["dataset"].eq(
                 "utkface"
@@ -1032,6 +1034,15 @@ with representation_tab:
                 "n_low_confidence_cells"
             ].sum()
             + fairface_status[
+                "n_suppressed_cells"
+            ].sum()
+        )
+
+        lfw_flagged = int(
+            lfw_status[
+                "n_low_confidence_cells"
+            ].sum()
+            + lfw_status[
                 "n_suppressed_cells"
             ].sum()
         )
@@ -1052,8 +1063,9 @@ with representation_tab:
             thresholds. UTKFace contains <strong>{utk_flagged}
             flagged cells</strong> across the tested intersections,
             while FairFace contains <strong>{fairface_flagged}</strong>.
-            Thin cells should not be converted into apparently precise
-            subgroup percentages.
+            LFW (gender x race only -- age is not available) contains
+            <strong>{lfw_flagged}</strong>. Thin cells should not be
+            converted into apparently precise subgroup percentages.
             """
         )
 
@@ -1154,8 +1166,9 @@ with representation_tab:
 
             - FairFace female prevalence: **47.00%**
             - UTKFace female prevalence: **47.80%**
-            - LFW: **not available**, because eligible demographic
-              labels are unavailable.
+            - LFW female prevalence: **22.39%** -- far more male-skewed,
+              consistent with LFW's known bias toward early-2000s public
+              figures.
             """
         )
 
@@ -1297,8 +1310,8 @@ with representation_tab:
 
             - FairFace has complete gender, race and harmonised
               age-band labels, but does not provide exact numeric age.
-            - LFW has no available gender, race or age labels in the
-              current project metadata.
+            - LFW gender is 99.93% available and race 83.91% available
+              (both derived, see note above); age remains unavailable.
             - UTKFace has **4 rows** with missing demographic labels
               out of 24,108 images.
             """
@@ -1308,9 +1321,9 @@ with representation_tab:
             """
             Missing demographic information is not merely a data-cleaning
             inconvenience. It determines which fairness questions can
-            actually be answered. In particular, the current LFW
-            metadata cannot support demographic subgroup error analysis
-            without an additional defensible label/provenance strategy.
+            actually be answered. LFW's age labels remain unavailable,
+            so age-based subgroup analysis stays out of reach for that
+            dataset regardless of the derived gender/race fields.
             """
         )
 
@@ -1349,6 +1362,7 @@ with representation_tab:
             "REP-006",
             "missingness and affected-analysis outputs",
         )
+
 
 
 # ============================================================

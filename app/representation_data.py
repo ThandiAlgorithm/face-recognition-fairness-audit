@@ -9,10 +9,18 @@ import streamlit as st
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REP_ROOT = PROJECT_ROOT / "results" / "representation"
 
+# LFW has no native race/gender labels. These REP-00X-lfw-demographics-derived
+# folders are full reruns of the same REP scripts against a copy of the master
+# table with LFW race/gender derived from external sources (see
+# build_lfw_derived_demographics.py) -- FairFace/UTKFace rows are identical to
+# the native REP-00X folders either way, so every loader below reads from the
+# derived folder uniformly rather than only for LFW-specific tables.
+LFW_DERIVED_SUFFIX = "-lfw-demographics-derived"
+
 
 @st.cache_data(show_spinner=False)
 def load_rep_csv(issue: str, filename: str) -> pd.DataFrame:
-    path = REP_ROOT / issue / filename
+    path = REP_ROOT / f"{issue}{LFW_DERIVED_SUFFIX}" / filename
 
     if not path.exists():
         return pd.DataFrame()

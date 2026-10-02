@@ -1,0 +1,4 @@
+dataset,n_images,n_images_with_subject_id,n_images_without_subject_id,pct_images_with_subject_id,n_unique_identities,n_singleton_identities,n_repeated_identities,max_images_per_identity,subject_id_available,repeated_identity_structure_present
+fairface,97698,0,97698,0.0,0,0,0,0,False,False
+lfw,13233,13233,0,100.0,5749,4069,1680,530,True,True
+utkface,24108,0,24108,0.0,0,0,0,0,False,False
