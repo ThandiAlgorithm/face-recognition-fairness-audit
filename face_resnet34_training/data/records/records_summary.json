@@ -1,0 +1,20 @@
+{
+  "lfw": {
+    "n_rows": 13233,
+    "n_columns": 62,
+    "sha256": "8c05c645df9e0f9ddeafe764ee3de6076d9defd371d0a3ed6e5a54c84fab7669",
+    "file_size_bytes": 6228962
+  },
+  "fairface": {
+    "n_rows": 97698,
+    "n_columns": 22,
+    "sha256": "b194dfeca3855645022f1a4413bc2686a2107051ba593b2e668e753e1c51e2ff",
+    "file_size_bytes": 22279122
+  },
+  "utkface": {
+    "n_rows": 24108,
+    "n_columns": 22,
+    "sha256": "fb498313aea82c465395ca5111302acc9c09a5d3014fdffbcb327ea8c086a97a",
+    "file_size_bytes": 6173847
+  }
+}

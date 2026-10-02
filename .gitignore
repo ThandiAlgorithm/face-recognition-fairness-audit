@@ -116,3 +116,8 @@ results/model_audit/**/smoke_*/
 results/model_audit/**/*_smoke_*/
 
 results/model_audit/model_comparison/track_a_final/qualitative_examples/*/individual/
+
+# ResNet-34 baseline training: large derived per-image record tables.
+# Fully reproducible from src/datasets/records.py; only the scripts, schema
+# README, and a small summary manifest (row counts + file SHA256s) are committed.
+face_resnet34_training/data/records/*.csv
