@@ -1,0 +1,28 @@
+{
+  "race": {
+    "categories": [
+      "Asian",
+      "Black",
+      "Indian",
+      "Others",
+      "White"
+    ],
+    "n_unknown_or_missing": 4
+  },
+  "gender": {
+    "categories": [
+      "female",
+      "male"
+    ],
+    "n_unknown_or_missing": 4
+  },
+  "age_group": {
+    "categories": [
+      "0-19",
+      "20-39",
+      "40-59",
+      "60+"
+    ],
+    "n_unknown_or_missing": 4
+  }
+}

@@ -30,3 +30,9 @@ for row counts and file hashes; rerun `records.py` to regenerate exactly.
 historical provenance. The field that actually governs eligibility post
 LFW-demographics-derivation is `eligible_demographic_audit` (+ the
 `_overridden` flag), not `exclusion_reason`.
+
+**LFW attribute coverage note**: `lfw_att_40.mat` (the real LFWA+ release)
+only covers 13,143 of LFW's 13,233 images -- 90 rows have all `attr_*`
+columns null. `FaceDataset` (src/datasets/face_dataset.py) excludes these
+from the LFW attribute-classification task at load time and logs the count;
+the frozen split manifest itself is untouched.
