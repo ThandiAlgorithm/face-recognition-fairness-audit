@@ -108,15 +108,26 @@ class FaceDataset(Dataset):
             "age_group": torch.tensor(self._label_index(self._age_index, row["age_group"]), dtype=torch.long),
         }
 
+    @staticmethod
+    def _safe_str(value, sentinel: str = "unknown") -> str:
+        # age_group/ita_group mix real category strings with bare NaN within
+        # the same dataset (e.g. UTKFace's 4 unlabeled rows, or any row with
+        # missing ITA). DataLoader's default collate picks its collation
+        # strategy from the first batch element's type, so a column that's
+        # sometimes str and sometimes float crashes as soon as a batch mixes
+        # the two. Metadata is report-only (never fed to the model), so a
+        # string sentinel is safe here -- unlike targets, which use -1.
+        return sentinel if pd.isna(value) else str(value)
+
     def _metadata(self, row: pd.Series) -> dict:
         return {
             "image_path": row["image_path"],
-            "identity_id": row.get("identity_id"),
+            "identity_id": self._safe_str(row.get("identity_id"), sentinel="none"),
             "race_label": row["race_label"],
             "gender_label": row["gender_label"],
-            "age_group": row["age_group"],
+            "age_group": self._safe_str(row["age_group"]),
             "ita_value": row["ita_value"],
-            "ita_group": row["ita_group"],
+            "ita_group": self._safe_str(row["ita_group"]),
         }
 
     def __getitem__(self, idx: int):
