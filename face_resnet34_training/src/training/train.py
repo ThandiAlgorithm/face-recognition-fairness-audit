@@ -100,9 +100,14 @@ def train_dataset(
     seed: int,
     device_str: str,
     allow_dirty: bool,
+    weight_decay: float = 0.01,
     max_steps_per_epoch: int | None = None,
     out_dir: Path | None = None,
+    epoch_callback=None,
 ) -> dict:
+    """epoch_callback(epoch, val_metrics), if given, runs after every epoch's
+    validation pass -- src/tuning/ uses it to report intermediate values to
+    Optuna and raise optuna.TrialPruned without train.py importing optuna."""
     check_git_clean(allow_dirty)
     set_seed(seed)
     device = torch.device(device_str)
@@ -110,9 +115,7 @@ def train_dataset(
     labels = load_labels(dataset)
     model = build_model(dataset, labels).to(device)
     loss_fn = build_loss(dataset)
-    # AdamW with a placeholder LR -- this baseline loop isn't tuned; Optuna
-    # (src/tuning/) searches LR/weight-decay/etc. properly in the next step.
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     scaler = torch.amp.GradScaler(enabled=(device.type == "cuda"))
 
     train_ds = FaceDataset(dataset, "train", transform=train_transform())
@@ -156,6 +159,9 @@ def train_dataset(
                 out_dir / "best_checkpoint.pt",
             )
 
+        if epoch_callback is not None:
+            epoch_callback(epoch, val_metrics)
+
     env = capture_environment(allow_dirty_used=allow_dirty)
     (out_dir / "history.json").write_text(json.dumps(history, indent=2))
     (out_dir / "environment.json").write_text(json.dumps(env, indent=2))
@@ -168,6 +174,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--lr", type=float, default=1e-3)
+    parser.add_argument("--weight-decay", type=float, default=0.01)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--allow-dirty", action="store_true")
@@ -184,6 +191,7 @@ def main() -> None:
         epochs=args.epochs,
         batch_size=args.batch_size,
         lr=args.lr,
+        weight_decay=args.weight_decay,
         seed=args.seed,
         device_str=args.device,
         allow_dirty=args.allow_dirty,

@@ -121,3 +121,9 @@ results/model_audit/model_comparison/track_a_final/qualitative_examples/*/indivi
 # Fully reproducible from src/datasets/records.py; only the scripts, schema
 # README, and a small summary manifest (row counts + file SHA256s) are committed.
 face_resnet34_training/data/records/*.csv
+
+# Optuna per-trial checkpoints and the live study database -- regenerable by
+# rerunning tuning.py with the same seed; only best_params.json and
+# trials_summary.csv (the actual tuning record) are committed.
+face_resnet34_training/experiments/*/tuning/study.db
+face_resnet34_training/experiments/*/tuning/trial*/
