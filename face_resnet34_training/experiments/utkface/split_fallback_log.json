@@ -1,0 +1,56 @@
+[
+  {
+    "from_level": [
+      "race_label",
+      "gender_label",
+      "age_group"
+    ],
+    "to_level": [
+      "race_label",
+      "gender_label"
+    ],
+    "n_small_strata": 3,
+    "n_groups_affected": 20,
+    "affected_strata": [
+      "('Others', 'female', '60+')",
+      "('Others', 'male', '60+')",
+      "('unknown', 'unknown', nan)"
+    ]
+  },
+  {
+    "from_level": [
+      "race_label",
+      "gender_label"
+    ],
+    "to_level": [
+      "race_label"
+    ],
+    "n_small_strata": 3,
+    "n_groups_affected": 20,
+    "affected_strata": [
+      "('Others', 'female')",
+      "('Others', 'male')",
+      "('unknown', 'unknown')"
+    ]
+  },
+  {
+    "from_level": [
+      "race_label"
+    ],
+    "to_level": [],
+    "n_small_strata": 1,
+    "n_groups_affected": 4,
+    "affected_strata": [
+      "('unknown',)"
+    ]
+  },
+  {
+    "from_level": [],
+    "to_level": "unstratified",
+    "n_small_strata": 1,
+    "n_groups_affected": 4,
+    "affected_strata": [
+      "('__all__',)"
+    ]
+  }
+]

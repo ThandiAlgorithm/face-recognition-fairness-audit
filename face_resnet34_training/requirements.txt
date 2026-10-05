@@ -1,0 +1,12 @@
+torch==2.3.1
+torchvision==0.18.1
+optuna==3.6.1
+fairlearn==0.10.0
+scikit-learn==1.5.0
+pandas==2.2.2
+numpy==1.26.4
+pillow==10.4.0
+imagehash==4.3.1
+matplotlib==3.9.0
+pyyaml==6.0.1
+pyarrow==16.1.0
