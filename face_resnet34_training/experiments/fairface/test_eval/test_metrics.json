@@ -1,0 +1,13 @@
+{
+  "n_test": 9758,
+  "race_accuracy": 0.6259479401516704,
+  "race_n_valid": 9758,
+  "gender_accuracy": 0.8743594998975199,
+  "gender_n_valid": 9758,
+  "age_group_accuracy": 0.5344332855093257,
+  "age_group_n_valid": 9758,
+  "checkpoint_path": "experiments/fairface/runs/seed0/best_checkpoint.pt",
+  "checkpoint_epoch": 7,
+  "method": "M1",
+  "seed": 0
+}

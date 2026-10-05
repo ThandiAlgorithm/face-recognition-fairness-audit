@@ -1,0 +1,13 @@
+{
+  "n_test": 2405,
+  "race_accuracy": 0.8015806988352745,
+  "race_n_valid": 2404,
+  "gender_accuracy": 0.8801996672212978,
+  "gender_n_valid": 2404,
+  "age_group_accuracy": 0.769134775374376,
+  "age_group_n_valid": 2404,
+  "checkpoint_path": "experiments/utkface/runs/seed0/best_checkpoint.pt",
+  "checkpoint_epoch": 8,
+  "method": "M1",
+  "seed": 0
+}
