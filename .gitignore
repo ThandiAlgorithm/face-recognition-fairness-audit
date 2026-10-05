@@ -37,6 +37,10 @@ wandb/
 *.tif
 *.tiff
 *.webp
+# Exception: the evaluation pipeline's own result figures (confusion
+# matrices, ROC/PR curves, calibration plots) -- these are results, not
+# stray screenshots, and a partner needs them without re-running evaluate.py.
+!face_resnet34_training/experiments/*/test_eval/**/*.png
 # Exception: figures you generate for the report
 !docs/figures/*.png
 !results/**/*.png
