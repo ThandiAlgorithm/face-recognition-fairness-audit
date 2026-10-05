@@ -8,7 +8,7 @@ against a fabricated class. Ignore-index rate is tiny (4/24108 for UTKFace,
 0 elsewhere) so an all-ignored batch -- which would make CrossEntropyLoss's
 mean reduction divide by zero -- isn't expected in practice; not special-cased.
 
-BCEWithLogitsLoss for LFW's 40-way multi-label attribute head.
+BCEWithLogitsLoss for LFW's multi-label attribute head (73-way, LFWA+).
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ class MultiTaskLoss(nn.Module):
         self.tasks = tasks
         self.ce = nn.CrossEntropyLoss(ignore_index=IGNORE_INDEX)
 
-    def forward(self, outputs: dict, targets: dict) -> dict:
+    def forward(self, outputs: dict, targets: dict, meta: dict | None = None) -> dict:
         losses = {task: self.ce(outputs[task], targets[task]) for task in self.tasks}
         losses["total"] = sum(losses[task] for task in self.tasks)
         return losses
@@ -35,7 +35,7 @@ class AttributeLoss(nn.Module):
         super().__init__()
         self.bce = nn.BCEWithLogitsLoss()
 
-    def forward(self, outputs: dict, targets: dict) -> dict:
+    def forward(self, outputs: dict, targets: dict, meta: dict | None = None) -> dict:
         loss = self.bce(outputs["attributes"], targets["attributes"])
         return {"attributes": loss, "total": loss}
 

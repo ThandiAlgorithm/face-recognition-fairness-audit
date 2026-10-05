@@ -5,10 +5,14 @@ anything heavier stacked on top of the 512-d pooled feature vector.
 
 FairFace and UTKFace each get three classification heads (race, gender,
 age_group) over that dataset's own frozen label vocabulary
-(configs/<dataset>_labels.json). LFW gets a single 40-way multi-label head
-over the LFWA+ attributes -- it has no native race/gender/age task of its
-own; those fields exist only for subgroup/fairness evaluation, never as a
-training target (see face_dataset.py / records.py).
+(configs/<dataset>_labels.json). LFW gets a single multi-label head over
+the LFWA+ attributes (73-way, lfw_att_73.mat) -- this includes native
+Male/Asian/White/Black/Indian flags, so gender and race ARE trained
+targets for LFW too, just as two of the flat attribute set rather than as
+separate heads. race_label/gender_label elsewhere in this codebase are a
+second, independent source (derived demographics metadata) used only for
+subgroup/fairness evaluation, never fed into training (see face_dataset.py
+/ records.py).
 """
 from __future__ import annotations
 

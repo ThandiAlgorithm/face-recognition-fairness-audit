@@ -75,14 +75,14 @@ class FaceDataset(Dataset):
             df = df.merge(records, on="image_path", how="left", validate="one_to_one")
             missing = df[attr_cols].isna().any(axis=1)
             if missing.any():
-                # lfw_att_40.mat (the real LFWA+ release) only covers 13,143 of
+                # lfw_att_73.mat (the fuller LFWA+ release) only covers 13,143 of
                 # LFW's 13,233 images -- these ~90 rows have no attribute label
                 # at all and can't serve as training examples for this head.
                 # The frozen split itself is untouched; only this dataset's
                 # usable rows shrink.
                 print(
                     f"[lfw/{split}] {int(missing.sum())}/{len(df)} rows have no LFWA+ "
-                    "attribute match (not in lfw_att_40.mat's 13,143-image coverage) -- excluded"
+                    "attribute match (not in lfw_att_73.mat's 13,143-image coverage) -- excluded"
                 )
                 df = df[~missing].reset_index(drop=True)
         else:

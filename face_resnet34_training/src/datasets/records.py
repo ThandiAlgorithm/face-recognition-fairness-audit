@@ -27,11 +27,13 @@ GOV-002 binary split (ITA > 28 -> lighter, <= 28 -> darker;
 configs/categories.yaml, skin_binary.ita), verified to match that rule on
 100% of non-null rows.
 
-LFW's own training target (a 40-way multi-label attribute head, per the
-spec) comes from lfw_att_40.mat -- the real LFWA+ attribute set. Note this
-set has no race attributes (no Black/White/Asian flags), only Male/Young
-among anything demographic-adjacent -- it is a label source for the
-attribute head, not for race_label/gender_label.
+LFW's own training target (a multi-label attribute head) comes from
+lfw_att_73.mat -- the fuller LFWA+ release, which includes native
+Male/Asian/White/Black/Indian flags alongside the usual appearance
+attributes. race_label/gender_label (below) stay sourced from
+master_annotations_lfw_demographics_derived.parquet regardless -- they're
+audit-only grouping columns, independent of whatever the attribute head is
+trained on.
 """
 from __future__ import annotations
 
@@ -52,7 +54,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 DATA_ROOT = REPO_ROOT / "data"
 MASTER_PATH = REPO_ROOT / "metadata" / "master_annotations.parquet"
 LFW_DEMOGRAPHICS_PATH = REPO_ROOT / "metadata" / "master_annotations_lfw_demographics_derived.parquet"
-LFW_ATTR_PATH = REPO_ROOT / "lfw_att_40.mat"
+LFW_ATTR_PATH = REPO_ROOT / "lfw_att_73.mat"
 RECORDS_DIR = Path(__file__).resolve().parents[2] / "data" / "records"
 
 RECORD_COLUMNS = [
@@ -113,13 +115,18 @@ def _deref_mat_string(f: h5py.File, ref) -> str:
 
 def load_lfw_attributes() -> pd.DataFrame:
     """Returns one row per LFW image: path_key (identity/filename.jpg, forward
-    slashes) plus one 0/1 column per LFWA+ attribute."""
+    slashes) plus one 0/1 column per LFWA+ attribute. Attribute names are
+    sanitised (spaces -> underscores) so they match the existing
+    underscore_case convention used everywhere downstream (plot filenames,
+    per_attribute_accuracy keys, etc.)."""
     with h5py.File(LFW_ATTR_PATH, "r") as f:
-        attr_names = [_deref_mat_string(f, r[0]) for r in f["AttrName"][()]]
+        attr_names = [
+            _deref_mat_string(f, r[0]).replace(" ", "_") for r in f["AttrName"][()]
+        ]
         path_keys = [
             _deref_mat_string(f, r[0]).replace("\\", "/") for r in f["name"][()]
         ]
-        labels = f["label"][()].T  # (n_images, 40)
+        labels = f["label"][()].T  # (n_images, n_attributes)
 
     df = pd.DataFrame(labels, columns=[f"attr_{name}" for name in attr_names])
     df.insert(0, "path_key", path_keys)
@@ -128,7 +135,7 @@ def load_lfw_attributes() -> pd.DataFrame:
 
 def _lfw_path_key(original_path: str) -> str:
     # original_path looks like "LFW/lfw/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg";
-    # lfw_att_40.mat keys images as "Aaron_Eckhart/Aaron_Eckhart_0001.jpg".
+    # lfw_att_73.mat keys images as "Aaron_Eckhart/Aaron_Eckhart_0001.jpg".
     parts = original_path.split("/")
     return "/".join(parts[-2:])
 

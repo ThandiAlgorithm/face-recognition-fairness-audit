@@ -118,9 +118,9 @@ results/model_audit/**/*_smoke_*/
 results/model_audit/model_comparison/track_a_final/qualitative_examples/*/individual/
 
 # ResNet-34 baseline training: large derived per-image record tables.
-# Fully reproducible from src/datasets/records.py; only the scripts, schema
-# README, and a small summary manifest (row counts + file SHA256s) are committed.
-face_resnet34_training/data/records/*.csv
+# Fully reproducible from src/datasets/records.py, but committed anyway so a
+# partner/collaborator has them without needing to re-run Phase 0 + records.py
+# against the raw datasets themselves.
 
 # Optuna per-trial checkpoints and the live study database -- regenerable by
 # rerunning tuning.py with the same seed; only best_params.json and
