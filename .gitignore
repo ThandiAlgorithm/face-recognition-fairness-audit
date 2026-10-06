@@ -37,6 +37,10 @@ wandb/
 *.tif
 *.tiff
 *.webp
+# Exception: the evaluation pipeline's own result figures (confusion
+# matrices, ROC/PR curves, calibration plots) -- these are results, not
+# stray screenshots, and a partner needs them without re-running evaluate.py.
+!face_resnet34_training/experiments/*/test_eval/**/*.png
 # Exception: figures you generate for the report
 !docs/figures/*.png
 !results/**/*.png
@@ -116,3 +120,14 @@ results/model_audit/**/smoke_*/
 results/model_audit/**/*_smoke_*/
 
 results/model_audit/model_comparison/track_a_final/qualitative_examples/*/individual/
+
+# ResNet-34 baseline training: large derived per-image record tables.
+# Fully reproducible from src/datasets/records.py, but committed anyway so a
+# partner/collaborator has them without needing to re-run Phase 0 + records.py
+# against the raw datasets themselves.
+
+# Optuna per-trial checkpoints and the live study database -- regenerable by
+# rerunning tuning.py with the same seed; only best_params.json and
+# trials_summary.csv (the actual tuning record) are committed.
+face_resnet34_training/experiments/*/tuning/study.db
+face_resnet34_training/experiments/*/tuning/trial*/

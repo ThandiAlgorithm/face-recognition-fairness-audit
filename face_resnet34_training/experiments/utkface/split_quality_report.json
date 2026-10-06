@@ -1,0 +1,1362 @@
+{
+  "race": [
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "count": 357,
+      "pct_of_split": 14.844074844074845
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "count": 455,
+      "pct_of_split": 18.91891891891892
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "count": 398,
+      "pct_of_split": 16.54885654885655
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "count": 173,
+      "pct_of_split": 7.1933471933471935
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "count": 1021,
+      "pct_of_split": 42.45322245322246
+    },
+    {
+      "split": "test",
+      "race_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "count": 2855,
+      "pct_of_split": 14.838106127540149
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "count": 3640,
+      "pct_of_split": 18.917935658229823
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "count": 3225,
+      "pct_of_split": 16.761083103788785
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "count": 1366,
+      "pct_of_split": 7.099423106907126
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "count": 8152,
+      "pct_of_split": 42.36786029832129
+    },
+    {
+      "split": "train",
+      "race_label": "unknown",
+      "count": 3,
+      "pct_of_split": 0.015591705212826776
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "count": 357,
+      "pct_of_split": 14.825581395348838
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "count": 457,
+      "pct_of_split": 18.97840531561462
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "count": 401,
+      "pct_of_split": 16.65282392026578
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "count": 171,
+      "pct_of_split": 7.101328903654484
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "count": 1022,
+      "pct_of_split": 42.44186046511628
+    }
+  ],
+  "gender": [
+    {
+      "split": "test",
+      "gender_label": "female",
+      "count": 1146,
+      "pct_of_split": 47.65072765072765
+    },
+    {
+      "split": "test",
+      "gender_label": "male",
+      "count": 1258,
+      "pct_of_split": 52.307692307692314
+    },
+    {
+      "split": "test",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "train",
+      "gender_label": "female",
+      "count": 9198,
+      "pct_of_split": 47.804168182526894
+    },
+    {
+      "split": "train",
+      "gender_label": "male",
+      "count": 10040,
+      "pct_of_split": 52.18024011226028
+    },
+    {
+      "split": "train",
+      "gender_label": "unknown",
+      "count": 3,
+      "pct_of_split": 0.015591705212826776
+    },
+    {
+      "split": "val",
+      "gender_label": "female",
+      "count": 1149,
+      "pct_of_split": 47.71594684385382
+    },
+    {
+      "split": "val",
+      "gender_label": "male",
+      "count": 1259,
+      "pct_of_split": 52.28405315614618
+    }
+  ],
+  "age_group": [
+    {
+      "split": "test",
+      "age_group": "0-19",
+      "count": 487,
+      "pct_of_split": 20.24948024948025
+    },
+    {
+      "split": "test",
+      "age_group": "20-39",
+      "count": 1189,
+      "pct_of_split": 49.43866943866944
+    },
+    {
+      "split": "test",
+      "age_group": "40-59",
+      "count": 451,
+      "pct_of_split": 18.752598752598754
+    },
+    {
+      "split": "test",
+      "age_group": "60+",
+      "count": 277,
+      "pct_of_split": 11.517671517671518
+    },
+    {
+      "split": "test",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "train",
+      "age_group": "0-19",
+      "count": 3885,
+      "pct_of_split": 20.191258250610673
+    },
+    {
+      "split": "train",
+      "age_group": "20-39",
+      "count": 9529,
+      "pct_of_split": 49.524452991008786
+    },
+    {
+      "split": "train",
+      "age_group": "40-59",
+      "count": 3640,
+      "pct_of_split": 18.917935658229823
+    },
+    {
+      "split": "train",
+      "age_group": "60+",
+      "count": 2184,
+      "pct_of_split": 11.350761394937892
+    },
+    {
+      "split": "train",
+      "age_group": NaN,
+      "count": 3,
+      "pct_of_split": 0.015591705212826776
+    },
+    {
+      "split": "val",
+      "age_group": "0-19",
+      "count": 485,
+      "pct_of_split": 20.141196013289036
+    },
+    {
+      "split": "val",
+      "age_group": "20-39",
+      "count": 1188,
+      "pct_of_split": 49.33554817275748
+    },
+    {
+      "split": "val",
+      "age_group": "40-59",
+      "count": 461,
+      "pct_of_split": 19.14451827242525
+    },
+    {
+      "split": "val",
+      "age_group": "60+",
+      "count": 274,
+      "pct_of_split": 11.378737541528238
+    }
+  ],
+  "ita_group_report": [
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "count": 782,
+      "pct_of_split": 32.515592515592516
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "count": 1456,
+      "pct_of_split": 60.54054054054055
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "count": 167,
+      "pct_of_split": 6.9438669438669445
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "count": 6143,
+      "pct_of_split": 31.926615040798296
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "count": 11640,
+      "pct_of_split": 60.495816225767896
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "count": 1458,
+      "pct_of_split": 7.5775687334338135
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "count": 758,
+      "pct_of_split": 31.478405315614616
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "count": 1472,
+      "pct_of_split": 61.12956810631229
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "count": 178,
+      "pct_of_split": 7.392026578073089
+    }
+  ],
+  "race_x_gender": [
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "gender_label": "female",
+      "count": 193,
+      "pct_of_split": 8.024948024948026
+    },
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "gender_label": "male",
+      "count": 164,
+      "pct_of_split": 6.8191268191268195
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "gender_label": "female",
+      "count": 222,
+      "pct_of_split": 9.230769230769232
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "gender_label": "male",
+      "count": 233,
+      "pct_of_split": 9.68814968814969
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "gender_label": "female",
+      "count": 172,
+      "pct_of_split": 7.151767151767152
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "gender_label": "male",
+      "count": 226,
+      "pct_of_split": 9.397089397089397
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "gender_label": "female",
+      "count": 98,
+      "pct_of_split": 4.074844074844075
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "gender_label": "male",
+      "count": 75,
+      "pct_of_split": 3.118503118503119
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "gender_label": "female",
+      "count": 461,
+      "pct_of_split": 19.16839916839917
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "gender_label": "male",
+      "count": 560,
+      "pct_of_split": 23.284823284823286
+    },
+    {
+      "split": "test",
+      "race_label": "unknown",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "gender_label": "female",
+      "count": 1547,
+      "pct_of_split": 8.040122654747673
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "gender_label": "male",
+      "count": 1308,
+      "pct_of_split": 6.797983472792474
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "gender_label": "female",
+      "count": 1778,
+      "pct_of_split": 9.240683956135335
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "gender_label": "male",
+      "count": 1862,
+      "pct_of_split": 9.677251702094486
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "gender_label": "female",
+      "count": 1393,
+      "pct_of_split": 7.239748453822567
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "gender_label": "male",
+      "count": 1832,
+      "pct_of_split": 9.521334649966217
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "gender_label": "female",
+      "count": 752,
+      "pct_of_split": 3.9083207733485787
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "gender_label": "male",
+      "count": 614,
+      "pct_of_split": 3.1911023335585464
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "gender_label": "female",
+      "count": 3728,
+      "pct_of_split": 19.37529234447274
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "gender_label": "male",
+      "count": 4424,
+      "pct_of_split": 22.992567953848553
+    },
+    {
+      "split": "train",
+      "race_label": "unknown",
+      "gender_label": "unknown",
+      "count": 3,
+      "pct_of_split": 0.015591705212826776
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "gender_label": "female",
+      "count": 192,
+      "pct_of_split": 7.973421926910299
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "gender_label": "male",
+      "count": 165,
+      "pct_of_split": 6.852159468438539
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "gender_label": "female",
+      "count": 220,
+      "pct_of_split": 9.136212624584719
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "gender_label": "male",
+      "count": 237,
+      "pct_of_split": 9.8421926910299
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "gender_label": "female",
+      "count": 175,
+      "pct_of_split": 7.267441860465117
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "gender_label": "male",
+      "count": 226,
+      "pct_of_split": 9.385382059800666
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "gender_label": "female",
+      "count": 93,
+      "pct_of_split": 3.8621262458471763
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "gender_label": "male",
+      "count": 78,
+      "pct_of_split": 3.2392026578073088
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "gender_label": "female",
+      "count": 469,
+      "pct_of_split": 19.476744186046513
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "gender_label": "male",
+      "count": 553,
+      "pct_of_split": 22.96511627906977
+    }
+  ],
+  "ita_x_gender": [
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "gender_label": "female",
+      "count": 335,
+      "pct_of_split": 13.92931392931393
+    },
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "gender_label": "male",
+      "count": 447,
+      "pct_of_split": 18.58627858627859
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "gender_label": "female",
+      "count": 738,
+      "pct_of_split": 30.68607068607069
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "gender_label": "male",
+      "count": 717,
+      "pct_of_split": 29.812889812889814
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "gender_label": "female",
+      "count": 73,
+      "pct_of_split": 3.0353430353430353
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "gender_label": "male",
+      "count": 94,
+      "pct_of_split": 3.9085239085239087
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "gender_label": "female",
+      "count": 2447,
+      "pct_of_split": 12.717634218595709
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "gender_label": "male",
+      "count": 3695,
+      "pct_of_split": 19.203783587131646
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "gender_label": "female",
+      "count": 6188,
+      "pct_of_split": 32.16049061899069
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "gender_label": "male",
+      "count": 5451,
+      "pct_of_split": 28.33012837170625
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "gender_label": "female",
+      "count": 563,
+      "pct_of_split": 2.9260433449404917
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "gender_label": "male",
+      "count": 894,
+      "pct_of_split": 4.646328153422379
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "gender_label": "female",
+      "count": 310,
+      "pct_of_split": 12.87375415282392
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "gender_label": "male",
+      "count": 448,
+      "pct_of_split": 18.6046511627907
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "gender_label": "female",
+      "count": 768,
+      "pct_of_split": 31.893687707641195
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "gender_label": "male",
+      "count": 704,
+      "pct_of_split": 29.2358803986711
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "gender_label": "female",
+      "count": 71,
+      "pct_of_split": 2.948504983388704
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "gender_label": "male",
+      "count": 107,
+      "pct_of_split": 4.443521594684386
+    }
+  ],
+  "ita_x_age": [
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "age_group": "0-19",
+      "count": 93,
+      "pct_of_split": 3.866943866943867
+    },
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "age_group": "20-39",
+      "count": 440,
+      "pct_of_split": 18.295218295218298
+    },
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "age_group": "40-59",
+      "count": 144,
+      "pct_of_split": 5.987525987525988
+    },
+    {
+      "split": "test",
+      "ita_group_report": "<28",
+      "age_group": "60+",
+      "count": 105,
+      "pct_of_split": 4.365904365904366
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": "0-19",
+      "count": 361,
+      "pct_of_split": 15.010395010395012
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": "20-39",
+      "count": 665,
+      "pct_of_split": 27.650727650727653
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": "40-59",
+      "count": 272,
+      "pct_of_split": 11.30977130977131
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": "60+",
+      "count": 157,
+      "pct_of_split": 6.528066528066528
+    },
+    {
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "age_group": "0-19",
+      "count": 33,
+      "pct_of_split": 1.3721413721413722
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "age_group": "20-39",
+      "count": 84,
+      "pct_of_split": 3.492723492723493
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "age_group": "40-59",
+      "count": 35,
+      "pct_of_split": 1.4553014553014554
+    },
+    {
+      "split": "test",
+      "ita_group_report": NaN,
+      "age_group": "60+",
+      "count": 15,
+      "pct_of_split": 0.6237006237006237
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "age_group": "0-19",
+      "count": 796,
+      "pct_of_split": 4.136999116470038
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "age_group": "20-39",
+      "count": 3225,
+      "pct_of_split": 16.761083103788785
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "age_group": "40-59",
+      "count": 1284,
+      "pct_of_split": 6.67324983108986
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "age_group": "60+",
+      "count": 837,
+      "pct_of_split": 4.350085754378671
+    },
+    {
+      "split": "train",
+      "ita_group_report": "<28",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "age_group": "0-19",
+      "count": 2856,
+      "pct_of_split": 14.84330336261109
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "age_group": "20-39",
+      "count": 5518,
+      "pct_of_split": 28.67834312145938
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "age_group": "40-59",
+      "count": 2069,
+      "pct_of_split": 10.753079361779532
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "age_group": "60+",
+      "count": 1196,
+      "pct_of_split": 6.215893144846942
+    },
+    {
+      "split": "train",
+      "ita_group_report": "\u226528",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "age_group": "0-19",
+      "count": 233,
+      "pct_of_split": 1.2109557715295463
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "age_group": "20-39",
+      "count": 786,
+      "pct_of_split": 4.085026765760615
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "age_group": "40-59",
+      "count": 287,
+      "pct_of_split": 1.4916064653604284
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "age_group": "60+",
+      "count": 151,
+      "pct_of_split": 0.7847824957122811
+    },
+    {
+      "split": "train",
+      "ita_group_report": NaN,
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "age_group": "0-19",
+      "count": 87,
+      "pct_of_split": 3.6129568106312293
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "age_group": "20-39",
+      "count": 393,
+      "pct_of_split": 16.32059800664452
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "age_group": "40-59",
+      "count": 178,
+      "pct_of_split": 7.392026578073089
+    },
+    {
+      "split": "val",
+      "ita_group_report": "<28",
+      "age_group": "60+",
+      "count": 100,
+      "pct_of_split": 4.152823920265781
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "age_group": "0-19",
+      "count": 361,
+      "pct_of_split": 14.991694352159469
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "age_group": "20-39",
+      "count": 701,
+      "pct_of_split": 29.11129568106312
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "age_group": "40-59",
+      "count": 253,
+      "pct_of_split": 10.506644518272426
+    },
+    {
+      "split": "val",
+      "ita_group_report": "\u226528",
+      "age_group": "60+",
+      "count": 157,
+      "pct_of_split": 6.519933554817276
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "age_group": "0-19",
+      "count": 37,
+      "pct_of_split": 1.5365448504983388
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "age_group": "20-39",
+      "count": 94,
+      "pct_of_split": 3.9036544850498336
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "age_group": "40-59",
+      "count": 30,
+      "pct_of_split": 1.2458471760797343
+    },
+    {
+      "split": "val",
+      "ita_group_report": NaN,
+      "age_group": "60+",
+      "count": 17,
+      "pct_of_split": 0.7059800664451827
+    }
+  ],
+  "race_x_ita": [
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "ita_group_report": "<28",
+      "count": 69,
+      "pct_of_split": 2.869022869022869
+    },
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "ita_group_report": "\u226528",
+      "count": 264,
+      "pct_of_split": 10.977130977130978
+    },
+    {
+      "split": "test",
+      "race_label": "Asian",
+      "ita_group_report": NaN,
+      "count": 24,
+      "pct_of_split": 0.997920997920998
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "ita_group_report": "<28",
+      "count": 306,
+      "pct_of_split": 12.723492723492724
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "ita_group_report": "\u226528",
+      "count": 120,
+      "pct_of_split": 4.98960498960499
+    },
+    {
+      "split": "test",
+      "race_label": "Black",
+      "ita_group_report": NaN,
+      "count": 29,
+      "pct_of_split": 1.2058212058212059
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "ita_group_report": "<28",
+      "count": 132,
+      "pct_of_split": 5.488565488565489
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "ita_group_report": "\u226528",
+      "count": 248,
+      "pct_of_split": 10.311850311850312
+    },
+    {
+      "split": "test",
+      "race_label": "Indian",
+      "ita_group_report": NaN,
+      "count": 18,
+      "pct_of_split": 0.7484407484407485
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "ita_group_report": "<28",
+      "count": 52,
+      "pct_of_split": 2.1621621621621623
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "ita_group_report": "\u226528",
+      "count": 113,
+      "pct_of_split": 4.698544698544699
+    },
+    {
+      "split": "test",
+      "race_label": "Others",
+      "ita_group_report": NaN,
+      "count": 8,
+      "pct_of_split": 0.33264033264033266
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "ita_group_report": "<28",
+      "count": 223,
+      "pct_of_split": 9.272349272349272
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "ita_group_report": "\u226528",
+      "count": 710,
+      "pct_of_split": 29.521829521829524
+    },
+    {
+      "split": "test",
+      "race_label": "White",
+      "ita_group_report": NaN,
+      "count": 88,
+      "pct_of_split": 3.6590436590436592
+    },
+    {
+      "split": "test",
+      "race_label": "unknown",
+      "ita_group_report": "\u226528",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "ita_group_report": "<28",
+      "count": 632,
+      "pct_of_split": 3.284652564835507
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "ita_group_report": "\u226528",
+      "count": 2038,
+      "pct_of_split": 10.591965074580322
+    },
+    {
+      "split": "train",
+      "race_label": "Asian",
+      "ita_group_report": NaN,
+      "count": 185,
+      "pct_of_split": 0.9614884881243178
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "ita_group_report": "<28",
+      "count": 2330,
+      "pct_of_split": 12.109557715295463
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "ita_group_report": "\u226528",
+      "count": 1039,
+      "pct_of_split": 5.399927238709007
+    },
+    {
+      "split": "train",
+      "race_label": "Black",
+      "ita_group_report": NaN,
+      "count": 271,
+      "pct_of_split": 1.4084507042253522
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "ita_group_report": "<28",
+      "count": 1076,
+      "pct_of_split": 5.592224936333871
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "ita_group_report": "\u226528",
+      "count": 1966,
+      "pct_of_split": 10.21776414947248
+    },
+    {
+      "split": "train",
+      "race_label": "Indian",
+      "ita_group_report": NaN,
+      "count": 183,
+      "pct_of_split": 0.9510940179824333
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "ita_group_report": "<28",
+      "count": 351,
+      "pct_of_split": 1.8242295099007328
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "ita_group_report": "\u226528",
+      "count": 957,
+      "pct_of_split": 4.973753962891742
+    },
+    {
+      "split": "train",
+      "race_label": "Others",
+      "ita_group_report": NaN,
+      "count": 58,
+      "pct_of_split": 0.301439634114651
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "ita_group_report": "<28",
+      "count": 1753,
+      "pct_of_split": 9.110753079361778
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "ita_group_report": "\u226528",
+      "count": 5639,
+      "pct_of_split": 29.307208565043396
+    },
+    {
+      "split": "train",
+      "race_label": "White",
+      "ita_group_report": NaN,
+      "count": 760,
+      "pct_of_split": 3.9498986539161165
+    },
+    {
+      "split": "train",
+      "race_label": "unknown",
+      "ita_group_report": "<28",
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "race_label": "unknown",
+      "ita_group_report": "\u226528",
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "train",
+      "race_label": "unknown",
+      "ita_group_report": NaN,
+      "count": 1,
+      "pct_of_split": 0.005197235070942259
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "ita_group_report": "<28",
+      "count": 61,
+      "pct_of_split": 2.5332225913621262
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "ita_group_report": "\u226528",
+      "count": 270,
+      "pct_of_split": 11.212624584717608
+    },
+    {
+      "split": "val",
+      "race_label": "Asian",
+      "ita_group_report": NaN,
+      "count": 26,
+      "pct_of_split": 1.0797342192691028
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "ita_group_report": "<28",
+      "count": 296,
+      "pct_of_split": 12.29235880398671
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "ita_group_report": "\u226528",
+      "count": 124,
+      "pct_of_split": 5.149501661129568
+    },
+    {
+      "split": "val",
+      "race_label": "Black",
+      "ita_group_report": NaN,
+      "count": 37,
+      "pct_of_split": 1.5365448504983388
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "ita_group_report": "<28",
+      "count": 128,
+      "pct_of_split": 5.3156146179401995
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "ita_group_report": "\u226528",
+      "count": 259,
+      "pct_of_split": 10.755813953488373
+    },
+    {
+      "split": "val",
+      "race_label": "Indian",
+      "ita_group_report": NaN,
+      "count": 14,
+      "pct_of_split": 0.5813953488372093
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "ita_group_report": "<28",
+      "count": 48,
+      "pct_of_split": 1.9933554817275747
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "ita_group_report": "\u226528",
+      "count": 118,
+      "pct_of_split": 4.900332225913622
+    },
+    {
+      "split": "val",
+      "race_label": "Others",
+      "ita_group_report": NaN,
+      "count": 5,
+      "pct_of_split": 0.20764119601328906
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "ita_group_report": "<28",
+      "count": 225,
+      "pct_of_split": 9.343853820598007
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "ita_group_report": "\u226528",
+      "count": 701,
+      "pct_of_split": 29.11129568106312
+    },
+    {
+      "split": "val",
+      "race_label": "White",
+      "ita_group_report": NaN,
+      "count": 96,
+      "pct_of_split": 3.9867109634551494
+    }
+  ],
+  "small_cell_warnings": [
+    {
+      "dimension": "race",
+      "split": "test",
+      "race_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "gender",
+      "split": "test",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "age_group",
+      "split": "test",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "race_x_gender",
+      "split": "test",
+      "race_label": "unknown",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "ita_x_gender",
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "gender_label": "unknown",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "ita_x_age",
+      "split": "test",
+      "ita_group_report": "\u226528",
+      "age_group": NaN,
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    },
+    {
+      "dimension": "race_x_ita",
+      "split": "test",
+      "race_label": "unknown",
+      "ita_group_report": "\u226528",
+      "count": 1,
+      "pct_of_split": 0.04158004158004158
+    }
+  ]
+}
