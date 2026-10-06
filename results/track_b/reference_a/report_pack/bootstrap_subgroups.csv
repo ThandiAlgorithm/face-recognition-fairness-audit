@@ -1,0 +1,89 @@
+model_id,analysis,attribute,group,metric,estimate,ci_lower,ci_upper,confidence_level,bootstrap_iterations,valid_bootstrap_iterations,n_pairs,n_genuine,n_impostor,small_genuine_sample,small_impostor_sample,interpret_with_caution
+ReferenceA_ArcFace,subgroup,gender,female,accuracy,0.9378531073446328,0.8983050847457628,0.9717514124293786,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,balanced_accuracy,0.95985401459854,0.9343065693430656,0.9817518248175184,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,precision,1.0,1.0,1.0,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,F1,0.9581749049429658,0.9296875,0.9814126394052044,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,TPR_TAR,0.9197080291970804,0.8686131386861314,0.9635036496350364,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,FMR_FPR,0.0,0.0,0.0,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,FNMR_FNR,0.0802919708029197,0.0364963503649635,0.1313868613138686,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,female,specificity_TNR,1.0,1.0,1.0,0.95,2000,2000,177,137,40,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,accuracy,0.9686468646864688,0.9554455445544554,0.9818481848184818,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,balanced_accuracy,0.9683875794986908,0.9539502771826004,0.9814474713464612,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,precision,0.9777777777777776,0.9618502553565312,0.9915730337078652,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,F1,0.9737206085753805,0.9623430962343096,0.9847856154910096,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,TPR_TAR,0.9696969696969696,0.950413223140496,0.9862258953168044,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,FMR_FPR,0.0329218106995884,0.0123456790123456,0.0576131687242798,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,FNMR_FNR,0.0303030303030303,0.0137741046831955,0.0495867768595041,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,gender,male,specificity_TNR,0.9670781893004116,0.9423868312757202,0.9876543209876544,0.95,2000,2000,606,363,243,False,False,False
+ReferenceA_ArcFace,subgroup,race,Asian,accuracy,0.9166666666666666,0.75,1.0,0.95,2000,2000,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,balanced_accuracy,,,,0.95,2000,0,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,precision,1.0,1.0,1.0,0.95,2000,2000,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,F1,0.9565217391304348,0.8571428571428571,1.0,0.95,2000,2000,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,TPR_TAR,0.9166666666666666,0.75,1.0,0.95,2000,2000,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,FMR_FPR,,,,0.95,2000,0,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,FNMR_FNR,0.0833333333333333,0.0,0.25,0.95,2000,2000,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Asian,specificity_TNR,,,,0.95,2000,0,12,12,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,accuracy,1.0,1.0,1.0,0.95,2000,2000,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,balanced_accuracy,,,,0.95,2000,0,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,precision,1.0,1.0,1.0,0.95,2000,2000,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,F1,1.0,1.0,1.0,0.95,2000,2000,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,TPR_TAR,1.0,1.0,1.0,0.95,2000,2000,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,FMR_FPR,,,,0.95,2000,0,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,FNMR_FNR,0.0,0.0,0.0,0.95,2000,2000,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,Black,specificity_TNR,,,,0.95,2000,0,6,6,0,True,True,True
+ReferenceA_ArcFace,subgroup,race,White,accuracy,0.9731543624161074,0.959731543624161,0.9848993288590604,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,balanced_accuracy,0.9731333707594836,0.9596162769382354,0.9853064170571588,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,precision,0.9791044776119404,0.9643916913946587,0.9938842582233162,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,F1,0.9761904761904762,0.964179104477612,0.9866280336800396,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,TPR_TAR,0.973293768545994,0.9554896142433236,0.9881305637982196,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,FMR_FPR,0.027027027027027,0.0077220077220077,0.0463320463320463,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,FNMR_FNR,0.0267062314540059,0.0118694362017804,0.0445103857566765,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,race,White,specificity_TNR,0.972972972972973,0.9536679536679536,0.9922779922779924,0.95,2000,2000,596,337,259,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,accuracy,1.0,1.0,1.0,0.95,2000,2000,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,balanced_accuracy,,,,0.95,2000,0,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,precision,1.0,1.0,1.0,0.95,2000,2000,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,F1,1.0,1.0,1.0,0.95,2000,2000,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,TPR_TAR,1.0,1.0,1.0,0.95,2000,2000,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,FMR_FPR,,,,0.95,2000,0,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,FNMR_FNR,0.0,0.0,0.0,0.95,2000,2000,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × female,specificity_TNR,,,,0.95,2000,0,2,2,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,accuracy,0.9,0.7,1.0,0.95,2000,2000,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,balanced_accuracy,,,,0.95,2000,0,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,precision,1.0,1.0,1.0,0.95,2000,2000,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,F1,0.9473684210526316,0.8235294117647058,1.0,0.95,2000,2000,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,TPR_TAR,0.9,0.7,1.0,0.95,2000,2000,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,FMR_FPR,,,,0.95,2000,0,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,FNMR_FNR,0.1,0.0,0.3,0.95,2000,2000,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Asian × male,specificity_TNR,,,,0.95,2000,0,10,10,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,accuracy,1.0,1.0,1.0,0.95,2000,2000,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,balanced_accuracy,,,,0.95,2000,0,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,precision,1.0,1.0,1.0,0.95,2000,2000,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,F1,1.0,1.0,1.0,0.95,2000,2000,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,TPR_TAR,1.0,1.0,1.0,0.95,2000,2000,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,FMR_FPR,,,,0.95,2000,0,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,FNMR_FNR,0.0,0.0,0.0,0.95,2000,2000,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × female,specificity_TNR,,,,0.95,2000,0,1,1,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,accuracy,1.0,1.0,1.0,0.95,2000,2000,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,balanced_accuracy,,,,0.95,2000,0,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,precision,1.0,1.0,1.0,0.95,2000,2000,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,F1,1.0,1.0,1.0,0.95,2000,2000,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,TPR_TAR,1.0,1.0,1.0,0.95,2000,2000,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,FMR_FPR,,,,0.95,2000,0,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,FNMR_FNR,0.0,0.0,0.0,0.95,2000,2000,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,Black × male,specificity_TNR,,,,0.95,2000,0,5,5,0,True,True,True
+ReferenceA_ArcFace,subgroup,intersection,White × female,accuracy,0.9508196721311476,0.9098360655737704,0.9836065573770492,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,balanced_accuracy,0.97,0.945,0.99,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,precision,1.0,1.0,1.0,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,F1,0.9690721649484536,0.9417989417989416,0.98989898989899,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,TPR_TAR,0.94,0.89,0.98,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,FMR_FPR,0.0,0.0,0.0,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,FNMR_FNR,0.06,0.02,0.11,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × female,specificity_TNR,1.0,1.0,1.0,0.95,2000,2000,122,100,22,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,accuracy,0.975609756097561,0.959349593495935,0.989159891598916,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,balanced_accuracy,0.9709436133486766,0.9507000383582662,0.9886363636363636,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,precision,0.975,0.9552845528455284,0.9915966386554622,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,F1,0.981132075471698,0.9686847599164928,0.9916317991631798,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,TPR_TAR,0.9873417721518988,0.9704641350210972,1.0,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,FMR_FPR,0.0454545454545454,0.0151515151515151,0.0833333333333333,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,FNMR_FNR,0.0126582278481012,0.0,0.0295358649789029,0.95,2000,2000,369,237,132,False,False,False
+ReferenceA_ArcFace,subgroup,intersection,White × male,specificity_TNR,0.9545454545454546,0.9166666666666666,0.9848484848484848,0.95,2000,2000,369,237,132,False,False,False

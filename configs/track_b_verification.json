@@ -1,0 +1,221 @@
+{
+  "protocol_name": "TRACK-B-LFW-VERIFICATION",
+  "protocol_version": "1.0",
+  "project": "Algorithmic Fairness in Facial Recognition Systems",
+  "purpose": "Common verification and fairness evaluation protocol for the pretrained reference recognizer and project-trained recognition models.",
+
+  "datasets": {
+    "primary_verification_benchmark": "LFW",
+    "secondary_analysis_datasets": [
+      "FairFace",
+      "UTKFace"
+    ],
+    "lfw_protocol": {
+      "view1_role": "development",
+      "view1_train_pairs": 2200,
+      "view1_test_pairs": 1000,
+      "view2_role": "final_reporting_only",
+      "view2_status": "sealed",
+      "view2_must_not_be_used_for": [
+        "threshold_selection",
+        "hyperparameter_tuning",
+        "model_selection",
+        "mitigation_selection",
+        "preprocessing_selection"
+      ]
+    }
+  },
+
+  "model_roles": {
+    "R0": {
+      "name": "ArcFace",
+      "role": "pretrained_reference_recognizer",
+      "trainable_in_project": false
+    },
+    "M0": {
+      "role": "ordinary_project_baseline",
+      "fairness_mitigation": "none"
+    },
+    "M1": {
+      "role": "data_level_mitigation",
+      "fairness_mitigation": "resampling_or_balanced_batches"
+    },
+    "M2": {
+      "role": "loss_level_mitigation",
+      "fairness_mitigation": "sample_or_group_reweighting"
+    },
+    "M3": {
+      "role": "representation_level_mitigation",
+      "fairness_mitigation": "adversarial_debiasing"
+    },
+    "M4": {
+      "role": "optional_distribution_level_mitigation",
+      "fairness_mitigation": "MMD_regularization",
+      "status": "stretch_only"
+    }
+  },
+
+  "preprocessing": {
+    "official_input": "project_aligned_face_crop",
+    "aligned_path_column": "aligned_path",
+    "master_table": "metadata/master_annotations.parquet",
+    "alignment_generator": "run_full_feature_extraction.py",
+    "detector_implementation": "src/detection.py",
+    "detector": "RetinaFace",
+    "alignment_function": "detection.align_face",
+    "same_preprocessing_for_all_recognition_models": true,
+    "model_specific_redetection": false,
+    "model_specific_realignment": false,
+    "raw_lfw_arcface_run": {
+      "status": "diagnostic_only",
+      "eligible_for_final_results": false,
+      "reason": "Raw-image ArcFace verification produced insufficient genuine/impostor separation and is retained only as a preprocessing diagnostic."
+    }
+  },
+
+  "embedding_and_scoring": {
+    "score_type": "cosine_similarity",
+    "higher_score_means_more_similar": true,
+    "embedding_l2_normalized": true,
+    "decision_rule": "genuine_if_score_greater_than_or_equal_to_threshold",
+    "one_global_threshold": true,
+    "subgroup_specific_thresholds": false
+  },
+
+  "threshold_selection": {
+    "source_split": "LFW_View1_train",
+    "criterion": "maximum_Youden_J",
+    "equivalent_objective": "maximum_balanced_accuracy",
+    "threshold_must_be_frozen_before_view1_test_evaluation": true,
+    "test_threshold_reoptimization": false,
+    "view2_threshold_reoptimization": false
+  },
+
+  "verification_metrics": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "F1",
+    "TPR_TAR",
+    "specificity_TNR",
+    "FMR_FPR",
+    "FNMR_FNR",
+    "ROC_AUC",
+    "EER"
+  ],
+
+  "demographic_annotations": {
+    "lfw_primary_demographic_source": "externally_derived_annotations",
+    "derived_master_table": "metadata/master_annotations_lfw_demographics_derived.parquet",
+    "gender": {
+      "source": "LFW female/male name lists",
+      "unknown_policy": "retain_for_coverage_but_exclude_from_known_group_comparisons"
+    },
+    "race": {
+      "source": "Kumar_et_al_2009_LFW_attribute_classifier",
+      "categories": [
+        "Asian",
+        "Black",
+        "Indian",
+        "White",
+        "unknown"
+      ],
+      "unknown_policy": "retain_for_coverage_but_exclude_from_primary_known_group_comparisons",
+      "interpretation": "derived_measurement_not_ground_truth"
+    },
+    "sensitivity_sources": [
+      "FairFace_demographic_predictions",
+      "DeepFace_demographic_predictions"
+    ]
+  },
+
+  "pair_grouping_rules": {
+    "genuine_pairs": {
+      "primary_group_rule": "both_images_have_same_known_group_label",
+      "conflicting_or_missing_labels": "exclude_from_group_specific_metric_but_report_coverage"
+    },
+    "impostor_pairs": {
+      "primary_FMR_analysis": "within_group_impostor_pairs",
+      "within_group_rule": "both_images_have_same_known_group_label",
+      "cross_group_impostors": "report_separately",
+      "missing_labels": "exclude_from_known_group_metric_but_report_coverage"
+    },
+    "intersectional_groups": {
+      "primary": "race_x_gender",
+      "require_all_component_labels_known": true
+    }
+  },
+
+  "fairness_metrics": {
+    "group_metrics": [
+      "TPR",
+      "FMR",
+      "FNMR",
+      "FPR",
+      "accuracy",
+      "balanced_accuracy"
+    ],
+    "disparity_summaries": [
+      "max_minus_min_TPR",
+      "max_minus_min_FMR",
+      "max_minus_min_FNMR"
+    ],
+    "equalized_odds": {
+      "binary_gender_analysis": "compare_TPR_and_FPR_across_race_groups",
+      "multiclass_race_analysis": "one_vs_rest_comparison_across_gender"
+    },
+    "same_global_threshold_for_every_group": true
+  },
+
+  "skin_tone_and_visual_conditions": {
+    "source": "Phase_1_measurement_audit",
+    "skin_tone_measurement": "ITA_or_project_continuous_skin_measurement",
+    "race_must_not_be_inferred_from_skin_tone": true,
+    "pair_requirement": "both_images_must_have_required_measurement",
+    "missing_measurement_policy": "report_coverage_and_exclude_from_specific_subgroup_metric"
+  },
+
+  "statistics": {
+    "confidence_level": 0.95,
+    "bootstrap": {
+      "enabled": true,
+      "iterations": 2000,
+      "random_seed": 2026,
+      "apply_to": [
+        "overall_verification_metrics",
+        "demographic_subgroup_metrics",
+        "intersectional_metrics"
+      ]
+    },
+    "paired_model_comparison": {
+      "test": "McNemar",
+      "comparison_unit": "same_LFW_pair",
+      "comparisons": [
+        "M0_vs_M1",
+        "M0_vs_M2",
+        "M0_vs_M3"
+      ]
+    }
+  },
+
+  "reporting_rules": {
+    "always_report_sample_size": true,
+    "always_report_demographic_coverage": true,
+    "always_report_unknown_or_excluded_counts": true,
+    "do_not_describe_derived_demographics_as_ground_truth": true,
+    "do_not_claim_fairness_from_representation_counts_alone": true,
+    "do_not_describe_FairFace_as_inherently_fair": true,
+    "do_not_describe_DeepFace_as_inherently_biased": true,
+    "separate_reference_model_from_project_baseline": true
+  },
+
+  "outputs": {
+    "root": "results/track_b",
+    "reference_model": "results/track_b/arcface_reference",
+    "pair_scores_suffix": "pair_scores.csv",
+    "metrics_suffix": "metrics.csv",
+    "fairness_suffix": "subgroup_fairness.csv",
+    "statistics_suffix": "statistical_comparisons.csv"
+  }
+}

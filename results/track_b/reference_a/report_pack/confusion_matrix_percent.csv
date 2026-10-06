@@ -1,0 +1,3 @@
+actual_class,predicted_genuine_pct,predicted_impostor_pct,n
+Genuine,0.956,0.044,500
+Impostor,0.02,0.98,500

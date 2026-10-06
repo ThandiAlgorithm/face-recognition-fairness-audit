@@ -1,0 +1,4 @@
+attribute,total_pairs,both_labels_known,both_labels_known_pct,any_unknown_or_missing,genuine_same_known_group,genuine_conflicting_known_labels,impostor_within_group,impostor_cross_group
+gender,1000,995,0.995,5,500,0,283,212
+race,1000,715,0.715,285,355,18,259,83
+intersection,1000,710,0.71,290,355,18,154,183

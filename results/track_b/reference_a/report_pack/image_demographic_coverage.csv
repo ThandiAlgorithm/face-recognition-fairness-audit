@@ -1,0 +1,4 @@
+attribute,n_images,known,unknown_or_missing,coverage_pct
+gender,13233,13224,9,0.9993198821128996
+race,13233,11104,2129,0.839114335373687
+intersection,13233,11098,2135,0.8386609234489534
