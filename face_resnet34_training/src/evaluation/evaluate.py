@@ -180,6 +180,14 @@ def main() -> None:
     parser.add_argument("--method", default="M1", help="M1/M2/M3/M4 -- recorded in the predictions file for later comparison.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
+        "--out-dir",
+        type=Path,
+        default=None,
+        help="Where to write test_predictions.parquet/test_metrics.json. Defaults to experiments/<dataset>/test_eval/, "
+             "which M1 already occupies -- pass a method-specific dir (e.g. experiments/<dataset>/M2_resampling/seed_42/test_eval) "
+             "for M2/M3/M4 so each method's evaluation doesn't overwrite the others.",
+    )
+    parser.add_argument(
         "--max-batches",
         type=int,
         default=None,
@@ -191,6 +199,7 @@ def main() -> None:
         args.checkpoint,
         args.batch_size,
         args.device,
+        out_dir=args.out_dir,
         max_batches=args.max_batches,
         method=args.method,
         seed=args.seed,

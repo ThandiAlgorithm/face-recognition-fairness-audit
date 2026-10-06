@@ -533,8 +533,13 @@ def generate_highlights(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("dataset", choices=["fairface", "utkface", "lfw"])
+    parser.add_argument(
+        "--eval-dir", type=Path, default=None,
+        help="Directory holding test_predictions.parquet (from evaluate.py's matching --out-dir). "
+             "Defaults to experiments/<dataset>/test_eval/ (M1's location).",
+    )
     args = parser.parse_args()
-    summary = compute_all_metrics(args.dataset)
+    summary = compute_all_metrics(args.dataset, eval_dir=args.eval_dir)
     print(json.dumps({"n_subgroup_rows": summary["n_subgroup_rows"], "n_fairness_rows": summary["n_fairness_rows"]}, indent=2))
 
 
