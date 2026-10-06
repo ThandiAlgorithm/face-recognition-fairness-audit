@@ -20,11 +20,19 @@ untouched by this), so they stay in the training pool at full weight for
 the task they were already being used for -- same philosophy as M2 and
 M3's treatment of unknown ITA.
 
-lambda (--adv-lambda) is fixed for the whole run rather than ramped, the
-simplest version of the mechanism and a known simplification versus the
-original DANN schedule (sigmoid ramp from 0); not expected to change the
-sign of any effect, only its magnitude. Documented here rather than
-silently matched to any particular paper's schedule.
+lambda (--adv-lambda) is RAMPED across training, not fixed, following the
+original DANN schedule: lambda(p) = adv_lambda * (2/(1+exp(-10p)) - 1),
+where p is the fraction of max_epochs completed -- near 0 at the start,
+approaching adv_lambda by the end. This is not a stylistic choice: an
+earlier version of this file used a fixed lambda from epoch 0, and on real
+data (not the synthetic unit-test tensors) it diverged catastrophically on
+both FairFace and UTKFace -- loss exploding from the millions into the
+quintillions within ~10 epochs, a textbook instance of the well-known GAN/
+DANN failure mode where full adversarial pressure before the backbone has
+learned reasonable features sends the minimax game into runaway feedback.
+Ramping gives the backbone time to settle into a sane feature space before
+the adversarial pressure ramps up. --grad-clip-norm (default 5.0) is a
+second, independent safety net on top of this.
 
 Logs, mirroring M2/M3's per-run artifacts:
   adversarial_config.json   -- static: lambda, ITA class mapping, formula
@@ -45,6 +53,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -200,6 +209,14 @@ class AdversarialLossWrapper(nn.Module):
         return losses
 
 
+def _ramped_lambda(adv_lambda: float, epoch: int, max_epochs: int) -> float:
+    """Standard DANN sigmoid ramp: ~0 at epoch 0, approaching adv_lambda by
+    the final epoch. p = training progress in [0, 1); gamma=10 matches the
+    original paper's constant."""
+    p = epoch / max(max_epochs, 1)
+    return float(adv_lambda * (2.0 / (1.0 + math.exp(-10.0 * p)) - 1.0))
+
+
 def run_m4(
     dataset: str,
     max_epochs: int,
@@ -213,6 +230,7 @@ def run_m4(
     num_workers: int,
     early_stopping_patience: int | None,
     adv_lambda: float = 1.0,
+    grad_clip_norm: float | None = 5.0,
     max_steps_per_epoch: int | None = None,
 ) -> dict:
     out_dir = EXPERIMENTS_DIR / dataset / "M4_adversarial" / f"seed_{seed}"
@@ -224,8 +242,9 @@ def run_m4(
                 "mechanism": "gradient_reversal",
                 "adversarial_target": "ita_group",
                 "ita_class_index": ITA_CLASS_INDEX,
-                "grl_lambda": adv_lambda,
-                "lambda_schedule": "fixed (not ramped)",
+                "grl_lambda_max": adv_lambda,
+                "lambda_schedule": "DANN sigmoid ramp: adv_lambda * (2/(1+exp(-10p)) - 1), p = epoch/max_epochs",
+                "grad_clip_norm": grad_clip_norm,
                 "loss_formula": "total = base_task_loss + CrossEntropyLoss(ita_head(GRL(features)), ita_group)",
             },
             indent=2,
@@ -235,14 +254,22 @@ def run_m4(
     history_path = out_dir / "adversarial_history.csv"
     history_rows: list[dict] = []
     loss_fn_holder: dict = {}
+    model_holder: dict = {}
+
+    def model_ready_callback(model: nn.Module, max_epochs_: int) -> None:
+        model_holder["model"] = model
+        model.grl.lambda_ = _ramped_lambda(adv_lambda, 0, max_epochs_)
 
     def epoch_callback(epoch: int, val_metrics: dict) -> None:
         stats = loss_fn_holder["loss_fn"].tracker.epoch_summary()
-        history_rows.append({"epoch": epoch, **stats})
+        history_rows.append({"epoch": epoch, "grl_lambda": model_holder["model"].grl.lambda_, **stats})
         with open(history_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=list(history_rows[0].keys()))
             writer.writeheader()
             writer.writerows(history_rows)
+        # Set for the epoch that's about to run next, so epoch 0's logged
+        # lambda above reflects what epoch 0 actually trained with.
+        model_holder["model"].grl.lambda_ = _ramped_lambda(adv_lambda, epoch + 1, max_epochs)
 
     import train as train_module
 
@@ -275,6 +302,8 @@ def run_m4(
             max_steps_per_epoch=max_steps_per_epoch,
             out_dir=out_dir,
             epoch_callback=epoch_callback,
+            model_ready_callback=model_ready_callback,
+            grad_clip_norm=grad_clip_norm,
             method="M4",
         )
     finally:
@@ -297,7 +326,8 @@ def main() -> None:
     parser.add_argument("--num-threads", type=int, default=None)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--allow-dirty", action="store_true")
-    parser.add_argument("--adv-lambda", type=float, default=1.0, help="Gradient-reversal strength (fixed, not ramped).")
+    parser.add_argument("--adv-lambda", type=float, default=1.0, help="Target gradient-reversal strength; ramped up to this over training (DANN sigmoid schedule), not applied in full from epoch 0.")
+    parser.add_argument("--grad-clip-norm", type=float, default=5.0, help="Gradient-norm clip, a stability safety net for adversarial training; pass a negative value to disable.")
     parser.add_argument("--smoke-test-steps", type=int, default=None)
     args = parser.parse_args()
 
@@ -314,6 +344,7 @@ def main() -> None:
         num_workers=args.num_workers,
         early_stopping_patience=args.early_stopping_patience,
         adv_lambda=args.adv_lambda,
+        grad_clip_norm=(None if args.grad_clip_norm < 0 else args.grad_clip_norm),
         max_steps_per_epoch=args.smoke_test_steps,
     )
 

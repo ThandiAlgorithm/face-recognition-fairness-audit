@@ -105,7 +105,7 @@ def get_cpu_model() -> str:
     return platform.processor() or "unknown"
 
 
-def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool) -> dict:
+def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool, grad_clip_norm: float | None = None) -> dict:
     model.train(train)
     if isinstance(loss_fn, torch.nn.Module):
         loss_fn.train(train)
@@ -129,10 +129,15 @@ def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool) ->
                 optimizer.zero_grad(set_to_none=True)
                 if scaler.is_enabled():
                     scaler.scale(losses["total"]).backward()
+                    if grad_clip_norm is not None:
+                        scaler.unscale_(optimizer)
+                        torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip_norm)
                     scaler.step(optimizer)
                     scaler.update()
                 else:
                     losses["total"].backward()
+                    if grad_clip_norm is not None:
+                        torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip_norm)
                     optimizer.step()
 
         batch_size = imgs.size(0)
@@ -317,6 +322,8 @@ def train_dataset(
     epoch_callback=None,
     train_loader_factory=None,
     method: str = "M1",
+    model_ready_callback=None,
+    grad_clip_norm: float | None = None,
 ) -> dict:
     """epoch_callback(epoch, val_metrics), if given, runs after every epoch's
     validation pass -- src/tuning/ uses it to report intermediate values to
@@ -328,7 +335,17 @@ def train_dataset(
     everything else (model, loss, optimizer, scheduler, early stopping,
     checkpointing) stays byte-identical to M1 and every other mitigation
     variant. method is recorded in environment.json for traceability; it
-    does not change any training behaviour by itself."""
+    does not change any training behaviour by itself.
+
+    model_ready_callback(model, max_epochs), if given, runs once right after
+    the model is built -- M4 uses this to keep a live reference for ramping
+    its GRL's lambda across epochs (see mitigation_m4.py).
+
+    grad_clip_norm, if given, clips the gradient norm before every
+    optimizer.step() (train pass only) -- M4 uses this as a stability
+    safety net for adversarial training, which is far more prone to runaway
+    divergence than plain supervised classification; M1/M2/M3 leave this
+    None, unchanged from before this existed."""
     check_git_clean(allow_dirty)
     if num_threads is not None:
         torch.set_num_threads(num_threads)
@@ -342,6 +359,8 @@ def train_dataset(
 
     labels = load_labels(dataset)
     model = build_model(dataset, labels).to(device)
+    if model_ready_callback is not None:
+        model_ready_callback(model, max_epochs)
     loss_fn = build_loss(dataset)
     optimizer, scheduler = build_optimizer_and_scheduler(model, lr, weight_decay, max_epochs)
     scaler = torch.cuda.amp.GradScaler(enabled=(device.type == "cuda"))
@@ -377,7 +396,7 @@ def train_dataset(
 
     for epoch in range(max_epochs):
         t0 = time.time()
-        train_metrics = run_epoch(model, train_loader, loss_fn, optimizer, device, scaler, train=True)
+        train_metrics = run_epoch(model, train_loader, loss_fn, optimizer, device, scaler, train=True, grad_clip_norm=grad_clip_norm)
         val_metrics = run_epoch(model, val_loader, loss_fn, optimizer, device, scaler, train=False)
         scheduler.step()
         elapsed = time.time() - t0

@@ -48,29 +48,66 @@ EXPERIMENTS_DIR = Path(__file__).resolve().parents[2] / "experiments"
 # not just race-alone or gender-alone conditioning. Intersectional gaps can
 # be large even when both marginal (single-attribute) views look fine --
 # the whole point of auditing this separately (Buolamwini & Gebru 2018).
-SENSITIVE_COLS = ["race_label", "gender_label", "ita_group", "race_gender_label"]
+SENSITIVE_COLS = [
+    "race_label", "gender_label", "ita_group", "age_group",
+    "race_gender_label", "race_ita_label", "gender_ita_label", "fitzpatrick_approx",
+]
 N_BOOTSTRAP = 1000
 CLASSIFICATION_TASKS = ["race", "gender", "age_group"]
 
 
+# Approximate ITA(deg) -> Fitzpatrick-type band, from the commonly cited
+# dermatology correspondence (e.g. Chardon et al. 1991; used in several
+# skin-tone CV fairness papers as the standard ITA<->Fitzpatrick bridge).
+# This is NOT a clinical Fitzpatrick assignment -- no annotator or
+# self-report exists for these datasets -- it is an image-derived
+# approximation, documented as such everywhere it's used (see
+# ITA_VS_FITZPATRICK.md). Breakpoints are upper-bound-exclusive except the
+# first.
+FITZPATRICK_ITA_BREAKPOINTS = [
+    (55.0, "I-II (very light)"),
+    (41.0, "II-III (light)"),
+    (28.0, "III-IV (intermediate)"),
+    (10.0, "IV-V (tan)"),
+    (-30.0, "V (brown)"),
+    (float("-inf"), "VI (dark)"),
+]
+
+
+def _approximate_fitzpatrick(ita_value) -> str:
+    if ita_value is None or pd.isna(ita_value):
+        return "unknown"
+    for lower, label in FITZPATRICK_ITA_BREAKPOINTS:
+        if ita_value > lower:
+            return label
+    return "unknown"
+
+
 def _add_intersectional_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Adds race_gender_label = '<race>_<gender>' (e.g. 'Black_Female'), the
-    true joint subgroup. Either side missing/unknown -> 'unknown' for the
-    joint column too, rather than a half-formed label that would silently
-    pollute a real subgroup's statistics."""
+    """Adds derived grouping columns not present in the raw saved
+    predictions:
+      race_gender_label       = '<race>_<gender>' (e.g. 'Black_Female')
+      fitzpatrick_approx       = ITA-derived approximate Fitzpatrick band
+      race_ita_label           = '<race>_<ita_group>' (race x skin-tone)
+      gender_ita_label         = '<gender>_<ita_group>' (gender x skin-tone)
+    Either side missing/unknown -> 'unknown' for the joint column too,
+    rather than a half-formed label that would silently pollute a real
+    subgroup's statistics."""
     df = df.copy()
     race = df.get("race_label")
     gender = df.get("gender_label")
-    if race is None or gender is None:
-        df["race_gender_label"] = "unknown"
-        return df
+    ita_group = df.get("ita_group")
+    ita_value = df.get("ita_value")
 
-    def _join(r, g):
-        if pd.isna(r) or pd.isna(g) or r == "unknown" or g == "unknown":
+    def _join(a, b):
+        if pd.isna(a) or pd.isna(b) or a == "unknown" or b == "unknown":
             return "unknown"
-        return f"{r}_{g}"
+        return f"{a}_{b}"
 
-    df["race_gender_label"] = [_join(r, g) for r, g in zip(race, gender)]
+    df["race_gender_label"] = [_join(r, g) for r, g in zip(race, gender)] if race is not None and gender is not None else "unknown"
+    df["fitzpatrick_approx"] = [_approximate_fitzpatrick(v) for v in ita_value] if ita_value is not None else "unknown"
+    df["race_ita_label"] = [_join(r, s) for r, s in zip(race, ita_group)] if race is not None and ita_group is not None else "unknown"
+    df["gender_ita_label"] = [_join(g, s) for g, s in zip(gender, ita_group)] if gender is not None and ita_group is not None else "unknown"
     return df
 
 
@@ -447,6 +484,17 @@ def generate_highlights(
     highlights["gender_fairness_by_race"] = _rows(fairness_df, task_col, gender_key, "race_label")
     highlights["gender_by_ita"] = _rows(subgroup_df, task_col, gender_key, "ita_group")
     highlights["gender_fairness_by_ita"] = _rows(fairness_df, task_col, gender_key, "ita_group")
+    highlights["gender_by_age"] = _rows(subgroup_df, task_col, gender_key, "age_group")
+    highlights["gender_fairness_by_age"] = _rows(fairness_df, task_col, gender_key, "age_group")
+    highlights["gender_by_fitzpatrick_approx"] = _rows(subgroup_df, task_col, gender_key, "fitzpatrick_approx")
+    highlights["gender_fairness_by_fitzpatrick_approx"] = _rows(fairness_df, task_col, gender_key, "fitzpatrick_approx")
+    highlights["gender_by_race_ita"] = _rows(subgroup_df, task_col, gender_key, "race_ita_label")
+    highlights["gender_fairness_by_race_ita"] = _rows(fairness_df, task_col, gender_key, "race_ita_label")
+    if dataset != "lfw" and "race" in classification:
+        highlights["race_by_age"] = _rows(subgroup_df, task_col, "race", "age_group")
+        highlights["race_fairness_by_age"] = _rows(fairness_df, task_col, "race", "age_group")
+        highlights["race_by_fitzpatrick_approx"] = _rows(subgroup_df, task_col, "race", "fitzpatrick_approx")
+        highlights["race_fairness_by_fitzpatrick_approx"] = _rows(fairness_df, task_col, "race", "fitzpatrick_approx")
 
     # True joint race x gender subgroups (e.g. "Black_Female" vs
     # "White_Male"), not just race-alone or gender-alone conditioning --
