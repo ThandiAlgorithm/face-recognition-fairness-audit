@@ -1,0 +1,4 @@
+outcome,n_errors,pairs_with_multi_face_signal,pairs_with_alignment_signal,pairs_with_detection_signal,mean_similarity
+FN,22,10,0,0,0.2023780240931294
+FP,10,2,0,0,0.3280355006456375
+ALL,32,12,0,0,0.2416459855157882

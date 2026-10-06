@@ -1,0 +1,3 @@
+pipeline,official_result,accuracy,TPR_TAR,FMR_FPR,FNMR_FNR,ROC_AUC,EER,mean_score_separation
+Raw-image diagnostic,False,0.581,0.44,0.278,0.56,0.5921,0.433,0.013381
+Project-aligned Reference A,True,0.968,0.956,0.02,0.044,0.994356,0.034,0.5101560864448548

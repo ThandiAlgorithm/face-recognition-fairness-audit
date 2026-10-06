@@ -1,0 +1,12 @@
+model_id,split,attribute,group,n_pairs,n_genuine,n_impostor,tp,tn,fp,fn,TPR_TAR,FMR_FPR,FNMR_FNR,specificity_TNR,accuracy,balanced_accuracy
+ReferenceA_ArcFace,test,gender,female,177,137,40,126,40,0,11,0.9197080291970804,0.0,0.0802919708029197,1.0,0.9378531073446328,0.95985401459854
+ReferenceA_ArcFace,test,gender,male,606,363,243,352,235,8,11,0.9696969696969696,0.0329218106995884,0.0303030303030303,0.9670781893004116,0.9686468646864688,0.9683875794986908
+ReferenceA_ArcFace,test,race,Asian,12,12,0,11,0,0,1,0.9166666666666666,,0.0833333333333333,,0.9166666666666666,
+ReferenceA_ArcFace,test,race,Black,6,6,0,6,0,0,0,1.0,,0.0,,1.0,
+ReferenceA_ArcFace,test,race,White,596,337,259,328,252,7,9,0.973293768545994,0.027027027027027,0.0267062314540059,0.972972972972973,0.9731543624161074,0.9731333707594836
+ReferenceA_ArcFace,test,intersection,Asian × female,2,2,0,2,0,0,0,1.0,,0.0,,1.0,
+ReferenceA_ArcFace,test,intersection,Asian × male,10,10,0,9,0,0,1,0.9,,0.1,,0.9,
+ReferenceA_ArcFace,test,intersection,Black × female,1,1,0,1,0,0,0,1.0,,0.0,,1.0,
+ReferenceA_ArcFace,test,intersection,Black × male,5,5,0,5,0,0,0,1.0,,0.0,,1.0,
+ReferenceA_ArcFace,test,intersection,White × female,122,100,22,94,22,0,6,0.94,0.0,0.06,1.0,0.9508196721311476,0.97
+ReferenceA_ArcFace,test,intersection,White × male,369,237,132,234,126,6,3,0.9873417721518988,0.0454545454545454,0.0126582278481012,0.9545454545454546,0.975609756097561,0.9709436133486766

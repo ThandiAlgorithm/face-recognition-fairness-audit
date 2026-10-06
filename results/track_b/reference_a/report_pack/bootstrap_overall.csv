@@ -1,0 +1,9 @@
+model_id,analysis,attribute,group,metric,estimate,ci_lower,ci_upper,confidence_level,bootstrap_iterations,valid_bootstrap_iterations,n_pairs,n_genuine,n_impostor,small_genuine_sample,small_impostor_sample,interpret_with_caution
+ReferenceA_ArcFace,overall,overall,all_test_pairs,accuracy,0.968,0.957,0.978,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,balanced_accuracy,0.968,0.957,0.978,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,precision,0.9795081967213116,0.9662027833001988,0.9897540983606558,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,F1,0.9676113360323886,0.9564314257942078,0.9776887559435332,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,TPR_TAR,0.956,0.938,0.972,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,FMR_FPR,0.02,0.01,0.034,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,FNMR_FNR,0.044,0.028,0.062,0.95,2000,2000,1000,500,500,False,False,False
+ReferenceA_ArcFace,overall,overall,all_test_pairs,specificity_TNR,0.98,0.966,0.99,0.95,2000,2000,1000,500,500,False,False,False
