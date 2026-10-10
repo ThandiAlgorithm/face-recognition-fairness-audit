@@ -1,0 +1,5 @@
+scenario,n_images,percent_of_full_pool,smallest_group,largest_group,max_to_min_ratio
+current_pool,131195,97.15341493938789,4454,38399,8.621239335428829
+strict_parity_all,35632,26.386451321470094,4454,4454,1.0
+strict_parity_explicit,72975,54.0399440161731,10425,10425,1.0
+volume_aware_cap,96432,71.41048141647968,10425,14990,1.4378896882494006

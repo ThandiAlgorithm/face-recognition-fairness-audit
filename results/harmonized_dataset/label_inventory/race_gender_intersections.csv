@@ -1,0 +1,38 @@
+dataset,race_label,gender_label,count,fraction
+fairface,Black,female,6894,0.0705643923109992
+fairface,Black,male,6895,0.0705746279350652
+fairface,East Asian,female,6914,0.07076910479231918
+fairface,East Asian,male,6923,0.07086122540891318
+fairface,Indian,female,6672,0.06829208376834736
+fairface,Indian,male,7163,0.07331777518475302
+fairface,Latino_Hispanic,female,7545,0.07722778357796475
+fairface,Latino_Hispanic,male,7445,0.07620422117136481
+fairface,Middle Eastern,female,3243,0.033194128846035745
+fairface,Middle Eastern,male,7182,0.073512252042007
+fairface,Southeast Asian,female,5863,0.06001146389895392
+fairface,Southeast Asian,male,6347,0.06496550594689758
+fairface,White,female,8789,0.08996089991606789
+fairface,White,male,9823,0.10054453520031116
+utkface,Asian,female,1942,0.08055417288866766
+utkface,Asian,male,1644,0.06819313091090094
+utkface,Black,female,2221,0.09212709474033516
+utkface,Black,male,2337,0.09693877551020408
+utkface,Indian,female,1742,0.07225817156130745
+utkface,Indian,male,2285,0.09478181516509043
+utkface,Others,female,943,0.0391156462585034
+utkface,Others,male,768,0.031856645097063215
+utkface,White,female,4674,0.19387755102040816
+utkface,White,male,5548,0.23013107682097228
+utkface,unknown,unknown,4,0.00016592002654720425
+lfw,Asian,female,233,0.017607496410488928
+lfw,Asian,male,635,0.0479860953676415
+lfw,Black,female,140,0.010579611577117811
+lfw,Black,male,339,0.025617773747449557
+lfw,Indian,female,33,0.0024937655860349127
+lfw,Indian,male,159,0.012015416005440944
+lfw,White,female,2077,0.15695609461195495
+lfw,White,male,7482,0.5654046701428248
+lfw,White,unknown,6,0.0004534119247336205
+lfw,unknown,female,478,0.036121816670445096
+lfw,unknown,male,1648,0.12453714199350109
+lfw,unknown,unknown,3,0.00022670596236681024

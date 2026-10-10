@@ -1,0 +1,79 @@
+candidate_demographic_label,age_group_clean,count
+Black,0-19,267
+Black,0-2,250
+Black,10-19,1352
+Black,20-29,2837
+Black,20-39,2498
+Black,3-9,1850
+Black,30-39,2362
+Black,40-49,1314
+Black,40-59,581
+Black,50-59,689
+Black,60+,282
+Black,60-69,248
+Black,70+,78
+Black,missing,382
+East Asian,0-2,457
+East Asian,10-19,1321
+East Asian,20-29,5414
+East Asian,3-9,1956
+East Asian,30-39,2640
+East Asian,40-49,1066
+East Asian,50-59,582
+East Asian,60-69,300
+East Asian,70+,101
+Indian,0-19,552
+Indian,0-2,156
+Indian,10-19,1427
+Indian,20-29,2905
+Indian,20-39,1859
+Indian,3-9,1419
+Indian,30-39,2588
+Indian,40-49,1512
+Indian,40-59,740
+Indian,50-59,898
+Indian,60+,193
+Indian,60-69,418
+Indian,70+,163
+Indian,missing,160
+Latino,0-2,208
+Latino,10-19,1824
+Latino,20-29,3961
+Latino,3-9,1767
+Latino,30-39,3272
+Latino,40-49,2218
+Latino,50-59,1255
+Latino,60-69,400
+Latino,70+,85
+Middle Eastern,0-2,144
+Middle Eastern,10-19,820
+Middle Eastern,20-29,2647
+Middle Eastern,3-9,837
+Middle Eastern,30-39,2697
+Middle Eastern,40-49,1713
+Middle Eastern,50-59,942
+Middle Eastern,60-69,491
+Middle Eastern,70+,134
+Southeast Asian,0-2,248
+Southeast Asian,10-19,1568
+Southeast Asian,20-29,3980
+Southeast Asian,3-9,1730
+Southeast Asian,30-39,2277
+Southeast Asian,40-49,1185
+Southeast Asian,50-59,691
+Southeast Asian,60-69,346
+Southeast Asian,70+,185
+White,0-19,851
+White,0-2,170
+White,10-19,520
+White,20-29,2290
+White,20-39,1464
+White,3-9,550
+White,30-39,1772
+White,40-49,933
+White,40-59,936
+White,50-59,654
+White,60+,739
+White,60-69,310
+White,70+,67
+White,missing,3734

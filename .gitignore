@@ -131,3 +131,10 @@ results/model_audit/model_comparison/track_a_final/qualitative_examples/*/indivi
 # trials_summary.csv (the actual tuning record) are committed.
 face_resnet34_training/experiments/*/tuning/study.db
 face_resnet34_training/experiments/*/tuning/trial*/
+results/harmonized_dataset/Harmonized_Face_Dataset_v1_MATERIALIZED/
+results/harmonized_dataset/harmonized_dataset_website_v2/data/project_outputs/
+results/harmonized_dataset/Harmonized_Face_Dataset_v1_MATERIALIZED/
+results/harmonized_dataset/harmonized_dataset_website_v2/data/project_outputs/
+results/harmonized_dataset/harmonized_dataset_website_v2/data/
+results/harmonized_dataset/harmonized_resnet34/
+results/harmonized_dataset/candidate_taxonomy_v1/
