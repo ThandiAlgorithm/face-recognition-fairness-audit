@@ -1,0 +1,8 @@
+candidate_demographic_label,train,val,test
+White,12074,1471,1445
+Black,12001,1501,1488
+Indian,12089,1458,1443
+East Asian,11113,1376,1348
+Southeast Asian,9702,1288,1220
+Middle Eastern,7404,949,912
+Latino,12021,1503,1466

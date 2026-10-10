@@ -1,0 +1,19 @@
+source_dataset,race_label,candidate_demographic_label,mapping_reason,count
+lfw,Asian,Asian,direct broad derived label,868
+utkface,Asian,Asian,direct broad source label,3586
+fairface,Black,Black,direct,13789
+lfw,Black,Black,direct derived label,479
+utkface,Black,Black,direct,4558
+fairface,East Asian,East Asian,direct,13837
+fairface,Indian,Indian,direct,13835
+lfw,Indian,Indian,direct derived label,192
+utkface,Indian,Indian,direct,4027
+fairface,Latino_Hispanic,Latino,harmonised from FairFace Latino_Hispanic,14990
+fairface,Middle Eastern,Middle Eastern,direct,10425
+utkface,Others,Other,source residual category,1711
+fairface,Southeast Asian,Southeast Asian,direct,12210
+lfw,unknown,Unknown,derived label unavailable,2129
+utkface,unknown,Unknown,source unknown,4
+fairface,White,White,direct,18612
+lfw,White,White,direct derived label,9565
+utkface,White,White,direct,10222

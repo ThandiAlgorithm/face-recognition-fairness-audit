@@ -1,0 +1,15 @@
+image_id,image_path,source_dataset,race_label,race_source,gender_label,gender_source,age_value,age_group,ita_value,ita_group,identity_id,candidate_demographic_label,mapping_reason,gender_clean,ita_clean,split_key,split_value,split,resolved_image_path,image_file_exists
+utkface-e0dd37655f559e58,,utkface,White,native,female,native,52.0,40-59,,missing,,White,direct,female,missing,utkface::image::utkface-e0dd37655f559e58,0.8110439578802858,val,,False
+utkface-6c19165a931ef14f,,utkface,White,native,female,native,68.0,60+,,missing,,White,direct,female,missing,utkface::image::utkface-6c19165a931ef14f,0.5311508747597717,train,,False
+utkface-350f045a79de0140,,utkface,White,native,female,native,3.0,0-19,,missing,,White,direct,female,missing,utkface::image::utkface-350f045a79de0140,0.946382725168689,test,,False
+utkface-b722268b0956dda0,,utkface,White,native,female,native,85.0,60+,,missing,,White,direct,female,missing,utkface::image::utkface-b722268b0956dda0,0.8183083680721804,val,,False
+utkface-697dd3c95687f7ad,,utkface,White,native,male,native,55.0,40-59,,missing,,White,direct,male,missing,utkface::image::utkface-697dd3c95687f7ad,0.9589766531654624,test,,False
+utkface-1a3c0112228d166a,,utkface,White,native,male,native,75.0,60+,,missing,,White,direct,male,missing,utkface::image::utkface-1a3c0112228d166a,0.529769512010151,train,,False
+utkface-7cbfe6c05172a8a3,,utkface,White,native,male,native,80.0,60+,,missing,,White,direct,male,missing,utkface::image::utkface-7cbfe6c05172a8a3,0.7562332431852955,train,,False
+utkface-7dcead6d8ada64fe,,utkface,White,native,male,native,33.0,20-39,,missing,,White,direct,male,missing,utkface::image::utkface-7dcead6d8ada64fe,0.3724879925790005,train,,False
+utkface-acdb74c7c07d40e1,,utkface,White,native,male,native,68.0,60+,,missing,,White,direct,male,missing,utkface::image::utkface-acdb74c7c07d40e1,0.35284621602598,train,,False
+utkface-aed9696ad25105a9,,utkface,Black,native,male,native,75.0,60+,,missing,,Black,direct,male,missing,utkface::image::utkface-aed9696ad25105a9,0.5752757661705008,train,,False
+utkface-54b9bfc82e461b49,,utkface,Black,native,male,native,22.0,20-39,,missing,,Black,direct,male,missing,utkface::image::utkface-54b9bfc82e461b49,0.9948370930574896,test,,False
+utkface-6f72db672ea96a68,,utkface,Black,native,male,native,75.0,60+,,missing,,Black,direct,male,missing,utkface::image::utkface-6f72db672ea96a68,0.4282318425966131,train,,False
+utkface-320416ebd0f63272,,utkface,Black,native,female,native,1.0,0-19,,missing,,Black,direct,female,missing,utkface::image::utkface-320416ebd0f63272,0.2500140860716304,train,,False
+utkface-d42239680c83232d,,utkface,Indian,native,female,native,2.0,0-19,,missing,,Indian,direct,female,missing,utkface::image::utkface-d42239680c83232d,0.2118528824530383,train,,False

@@ -1,0 +1,32 @@
+OPEN DAY — DID YOU KNOW?
+
+WORLD POPULATION
+----------------
+• The 2025 world population is approximately 8.232 billion.
+• Asia contains approximately 58.7% of the world's population.
+• Southern Asia alone represents approximately 25.3% of humanity.
+• Eastern Asia represents approximately 20.1%.
+• South-Eastern Asia represents approximately 8.5%.
+
+SOURCE DATASET FINDING
+----------------------
+• In our LFW metadata, approximately 72.3% of images are labelled White.
+• Approximately 77.6% of known-gender LFW images are labelled male.
+
+OUR MVP
+-------
+• Final candidate: 95,272 image records.
+• Seven explicit demographic categories are retained.
+• Largest group: 14,990 records.
+• Smallest group: 9,265 records.
+• Largest-to-smallest ratio: 1.62:1.
+• No minority category was duplicated to manufacture numerical balance.
+• A 35/65 gender floor was used rather than forcing exact 50/50 parity.
+
+IMPORTANT INTERPRETATION
+------------------------
+World geography is NOT treated as race or ethnicity.
+
+Population statistics are used as contextual evidence about global
+representation. Demographic labels retain their original source provenance.
+Skin tone (ITA) is analysed separately from demographic category.

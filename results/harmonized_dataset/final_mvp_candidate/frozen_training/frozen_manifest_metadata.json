@@ -1,0 +1,9 @@
+{
+  "input_manifest": "C:\\Users\\nicol\\Documents\\Investigation\\face-recognition-fairness-audit\\results\\harmonized_dataset\\final_mvp_candidate\\splits\\final_mvp_with_splits.csv",
+  "frozen_manifest": "C:\\Users\\nicol\\Documents\\Investigation\\face-recognition-fairness-audit\\results\\harmonized_dataset\\final_mvp_candidate\\frozen_training\\training_manifest_frozen.csv",
+  "input_records": 95272,
+  "frozen_records": 95258,
+  "excluded_records": 14,
+  "lfw_identity_leakage": 0,
+  "sha256": "79678bfe9f14449336de8c072cf98f11d77188952c58f30928f2fd97868255db"
+}

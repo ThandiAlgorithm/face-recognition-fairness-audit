@@ -1,0 +1,41 @@
+dataset,label,count,percentage
+fairface,White,18612,19.050543511637905
+fairface,Black,13789,14.113902024606439
+fairface,Indian,13835,14.160985895310038
+fairface,East Asian,13837,14.163033020123237
+fairface,Southeast Asian,12210,12.49769698458515
+fairface,Middle Eastern,10425,10.670638088804274
+fairface,Latino,14990,15.343200474932955
+fairface,Asian,0,0.0
+fairface,Other,0,0.0
+fairface,Unknown,0,0.0
+utkface,White,10222,42.40086278413804
+utkface,Black,4558,18.906587025053927
+utkface,Indian,4027,16.703998672639788
+utkface,East Asian,0,0.0
+utkface,Southeast Asian,0,0.0
+utkface,Middle Eastern,0,0.0
+utkface,Latino,0,0.0
+utkface,Asian,3586,14.87473037995686
+utkface,Other,1711,7.0972291355566615
+utkface,Unknown,4,0.016592002654720425
+lfw,White,9565,72.28141766795133
+lfw,Black,479,3.6197385324567373
+lfw,Indian,192,1.4509181591475855
+lfw,East Asian,0,0.0
+lfw,Southeast Asian,0,0.0
+lfw,Middle Eastern,0,0.0
+lfw,Latino,0,0.0
+lfw,Asian,868,6.559359177813043
+lfw,Other,0,0.0
+lfw,Unknown,2129,16.088566462631302
+Our MVP,White,14990,15.73389873205139
+Our MVP,Black,14990,15.73389873205139
+Our MVP,Indian,14990,15.73389873205139
+Our MVP,East Asian,13837,14.523679570073053
+Our MVP,Southeast Asian,12210,12.815937526240658
+Our MVP,Middle Eastern,9265,9.72478797548073
+Our MVP,Latino,14990,15.73389873205139
+Our MVP,Asian,0,0.0
+Our MVP,Other,0,0.0
+Our MVP,Unknown,0,0.0

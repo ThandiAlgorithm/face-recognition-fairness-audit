@@ -1,0 +1,8 @@
+demographic_group,n_total,n_age_group_known,age_group_coverage_pct,n_unique_age_groups
+White,14990,11256,75.09006004002669,13
+Black,14990,14608,97.45163442294863,13
+Indian,14990,14830,98.93262174783189,13
+East Asian,13837,13837,100.0,9
+Southeast Asian,12210,12210,100.0,9
+Middle Eastern,10425,10425,100.0,9
+Latino,14990,14990,100.0,9

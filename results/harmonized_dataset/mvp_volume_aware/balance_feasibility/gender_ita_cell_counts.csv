@@ -1,0 +1,29 @@
+candidate_demographic_label,gender_clean,ita_clean,count
+Black,female,darker,6091
+Black,female,lighter,1029
+Black,male,darker,6478
+Black,male,lighter,636
+East Asian,female,darker,4383
+East Asian,female,lighter,2185
+East Asian,male,darker,4968
+East Asian,male,lighter,1573
+Indian,female,darker,4924
+Indian,female,lighter,1835
+Indian,male,darker,5952
+Indian,male,lighter,1674
+Latino,female,darker,5403
+Latino,female,lighter,1909
+Latino,male,darker,5864
+Latino,male,lighter,1318
+Middle Eastern,female,darker,2231
+Middle Eastern,female,lighter,862
+Middle Eastern,male,darker,5329
+Middle Eastern,male,lighter,1378
+Southeast Asian,female,darker,4558
+Southeast Asian,female,lighter,1048
+Southeast Asian,male,darker,5222
+Southeast Asian,male,lighter,823
+White,female,darker,2617
+White,female,lighter,3089
+White,male,darker,4168
+White,male,lighter,4249

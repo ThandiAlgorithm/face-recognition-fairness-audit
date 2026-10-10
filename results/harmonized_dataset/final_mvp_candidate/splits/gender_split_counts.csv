@@ -1,0 +1,45 @@
+split,candidate_demographic_label,gender_clean,count
+test,Black,female,732
+test,Black,male,756
+test,East Asian,female,659
+test,East Asian,male,689
+test,Indian,female,651
+test,Indian,male,792
+test,Latino,female,705
+test,Latino,male,761
+test,Middle Eastern,female,333
+test,Middle Eastern,male,579
+test,Southeast Asian,female,598
+test,Southeast Asian,male,622
+test,White,female,592
+test,White,male,851
+test,White,unknown,2
+train,Black,female,5921
+train,Black,male,6080
+train,East Asian,female,5551
+train,East Asian,male,5562
+train,Indian,female,5698
+train,Indian,male,6391
+train,Latino,female,6084
+train,Latino,male,5937
+train,Middle Eastern,female,2555
+train,Middle Eastern,male,4849
+train,Southeast Asian,female,4634
+train,Southeast Asian,male,5068
+train,White,female,4837
+train,White,male,7236
+train,White,unknown,1
+val,Black,female,716
+val,Black,male,785
+val,East Asian,female,704
+val,East Asian,male,672
+val,Indian,female,664
+val,Indian,male,794
+val,Latino,female,756
+val,Latino,male,747
+val,Middle Eastern,female,355
+val,Middle Eastern,male,594
+val,Southeast Asian,female,631
+val,Southeast Asian,male,657
+val,White,female,638
+val,White,male,833

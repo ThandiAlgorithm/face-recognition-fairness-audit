@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harmonized Diversity-Aware Face Dataset v1.0</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Wits EIE Investigation Project · Dataset Product</div>
+    <h1>Harmonized Diversity-Aware<br>Face Dataset <span>v1.0</span></h1>
+    <p class="lead">A provenance-preserving dataset manifest constructed from FairFace, UTKFace and LFW, with explicit representation controls and independent audits of gender, ITA and image characteristics.</p>
+    <div class="stats">
+      <div><strong>95,258</strong><span>valid records</span></div>
+      <div><strong>7</strong><span>explicit labels</span></div>
+      <div><strong>3</strong><span>source datasets</span></div>
+      <div><strong>1.62:1</strong><span>largest : smallest</span></div>
+    </div>
+  </div>
+</header>
+<nav class="nav"><div class="wrap"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#diversity">Diversity</a><a href="#provenance">Provenance</a><a href="#limitations">Limitations</a><a href="#gallery">Previews</a><a href="#data-explorer">All Data</a><a href="#brief">Briefing</a></div></nav>
+<main class="wrap">
+<section id="overview">
+  <div class="section-kicker">Final product</div><h2>What was created?</h2>
+  <div class="grid two"><div><p>The final product is a <strong>95,258-record manifest</strong> referencing valid source images. Images are not duplicated or altered. Every record retains source provenance and a harmonized demographic label.</p><p>The final seven labels are <strong>White, Black, Indian, East Asian, Southeast Asian, Middle Eastern and Latino</strong>. Broad Asian, Other and Unknown development records were not visually reinterpreted and are excluded from the explicit-label final product.</p></div><div class="callout"><h3>Safe project claim</h3><p>“A provenance-preserving, harmonized and diversity-aware face-dataset manifest constructed from FairFace, UTKFace and LFW.”</p><p class="small">Do not describe it as perfectly fair or universally representative.</p></div></div>
+  <img class="chart" src="assets/final_composition.png" alt="Final demographic composition">
+</section>
+<section id="method">
+  <div class="section-kicker">Construction logic</div><h2>Why this balancing strategy?</h2>
+  <p>Strict parity was tested and rejected because it removed too much useful data. The selected approach prioritized <strong>volume + representation + within-group diversity + provenance</strong>.</p>
+  <img class="chart" src="assets/construction_pipeline.png" alt="Construction pipeline">
+  <img class="chart" src="assets/balancing_strategies.png" alt="Balancing strategies">
+  <div class="decision-grid">
+    <article><b>1. Harmonize conservatively</b><p>Only use distinctions supported by source metadata. No appearance-based manual relabeling.</p></article>
+    <article><b>2. Reduce dominance</b><p>Cap large groups at a volume-aware target instead of oversampling small groups.</p></article>
+    <article><b>3. Apply a soft gender floor</b><p>Use a project-defined 35/65 floor. Only Middle Eastern required adjustment.</p></article>
+    <article><b>4. Audit ITA, do not force it</b><p>Exact ITA parity would destroy too much data and can erase within-group variation.</p></article>
+  </div>
+</section>
+<section id="results">
+  <div class="section-kicker">Final composition</div><h2>Representation after harmonization</h2>
+  <div class="table-wrap"><table><thead><tr><th>Label</th><th>Records</th><th>Share</th></tr></thead><tbody>
+  <tr><td>White</td><td>14,981</td><td>15.73%</td></tr><tr><td>Black</td><td>14,986</td><td>15.73%</td></tr><tr><td>Indian</td><td>14,989</td><td>15.74%</td></tr><tr><td>East Asian</td><td>13,837</td><td>14.53%</td></tr><tr><td>Southeast Asian</td><td>12,210</td><td>12.82%</td></tr><tr><td>Middle Eastern</td><td>9,265</td><td>9.73%</td></tr><tr><td>Latino</td><td>14,990</td><td>15.74%</td></tr>
+  </tbody></table></div>
+  <p class="note">The final 14-record reduction from 95,272 to 95,258 was a file-integrity step: invalid or missing paths were excluded.</p>
+</section>
+<section id="diversity">
+  <div class="section-kicker">Beyond counts</div><h2>What else was audited?</h2>
+  <div class="grid two"><img class="chart" src="assets/gender_composition.png" alt="Gender composition"><img class="chart" src="assets/ita_composition.png" alt="ITA composition"></div>
+  <div class="grid two"><img class="chart" src="assets/brightness_audit.png" alt="Brightness audit"><img class="chart" src="assets/parity_retention.png" alt="Parity retention feasibility"></div>
+  <div class="callout"><h3>Key decision</h3><p>Exact joint gender × ITA parity would retain only <strong>17.0%</strong> of Black records and <strong>27.0%</strong> of Southeast Asian records. The project therefore treats ITA as an audit variable rather than a hard quota.</p></div>
+</section>
+<section id="provenance">
+  <div class="section-kicker">Traceability</div><h2>Where do final records come from?</h2>
+  <img class="chart" src="assets/source_contribution.png" alt="Source contribution">
+  <div class="grid three"><div class="metric"><strong>80,034</strong><span>FairFace · 84.02%</span></div><div class="metric"><strong>10,948</strong><span>UTKFace · 11.49%</span></div><div class="metric"><strong>4,276</strong><span>LFW · 4.49%</span></div></div>
+  <p class="warning"><strong>Main limitation:</strong> East Asian, Southeast Asian, Middle Eastern and Latino records in the final product are entirely sourced from FairFace. This is reported explicitly rather than hidden.</p>
+</section>
+<section id="limitations">
+  <div class="section-kicker">Responsible interpretation</div><h2>Limitations</h2>
+  <ul class="limits"><li>Source taxonomies are inconsistent; harmonization cannot create missing demographic information.</li><li>Broad Asian development records were excluded because a defensible fine-grained assignment was unavailable.</li><li>Gender metadata is binary and incomplete as a representation of gender identity.</li><li>Exact age and face-area coverage were too sparse to use as hard balancing constraints.</li><li>ITA and brightness are influenced by imaging conditions and are not equivalent to race or ethnicity.</li><li>Improved dataset composition does not by itself guarantee a fair trained model.</li></ul>
+</section>
+<section id="gallery">
+  <div class="section-kicker">Visual QA</div><h2>Label preview sheets</h2>
+  <p>When this website folder is placed at <code>results/harmonized_dataset/final_dataset_website</code>, the cards below load the preview sheets already generated in the sibling <code>FINAL_HARMONIZED_DATASET/previews</code> folder.</p>
+  <div class="gallery" id="galleryGrid"></div>
+</section>
+
+<section id="data-explorer">
+  <div class="section-kicker">Complete project data</div><h2>All dataset data in one place</h2>
+  <p>This section exposes the canonical 95,258-record manifest and links to the complete generated harmonization outputs. Use the filters to inspect individual records without opening the CSV manually.</p>
+  <div class="data-panel">
+    <p id="dataStatus">Preparing data explorer…</p>
+    <div id="dataFilters" class="data-filters"></div>
+    <div class="data-table-wrap"><table id="dataTable" class="data-table"></table></div>
+    <div id="pagination" class="pagination"></div>
+  </div>
+  <h3>Data & documentation downloads</h3>
+  <div id="allDataLinks" class="data-downloads"></div>
+  <p class="note"><strong>Scope:</strong> “All data” here means all generated manifests, labels, audit tables, plots, documentation and preview sheets from the harmonization work. The original FairFace, UTKFace and LFW image files are not repackaged into the website; the canonical manifest points to their source image paths and preserves provenance.</p>
+</section>
+
+<section id="brief">
+  <div class="section-kicker">Meeting-ready</div><h2>How to explain the result to a supervisor or partner</h2>
+  <ol class="brief"><li>We audited 135,039 records before merging anything.</li><li>We harmonized labels conservatively and preserved provenance.</li><li>Strict parity was rejected because it discarded too much volume.</li><li>A volume-aware cap reduced demographic dominance without oversampling.</li><li>A 35/65 gender floor cost only 1,160 records and fixed the only major gender skew.</li><li>ITA, brightness, contrast and sharpness were audited separately rather than hidden behind counts.</li><li>The final frozen product contains 95,258 valid, non-duplicate records.</li><li>The main limitation is FairFace source dependence for four labels.</li></ol>
+</section>
+<section>
+  <div class="section-kicker">Research basis</div><h2>References</h2>
+  <p class="small">Karkkainen & Joo (2019), <em>FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age</em>.<br>Wu & Bowyer (2023), <em>What Should Be Balanced in a “Balanced” Face Recognition Dataset?</em><br>Gebru et al. (2021), <em>Datasheets for Datasets</em>.<br>United Nations DESA (2024), <em>World Population Prospects 2024: Summary of Results</em>.</p>
+</section>
+</main>
+<footer><div class="wrap">Harmonized Diversity-Aware Face Dataset v1.0 · Wits EIE Investigation Project · October 2026</div></footer>
+<script src="script.js"></script>
+</body></html>

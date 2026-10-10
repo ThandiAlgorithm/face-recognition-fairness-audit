@@ -1,0 +1,25 @@
+{
+  "dataset_name": "Harmonized Diversity-Aware Face Dataset",
+  "version": "1.0",
+  "primary_label": "demographic_label",
+  "labels": [
+    "White",
+    "Black",
+    "Indian",
+    "East Asian",
+    "Southeast Asian",
+    "Middle Eastern",
+    "Latino"
+  ],
+  "source_datasets": [
+    "fairface",
+    "utkface",
+    "lfw"
+  ],
+  "notes": {
+    "demographic_label": "Harmonized from source metadata. No appearance-based manual reclassification was performed.",
+    "gender_label": "Preserved from available source/derived metadata.",
+    "ita_value": "Skin-tone measurement retained separately from demographic label.",
+    "ita_group": "Derived skin-tone grouping; not equivalent to race or ethnicity."
+  }
+}
