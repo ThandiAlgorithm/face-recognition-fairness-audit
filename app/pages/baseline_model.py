@@ -1,41 +1,42 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 from model_audit_data import (
     fairface_comparison_figure,
     load_labelled_dataset_metrics,
     load_lfw_cross_model_agreement,
-    load_lfw_distribution_distance,
     load_lfw_identity_consistency,
     load_lfw_modal_agreement,
     load_lfw_model_assigned_distributions,
     load_qualitative_manifest,
-    model_audit_artifact,
     qualitative_contact_sheet,
     track_a_figure,
 )
+
 from ui import (
-    apply_wits_theme,
-    blue_callout,
-    card,
-    gold_callout,
-    hero,
-    section_label,
+    evidence_note,
+    finding_card,
+    metric_row,
+    page_header,
+    section_header,
 )
 
 
 # ============================================================
-# STYLE
+# CONSTANTS
 # ============================================================
-
-apply_wits_theme()
 
 WITS_NAVY = "#002B5C"
 WITS_BLUE = "#0067B1"
-WITS_GOLD = "#F4C542"
+WITS_GOLD = "#D8AA19"
+WITS_LIGHT_BLUE = "#DCEAF5"
+WITS_PALE_BLUE = "#F4F8FB"
 
 MODEL_COLOURS = {
     "FairFace ResNet-34": WITS_BLUE,
@@ -44,55 +45,400 @@ MODEL_COLOURS = {
 
 
 # ============================================================
+# PATHS
+# ============================================================
+
+PROJECT_ROOT = (
+    Path(__file__)
+    .resolve()
+    .parents[2]
+)
+
+MODEL_RESULTS_ROOT = (
+    PROJECT_ROOT
+    / "results"
+    / "model_audit"
+)
+
+
+# ============================================================
 # HELPERS
 # ============================================================
 
-def metric_value(
-    frame: pd.DataFrame,
-    dataset: str,
-    model: str,
-    task: str,
-    metric: str,
-) -> float | None:
-
-    row = frame[
-        frame["dataset"].eq(dataset)
-        & frame["model"].eq(model)
-        & frame["task"].eq(task)
-    ]
-
-    if row.empty:
-        return None
-
-    return float(
-        row.iloc[0][metric]
-    )
-
-
-def pct(
-    value: float | None,
-) -> str:
-
-    if value is None:
-        return "Unavailable"
-
-    return f"{value:.2%}"
-
-
-def show_image_if_available(
-    path,
+def show_image(
+    path: Path,
     caption: str | None = None,
 ) -> None:
 
     if path.exists():
+
         st.image(
             str(path),
             caption=caption,
             use_container_width=True,
         )
+
     else:
+
         st.info(
             f"Figure not available: {path.name}"
+        )
+
+
+def percentage_table(
+    frame: pd.DataFrame,
+) -> pd.DataFrame:
+
+    output = frame.copy()
+
+    output["Task"] = (
+        output["task"]
+        .replace(
+            {
+                "race_6class": "Race — harmonised 6-class",
+                "race_4class": "Race — harmonised 4-class",
+                "gender": "Gender",
+            }
+        )
+    )
+
+    output["Dataset"] = (
+        output["dataset"]
+    )
+
+    output["Model"] = (
+        output["model"]
+    )
+
+    for source, target in [
+        (
+            "accuracy",
+            "Accuracy (%)",
+        ),
+        (
+            "precision_macro",
+            "Macro precision (%)",
+        ),
+        (
+            "recall_macro",
+            "Macro recall (%)",
+        ),
+        (
+            "f1_macro",
+            "Macro F1 (%)",
+        ),
+    ]:
+
+        output[target] = (
+            output[source]
+            * 100
+        )
+
+    return output
+
+
+def clean_class_name(
+    value,
+) -> str:
+
+    text = (
+        str(value)
+        .strip()
+        .replace("_", " ")
+    )
+
+    replacements = {
+        "Latino Hispanic": "Latino / Hispanic",
+        "Latino hispanic": "Latino / Hispanic",
+        "Middle eastern": "Middle Eastern",
+        "East asian": "East Asian",
+        "Southeast asian": "Southeast Asian",
+        "South east asian": "Southeast Asian",
+        "Out of scope": "Out of scope",
+        "out of scope": "Out of scope",
+    }
+
+    return replacements.get(
+        text,
+        text,
+    )
+
+
+@st.cache_data(
+    show_spinner=False
+)
+def load_confusion_matrix_csv(
+    path_string: str,
+) -> tuple[pd.DataFrame, list[str]]:
+
+    path = Path(
+        path_string
+    )
+
+    if not path.exists():
+        return pd.DataFrame(), []
+
+    try:
+
+        frame = pd.read_csv(
+            path
+        )
+
+    except Exception:
+
+        return pd.DataFrame(), []
+
+    if frame.empty:
+        return pd.DataFrame(), []
+
+    first_column = (
+        frame.columns[0]
+    )
+
+    first_values_numeric = (
+        pd.to_numeric(
+            frame[first_column],
+            errors="coerce",
+        )
+    )
+
+    first_column_looks_like_labels = (
+        str(first_column)
+        .lower()
+        .startswith("unnamed")
+        or first_values_numeric
+        .isna()
+        .any()
+    )
+
+    if first_column_looks_like_labels:
+
+        row_labels = (
+            frame[first_column]
+            .astype(str)
+            .map(clean_class_name)
+            .tolist()
+        )
+
+        matrix = frame.drop(
+            columns=[
+                first_column
+            ]
+        )
+
+    else:
+
+        matrix = frame.copy()
+
+        row_labels = [
+            clean_class_name(
+                value
+            )
+            for value in matrix.index
+        ]
+
+    matrix = (
+        matrix
+        .apply(
+            pd.to_numeric,
+            errors="coerce",
+        )
+        .fillna(0)
+    )
+
+    matrix.columns = [
+        clean_class_name(
+            column
+        )
+        for column in matrix.columns
+    ]
+
+    if (
+        not row_labels
+        or len(row_labels)
+        != len(matrix)
+    ):
+
+        row_labels = [
+            clean_class_name(
+                column
+            )
+            for column in matrix.columns[
+                :len(matrix)
+            ]
+        ]
+
+    return (
+        matrix,
+        row_labels,
+    )
+
+
+def show_percentage_confusion_matrix(
+    path: Path,
+    title: str,
+    taxonomy_note: str | None = None,
+) -> None:
+
+    counts, row_labels = (
+        load_confusion_matrix_csv(
+            str(path)
+        )
+    )
+
+    if counts.empty:
+
+        st.info(
+            "Confusion-matrix data are not available "
+            f"for {path.name}."
+        )
+
+        return
+
+    row_totals = (
+        counts
+        .sum(axis=1)
+        .replace(
+            0,
+            pd.NA,
+        )
+    )
+
+    percentages = (
+        counts
+        .div(
+            row_totals,
+            axis=0,
+        )
+        * 100
+    ).fillna(0)
+
+    fig = go.Figure(
+        data=go.Heatmap(
+            z=percentages.values,
+            x=list(
+                percentages.columns
+            ),
+            y=row_labels,
+            customdata=counts.values,
+            zmin=0,
+            zmax=100,
+            colorscale=[
+                [
+                    0.00,
+                    "#F7FAFC",
+                ],
+                [
+                    0.10,
+                    "#E5F0F7",
+                ],
+                [
+                    0.30,
+                    "#B6D5E8",
+                ],
+                [
+                    0.55,
+                    "#66A9CF",
+                ],
+                [
+                    0.75,
+                    "#2478AD",
+                ],
+                [
+                    1.00,
+                    WITS_NAVY,
+                ],
+            ],
+            colorbar=dict(
+                title="Row %",
+                ticksuffix="%",
+                thickness=14,
+            ),
+            hovertemplate=(
+                "<b>True label:</b> %{y}<br>"
+                "<b>Predicted label:</b> %{x}<br>"
+                "<b>Row share:</b> %{z:.2f}%<br>"
+                "<b>Raw count:</b> %{customdata:,.0f}"
+                "<extra></extra>"
+            ),
+        )
+    )
+
+    for row_index, true_label in enumerate(
+        row_labels
+    ):
+
+        for column_index, predicted_label in enumerate(
+            percentages.columns
+        ):
+
+            value = float(
+                percentages.iloc[
+                    row_index,
+                    column_index,
+                ]
+            )
+
+            text_colour = (
+                "white"
+                if value >= 48
+                else WITS_NAVY
+            )
+
+            fig.add_annotation(
+                x=predicted_label,
+                y=true_label,
+                text=f"{value:.1f}%",
+                showarrow=False,
+                font=dict(
+                    size=14,
+                    color=text_colour,
+                ),
+            )
+
+    matrix_height = max(
+        430,
+        72 * len(
+            row_labels
+        ),
+    )
+
+    fig.update_layout(
+        title=dict(
+            text=title,
+            x=0.5,
+            xanchor="center",
+            font=dict(
+                size=18,
+            ),
+        ),
+        height=matrix_height,
+        xaxis=dict(
+            title="Predicted label",
+            tickangle=-32,
+            side="bottom",
+        ),
+        yaxis=dict(
+            title="True label",
+            autorange="reversed",
+        ),
+        margin=dict(
+            l=90,
+            r=40,
+            t=80,
+            b=110,
+        ),
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+    )
+
+    if taxonomy_note:
+
+        st.caption(
+            taxonomy_note
         )
 
 
@@ -100,22 +446,35 @@ def show_image_if_available(
 # LOAD DATA
 # ============================================================
 
-metrics = load_labelled_dataset_metrics()
-lfw_agreement = load_lfw_cross_model_agreement()
-lfw_distributions = load_lfw_model_assigned_distributions()
-lfw_distance = load_lfw_distribution_distance()
-lfw_identity = load_lfw_identity_consistency()
-lfw_modal = load_lfw_modal_agreement()
-qualitative_manifest = load_qualitative_manifest()
+metrics = (
+    load_labelled_dataset_metrics()
+)
+
+lfw_agreement = (
+    load_lfw_cross_model_agreement()
+)
+
+lfw_distributions = (
+    load_lfw_model_assigned_distributions()
+)
+
+lfw_identity = (
+    load_lfw_identity_consistency()
+)
+
+lfw_modal = (
+    load_lfw_modal_agreement()
+)
 
 
 if metrics.empty:
+
     st.error(
         """
-        Track A comparison outputs were not found. Expected results under
-        results/model_audit/model_comparison/track_a_final/.
+        Demographic-model comparison outputs were not found.
         """
     )
+
     st.stop()
 
 
@@ -123,85 +482,14 @@ if metrics.empty:
 # HEADER
 # ============================================================
 
-hero(
-    "Demographic Model Audit",
-    """
-    Track A compares two demographic attribute classifiers across
-    FairFace, UTKFace and LFW. Labelled datasets quantify classifier
-    performance; LFW is used to test how strongly inferred demographic
-    measurements depend on the annotation model.
-    """,
-    eyebrow="Stage 2A · Demographic attribute classification",
-)
-
-gold_callout(
-    """
-    <strong>This page is not yet the facial-recognition baseline.</strong>
-    FairFace ResNet-34 and DeepFace are being audited here as
-    demographic measurement systems. Facial verification is the next
-    experimental track.
-    """
-)
-
-
-# ============================================================
-# TOP SUMMARY
-# ============================================================
-
-section_label("Track A status")
-
-st.subheader("Two models · three datasets · one controlled comparison")
-
-s1, s2, s3, s4 = st.columns(4)
-
-s1.metric(
-    "Models evaluated",
-    "2",
-)
-
-s2.metric(
-    "FairFace validation",
-    "10,954",
-)
-
-s3.metric(
-    "UTKFace aligned",
-    "24,054",
-)
-
-s4.metric(
-    "LFW",
-    "13,233",
-)
-
-st.caption(
-    """
-    FairFace and DeepFace were compared on the same images within each
-    dataset. Race taxonomies were harmonised before direct comparison.
-    """
-)
-
-
-# ============================================================
-# TABS
-# ============================================================
-
-(
-    summary_tab,
-    fairface_tab,
-    utkface_tab,
-    lfw_tab,
-    qualitative_tab,
-    verification_tab,
-) = st.tabs(
-    [
-        "Track A Summary",
-        "FairFace",
-        "UTKFace",
-        "LFW Sensitivity",
-        "Qualitative Audit",
-        "Track B Next",
-    ]
+page_header(
+    "Demographic Measurement",
+    (
+        "A controlled comparison of FairFace ResNet-34 and DeepFace "
+        "as demographic annotation systems across FairFace, UTKFace "
+        "and LFW."
+    ),
+    "Demographic annotation audit",
 )
 
 
@@ -209,43 +497,140 @@ st.caption(
 # SUMMARY
 # ============================================================
 
-with summary_tab:
+metric_row(
+    [
+        (
+            "Models evaluated",
+            "2",
+        ),
+        (
+            "FairFace validation",
+            "10,954",
+        ),
+        (
+            "UTKFace",
+            "24,054",
+        ),
+        (
+            "LFW",
+            "13,233",
+        ),
+    ]
+)
 
-    section_label("Labelled evaluation")
+st.write(
+    """
+    FairFace and UTKFace provide independent demographic labels and can
+    therefore be used to evaluate classification performance. LFW does
+    not provide equivalent independent demographic ground truth in the
+    canonical project table, so the LFW analysis measures agreement,
+    disagreement and repeated-identity stability rather than
+    demographic accuracy.
+    """
+)
 
-    st.subheader("Full-dataset classifier performance")
+st.divider()
 
-    summary = metrics.copy()
 
-    summary["Task"] = summary["task"].replace(
-        {
-            "race_6class": "Race — harmonised 6-class",
-            "race_4class": "Race — harmonised 4-class",
-            "gender": "Gender",
-        }
+# ============================================================
+# KEY FINDINGS
+# ============================================================
+
+section_header(
+    "Key findings",
+    (
+        "The strongest results from the demographic-measurement "
+        "comparison."
+    ),
+)
+
+f1, f2, f3 = st.columns(3)
+
+with f1:
+
+    finding_card(
+        "FairFace validation",
+        (
+            "Race accuracy was 77.65% for FairFace ResNet-34 and "
+            "65.75% for DeepFace. Gender accuracy was 94.39% and "
+            "70.17%, respectively."
+        ),
+        (
+            "The demographic classifier itself can materially affect "
+            "the apparent performance of an annotation pipeline."
+        ),
     )
 
-    summary["Dataset"] = summary["dataset"]
-    summary["Model"] = summary["model"]
+with f2:
 
-    summary["Accuracy (%)"] = (
-        summary["accuracy"]
-        * 100
+    finding_card(
+        "UTKFace domain shift",
+        (
+            "Race accuracy narrowed to 76.48% versus 75.16%, while "
+            "gender accuracy remained separated at 94.35% versus "
+            "86.23%."
+        ),
+        (
+            "The size of the model-performance gap depends on the "
+            "evaluation dataset."
+        ),
     )
 
-    summary["Macro F1 (%)"] = (
-        summary["f1_macro"]
-        * 100
+with f3:
+
+    finding_card(
+        "LFW measurement sensitivity",
+        (
+            "The models disagreed on 25.29% of race assignments but "
+            "only 4.63% of gender assignments on the same 13,233 "
+            "images."
+        ),
+        (
+            "Race-based fairness results can be more sensitive to the "
+            "choice of annotation model than gender-based results."
+        ),
     )
 
-    summary["Macro precision (%)"] = (
-        summary["precision_macro"]
-        * 100
+st.divider()
+
+
+# ============================================================
+# TABS
+# ============================================================
+
+(
+    overview_tab,
+    fairface_tab,
+    utkface_tab,
+    lfw_tab,
+    qualitative_tab,
+) = st.tabs(
+    [
+        "Overview",
+        "FairFace",
+        "UTKFace",
+        "LFW Sensitivity",
+        "Qualitative Review",
+    ]
+)
+
+
+# ============================================================
+# OVERVIEW
+# ============================================================
+
+with overview_tab:
+
+    section_header(
+        "Performance comparison",
+        (
+            "Accuracy and class-balanced metrics are reported together "
+            "so that majority classes do not dominate interpretation."
+        ),
     )
 
-    summary["Macro recall (%)"] = (
-        summary["recall_macro"]
-        * 100
+    summary = percentage_table(
+        metrics
     )
 
     st.dataframe(
@@ -268,17 +653,25 @@ with summary_tab:
         hide_index=True,
         use_container_width=True,
         column_config={
-            "Accuracy (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Accuracy (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro precision (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro precision (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro recall (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro recall (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro F1 (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro F1 (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
         },
     )
@@ -286,86 +679,62 @@ with summary_tab:
     left, right = st.columns(2)
 
     with left:
-        show_image_if_available(
+
+        show_image(
             track_a_figure(
                 "01_gender_accuracy_comparison.png"
-            )
+            ),
+            "Gender classification accuracy",
         )
 
     with right:
-        show_image_if_available(
+
+        show_image(
             track_a_figure(
                 "02_race_accuracy_comparison.png"
-            )
+            ),
+            "Race classification accuracy",
         )
 
-    gold_callout(
+    st.warning(
         """
-        The race bars use different harmonised evaluation spaces:
-        FairFace uses a common <strong>six-class</strong> taxonomy,
-        whereas UTKFace uses a comparable <strong>four-class</strong>
-        taxonomy. The chart is therefore useful for within-dataset model
-        comparison; it should not be interpreted as a single identical
-        race task across both datasets.
+        The FairFace race evaluation uses a harmonised six-class
+        comparison when the two models are evaluated directly, while
+        UTKFace uses a four-class comparable taxonomy. These are valid
+        within-dataset comparisons but should not be interpreted as one
+        identical race-classification task.
         """
     )
 
-    section_label("Key performance result")
+    st.divider()
 
-    c1, c2 = st.columns(2)
-
-    with c1:
-
-        st.markdown(
-            """
-            ### FairFace validation
-
-            **FairFace ResNet-34**
-
-            - Race accuracy: **77.65%**
-            - Race macro F1: **75.24%**
-            - Gender accuracy: **94.39%**
-            - Gender macro F1: **94.37%**
-
-            **DeepFace**
-
-            - Race accuracy: **65.75%**
-            - Race macro F1: **61.53%**
-            - Gender accuracy: **70.17%**
-            - Gender macro F1: **66.60%**
-            """
-        )
-
-    with c2:
-
-        st.markdown(
-            """
-            ### UTKFace
-
-            **FairFace ResNet-34**
-
-            - Race accuracy: **76.48%**
-            - Race macro F1: **81.88%**
-            - Gender accuracy: **94.35%**
-            - Gender macro F1: **94.34%**
-
-            **DeepFace**
-
-            - Race accuracy: **75.16%**
-            - Race macro F1: **77.81%**
-            - Gender accuracy: **86.23%**
-            - Gender macro F1: **86.03%**
-            """
-        )
-
-    blue_callout(
-        """
-        Representation adequacy alone does not determine classifier
-        performance. The same demographic task can change substantially
-        across models and datasets even when subgroup sample sizes are
-        large.
-        """
+    section_header(
+        "Why macro F1 matters"
     )
+
+    left, right = st.columns(2)
+
+    with left:
+
+        evidence_note(
+            "Accuracy",
+            (
+                "The proportion of all evaluated images classified "
+                "correctly. Large classes contribute more strongly to "
+                "the overall result."
+            ),
+        )
+
+    with right:
+
+        evidence_note(
+            "Macro F1",
+            (
+                "F1 is calculated separately for every class and then "
+                "averaged equally, making poor performance on smaller "
+                "classes more visible."
+            ),
+        )
 
 
 # ============================================================
@@ -374,86 +743,97 @@ with summary_tab:
 
 with fairface_tab:
 
-    section_label("Independent labels")
-
-    st.subheader("FairFace held-out validation set")
-
-    st.write(
-        """
-        Both classifiers were evaluated on the same **10,954**
-        FairFace validation images. Race categories were harmonised to
-        a common six-class evaluation space for direct comparison.
-        """
+    section_header(
+        "FairFace validation",
+        (
+            "Both demographic classifiers are evaluated on the same "
+            "held-out 10,954-image validation population."
+        ),
     )
 
-    fairface_metrics = metrics[
-        metrics["dataset"].eq(
-            "FairFace validation"
-        )
-    ].copy()
-
-    display = fairface_metrics[
-        [
-            "model",
-            "task",
-            "n",
-            "accuracy",
-            "precision_macro",
-            "recall_macro",
-            "f1_macro",
-            "f1_weighted",
+    fairface_metrics = (
+        metrics[
+            metrics[
+                "dataset"
+            ].eq(
+                "FairFace validation"
+            )
         ]
-    ].copy()
+        .copy()
+    )
 
-    for column in [
-        "accuracy",
-        "precision_macro",
-        "recall_macro",
-        "f1_macro",
-        "f1_weighted",
-    ]:
-        display[column] *= 100
-
-    display = display.rename(
-        columns={
-            "model": "Model",
-            "task": "Task",
-            "n": "Images",
-            "accuracy": "Accuracy (%)",
-            "precision_macro": "Macro precision (%)",
-            "recall_macro": "Macro recall (%)",
-            "f1_macro": "Macro F1 (%)",
-            "f1_weighted": "Weighted F1 (%)",
-        }
+    display = percentage_table(
+        fairface_metrics
     )
 
     st.dataframe(
-        display,
+        display[
+            [
+                "Model",
+                "Task",
+                "n",
+                "Accuracy (%)",
+                "Macro precision (%)",
+                "Macro recall (%)",
+                "Macro F1 (%)",
+            ]
+        ].rename(
+            columns={
+                "n": "Images",
+            }
+        ),
         hide_index=True,
         use_container_width=True,
         column_config={
-            "Accuracy (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Accuracy (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro precision (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro precision (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro recall (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro recall (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro F1 (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
-            ),
-            "Weighted F1 (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro F1 (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
         },
+    )
+
+    metric_row(
+        [
+            (
+                "FairFace model · race",
+                "77.65%",
+            ),
+            (
+                "DeepFace · race",
+                "65.75%",
+            ),
+            (
+                "FairFace model · gender",
+                "94.39%",
+            ),
+            (
+                "DeepFace · gender",
+                "70.17%",
+            ),
+        ]
     )
 
     left, right = st.columns(2)
 
     with left:
-        show_image_if_available(
+
+        show_image(
             fairface_comparison_figure(
                 "01_model_performance_comparison.png"
             ),
@@ -461,65 +841,99 @@ with fairface_tab:
         )
 
     with right:
-        show_image_if_available(
+
+        show_image(
             fairface_comparison_figure(
                 "02_gender_female_tpr_by_race.png"
             ),
-            "Female TPR by race on FairFace validation",
+            "Female true-positive rate by labelled race group",
         )
+
+    st.info(
+        """
+        These are labelled evaluation results because FairFace provides
+        demographic annotations for the held-out validation images.
+        They describe performance under this dataset, taxonomy and
+        preprocessing configuration rather than establishing the
+        causal origin of a disparity.
+        """
+    )
 
     st.divider()
 
-    st.subheader("Confusion matrices")
+    section_header(
+        "Percentage confusion matrices",
+        (
+            "Each true-class row is normalised to 100%, allowing "
+            "classification behaviour to be compared directly across "
+            "classes with different sample sizes."
+        ),
+    )
 
-    model_choice = st.radio(
+    model_choice = st.segmented_control(
         "Model",
         [
             "FairFace ResNet-34",
             "DeepFace",
         ],
-        horizontal=True,
-        key="fairface_confusion_model",
+        default="FairFace ResNet-34",
+        key="fairface_cm_model",
     )
 
     if model_choice == "FairFace ResNet-34":
-        base = (
-            "fairface_resnet34",
-            "fairface_validation",
+
+        matrix_root = (
+            MODEL_RESULTS_ROOT
+            / "fairface_resnet34"
+            / "fairface_validation"
         )
+
     else:
-        base = (
-            "deepface",
-            "fairface_validation",
+
+        matrix_root = (
+            MODEL_RESULTS_ROOT
+            / "deepface"
+            / "fairface_validation"
         )
 
-    cm_left, cm_right = st.columns(2)
+    race_path = (
+        matrix_root
+        / "race_confusion_matrix.csv"
+    )
 
-    with cm_left:
-        show_image_if_available(
-            model_audit_artifact(
-                *base,
-                "race_confusion_matrix.png",
-            ),
-            f"{model_choice}: race confusion matrix",
-        )
+    gender_path = (
+        matrix_root
+        / "gender_confusion_matrix.csv"
+    )
 
-    with cm_right:
-        show_image_if_available(
-            model_audit_artifact(
-                *base,
-                "gender_confusion_matrix.png",
-            ),
-            f"{model_choice}: gender confusion matrix",
-        )
+    show_percentage_confusion_matrix(
+        race_path,
+        (
+            f"{model_choice} · FairFace validation · "
+            f"race classification"
+        ),
+        (
+            "Taxonomy note: the original FairFace ResNet-34 audit may "
+            "show the native seven-category FairFace taxonomy. Direct "
+            "FairFace-versus-DeepFace summary metrics use the common "
+            "harmonised six-class comparison where required."
+        ),
+    )
 
-    gold_callout(
+    show_percentage_confusion_matrix(
+        gender_path,
+        (
+            f"{model_choice} · FairFace validation · "
+            f"gender classification"
+        ),
+    )
+
+    st.caption(
         """
-        These are ground-truth evaluation results because FairFace
-        provides demographic labels for the held-out validation images.
-        The results describe performance under this dataset and
-        preprocessing configuration; they do not establish the causal
-        source of any error disparity.
+        Diagonal percentages are correct classifications. Off-diagonal
+        percentages show which alternative labels were assigned to each
+        true class. Hover over a cell to see both percentage and raw
+        count.
         """
     )
 
@@ -530,138 +944,202 @@ with fairface_tab:
 
 with utkface_tab:
 
-    section_label("Cross-dataset evaluation")
-
-    st.subheader("UTKFace aligned evaluation")
+    section_header(
+        "UTKFace",
+        (
+            "Cross-dataset evaluation tests how both demographic "
+            "classifiers behave under a different image population "
+            "and label system."
+        ),
+    )
 
     st.write(
         """
         **24,054** UTKFace images were processed using the project's
-        deterministic five-point alignment. **24,050** had usable gender
+        deterministic alignment pipeline. **24,050** had usable gender
         labels, while **22,340** belonged to the four race categories
-        directly comparable across the model and dataset taxonomies.
+        directly comparable between the model and dataset taxonomies.
         """
     )
 
-    utk_metrics = metrics[
-        metrics["dataset"].eq(
-            "UTKFace aligned"
-        )
-    ].copy()
-
-    display = utk_metrics[
-        [
-            "model",
-            "task",
-            "n",
-            "accuracy",
-            "precision_macro",
-            "recall_macro",
-            "f1_macro",
-            "f1_weighted",
+    utk_metrics = (
+        metrics[
+            metrics[
+                "dataset"
+            ].eq(
+                "UTKFace aligned"
+            )
         ]
-    ].copy()
+        .copy()
+    )
 
-    for column in [
-        "accuracy",
-        "precision_macro",
-        "recall_macro",
-        "f1_macro",
-        "f1_weighted",
-    ]:
-        display[column] *= 100
-
-    display = display.rename(
-        columns={
-            "model": "Model",
-            "task": "Task",
-            "n": "Images",
-            "accuracy": "Accuracy (%)",
-            "precision_macro": "Macro precision (%)",
-            "recall_macro": "Macro recall (%)",
-            "f1_macro": "Macro F1 (%)",
-            "f1_weighted": "Weighted F1 (%)",
-        }
+    display = percentage_table(
+        utk_metrics
     )
 
     st.dataframe(
-        display,
+        display[
+            [
+                "Model",
+                "Task",
+                "n",
+                "Accuracy (%)",
+                "Macro precision (%)",
+                "Macro recall (%)",
+                "Macro F1 (%)",
+            ]
+        ].rename(
+            columns={
+                "n": "Images",
+            }
+        ),
         hide_index=True,
         use_container_width=True,
         column_config={
-            "Accuracy (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Accuracy (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro precision (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro precision (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro recall (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro recall (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
-            "Macro F1 (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
-            ),
-            "Weighted F1 (%)": st.column_config.NumberColumn(
-                format="%.2f%%"
+            "Macro F1 (%)": (
+                st.column_config.NumberColumn(
+                    format="%.2f%%"
+                )
             ),
         },
     )
 
+    metric_row(
+        [
+            (
+                "FairFace model · race",
+                "76.48%",
+            ),
+            (
+                "DeepFace · race",
+                "75.16%",
+            ),
+            (
+                "FairFace model · gender",
+                "94.35%",
+            ),
+            (
+                "DeepFace · gender",
+                "86.23%",
+            ),
+        ]
+    )
+
+    st.info(
+        """
+        The race-accuracy gap between the models becomes much smaller
+        on UTKFace, while the gender-performance gap remains visible.
+        The relative difference between demographic classifiers is
+        therefore dependent on the evaluation domain.
+        """
+    )
+
+    st.divider()
+
+    section_header(
+        "Percentage confusion matrices",
+        (
+            "The harmonised race evaluation retains predictions outside "
+            "the common taxonomy as an explicit out-of-scope category."
+        ),
+    )
+
+    race_left, race_right = (
+        st.columns(2)
+    )
+
+    with race_left:
+
+        show_percentage_confusion_matrix(
+            (
+                MODEL_RESULTS_ROOT
+                / "fairface_resnet34"
+                / "utkface_aligned"
+                / "race_confusion_matrix_harmonised.csv"
+            ),
+            (
+                "FairFace ResNet-34 · UTKFace · "
+                "harmonised race"
+            ),
+            (
+                "True UTKFace categories are evaluated against the "
+                "common comparable race taxonomy."
+            ),
+        )
+
+    with race_right:
+
+        show_percentage_confusion_matrix(
+            (
+                MODEL_RESULTS_ROOT
+                / "deepface"
+                / "utkface_aligned"
+                / "race_confusion_matrix_harmonised.csv"
+            ),
+            (
+                "DeepFace · UTKFace · harmonised race"
+            ),
+            (
+                "Predictions outside the comparable four-class taxonomy "
+                "remain visible rather than being reassigned."
+            ),
+        )
+
     st.markdown(
-        """
-        ### Cross-dataset result
-
-        Gender performance remained high for FairFace ResNet-34
-        (**94.35% accuracy**) while DeepFace decreased to **86.23%**.
-
-        Four-class race accuracy was much closer:
-        **76.48%** for FairFace ResNet-34 and **75.16%** for DeepFace.
-        However, macro F1 remained separated at **81.88%** and
-        **77.81%**, respectively.
-        """
+        "### Gender classification"
     )
 
-    blue_callout(
-        """
-        Both demographic models showed relatively low UTKFace Indian
-        race-classification accuracy despite thousands of Indian-labelled
-        examples. The result therefore cannot be explained simply as a
-        small-sample problem. Taxonomy, domain, model training data and
-        preprocessing remain plausible contributors.
-        """
+    gender_left, gender_right = (
+        st.columns(2)
     )
 
-    st.subheader("Race confusion matrices")
+    with gender_left:
 
-    left, right = st.columns(2)
-
-    with left:
-        show_image_if_available(
-            model_audit_artifact(
-                "fairface_resnet34",
-                "utkface_aligned",
-                "race_confusion_matrix_harmonised.png",
+        show_percentage_confusion_matrix(
+            (
+                MODEL_RESULTS_ROOT
+                / "fairface_resnet34"
+                / "utkface_aligned"
+                / "gender_confusion_matrix.csv"
             ),
-            "FairFace ResNet-34 — UTKFace",
+            (
+                "FairFace ResNet-34 · UTKFace · gender"
+            ),
         )
 
-    with right:
-        show_image_if_available(
-            model_audit_artifact(
-                "deepface",
-                "utkface_aligned",
-                "race_confusion_matrix_harmonised.png",
+    with gender_right:
+
+        show_percentage_confusion_matrix(
+            (
+                MODEL_RESULTS_ROOT
+                / "deepface"
+                / "utkface_aligned"
+                / "gender_confusion_matrix.csv"
             ),
-            "DeepFace — UTKFace",
+            (
+                "DeepFace · UTKFace · gender"
+            ),
         )
 
-    gold_callout(
+    st.caption(
         """
-        Predictions falling outside the harmonised four-class race
-        taxonomy were tracked rather than silently forced into a
-        comparable category. Taxonomy incompatibility is therefore part
-        of the measurement audit rather than being hidden as an ordinary
-        classification error.
+        All matrices shown here are row-normalised. Each true-class row
+        therefore totals approximately 100%.
         """
     )
 
@@ -672,102 +1150,142 @@ with utkface_tab:
 
 with lfw_tab:
 
-    section_label("Prediction-only analysis")
+    section_header(
+        "LFW measurement sensitivity",
+        (
+            "The same 13,233 images are annotated by both demographic "
+            "classifiers and their outputs are compared directly."
+        ),
+    )
 
-    st.subheader("Demographic measurement sensitivity on LFW")
-
-    gold_callout(
+    st.warning(
         """
         LFW does not provide independent race or gender ground truth in
-        the canonical project table. The analysis below therefore asks
-        whether two demographic classifiers assign the
-        <strong>same labels to the same images</strong>. It does not
-        identify which classifier is demographically correct.
+        the canonical project table. The results below measure
+        cross-model agreement and stability rather than demographic
+        classification accuracy.
         """
     )
 
     if not lfw_agreement.empty:
 
-        race_row = lfw_agreement[
-            lfw_agreement["task"].eq(
-                "race"
+        race_rows = (
+            lfw_agreement[
+                lfw_agreement[
+                    "task"
+                ].eq("race")
+            ]
+        )
+
+        gender_rows = (
+            lfw_agreement[
+                lfw_agreement[
+                    "task"
+                ].eq("gender")
+            ]
+        )
+
+        if (
+            not race_rows.empty
+            and not gender_rows.empty
+        ):
+
+            race_row = (
+                race_rows.iloc[0]
             )
-        ].iloc[0]
 
-        gender_row = lfw_agreement[
-            lfw_agreement["task"].eq(
-                "gender"
+            gender_row = (
+                gender_rows.iloc[0]
             )
-        ].iloc[0]
 
-        a, b, c, d = st.columns(4)
+            metric_row(
+                [
+                    (
+                        "Race agreement",
+                        f"{race_row['agreement_rate']:.2%}",
+                    ),
+                    (
+                        "Race disagreement",
+                        f"{race_row['disagreement_rate']:.2%}",
+                    ),
+                    (
+                        "Gender agreement",
+                        f"{gender_row['agreement_rate']:.2%}",
+                    ),
+                    (
+                        "Gender disagreement",
+                        f"{gender_row['disagreement_rate']:.2%}",
+                    ),
+                ]
+            )
 
-        a.metric(
-            "Race agreement",
-            f"{race_row['agreement_rate']:.2%}",
-        )
+            k1, k2 = st.columns(2)
 
-        b.metric(
-            "Race disagreement",
-            f"{race_row['disagreement_rate']:.2%}",
-        )
+            with k1:
 
-        c.metric(
-            "Gender agreement",
-            f"{gender_row['agreement_rate']:.2%}",
-        )
+                evidence_note(
+                    "Race Cohen's κ",
+                    (
+                        f"{race_row['cohen_kappa']:.3f}"
+                    ),
+                )
 
-        d.metric(
-            "Gender disagreement",
-            f"{gender_row['disagreement_rate']:.2%}",
-        )
+            with k2:
 
-        k1, k2 = st.columns(2)
-
-        k1.metric(
-            "Race Cohen's κ",
-            f"{race_row['cohen_kappa']:.3f}",
-        )
-
-        k2.metric(
-            "Gender Cohen's κ",
-            f"{gender_row['cohen_kappa']:.3f}",
-        )
+                evidence_note(
+                    "Gender Cohen's κ",
+                    (
+                        f"{gender_row['cohen_kappa']:.3f}"
+                    ),
+                )
 
     left, right = st.columns(2)
 
     with left:
-        show_image_if_available(
+
+        show_image(
             track_a_figure(
                 "06_lfw_model_agreement.png"
-            )
+            ),
+            "Cross-model demographic agreement",
         )
 
     with right:
-        show_image_if_available(
+
+        show_image(
             track_a_figure(
                 "08_lfw_cross_model_race_matrix.png"
-            )
+            ),
+            "Cross-model race assignment matrix",
         )
 
     st.divider()
 
-    section_label("Model-assigned composition")
-
-    st.subheader("Same images, different demographic composition")
+    section_header(
+        "Model-assigned composition",
+        (
+            "Changing the demographic classifier changes the inferred "
+            "composition of the same image population."
+        ),
+    )
 
     if not lfw_distributions.empty:
 
-        race_distribution = lfw_distributions[
-            lfw_distributions["task"].eq(
-                "race"
-            )
-        ].copy()
+        race_distribution = (
+            lfw_distributions[
+                lfw_distributions[
+                    "task"
+                ].eq("race")
+            ]
+            .copy()
+        )
 
         race_distribution[
             "Proportion (%)"
         ] = (
-            race_distribution["proportion"]
+            race_distribution[
+                "proportion"
+            ]
             * 100
         )
 
@@ -778,13 +1296,16 @@ with lfw_tab:
             color="model",
             barmode="group",
             color_discrete_map=MODEL_COLOURS,
-            title="Model-assigned race composition on LFW",
+            title=(
+                "Model-assigned race composition on LFW"
+            ),
         )
 
         fig.update_layout(
-            xaxis_title="Predicted category",
+            height=450,
+            xaxis_title="Assigned category",
+            yaxis_title="Share of images (%)",
             legend_title="Model",
-            height=460,
         )
 
         st.plotly_chart(
@@ -792,16 +1313,21 @@ with lfw_tab:
             use_container_width=True,
         )
 
-        gender_distribution = lfw_distributions[
-            lfw_distributions["task"].eq(
-                "gender"
-            )
-        ].copy()
+        gender_distribution = (
+            lfw_distributions[
+                lfw_distributions[
+                    "task"
+                ].eq("gender")
+            ]
+            .copy()
+        )
 
         gender_distribution[
             "Proportion (%)"
         ] = (
-            gender_distribution["proportion"]
+            gender_distribution[
+                "proportion"
+            ]
             * 100
         )
 
@@ -812,13 +1338,16 @@ with lfw_tab:
             color="model",
             barmode="group",
             color_discrete_map=MODEL_COLOURS,
-            title="Model-assigned gender composition on LFW",
+            title=(
+                "Model-assigned gender composition on LFW"
+            ),
         )
 
         fig.update_layout(
-            xaxis_title="Predicted category",
+            height=390,
+            xaxis_title="Assigned category",
+            yaxis_title="Share of images (%)",
             legend_title="Model",
-            height=400,
         )
 
         st.plotly_chart(
@@ -826,34 +1355,32 @@ with lfw_tab:
             use_container_width=True,
         )
 
-    st.markdown(
+    st.info(
         """
-        The aggregate race composition is also model-dependent. For
-        example:
-
-        - FairFace ResNet-34 assigned **18.45%** of LFW images to its
-          Middle Eastern category, compared with **9.23%** for DeepFace.
-        - Latino/Hispanic assignments were **3.76%** for FairFace
-          ResNet-34 and **8.01%** for DeepFace.
-        - Male assignments were **78.27%** and **81.87%**, respectively.
-
-        These values are classifier outputs, not verified demographic
-        attributes.
+        The inferred demographic composition of LFW is therefore not
+        independent of the annotation system. Fairness analyses that
+        use these inferred groups inherit this measurement uncertainty.
         """
     )
 
     st.divider()
 
-    section_label("Repeated identities")
-
-    st.subheader("Does one identity receive stable demographic labels?")
+    section_header(
+        "Repeated-identity stability",
+        (
+            "Repeated photographs of the same LFW identity provide a "
+            "second test of demographic-label stability."
+        ),
+    )
 
     if not lfw_identity.empty:
 
-        consistency = lfw_identity.copy()
+        consistency = (
+            lfw_identity.copy()
+        )
 
         consistency[
-            "Mean race consistency (%)"
+            "Race consistency (%)"
         ] = (
             consistency[
                 "mean_race_consistency"
@@ -862,7 +1389,7 @@ with lfw_tab:
         )
 
         consistency[
-            "Mean gender consistency (%)"
+            "Gender consistency (%)"
         ] = (
             consistency[
                 "mean_gender_consistency"
@@ -876,43 +1403,53 @@ with lfw_tab:
                     "model",
                     "repeated_identities",
                     "images_in_repeated_identities",
-                    "Mean race consistency (%)",
-                    "Mean gender consistency (%)",
+                    "Race consistency (%)",
+                    "Gender consistency (%)",
                 ]
             ].rename(
                 columns={
                     "model": "Model",
-                    "repeated_identities": "Repeated identities",
-                    "images_in_repeated_identities": "Images",
+                    "repeated_identities": (
+                        "Repeated identities"
+                    ),
+                    "images_in_repeated_identities": (
+                        "Images"
+                    ),
                 }
             ),
             hide_index=True,
             use_container_width=True,
             column_config={
-                "Mean race consistency (%)": st.column_config.NumberColumn(
-                    format="%.2f%%"
+                "Race consistency (%)": (
+                    st.column_config.NumberColumn(
+                        format="%.2f%%"
+                    )
                 ),
-                "Mean gender consistency (%)": st.column_config.NumberColumn(
-                    format="%.2f%%"
+                "Gender consistency (%)": (
+                    st.column_config.NumberColumn(
+                        format="%.2f%%"
+                    )
                 ),
             },
         )
 
     if not lfw_modal.empty:
 
-        modal_display = lfw_modal.copy()
+        modal = (
+            lfw_modal.copy()
+        )
 
-        modal_display[
+        modal[
             "Modal agreement (%)"
         ] = (
-            modal_display[
+            modal[
                 "modal_label_agreement_rate"
             ]
             * 100
         )
 
         st.dataframe(
-            modal_display[
+            modal[
                 [
                     "task",
                     "repeated_identities",
@@ -921,74 +1458,73 @@ with lfw_tab:
             ].rename(
                 columns={
                     "task": "Task",
-                    "repeated_identities": "Repeated identities",
+                    "repeated_identities": (
+                        "Repeated identities"
+                    ),
                 }
             ),
             hide_index=True,
             use_container_width=True,
             column_config={
-                "Modal agreement (%)": st.column_config.NumberColumn(
-                    format="%.2f%%"
-                )
+                "Modal agreement (%)": (
+                    st.column_config.NumberColumn(
+                        format="%.2f%%"
+                    )
+                ),
             },
         )
 
-    show_image_if_available(
+    show_image(
         track_a_figure(
             "07_lfw_identity_consistency_comparison.png"
         )
     )
 
-    blue_callout(
+    st.info(
         """
-        Among the 1,680 repeated LFW identities, the models agreed on
-        the modal race assignment for <strong>75.00%</strong> of
-        identities and on the modal gender assignment for
-        <strong>96.49%</strong>. Race assignment is therefore materially
-        more sensitive to the demographic classifier than gender
-        assignment under this experiment.
+        Across 1,680 identities with repeated images, the two models
+        agreed on the modal race assignment for 75.00% of identities
+        and on the modal gender assignment for 96.49%. Race assignment
+        is therefore substantially more measurement-sensitive in this
+        experiment.
         """
     )
 
 
 # ============================================================
-# QUALITATIVE AUDIT
+# QUALITATIVE REVIEW
 # ============================================================
 
 with qualitative_tab:
 
-    section_label("Manual QA")
+    section_header(
+        "Qualitative review",
+        (
+            "A deterministic image sample supports manual inspection "
+            "of demographic-model agreement and disagreement."
+        ),
+    )
 
-    st.subheader("90 deterministic qualitative examples")
-
-    st.write(
+    st.warning(
         """
-        The qualitative audit uses the **same selected image for both
-        models**, making prediction differences directly inspectable.
-
-        FairFace and UTKFace examples are stratified across available
-        race × gender groups. LFW deliberately includes race
-        disagreements, gender disagreements and full agreements.
+        The qualitative samples are quality-assurance evidence rather
+        than new performance estimates. The LFW sample deliberately
+        contains a larger share of model disagreements than the full
+        dataset.
         """
     )
 
-    gold_callout(
-        """
-        The 30-image samples are qualitative error-analysis panels,
-        <strong>not new performance estimates</strong>. In particular,
-        the LFW sample intentionally oversamples disagreements and is not
-        representative of the full 13,233-image agreement rate.
-        """
-    )
-
-    dataset_choice = st.selectbox(
-        "Dataset",
-        [
-            "FairFace",
-            "UTKFace",
-            "LFW",
-        ],
-        key="qualitative_dataset",
+    dataset_choice = (
+        st.segmented_control(
+            "Dataset",
+            [
+                "FairFace",
+                "UTKFace",
+                "LFW",
+            ],
+            default="FairFace",
+            key="qualitative_dataset",
+        )
     )
 
     dataset_key = {
@@ -1016,29 +1552,32 @@ with qualitative_tab:
     )
 
     if sheet.exists():
+
         st.image(
             str(sheet),
             caption=(
-                f"{dataset_choice} qualitative audit "
-                f"— page {page} of 3"
+                f"{dataset_choice} qualitative review "
+                f"— page {page}"
             ),
             use_container_width=True,
         )
+
     else:
-        st.warning(
-            "Contact sheet not available."
+
+        st.info(
+            "Qualitative contact sheet is not available."
         )
 
-    dataset_manifest = load_qualitative_manifest(
-        dataset_key
+    manifest = (
+        load_qualitative_manifest(
+            dataset_key
+        )
     )
 
-    if not dataset_manifest.empty:
+    if not manifest.empty:
 
-        st.subheader("Selection manifest")
-
-        selection_summary = (
-            dataset_manifest[
+        summary = (
+            manifest[
                 "selection_reason"
             ]
             .value_counts()
@@ -1051,18 +1590,19 @@ with qualitative_tab:
         )
 
         st.dataframe(
-            selection_summary,
+            summary,
             hide_index=True,
             use_container_width=True,
         )
 
         with st.expander(
-            "View the 30-image audit manifest"
+            "View image-level qualitative manifest"
         ):
 
-            manifest_columns = [
+            columns = [
                 column
-                for column in [
+                for column
+                in [
                     "sample_index",
                     "image_id",
                     "selection_reason",
@@ -1076,126 +1616,24 @@ with qualitative_tab:
                     "gender_model_agreement",
                 ]
                 if column
-                in dataset_manifest.columns
+                in manifest.columns
             ]
 
             st.dataframe(
-                dataset_manifest[
-                    manifest_columns
+                manifest[
+                    columns
                 ],
                 hide_index=True,
                 use_container_width=True,
-                height=500,
+                height=470,
             )
 
     st.caption(
         """
-        Before external public deployment, the redistribution terms of
-        the source face datasets should be checked for displayed example
-        images. The quantitative audit outputs do not require image
-        redistribution.
-        """
-    )
-
-
-# ============================================================
-# TRACK B
-# ============================================================
-
-with verification_tab:
-
-    section_label("Next experiment")
-
-    st.subheader("Track B — facial verification")
-
-    blue_callout(
-        """
-        Track A establishes that demographic annotation itself can be
-        model-dependent. Track B will now test whether a fixed
-        face-recognition system produces different verification error
-        rates across the resulting groups.
-        """
-    )
-
-    left, right = st.columns(2)
-
-    with left:
-        card(
-            "01",
-            "Embedding model",
-            """
-            Convert each aligned LFW face into a fixed-dimensional
-            identity embedding using a pretrained recognition model.
-            """,
-        )
-
-    with right:
-        card(
-            "02",
-            "Verification protocol",
-            """
-            Compare genuine and impostor pairs using a threshold selected
-            on development data and preserved for final evaluation.
-            """,
-        )
-
-    st.code(
-        """
-LFW image A                    LFW image B
-     |                              |
-     v                              v
-Aligned face                    Aligned face
-     |                              |
-     v                              v
-Recognition model              Recognition model
-     |                              |
-     v                              v
-Embedding A                    Embedding B
-          \\                    /
-           \\                  /
-            similarity score
-                   |
-                   v
-             fixed threshold
-                   |
-             +-----+-----+
-             |           |
-           MATCH      NON-MATCH
-        """,
-        language=None,
-    )
-
-    a, b, c, d = st.columns(4)
-
-    a.metric(
-        "ROC / AUC",
-        "Pending",
-    )
-
-    b.metric(
-        "FMR",
-        "Pending",
-    )
-
-    c.metric(
-        "FNMR",
-        "Pending",
-    )
-
-    d.metric(
-        "EER",
-        "Pending",
-    )
-
-    st.progress(
-        0.25
-    )
-
-    st.caption(
-        """
-        Candidate recognition models include ArcFace, FaceNet512 and
-        SFace. Embeddings should be generated once per image and reused
-        across pair-level analyses.
+        FairFace and UTKFace examples may be compared with dataset
+        demographic labels. LFW examples should be interpreted as
+        classifier assignments and model agreement because independent
+        demographic ground truth is not available in the project table.
         """
     )
     

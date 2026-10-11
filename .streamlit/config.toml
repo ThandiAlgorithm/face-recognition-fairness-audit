@@ -1,9 +1,13 @@
 [theme]
-primaryColor = "#0067B1"
-backgroundColor = "#F7F9FC"
-secondaryBackgroundColor = "#EAF1F8"
+primaryColor = "#D8AA19"
+backgroundColor = "#F6F8FB"
+secondaryBackgroundColor = "#FFFFFF"
 textColor = "#102A43"
 font = "sans serif"
 
+[client]
+showErrorDetails = true
+
 [browser]
 gatherUsageStats = false
+
