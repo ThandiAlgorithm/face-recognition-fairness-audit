@@ -1,57 +1,25 @@
 from __future__ import annotations
 
-import pandas as pd
 import streamlit as st
 
 from model_audit_data import (
-    load_gender_equalized_odds,
-    load_labelled_dataset_metrics,
     load_lfw_cross_model_agreement,
 )
 from ui import (
-    apply_wits_theme,
-    blue_callout,
-    card,
-    gold_callout,
-    hero,
-    section_label,
+    evidence_note,
+    metric_row,
+    page_header,
+    research_card,
+    section_header,
 )
-
-
-apply_wits_theme()
 
 
 # ============================================================
 # HELPERS
 # ============================================================
 
-def lookup_metric(
-    frame: pd.DataFrame,
-    dataset: str,
-    model: str,
-    task: str,
-    column: str,
-) -> float | None:
-
-    if frame.empty:
-        return None
-
-    row = frame[
-        frame["dataset"].eq(dataset)
-        & frame["model"].eq(model)
-        & frame["task"].eq(task)
-    ]
-
-    if row.empty:
-        return None
-
-    return float(
-        row.iloc[0][column]
-    )
-
-
 def lookup_agreement(
-    frame: pd.DataFrame,
+    frame,
     task: str,
 ) -> float | None:
 
@@ -59,252 +27,120 @@ def lookup_agreement(
         return None
 
     row = frame[
-        frame["task"].eq(task)
+        frame["task"].eq(
+            task
+        )
     ]
 
     if row.empty:
         return None
 
     return float(
-        row.iloc[0]["agreement_rate"]
+        row.iloc[0][
+            "agreement_rate"
+        ]
     )
+
+
+def percentage(
+    value: float | None,
+    fallback: str,
+) -> str:
+
+    if value is None:
+        return fallback
+
+    return f"{value:.2%}"
 
 
 # ============================================================
 # DATA
 # ============================================================
 
-metrics = load_labelled_dataset_metrics()
-eo = load_gender_equalized_odds()
-lfw_agreement = load_lfw_cross_model_agreement()
+lfw_agreement = (
+    load_lfw_cross_model_agreement()
+)
 
-lfw_race_agreement = lookup_agreement(
+race_agreement = lookup_agreement(
     lfw_agreement,
     "race",
 )
 
-lfw_race_disagreement = (
-    1.0 - lfw_race_agreement
-    if lfw_race_agreement is not None
+gender_agreement = lookup_agreement(
+    lfw_agreement,
+    "gender",
+)
+
+race_disagreement = (
+    1 - race_agreement
+    if race_agreement is not None
+    else None
+)
+
+gender_disagreement = (
+    1 - gender_agreement
+    if gender_agreement is not None
     else None
 )
 
 
 # ============================================================
-# HEADER
+# PAGE HEADER
 # ============================================================
 
-hero(
+page_header(
     "Facial Recognition Fairness Audit",
-    """
-    Auditing representation, demographic measurement and model
-    performance across LFW, FairFace and UTKFace before testing
-    whether disparities propagate into facial verification.
-    """,
-)
-
-section_label("Investigation structure")
-
-st.subheader("From dataset evidence to recognition fairness")
-
-c1, c2, c3, c4 = st.columns(4)
-
-with c1:
-    card(
-        "01",
-        "Dataset Audit",
-        """
-        Characterise representation, identity depth, missingness,
-        duplicates, image conditions and measurement limitations.
-        """,
-    )
-
-with c2:
-    card(
-        "02",
-        "Demographic Model Audit",
-        """
-        Compare FairFace ResNet-34 and DeepFace on labelled datasets
-        and test demographic-measurement sensitivity on LFW.
-        """,
-    )
-
-with c3:
-    card(
-        "03",
-        "Face Verification",
-        """
-        Evaluate fixed pretrained recognition models under a controlled
-        LFW same-person / different-person verification protocol.
-        """,
-    )
-
-with c4:
-    card(
-        "04",
-        "Mitigation",
-        """
-        Select an intervention only after the mechanism and largest
-        defensible recognition-performance disparity are established.
-        """,
-    )
-
-st.divider()
-
-
-# ============================================================
-# RESEARCH QUESTION
-# ============================================================
-
-section_label("Research question")
-
-st.subheader("The central investigation")
-
-blue_callout(
-    """
-    <strong>Where do demographic and measurement disparities enter
-    the facial-recognition pipeline, how do they affect model
-    performance, and do those disparities propagate into facial
-    verification?</strong>
-    """
-)
-
-q1, q2, q3 = st.columns(3)
-
-with q1:
-    card(
-        "RQ1",
-        "What is in the data?",
-        """
-        Measure representation, missingness, identity structure and
-        image-condition differences across the three datasets.
-        """,
-    )
-
-with q2:
-    card(
-        "RQ2",
-        "How stable is demographic measurement?",
-        """
-        Determine whether demographic classifiers produce comparable
-        performance and assignments across datasets and models.
-        """,
-    )
-
-with q3:
-    card(
-        "RQ3",
-        "Does it affect recognition?",
-        """
-        Test whether facial-verification error rates differ across
-        defensibly defined demographic and intersectional groups.
-        """,
-    )
-
-st.divider()
-
-
-# ============================================================
-# CURRENT EVIDENCE
-# ============================================================
-
-section_label("Current evidence")
-
-st.subheader("Track A is now complete")
-
-m1, m2, m3, m4 = st.columns(4)
-
-m1.metric(
-    "FairFace validation",
-    "10,954 images",
-)
-
-m2.metric(
-    "UTKFace aligned",
-    "24,054 images",
-)
-
-m3.metric(
-    "LFW compared",
-    "13,233 images",
-)
-
-m4.metric(
-    "LFW race disagreement",
     (
-        f"{lfw_race_disagreement:.2%}"
-        if lfw_race_disagreement is not None
-        else "Unavailable"
+        "An engineering investigation of dataset representation, "
+        "demographic measurement, facial-recognition performance "
+        "and mitigation across FairFace, UTKFace and LFW."
+    ),
+    (
+        "University of the Witwatersrand · "
+        "School of Electrical and Information Engineering"
     ),
 )
 
-gold_callout(
-    """
-    <strong>Key distinction:</strong> FairFace and UTKFace provide
-    independent demographic labels for classifier evaluation. LFW does
-    not provide independent race or gender ground truth in the canonical
-    project table. LFW is therefore used here to study
-    <strong>model-assigned demographic measurement sensitivity</strong>,
-    not demographic classification accuracy.
-    """
+
+# ============================================================
+# PROJECT AT A GLANCE
+# ============================================================
+
+section_header(
+    "Project at a glance",
+    (
+        "The investigation treats fairness as a system-level "
+        "engineering problem rather than a single performance metric."
+    ),
 )
 
-st.divider()
+metric_row(
+    [
+        (
+            "Source records audited",
+            "135,039",
+        ),
+        (
+            "Source datasets",
+            "3",
+        ),
+        (
+            "HarmoFace-95K",
+            "95,258",
+        ),
+        (
+            "Final demographic classes",
+            "7",
+        ),
+    ]
+)
 
-
-# ============================================================
-# TRACK A FINDINGS
-# ============================================================
-
-section_label("Track A findings")
-
-st.subheader("What the demographic model audit established")
-
-f1, f2 = st.columns(2)
-
-with f1:
-
-    st.markdown(
-        """
-        ### Labelled-dataset performance
-
-        On **FairFace validation**, FairFace ResNet-34 achieved
-        **77.65% six-class race accuracy** and **94.39% gender
-        accuracy**, compared with **65.75%** and **70.17%** for
-        DeepFace.
-
-        On **UTKFace**, four-class harmonised race accuracy was
-        closer between models: **76.48%** for FairFace ResNet-34 and
-        **75.16%** for DeepFace. Gender accuracy remained separated at
-        **94.35%** and **86.23%**, respectively.
-        """
-    )
-
-with f2:
-
-    st.markdown(
-        """
-        ### Measurement sensitivity on LFW
-
-        Across the same **13,233 LFW images**, the classifiers agreed
-        on **74.71% of race assignments** and **95.37% of gender
-        assignments**.
-
-        This corresponds to **25.29% race disagreement** and
-        **4.63% gender disagreement**, demonstrating that inferred
-        subgroup composition can depend materially on the demographic
-        annotation method.
-        """
-    )
-
-blue_callout(
+st.write(
     """
-    These findings do not establish why a disparity occurs. Training
-    data, label taxonomy, preprocessing, domain shift and model design
-    can all contribute. The audit therefore separates
-    <strong>representation</strong>, <strong>demographic
-    measurement</strong> and <strong>recognition performance</strong>
-    rather than treating them as the same phenomenon.
+    The project examines where measurable disparities can enter a
+    facial-recognition pipeline and separates those mechanisms into
+    distinct layers: the source data, demographic annotation,
+    recognition performance and mitigation.
     """
 )
 
@@ -312,44 +148,318 @@ st.divider()
 
 
 # ============================================================
-# PROGRESS
+# INVESTIGATION
 # ============================================================
 
-section_label("Progress")
-
-st.subheader("Current project position")
-
-a, b, c, d, e = st.columns(5)
-
-a.metric(
-    "Representation audit",
-    "Complete",
+section_header(
+    "Investigation",
+    (
+        "Each stage addresses a different source of uncertainty or "
+        "performance disparity."
+    ),
 )
 
-b.metric(
-    "Demographic model audit",
-    "Complete",
+row1 = st.columns(3)
+
+with row1[0]:
+    research_card(
+        "Dataset Audit",
+        (
+            "Analyse demographic representation, identity structure, "
+            "missing data, duplicates and image characteristics across "
+            "FairFace, UTKFace and LFW."
+        ),
+        "01",
+    )
+
+with row1[1]:
+    research_card(
+        "Demographic Measurement",
+        (
+            "Evaluate demographic classification performance and test "
+            "whether race and gender assignments remain consistent "
+            "across annotation models and datasets."
+        ),
+        "02",
+    )
+
+with row1[2]:
+    research_card(
+        "Face Recognition Audit",
+        (
+            "Evaluate facial verification and examine false-match and "
+            "false-non-match behaviour across demographic and "
+            "intersectional groups."
+        ),
+        "03",
+    )
+
+row2 = st.columns(3)
+
+with row2[0]:
+    research_card(
+        "Mitigation",
+        (
+            "Compare dataset-specific baseline models with models "
+            "trained after resampling-based mitigation and evaluate "
+            "performance and subgroup trade-offs."
+        ),
+        "04",
+    )
+
+with row2[1]:
+    research_card(
+        "HarmoFace-95K",
+        (
+            "Construct a harmonised, provenance-preserving and "
+            "diversity-aware dataset containing 95,258 labelled "
+            "face images."
+        ),
+        "05",
+    )
+
+with row2[2]:
+    research_card(
+        "Engineering Interpretation",
+        (
+            "Consolidate the statistical evidence into technical "
+            "findings, limitations and practical implications for "
+            "facial-recognition system development."
+        ),
+        "06",
+    )
+
+st.divider()
+
+
+# ============================================================
+# HEADLINE EVIDENCE
+# ============================================================
+
+section_header(
+    "Selected evidence",
+    (
+        "A small number of results summarise why the different "
+        "layers of the audit matter."
+    ),
 )
 
-c.metric(
-    "Measurement validation",
-    "In progress",
+metric_row(
+    [
+        (
+            "LFW race disagreement",
+            percentage(
+                race_disagreement,
+                "25.29%",
+            ),
+        ),
+        (
+            "LFW gender disagreement",
+            percentage(
+                gender_disagreement,
+                "4.63%",
+            ),
+        ),
+        (
+            "HarmoFace balance ratio",
+            "1.62 : 1",
+        ),
+    ]
 )
 
-d.metric(
-    "Face verification",
-    "Next",
+left, right = st.columns(2)
+
+with left:
+    evidence_note(
+        "FairFace validation",
+        (
+            "FairFace ResNet-34 achieved 77.65% six-class race "
+            "accuracy and 94.39% gender accuracy. DeepFace achieved "
+            "65.75% race accuracy and 70.17% gender accuracy."
+        ),
+    )
+
+with right:
+    evidence_note(
+        "UTKFace",
+        (
+            "Race accuracy narrowed to 76.48% for FairFace ResNet-34 "
+            "and 75.16% for DeepFace, while gender accuracy remained "
+            "separated at 94.35% and 86.23%."
+        ),
+    )
+
+st.info(
+    """
+    The demographic-measurement results show that the observed
+    composition of a dataset and the measured size of demographic
+    disparities can depend on the annotation method and evaluation
+    domain.
+    """
 )
 
-e.metric(
+st.divider()
+
+
+# ============================================================
+# HARMOFACE
+# ============================================================
+
+section_header(
+    "Dataset contribution",
+    (
+        "The dataset engineering work produced a training-ready "
+        "harmonised collection."
+    ),
+)
+
+st.markdown(
+    "## HarmoFace-95K"
+)
+
+metric_row(
+    [
+        (
+            "Images",
+            "95,258",
+        ),
+        (
+            "Training",
+            "76,395",
+        ),
+        (
+            "Validation",
+            "9,544",
+        ),
+        (
+            "Test",
+            "9,319",
+        ),
+    ]
+)
+
+st.write(
+    """
+    HarmoFace-95K combines audited records from FairFace, UTKFace and
+    LFW into seven harmonised demographic categories:
+
+    **White · Black · Indian · East Asian · Southeast Asian ·
+    Middle Eastern · Latino**
+    """
+)
+
+st.write(
+    """
+    The final construction uses volume-aware sampling rather than
+    strict equal-count undersampling. Minority records are not
+    duplicated to manufacture balance, source provenance is retained,
+    and ITA skin-tone measurements remain separate from demographic
+    labels.
+    """
+)
+
+st.divider()
+
+
+# ============================================================
+# MITIGATION
+# ============================================================
+
+section_header(
     "Mitigation",
-    "Planned",
+    (
+        "The audit is followed by an intervention designed to address "
+        "identified training-distribution problems."
+    ),
 )
+
+left, right = st.columns(
+    [
+        1,
+        1,
+    ]
+)
+
+with left:
+    with st.container(
+        border=True
+    ):
+        st.markdown(
+            "### Baseline"
+        )
+
+        st.write(
+            """
+            Dataset-specific baseline models provide the reference
+            performance before mitigation.
+            """
+        )
+
+with right:
+    with st.container(
+        border=True
+    ):
+        st.markdown(
+            "### Resampling intervention"
+        )
+
+        st.write(
+            """
+            Corresponding mitigated models are trained after adjusting
+            the training distribution and are evaluated using the same
+            performance and fairness framework.
+            """
+        )
+
+st.divider()
+
+
+# ============================================================
+# PROJECT OUTPUTS
+# ============================================================
+
+section_header(
+    "Engineering outputs",
+)
+
+outputs = st.columns(3)
+
+with outputs[0]:
+    research_card(
+        "Dataset evidence",
+        (
+            "Reproducible representation, demographic, identity and "
+            "image-condition analyses."
+        ),
+        "DATA",
+    )
+
+with outputs[1]:
+    research_card(
+        "Model evidence",
+        (
+            "Demographic measurement, recognition and mitigation "
+            "performance evaluated quantitatively."
+        ),
+        "MODELS",
+    )
+
+with outputs[2]:
+    research_card(
+        "HarmoFace-95K",
+        (
+            "A materialised labelled image dataset with metadata, "
+            "provenance and fixed data partitions."
+        ),
+        "DATASET",
+    )
+
+st.divider()
 
 st.caption(
     """
-    Track A covers demographic attribute classification and measurement
-    sensitivity. Track B will evaluate facial verification and the
-    resulting recognition-error disparities.
+    University of the Witwatersrand ·
+    School of Electrical and Information Engineering ·
+    Investigation Project
     """
 )

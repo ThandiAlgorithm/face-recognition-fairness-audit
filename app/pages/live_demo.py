@@ -1,91 +1,192 @@
+from __future__ import annotations
+
 import streamlit as st
 
 from ui import (
-    apply_wits_theme,
-    hero,
-    section_label,
-    blue_callout,
+    page_header,
+    research_card,
+    section_header,
 )
 
 
-apply_wits_theme()
+# ============================================================
+# HEADER
+# ============================================================
 
-hero(
-    "Live Face Verification",
-    """
-    An interactive demonstration of facial verification and how capture
-    conditions can influence the similarity score produced by a
-    recognition system.
-    """,
-    eyebrow="Open Day · Interactive demonstration",
+page_header(
+    "Interactive Face Verification",
+    (
+        "A demonstration interface showing how two face images can be "
+        "compared by a facial-recognition system."
+    ),
+    "Interactive demonstration",
 )
 
-section_label("Capture")
 
-st.subheader("Compare two images")
+# ============================================================
+# CONTEXT
+# ============================================================
 
-blue_callout(
+st.info(
     """
-    This demonstration is separate from the controlled scientific
-    experiment on LFW. Images captured here are intended for temporary
-    verification only and will not be added to the research datasets.
+    This demonstration is separate from the controlled LFW research
+    experiment. Camera images are intended for temporary demonstration
+    only and are not added to the research datasets.
     """
+)
+
+
+# ============================================================
+# CAPTURE
+# ============================================================
+
+section_header(
+    "Capture two images",
+    (
+        "Use two photographs of the same person or two different "
+        "people to demonstrate a verification comparison."
+    ),
 )
 
 left, right = st.columns(2)
 
 with left:
-    st.markdown("### Image A")
-    image_a = st.camera_input(
-        "Capture first image",
-        key="camera_a",
-    )
+
+    with st.container(
+        border=True
+    ):
+
+        st.markdown(
+            "### Image A"
+        )
+
+        image_a = (
+            st.camera_input(
+                "Capture first image",
+                key="camera_a",
+            )
+        )
 
 with right:
-    st.markdown("### Image B")
-    image_b = st.camera_input(
-        "Capture second image",
-        key="camera_b",
-    )
+
+    with st.container(
+        border=True
+    ):
+
+        st.markdown(
+            "### Image B"
+        )
+
+        image_b = (
+            st.camera_input(
+                "Capture second image",
+                key="camera_b",
+            )
+        )
+
+
+# ============================================================
+# RESULT
+# ============================================================
 
 st.divider()
 
-section_label("Verification result")
+section_header(
+    "Verification result"
+)
 
-if image_a is None or image_b is None:
+if (
+    image_a is None
+    or image_b is None
+):
 
     st.info(
-        "Capture both images to enable the verification pipeline."
+        """
+        Capture both images to enable the verification demonstration.
+        """
     )
 
 else:
 
-    st.success("Both images captured successfully.")
+    st.success(
+        "Both images have been captured."
+    )
 
-    c1, c2, c3 = st.columns(3)
+    m1, m2, m3 = st.columns(3)
 
-    c1.metric("Similarity score", "Not connected")
-    c2.metric("Decision threshold", "Not connected")
-    c3.metric("Verification", "Pending")
+    m1.metric(
+        "Similarity",
+        "—",
+    )
+
+    m2.metric(
+        "Decision threshold",
+        "—",
+    )
+
+    m3.metric(
+        "Verification result",
+        "—",
+    )
 
     st.warning(
         """
-        Webcam capture is working. The face-recognition model has not
-        yet been connected to this interface.
+        The camera interface is operational, but the recognition model
+        has not yet been connected. This page should remain hidden from
+        the public navigation until the verification pipeline is active.
         """
     )
 
+
+# ============================================================
+# DEMONSTRATION PURPOSE
+# ============================================================
+
 st.divider()
 
-section_label("Planned Open Day experiment")
+section_header(
+    "What the demonstration will show"
+)
 
-st.write(
+items = st.columns(3)
+
+with items[0]:
+
+    research_card(
+        "Similarity",
+        (
+            "The model converts both faces into numerical embeddings "
+            "and measures how similar those representations are."
+        ),
+        "01",
+    )
+
+with items[1]:
+
+    research_card(
+        "Threshold",
+        (
+            "A fixed decision threshold determines whether the pair is "
+            "classified as a match or non-match."
+        ),
+        "02",
+    )
+
+with items[2]:
+
+    research_card(
+        "Capture conditions",
+        (
+            "Visitors can observe how lighting, pose or image quality "
+            "can influence the resulting similarity score."
+        ),
+        "03",
+    )
+
+st.caption(
     """
-    Visitors will eventually be able to compare two images and observe
-    how pose, lighting, glasses or other capture conditions change the
-    similarity score.
-
-    This provides an intuitive demonstration of why image conditions
-    matter in facial-recognition systems.
+    No captured images should be retained after the demonstration
+    session unless explicit consent and an approved data-handling
+    process are in place.
     """
 )
