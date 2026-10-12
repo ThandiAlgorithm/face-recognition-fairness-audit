@@ -1,0 +1,257 @@
+{
+  "dataset": "utkface",
+  "attribute": "gender",
+  "threshold": 0.5,
+  "n_true_negative_total": 1146,
+  "n_misclassified": 172,
+  "n_correct": 974,
+  "misclassification_rate": 0.15008726003490402,
+  "category_rate_comparison": [
+    {
+      "field": "age_group",
+      "value": "0-19",
+      "n_in_group": 262,
+      "n_misclassified": 79,
+      "rate": 0.3015
+    },
+    {
+      "field": "age_group",
+      "value": "60+",
+      "n_in_group": 116,
+      "n_misclassified": 25,
+      "rate": 0.2155
+    },
+    {
+      "field": "race_label",
+      "value": "Asian",
+      "n_in_group": 193,
+      "n_misclassified": 41,
+      "rate": 0.2124
+    },
+    {
+      "field": "race_label",
+      "value": "Others",
+      "n_in_group": 98,
+      "n_misclassified": 19,
+      "rate": 0.1939
+    },
+    {
+      "field": "race_label",
+      "value": "White",
+      "n_in_group": 461,
+      "n_misclassified": 75,
+      "rate": 0.1627
+    },
+    {
+      "field": "ita_group",
+      "value": "\u226528",
+      "n_in_group": 738,
+      "n_misclassified": 111,
+      "rate": 0.1504
+    },
+    {
+      "field": "ita_group",
+      "value": "<28",
+      "n_in_group": 335,
+      "n_misclassified": 46,
+      "rate": 0.1373
+    },
+    {
+      "field": "age_group",
+      "value": "40-59",
+      "n_in_group": 136,
+      "n_misclassified": 15,
+      "rate": 0.1103
+    },
+    {
+      "field": "race_label",
+      "value": "Indian",
+      "n_in_group": 172,
+      "n_misclassified": 17,
+      "rate": 0.0988
+    },
+    {
+      "field": "race_label",
+      "value": "Black",
+      "n_in_group": 222,
+      "n_misclassified": 20,
+      "rate": 0.0901
+    },
+    {
+      "field": "age_group",
+      "value": "20-39",
+      "n_in_group": 632,
+      "n_misclassified": 53,
+      "rate": 0.0839
+    }
+  ],
+  "misclassified_by_race": {
+    "White": {
+      "n_misclassified": 75,
+      "n_total_female": 461,
+      "rate": 0.1627
+    },
+    "Black": {
+      "n_misclassified": 20,
+      "n_total_female": 222,
+      "rate": 0.0901
+    },
+    "Asian": {
+      "n_misclassified": 41,
+      "n_total_female": 193,
+      "rate": 0.2124
+    },
+    "Indian": {
+      "n_misclassified": 17,
+      "n_total_female": 172,
+      "rate": 0.0988
+    },
+    "Others": {
+      "n_misclassified": 19,
+      "n_total_female": 98,
+      "rate": 0.1939
+    }
+  },
+  "sample_misclassified_rows": [
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-b6c599f9adb679bd.png",
+      "race_label": "Asian",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9996875524520874
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-acac3b6aba6ff881.png",
+      "race_label": "White",
+      "age_group": "40-59",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9991163611412048
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-657465f21d946ec7.png",
+      "race_label": "Black",
+      "age_group": "40-59",
+      "ita_group": "unknown",
+      "model_confidence_male": 0.9969524145126343
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-63c0648f283cede3.png",
+      "race_label": "Asian",
+      "age_group": "20-39",
+      "ita_group": "<28",
+      "model_confidence_male": 0.996063768863678
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-09231ad793f17cd5.png",
+      "race_label": "White",
+      "age_group": "20-39",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9947977066040039
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-dd6d48e0172ab1e8.png",
+      "race_label": "Others",
+      "age_group": "0-19",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9947609305381775
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-cbd3864378765487.png",
+      "race_label": "White",
+      "age_group": "40-59",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9933473467826843
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-fdd152dcec8fb165.png",
+      "race_label": "Asian",
+      "age_group": "0-19",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9920973777770996
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-7b38fab0e47bdf47.png",
+      "race_label": "Others",
+      "age_group": "20-39",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9920166730880737
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-da71570d1fb419e5.png",
+      "race_label": "White",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9900864958763123
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-464a4be48739c12f.png",
+      "race_label": "Others",
+      "age_group": "20-39",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9891006350517273
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-d2c542eb8ef9989a.png",
+      "race_label": "White",
+      "age_group": "40-59",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9855068922042847
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-b430d88f9f3c0020.png",
+      "race_label": "Asian",
+      "age_group": "60+",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9852190017700195
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-40d5dc71230d94bf.png",
+      "race_label": "White",
+      "age_group": "20-39",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9850934743881226
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-035b5ed48562611f.png",
+      "race_label": "White",
+      "age_group": "60+",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.9839984178543091
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-c9bc4303138b56d3.png",
+      "race_label": "Asian",
+      "age_group": "0-19",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9817872047424316
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-1bb5c128f6a4a093.png",
+      "race_label": "Asian",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9795719981193542
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-f6514883b9af9c00.png",
+      "race_label": "White",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9784359335899353
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-eb6e45aba3929e3a.png",
+      "race_label": "White",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9783769845962524
+    },
+    {
+      "image_path": "data/derived/aligned/utkface/utkface-ae315a138da57057.png",
+      "race_label": "Indian",
+      "age_group": "60+",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9777141809463501
+    }
+  ]
+}

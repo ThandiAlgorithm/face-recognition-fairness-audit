@@ -156,9 +156,10 @@ def generate_all_plots(dataset: str, eval_dir: Path | None = None) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("dataset", choices=["fairface", "utkface", "lfw"])
+    parser.add_argument("--eval-dir", type=Path, default=None, help="Matches evaluate.py's --out-dir / metrics.py's --eval-dir.")
     args = parser.parse_args()
-    generate_all_plots(args.dataset)
-    print(f"Plots written under experiments/{args.dataset}/test_eval/{{confusion_matrices,roc_curves,pr_curves,calibration}}/")
+    generate_all_plots(args.dataset, eval_dir=args.eval_dir)
+    print(f"Plots written under {args.eval_dir or f'experiments/{args.dataset}/test_eval'}/{{confusion_matrices,roc_curves,pr_curves,calibration}}/")
 
 
 if __name__ == "__main__":

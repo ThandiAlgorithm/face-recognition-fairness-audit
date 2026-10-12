@@ -1,0 +1,17 @@
+{
+  "dataset": "lfw",
+  "attribute": "White",
+  "n_total": 1188,
+  "default_threshold_0.5": {
+    "recall_male": 0.9088863892013498,
+    "recall_female": 0.6688963210702341,
+    "gap": 0.23999006813111567
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.78,
+    "recall_male": 0.7952755905511811,
+    "recall_female": 0.7926421404682275,
+    "gap": 0.002633450082953681
+  },
+  "per_race_balanced_threshold": {}
+}

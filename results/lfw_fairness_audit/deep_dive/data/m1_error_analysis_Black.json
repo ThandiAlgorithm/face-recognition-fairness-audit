@@ -1,0 +1,544 @@
+{
+  "dataset": "lfw",
+  "attribute": "Black",
+  "threshold": 0.5,
+  "n_true_negative_total": 1148,
+  "n_misclassified": 11,
+  "n_correct": 1137,
+  "misclassification_rate": 0.009581881533101045,
+  "attribute_rate_comparison": [
+    {
+      "attribute": "White",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.7774846086191732,
+      "gap": -0.6865755177100823
+    },
+    {
+      "attribute": "Pale_Skin",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.5162708883025505,
+      "gap": -0.5162708883025505
+    },
+    {
+      "attribute": "Pointy_Nose",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.7247141600703606,
+      "gap": -0.4519868873430879
+    },
+    {
+      "attribute": "Big_Lips",
+      "rate_in_misclassified": 0.7272727272727273,
+      "rate_in_correct": 0.3597185576077397,
+      "gap": 0.3675541696649876
+    },
+    {
+      "attribute": "Smiling",
+      "rate_in_misclassified": 0.8181818181818182,
+      "rate_in_correct": 0.45118733509234826,
+      "gap": 0.36699448308946997
+    },
+    {
+      "attribute": "Frowning",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.5417766051011433,
+      "gap": -0.3599584232829615
+    },
+    {
+      "attribute": "Curly_Hair",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.613896218117854,
+      "gap": -0.3411689453905813
+    },
+    {
+      "attribute": "Brown_Eyes",
+      "rate_in_misclassified": 1.0,
+      "rate_in_correct": 0.6772207563764292,
+      "gap": 0.3227792436235708
+    },
+    {
+      "attribute": "Big_Nose",
+      "rate_in_misclassified": 1.0,
+      "rate_in_correct": 0.6798592788038699,
+      "gap": 0.32014072119613013
+    },
+    {
+      "attribute": "Arched_Eyebrows",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.25241864555848725,
+      "gap": 0.29303589989605816
+    },
+    {
+      "attribute": "Chubby",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.3781882145998241,
+      "gap": -0.28727912369073316
+    },
+    {
+      "attribute": "Double_Chin",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.36939313984168864,
+      "gap": -0.2784840489325977
+    },
+    {
+      "attribute": "Teeth_Not_Visible",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.5391380826737028,
+      "gap": -0.26641080994643007
+    },
+    {
+      "attribute": "Strong_Nose-Mouth_Lines",
+      "rate_in_misclassified": 0.8181818181818182,
+      "rate_in_correct": 0.5523306948109059,
+      "gap": 0.2658511233709123
+    },
+    {
+      "attribute": "High_Cheekbones",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.3720316622691293,
+      "gap": 0.26433197409450704
+    },
+    {
+      "attribute": "Straight_Hair",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.3737906772207564,
+      "gap": 0.26257295914288
+    },
+    {
+      "attribute": "Harsh_Lighting",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.2955145118733509,
+      "gap": 0.2499400335811945
+    },
+    {
+      "attribute": "Sideburns",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.32981530343007914,
+      "gap": -0.23890621252098823
+    },
+    {
+      "attribute": "Eyes_Open",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.8645558487247141,
+      "gap": -0.22819221236107778
+    },
+    {
+      "attribute": "Bags_Under_Eyes",
+      "rate_in_misclassified": 0.8181818181818182,
+      "rate_in_correct": 0.5936675461741425,
+      "gap": 0.2245142720076757
+    },
+    {
+      "attribute": "No_Eyewear",
+      "rate_in_misclassified": 1.0,
+      "rate_in_correct": 0.7801231310466139,
+      "gap": 0.2198768689533861
+    },
+    {
+      "attribute": "Youth",
+      "rate_in_misclassified": 0.36363636363636365,
+      "rate_in_correct": 0.1503957783641161,
+      "gap": 0.21324058527224754
+    },
+    {
+      "attribute": "Rosy_Cheeks",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.19876868953386104,
+      "gap": -0.19876868953386104
+    },
+    {
+      "attribute": "Shiny_Skin",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.11609498680738786,
+      "gap": 0.15663228591988484
+    },
+    {
+      "attribute": "Flushed_Face",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.14335971855760773,
+      "gap": -0.14335971855760773
+    },
+    {
+      "attribute": "Attractive_Man",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.32365875109938436,
+      "gap": -0.14184056928120253
+    },
+    {
+      "attribute": "Brown_Hair",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.4080914687774846,
+      "gap": 0.13736307667706082
+    },
+    {
+      "attribute": "Gray_Hair",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.13544415127528583,
+      "gap": -0.13544415127528583
+    },
+    {
+      "attribute": "Round_Jaw",
+      "rate_in_misclassified": 1.0,
+      "rate_in_correct": 0.8663148636763413,
+      "gap": 0.13368513632365875
+    },
+    {
+      "attribute": "Heavy_Makeup",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.1248900615655233,
+      "gap": -0.1248900615655233
+    },
+    {
+      "attribute": "Bangs",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.20844327176781002,
+      "gap": -0.11753418085871911
+    },
+    {
+      "attribute": "Asian",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.06772207563764292,
+      "gap": 0.1140961061805389
+    },
+    {
+      "attribute": "Wearing_Necklace",
+      "rate_in_misclassified": 0.36363636363636365,
+      "rate_in_correct": 0.25241864555848725,
+      "gap": 0.11121771807787639
+    },
+    {
+      "attribute": "Soft_Lighting",
+      "rate_in_misclassified": 0.8181818181818182,
+      "rate_in_correct": 0.7071240105540897,
+      "gap": 0.11105780762772854
+    },
+    {
+      "attribute": "Flash",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.19788918205804748,
+      "gap": -0.10698009114895657
+    },
+    {
+      "attribute": "Mouth_Closed",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.3781882145998241,
+      "gap": -0.1054609418725514
+    },
+    {
+      "attribute": "Partially_Visible_Forehead",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.08003518029903255,
+      "gap": 0.10178300151914928
+    },
+    {
+      "attribute": "Mouth_Slightly_Open",
+      "rate_in_misclassified": 0.45454545454545453,
+      "rate_in_correct": 0.3597185576077397,
+      "gap": 0.09482689693771484
+    },
+    {
+      "attribute": "Blurry",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.18293755496921724,
+      "gap": 0.08978971775805547
+    },
+    {
+      "attribute": "Round_Face",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.08970976253298153,
+      "gap": -0.08970976253298153
+    },
+    {
+      "attribute": "Eyeglasses",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.1785400175901495,
+      "gap": -0.0876309266810586
+    },
+    {
+      "attribute": "Wearing_Lipstick",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.1759014951627089,
+      "gap": -0.08499240425361798
+    },
+    {
+      "attribute": "Senior",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.18909410729991205,
+      "gap": 0.08363316542736066
+    },
+    {
+      "attribute": "Mouth_Wide_Open",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.08355321020228672,
+      "gap": -0.08355321020228672
+    },
+    {
+      "attribute": "Wearing_Necktie",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.6288478452066842,
+      "gap": -0.08339329975213883
+    },
+    {
+      "attribute": "Receding_Hairline",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.5532102022867195,
+      "gap": 0.08315343407691689
+    },
+    {
+      "attribute": "No_Beard",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.714160070360598,
+      "gap": -0.07779643399696168
+    },
+    {
+      "attribute": "Indian",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.02198768689533861,
+      "gap": 0.0689214040137523
+    },
+    {
+      "attribute": "Outdoor",
+      "rate_in_misclassified": 0.45454545454545453,
+      "rate_in_correct": 0.38698328935795956,
+      "gap": 0.06756216518749497
+    },
+    {
+      "attribute": "Male",
+      "rate_in_misclassified": 0.8181818181818182,
+      "rate_in_correct": 0.7519788918205804,
+      "gap": 0.06620292636123781
+    },
+    {
+      "attribute": "Fully_Visible_Forehead",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.6112576956904133,
+      "gap": -0.06580315023586791
+    },
+    {
+      "attribute": "5_o_Clock_Shadow",
+      "rate_in_misclassified": 0.45454545454545453,
+      "rate_in_correct": 0.3940193491644679,
+      "gap": 0.06052610538098663
+    },
+    {
+      "attribute": "Middle_Aged",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.12225153913808268,
+      "gap": 0.05956664268009915
+    },
+    {
+      "attribute": "Oval_Face",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.48636763412489004,
+      "gap": 0.05908691132965538
+    },
+    {
+      "attribute": "Obstructed_Forehead",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.1468777484608619,
+      "gap": -0.055968657551770995
+    },
+    {
+      "attribute": "Wearing_Hat",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.14599824098504838,
+      "gap": -0.055089150075957466
+    },
+    {
+      "attribute": "Attractive_Woman",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.14511873350923482,
+      "gap": -0.05420964260014391
+    },
+    {
+      "attribute": "Square_Face",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.052770448548812667,
+      "gap": -0.052770448548812667
+    },
+    {
+      "attribute": "Mustache",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.1424802110817942,
+      "gap": -0.051571120172703294
+    },
+    {
+      "attribute": "Wavy_Hair",
+      "rate_in_misclassified": 0.36363636363636365,
+      "rate_in_correct": 0.41424802110817943,
+      "gap": -0.050611657471815785
+    },
+    {
+      "attribute": "Child",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.04925241864555849,
+      "gap": -0.04925241864555849
+    },
+    {
+      "attribute": "Color_Photo",
+      "rate_in_misclassified": 0.9090909090909091,
+      "rate_in_correct": 0.9533861037818822,
+      "gap": -0.044295194690973094
+    },
+    {
+      "attribute": "Posed_Photo",
+      "rate_in_misclassified": 0.45454545454545453,
+      "rate_in_correct": 0.4951627088830255,
+      "gap": -0.04061725433757096
+    },
+    {
+      "attribute": "Blond_Hair",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.03869832893579595,
+      "gap": -0.03869832893579595
+    },
+    {
+      "attribute": "Black_Hair",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.12401055408970976,
+      "gap": -0.03310146318061885
+    },
+    {
+      "attribute": "Sunglasses",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.021108179419525065,
+      "gap": -0.021108179419525065
+    },
+    {
+      "attribute": "Bald",
+      "rate_in_misclassified": 0.09090909090909091,
+      "rate_in_correct": 0.11169744942832015,
+      "gap": -0.020788358519229236
+    },
+    {
+      "attribute": "Wearing_Earrings",
+      "rate_in_misclassified": 0.18181818181818182,
+      "rate_in_correct": 0.1662269129287599,
+      "gap": 0.015591268889421916
+    },
+    {
+      "attribute": "Bushy_Eyebrows",
+      "rate_in_misclassified": 0.5454545454545454,
+      "rate_in_correct": 0.5593667546174143,
+      "gap": -0.013912209162868838
+    },
+    {
+      "attribute": "Narrow_Eyes",
+      "rate_in_misclassified": 0.6363636363636364,
+      "rate_in_correct": 0.6226912928759895,
+      "gap": 0.013672343487646899
+    },
+    {
+      "attribute": "Goatee",
+      "rate_in_misclassified": 0.2727272727272727,
+      "rate_in_correct": 0.2612137203166227,
+      "gap": 0.011513552410649996
+    },
+    {
+      "attribute": "Baby",
+      "rate_in_misclassified": 0.0,
+      "rate_in_correct": 0.002638522427440633,
+      "gap": -0.002638522427440633
+    }
+  ],
+  "misclassified_by_race": {
+    "White": {
+      "n_misclassified": 1,
+      "n_total_female": 865,
+      "rate": 0.0012
+    },
+    "unknown": {
+      "n_misclassified": 7,
+      "n_total_female": 198,
+      "rate": 0.0354
+    },
+    "Asian": {
+      "n_misclassified": 2,
+      "n_total_female": 68,
+      "rate": 0.0294
+    },
+    "Indian": {
+      "n_misclassified": 1,
+      "n_total_female": 17,
+      "rate": 0.0588
+    }
+  },
+  "sample_misclassified_rows": [
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-654ffa81a7277d3c.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "unknown",
+      "model_confidence_male": 0.8301405310630798
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-7c23ae932b5cc6a5.png",
+      "race_label": "Asian",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.7313535809516907
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-26cda0d884a521ca.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.6683545112609863
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-703d143152bcb58a.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.665850043296814
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-a85e97390466d4ce.png",
+      "race_label": "Asian",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.640708863735199
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-9d285cade5d02ff9.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.591069221496582
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-264ffdc50b984878.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5806187391281128
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-62edb37f917957ed.png",
+      "race_label": "White",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5749859809875488
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-a8f448260170115c.png",
+      "race_label": "Indian",
+      "age_group": "unknown",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.5580129623413086
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-995472e4ca0c4763.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5367937684059143
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-d35a63e1e86d5b67.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5348513126373291
+    }
+  ]
+}

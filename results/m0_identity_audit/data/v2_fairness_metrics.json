@@ -1,0 +1,38 @@
+{
+  "race": {
+    "fnmr_gap": 0.16375968992248063,
+    "fmr_gap": 0.2020202279363092,
+    "worst_group_tar": 0.7083333333333333,
+    "worst_group": "Black",
+    "best_group_tar": 0.872093023255814,
+    "best_group": "Asian",
+    "equality_of_opportunity_gap": 0.1637596899224807
+  },
+  "gender": {
+    "fnmr_gap": 0.12051293632532904,
+    "fmr_gap": 0.005160290160290154,
+    "worst_group_tar": 0.7744299674267101,
+    "worst_group": "female",
+    "best_group_tar": 0.8949429037520391,
+    "best_group": "male",
+    "equality_of_opportunity_gap": 0.120512936325329
+  },
+  "fitzpatrick_approx": {
+    "fnmr_gap": 0.03180301405837781,
+    "fmr_gap": 0.04354719091561196,
+    "worst_group_tar": 0.8443579766536965,
+    "worst_group": "I-II (very light)",
+    "best_group_tar": 0.8761609907120743,
+    "best_group": "II-III (light)",
+    "equality_of_opportunity_gap": 0.03180301405837782
+  },
+  "ita_group": {
+    "fnmr_gap": 0.0049212259618458265,
+    "fmr_gap": 0.0073443279864662675,
+    "worst_group_tar": 0.857940446650124,
+    "worst_group": "darker",
+    "best_group_tar": 0.8628616726119699,
+    "best_group": "lighter",
+    "equality_of_opportunity_gap": 0.004921225961845854
+  }
+}

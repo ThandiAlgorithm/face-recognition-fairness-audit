@@ -1,0 +1,109 @@
+{
+  "dataset": "fairface",
+  "attribute": "gender",
+  "n_total": 9758,
+  "default_threshold_0.5": {
+    "recall_male": 0.9164894645273536,
+    "recall_female": 0.868484187568157,
+    "gap": 0.04800527695919654
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.605,
+    "recall_male": 0.8923255364392035,
+    "recall_female": 0.8918211559432934,
+    "gap": 0.0005043804959101728
+  },
+  "per_race_balanced_threshold": {
+    "Black": {
+      "n": 1370,
+      "at_0.5": {
+        "recall_male": 0.9269005847953217,
+        "recall_female": 0.7303206997084548
+      },
+      "balanced": {
+        "threshold": 0.765,
+        "recall_male": 0.8611111111111112,
+        "recall_female": 0.858600583090379,
+        "gap": 0.00251052802073215
+      }
+    },
+    "East Asian": {
+      "n": 1382,
+      "at_0.5": {
+        "recall_male": 0.8787878787878788,
+        "recall_female": 0.9042089985486212
+      },
+      "balanced": {
+        "threshold": 0.44,
+        "recall_male": 0.8917748917748918,
+        "recall_female": 0.8911465892597968,
+        "gap": 0.0006283025150949362
+      }
+    },
+    "Indian": {
+      "n": 1385,
+      "at_0.5": {
+        "recall_male": 0.9345403899721448,
+        "recall_female": 0.889055472263868
+      },
+      "balanced": {
+        "threshold": 0.605,
+        "recall_male": 0.9122562674094707,
+        "recall_female": 0.9100449775112444,
+        "gap": 0.0022112898982263873
+      }
+    },
+    "Latino_Hispanic": {
+      "n": 1496,
+      "at_0.5": {
+        "recall_male": 0.9274193548387096,
+        "recall_female": 0.8882978723404256
+      },
+      "balanced": {
+        "threshold": 0.5850000000000001,
+        "recall_male": 0.9032258064516129,
+        "recall_female": 0.9042553191489362,
+        "gap": 0.0010295126973233204
+      }
+    },
+    "Middle Eastern": {
+      "n": 1043,
+      "at_0.5": {
+        "recall_male": 0.9526462395543176,
+        "recall_female": 0.916923076923077
+      },
+      "balanced": {
+        "threshold": 0.61,
+        "recall_male": 0.9317548746518106,
+        "recall_female": 0.9323076923076923,
+        "gap": 0.0005528176558816655
+      }
+    },
+    "Southeast Asian": {
+      "n": 1219,
+      "at_0.5": {
+        "recall_male": 0.8815165876777251,
+        "recall_female": 0.8532423208191127
+      },
+      "balanced": {
+        "threshold": 0.555,
+        "recall_male": 0.8625592417061612,
+        "recall_female": 0.863481228668942,
+        "gap": 0.0009219869627807853
+      }
+    },
+    "White": {
+      "n": 1863,
+      "at_0.5": {
+        "recall_male": 0.9104781281790437,
+        "recall_female": 0.9079545454545455
+      },
+      "balanced": {
+        "threshold": 0.505,
+        "recall_male": 0.9094608341810784,
+        "recall_female": 0.9090909090909091,
+        "gap": 0.00036992509016930963
+      }
+    }
+  }
+}

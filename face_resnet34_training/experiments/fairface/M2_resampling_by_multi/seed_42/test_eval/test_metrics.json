@@ -1,0 +1,13 @@
+{
+  "n_test": 9758,
+  "race_accuracy": 0.5987907358065178,
+  "race_n_valid": 9758,
+  "gender_accuracy": 0.8834802213568355,
+  "gender_n_valid": 9758,
+  "age_group_accuracy": 0.5076860012297602,
+  "age_group_n_valid": 9758,
+  "checkpoint_path": "experiments/fairface/M2_resampling_by_multi/seed_42/best_checkpoint.pt",
+  "checkpoint_epoch": 7,
+  "method": "M2_multi",
+  "seed": 42
+}

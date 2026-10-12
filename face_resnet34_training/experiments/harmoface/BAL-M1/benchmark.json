@@ -1,0 +1,8 @@
+{
+  "n_train_images": 29750,
+  "batch_size": 64,
+  "batches_per_epoch": 465,
+  "mean_s_per_batch": 25.74102804667006,
+  "estimated_epoch_s": 11969.578041701578,
+  "estimated_epoch_hm": "3h19m"
+}

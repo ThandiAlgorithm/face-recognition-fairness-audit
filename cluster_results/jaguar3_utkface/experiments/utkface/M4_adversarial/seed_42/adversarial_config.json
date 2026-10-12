@@ -1,0 +1,11 @@
+{
+  "mechanism": "gradient_reversal",
+  "adversarial_target": "ita_group",
+  "ita_class_index": {
+    "<28": 0,
+    "\u226528": 1
+  },
+  "grl_lambda": 1.0,
+  "lambda_schedule": "fixed (not ramped)",
+  "loss_formula": "total = base_task_loss + CrossEntropyLoss(ita_head(GRL(features)), ita_group)"
+}

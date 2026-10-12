@@ -1,0 +1,2 @@
+epoch,number_sampled_ita_lt28,number_sampled_ita_ge28,number_sampled_ita_unknown,percentage_lt28,percentage_ge28,unique_images_seen,duplicate_draws
+0,6442,6238,6561,33.48058832701003,32.420352372537806,10225,9016

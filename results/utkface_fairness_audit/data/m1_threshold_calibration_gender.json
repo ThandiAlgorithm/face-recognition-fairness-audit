@@ -1,0 +1,83 @@
+{
+  "dataset": "utkface",
+  "attribute": "gender",
+  "n_total": 2405,
+  "default_threshold_0.5": {
+    "recall_male": 0.8052464228934817,
+    "recall_female": 0.962478184991274,
+    "gap": 0.15723176209779233
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.22,
+    "recall_male": 0.9093799682034976,
+    "recall_female": 0.9083769633507853,
+    "gap": 0.0010030048527123192
+  },
+  "per_race_balanced_threshold": {
+    "Asian": {
+      "n": 357,
+      "at_0.5": {
+        "recall_male": 0.524390243902439,
+        "recall_female": 0.9844559585492227
+      },
+      "balanced": {
+        "threshold": 0.09,
+        "recall_male": 0.8719512195121951,
+        "recall_female": 0.8756476683937824,
+        "gap": 0.0036964488815872665
+      }
+    },
+    "Black": {
+      "n": 455,
+      "at_0.5": {
+        "recall_male": 0.8283261802575107,
+        "recall_female": 0.9594594594594594
+      },
+      "balanced": {
+        "threshold": 0.22,
+        "recall_male": 0.927038626609442,
+        "recall_female": 0.9279279279279279,
+        "gap": 0.0008893013184858578
+      }
+    },
+    "Indian": {
+      "n": 398,
+      "at_0.5": {
+        "recall_male": 0.8407079646017699,
+        "recall_female": 0.9883720930232558
+      },
+      "balanced": {
+        "threshold": 0.17,
+        "recall_male": 0.9247787610619469,
+        "recall_female": 0.9302325581395349,
+        "gap": 0.005453797077587974
+      }
+    },
+    "Others": {
+      "n": 173,
+      "at_0.5": {
+        "recall_male": 0.7733333333333333,
+        "recall_female": 0.9489795918367347
+      },
+      "balanced": {
+        "threshold": 0.225,
+        "recall_male": 0.88,
+        "recall_female": 0.8775510204081632,
+        "gap": 0.002448979591836764
+      }
+    },
+    "White": {
+      "n": 1021,
+      "at_0.5": {
+        "recall_male": 0.8678571428571429,
+        "recall_female": 0.9479392624728851
+      },
+      "balanced": {
+        "threshold": 0.33,
+        "recall_male": 0.9160714285714285,
+        "recall_female": 0.9154013015184381,
+        "gap": 0.0006701270529904102
+      }
+    }
+  }
+}

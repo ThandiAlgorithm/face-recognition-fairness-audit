@@ -1,0 +1,6 @@
+{
+  "selected_on": "validation",
+  "criterion": "EER",
+  "threshold": 0.9508527559041977,
+  "val_eer": 0.1098
+}
