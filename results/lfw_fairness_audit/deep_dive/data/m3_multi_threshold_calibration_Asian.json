@@ -1,0 +1,17 @@
+{
+  "dataset": "lfw",
+  "attribute": "Asian",
+  "n_total": 1188,
+  "default_threshold_0.5": {
+    "recall_male": 0.4625,
+    "recall_female": 0.9666064981949458,
+    "gap": 0.5041064981949458
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.08499999999999999,
+    "recall_male": 0.8375,
+    "recall_female": 0.8402527075812274,
+    "gap": 0.002752707581227365
+  },
+  "per_race_balanced_threshold": {}
+}

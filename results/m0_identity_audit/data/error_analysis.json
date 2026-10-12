@@ -1,0 +1,19 @@
+{
+  "n_genuine": 4293,
+  "n_impostor": 20000,
+  "fnmr_overall": 0.31772653156300956,
+  "fmr_overall": 0.336,
+  "false_match_rate_by_same_race": {
+    "0": 0.3434539436137427,
+    "1": 0.33018951864044843
+  },
+  "false_match_rate_by_same_gender": {
+    "0": 0.3087885985748218,
+    "1": 0.3526002254065368
+  },
+  "note_age_group": "age_group_a/b are 100% null in test_scores.csv -- M0's pair table never populated age for LFW pairs, so no age-based false-match/false-non-match breakdown is possible from this data. This is a real gap in the M0 pipeline, not a finding about the model.",
+  "mean_similarity_false_match": 0.9672520083288692,
+  "mean_similarity_true_reject": 0.6962972886415661,
+  "mean_similarity_false_nonmatch": 0.7877581955425219,
+  "mean_similarity_true_accept": 0.974112341573916
+}

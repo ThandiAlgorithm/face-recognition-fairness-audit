@@ -105,12 +105,21 @@ def get_cpu_model() -> str:
     return platform.processor() or "unknown"
 
 
-def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool, grad_clip_norm: float | None = None) -> dict:
+def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool, grad_clip_norm: float | None = None,
+              log_every: int = 100) -> dict:
     model.train(train)
     if isinstance(loss_fn, torch.nn.Module):
         loss_fn.train(train)
     totals: dict = {}
     counts: dict = {}
+
+    # Mid-epoch visibility for long CPU-only runs -- a stalled vs. merely slow
+    # process looks identical from `ps` alone, and the only prior way to tell
+    # them apart was forensic /proc/<pid>/io sampling. Train only (validation
+    # is short); stderr so it survives stdout buffering under nohup.
+    n_batches = len(loader) if train else None
+    t_start = time.perf_counter()
+    batch_idx = 0
 
     for imgs, targets, meta in loader:
         imgs = imgs.to(device, non_blocking=True)
@@ -153,6 +162,17 @@ def run_epoch(model, loader, loss_fn, optimizer, device, scaler, train: bool, gr
                 acc_key = f"{task}_acc"
                 totals[acc_key] = totals.get(acc_key, 0.0) + acc * batch_size
                 counts[acc_key] = counts.get(acc_key, 0) + batch_size
+
+        batch_idx += 1
+        if train and log_every and batch_idx % log_every == 0:
+            elapsed = time.perf_counter() - t_start
+            s_per_batch = elapsed / batch_idx
+            eta_s = s_per_batch * (n_batches - batch_idx) if n_batches else float("nan")
+            print(
+                f"[run_epoch] batch {batch_idx}/{n_batches or '?'} "
+                f"({s_per_batch:.2f} s/batch, elapsed {elapsed/60:.1f}m, ETA {eta_s/60:.1f}m)",
+                file=sys.stderr, flush=True,
+            )
 
     return {k: totals[k] / counts[k] for k in totals}
 

@@ -1,0 +1,38 @@
+{
+  "Asian": {
+    "n_genuine": 172,
+    "n_impostor": 74,
+    "default_threshold": 0.9348000932633876,
+    "default_tar": 0.686046511627907,
+    "default_fmr": 0.35135135135135137,
+    "per_group_threshold": 0.9390489159649122,
+    "per_group_tar": 0.6686046511627907,
+    "per_group_fmr": 0.33783783783783783,
+    "per_group_eer": 0.3346165933375236
+  },
+  "Black": {
+    "n_genuine": 24,
+    "n_impostor": 11,
+    "default_threshold": 0.9348000932633876,
+    "default_tar": 0.9166666666666666,
+    "default_fmr": 0.45454545454545453,
+    "per_group_threshold": 0.946475147669173,
+    "per_group_tar": 0.8333333333333334,
+    "per_group_fmr": 0.18181818181818182,
+    "per_group_eer": 0.17424242424242425
+  },
+  "Indian": {
+    "skipped": "too few pairs (<10) for a stable per-group threshold"
+  },
+  "White": {
+    "n_genuine": 3194,
+    "n_impostor": 10534,
+    "default_threshold": 0.9348000932633876,
+    "default_tar": 0.6919223544145272,
+    "default_fmr": 0.326561610024682,
+    "per_group_threshold": 0.9378009614035088,
+    "per_group_tar": 0.682216656230432,
+    "per_group_fmr": 0.31573951015758495,
+    "per_group_eer": 0.31676142696357645
+  }
+}

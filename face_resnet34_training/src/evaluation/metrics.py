@@ -51,6 +51,7 @@ EXPERIMENTS_DIR = Path(__file__).resolve().parents[2] / "experiments"
 SENSITIVE_COLS = [
     "race_label", "gender_label", "ita_group", "age_group",
     "race_gender_label", "race_ita_label", "gender_ita_label", "fitzpatrick_approx",
+    "gender_age_label", "race_age_label", "age_ita_label",
 ]
 N_BOOTSTRAP = 1000
 CLASSIFICATION_TASKS = ["race", "gender", "age_group"]
@@ -90,6 +91,9 @@ def _add_intersectional_columns(df: pd.DataFrame) -> pd.DataFrame:
       fitzpatrick_approx       = ITA-derived approximate Fitzpatrick band
       race_ita_label           = '<race>_<ita_group>' (race x skin-tone)
       gender_ita_label         = '<gender>_<ita_group>' (gender x skin-tone)
+      gender_age_label         = '<gender>_<age_group>' (gender x age)
+      race_age_label           = '<race>_<age_group>' (race x age)
+      age_ita_label            = '<age_group>_<ita_group>' (age x skin-tone)
     Either side missing/unknown -> 'unknown' for the joint column too,
     rather than a half-formed label that would silently pollute a real
     subgroup's statistics."""
@@ -98,6 +102,7 @@ def _add_intersectional_columns(df: pd.DataFrame) -> pd.DataFrame:
     gender = df.get("gender_label")
     ita_group = df.get("ita_group")
     ita_value = df.get("ita_value")
+    age_group = df.get("age_group")
 
     def _join(a, b):
         if pd.isna(a) or pd.isna(b) or a == "unknown" or b == "unknown":
@@ -108,6 +113,9 @@ def _add_intersectional_columns(df: pd.DataFrame) -> pd.DataFrame:
     df["fitzpatrick_approx"] = [_approximate_fitzpatrick(v) for v in ita_value] if ita_value is not None else "unknown"
     df["race_ita_label"] = [_join(r, s) for r, s in zip(race, ita_group)] if race is not None and ita_group is not None else "unknown"
     df["gender_ita_label"] = [_join(g, s) for g, s in zip(gender, ita_group)] if gender is not None and ita_group is not None else "unknown"
+    df["gender_age_label"] = [_join(g, a) for g, a in zip(gender, age_group)] if gender is not None and age_group is not None else "unknown"
+    df["race_age_label"] = [_join(r, a) for r, a in zip(race, age_group)] if race is not None and age_group is not None else "unknown"
+    df["age_ita_label"] = [_join(a, s) for a, s in zip(age_group, ita_group)] if age_group is not None and ita_group is not None else "unknown"
     return df
 
 

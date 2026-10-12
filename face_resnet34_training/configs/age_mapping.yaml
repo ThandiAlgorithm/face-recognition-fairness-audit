@@ -1,0 +1,36 @@
+# Combined-M1 age harmonization (see src/combined_m1/ module docstring).
+#
+# FairFace's age_group (9 bands) and UTKFace's age_group (4 bands) are both
+# derived from the same underlying continuous age, just binned differently
+# -- unlike race, this is a clean arithmetic regrouping, not a social
+# category judgment, so every FairFace band has an unambiguous home in
+# UTKFace's coarser scheme (the harmonized taxonomy used here).
+#
+# LFW has no numeric age label at all -- only loosely-related, overlapping
+# LFWA+ attributes (Baby/Child/Youth/Middle_Aged/Senior) that don't bin a
+# single continuous age the same way. Mapping those onto numeric bands
+# would be a guess, so LFW's age_harmonized is always null (see
+# src/combined_m1/dataset.py); LFW's age-adjacent signal still reaches the
+# model, just through its own attribute head, unharmonized.
+
+harmonized_categories: ["0-19", "20-39", "40-59", "60+"]
+
+fairface:
+  "0-2": "0-19"
+  "3-9": "0-19"
+  "10-19": "0-19"
+  "20-29": "20-39"
+  "30-39": "20-39"
+  "40-49": "40-59"
+  "50-59": "40-59"
+  "60-69": "60+"
+  "70+": "60+"
+
+utkface:
+  "0-19": "0-19"
+  "20-39": "20-39"
+  "40-59": "40-59"
+  "60+": "60+"
+
+lfw:
+  source: null  # no numeric age label; age_harmonized is always null for LFW

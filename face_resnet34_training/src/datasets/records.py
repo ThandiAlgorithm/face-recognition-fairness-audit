@@ -133,6 +133,39 @@ def load_lfw_attributes() -> pd.DataFrame:
     return df
 
 
+LFW_ATTR_SCORES_PATH = REPO_ROOT / "data" / "LFW" / "lfw_attributes.txt"
+
+
+def load_lfw_attribute_scores() -> pd.DataFrame:
+    """Returns one row per LFW image: path_key (identity/filename.jpg) plus
+    one continuous-score column per attribute (attr_<Name>_score), parsed
+    from data/LFW/lfw_attributes.txt -- the original Kumar et al. 2009
+    "Describable Visual Attributes" classifier output, and the actual
+    source load_lfw_attributes()'s binary attr_ columns are thresholded
+    from (verified: attr_Male == 1 iff this file's Male score > 0, spot
+    checked). Never replaces the binary columns -- training already
+    depends on those -- this is purely an additive, optional signal (e.g.
+    attribute confidence/margin rather than just presence/absence) for
+    future finer-grained analysis."""
+    with open(LFW_ATTR_SCORES_PATH, encoding="utf-8") as f:
+        lines = [line.rstrip("\n") for line in f]
+    header = lines[1].lstrip("#").strip().split("\t")
+    attr_names = [h.strip().replace(" ", "_") for h in header[2:]]  # skip 'person', 'imagenum'
+
+    rows = []
+    for line in lines[2:]:
+        if not line.strip():
+            continue
+        parts = line.split("\t")
+        person, imagenum = parts[0], parts[1]
+        scores = [float(x) for x in parts[2:]]
+        person_key = person.replace(" ", "_")
+        path_key = f"{person_key}/{person_key}_{int(imagenum):04d}.jpg"
+        rows.append([path_key, *scores])
+
+    return pd.DataFrame(rows, columns=["path_key", *[f"attr_{n}_score" for n in attr_names]])
+
+
 def _lfw_path_key(original_path: str) -> str:
     # original_path looks like "LFW/lfw/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg";
     # lfw_att_73.mat keys images as "Aaron_Eckhart/Aaron_Eckhart_0001.jpg".
@@ -166,8 +199,10 @@ def build_records(dataset: str, master: pd.DataFrame) -> pd.DataFrame:
     sub = master[master["dataset"] == dataset].copy()
 
     lfw_attrs = None
+    lfw_attr_scores = None
     if dataset == "lfw":
         lfw_attrs = load_lfw_attributes()
+        lfw_attr_scores = load_lfw_attribute_scores()
         sub["path_key"] = sub["original_path"].map(_lfw_path_key)
 
     rows = []
@@ -216,6 +251,13 @@ def build_records(dataset: str, master: pd.DataFrame) -> pd.DataFrame:
         path_keys = sub["path_key"].to_numpy()
         attr_values = attr_lookup.reindex(path_keys)[attr_cols].reset_index(drop=True)
         records = pd.concat([records.reset_index(drop=True), attr_values], axis=1)
+
+    if lfw_attr_scores is not None:
+        score_lookup = lfw_attr_scores.set_index("path_key")
+        score_cols = [c for c in lfw_attr_scores.columns if c != "path_key"]
+        path_keys = sub["path_key"].to_numpy()
+        score_values = score_lookup.reindex(path_keys)[score_cols].reset_index(drop=True)
+        records = pd.concat([records.reset_index(drop=True), score_values], axis=1)
 
     if missing_files:
         print(f"[{dataset}] WARNING: {missing_files} rows had no resolvable image file on disk")

@@ -1,0 +1,10 @@
+balance_variable: ita_group
+original_group_counts:
+  <28: 59108
+  "\u226528": 15449
+  unknown: 3610
+sampling_formula: weight(i) = 1 / count(train images in i's ITA group); unknown ITA
+  forms its own group, never inferred
+replacement: true
+num_samples_per_epoch: 78167
+sampler_random_seed: 42

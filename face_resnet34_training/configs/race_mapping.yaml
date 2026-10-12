@@ -1,0 +1,49 @@
+# Combined-M1 race harmonization (see src/combined_m1/ module docstring).
+#
+# Maps each dataset's own race_label into a coarse, defensible 5-category
+# taxonomy for the combined model's race head. Anything without a clean
+# correspondence maps to null (excluded from the race loss for that image,
+# same ignore_index=-1 convention as the rest of the pipeline) rather than
+# being forced into a nearby bucket. race_label itself (race_original) is
+# always preserved unchanged in metadata, alongside source_dataset -- this
+# file only derives an additional, separate race_harmonized target.
+#
+# Rationale for the null entries:
+#   - FairFace "Middle Eastern": no consensus mapping into White/Black/
+#     Asian/Indian/Other: in different standards it is grouped with White,
+#     with Asian, or kept separate. Forcing a choice would be a guess.
+#   - FairFace "Latino_Hispanic": Hispanic/Latino is an ethnicity label
+#     (can co-occur with any race) in common taxonomies (e.g. US Census),
+#     not itself a race category -- there is no race it defensibly maps to.
+#   - UTKFace "Others": explicitly a catch-all in the source dataset, not
+#     a race category. Already flagged elsewhere in this project as
+#     statistically unreliable (n=173, 28% accuracy) for the same reason.
+
+harmonized_categories: [White, Black, Asian, Indian, Other]
+
+fairface:
+  White: White
+  Black: Black
+  Indian: Indian
+  East Asian: Asian
+  Southeast Asian: Asian
+  Middle Eastern: null
+  Latino_Hispanic: null
+
+utkface:
+  White: White
+  Black: Black
+  Asian: Asian
+  Indian: Indian
+  Others: null
+
+# LFW has no native race_label (that column is 'unknown' for every LFW row
+# -- see src/datasets/records.py). Its only genuine native race signal is
+# four of the LFWA+ attribute flags (Asian/Black/Indian/White), which are
+# real labels, not derived ones. race_harmonized for LFW is therefore built
+# from those four binary attributes directly (src/combined_m1/dataset.py),
+# not from this categorical map: exactly one flag set -> that category;
+# zero or more than one set -> null (ambiguous/unavailable).
+lfw:
+  source: attribute_flags
+  flags: [White, Black, Asian, Indian]

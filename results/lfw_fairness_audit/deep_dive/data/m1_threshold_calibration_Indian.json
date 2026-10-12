@@ -1,0 +1,17 @@
+{
+  "dataset": "lfw",
+  "attribute": "Indian",
+  "n_total": 1188,
+  "default_threshold_0.5": {
+    "recall_male": 0.0,
+    "recall_female": 0.9965546942291128,
+    "gap": 0.9965546942291128
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.03,
+    "recall_male": 0.8148148148148148,
+    "recall_female": 0.7932816537467701,
+    "gap": 0.021533161068044704
+  },
+  "per_race_balanced_threshold": {}
+}

@@ -1,0 +1,83 @@
+{
+  "dataset": "utkface",
+  "attribute": "gender",
+  "n_total": 2405,
+  "default_threshold_0.5": {
+    "recall_male": 0.9213036565977742,
+    "recall_female": 0.8804537521815009,
+    "gap": 0.04084990441627334
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.56,
+    "recall_male": 0.8998410174880763,
+    "recall_female": 0.9013961605584643,
+    "gap": 0.0015551430703879543
+  },
+  "per_race_balanced_threshold": {
+    "Asian": {
+      "n": 357,
+      "at_0.5": {
+        "recall_male": 0.8963414634146342,
+        "recall_female": 0.8549222797927462
+      },
+      "balanced": {
+        "threshold": 0.54,
+        "recall_male": 0.8719512195121951,
+        "recall_female": 0.8704663212435233,
+        "gap": 0.0014848982686718193
+      }
+    },
+    "Black": {
+      "n": 455,
+      "at_0.5": {
+        "recall_male": 0.9484978540772532,
+        "recall_female": 0.8918918918918919
+      },
+      "balanced": {
+        "threshold": 0.67,
+        "recall_male": 0.9098712446351931,
+        "recall_female": 0.9099099099099099,
+        "gap": 3.866527471685366e-05
+      }
+    },
+    "Indian": {
+      "n": 398,
+      "at_0.5": {
+        "recall_male": 0.8938053097345132,
+        "recall_female": 0.936046511627907
+      },
+      "balanced": {
+        "threshold": 0.44,
+        "recall_male": 0.9070796460176991,
+        "recall_female": 0.9069767441860465,
+        "gap": 0.00010290183165262423
+      }
+    },
+    "Others": {
+      "n": 173,
+      "at_0.5": {
+        "recall_male": 0.9066666666666666,
+        "recall_female": 0.8163265306122449
+      },
+      "balanced": {
+        "threshold": 0.59,
+        "recall_male": 0.8533333333333334,
+        "recall_female": 0.8571428571428571,
+        "gap": 0.003809523809523707
+      }
+    },
+    "White": {
+      "n": 1021,
+      "at_0.5": {
+        "recall_male": 0.9303571428571429,
+        "recall_female": 0.8785249457700651
+      },
+      "balanced": {
+        "threshold": 0.5650000000000001,
+        "recall_male": 0.9071428571428571,
+        "recall_female": 0.9067245119305857,
+        "gap": 0.0004183452122714648
+      }
+    }
+  }
+}

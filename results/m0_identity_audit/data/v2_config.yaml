@@ -1,0 +1,15 @@
+lr: 0.01
+batch_size: 32
+max_epochs: 30
+early_stopping_patience: 10
+seed: 42
+min_train_images_per_identity: 2
+n_train_identities: 1330
+optimizer: sgd
+momentum: 0.9
+weight_decay: 0.0001
+scheduler: cosine_annealing
+criterion: arcface
+mitigation: none
+arcface_scale: 64.0
+arcface_margin: 0.5

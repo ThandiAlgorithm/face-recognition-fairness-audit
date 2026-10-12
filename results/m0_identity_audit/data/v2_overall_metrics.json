@@ -1,0 +1,16 @@
+{
+  "n_pairs": 24293,
+  "n_genuine": 4293,
+  "n_impostor": 20000,
+  "roc_auc": 0.9452627009084557,
+  "eer": 0.12475,
+  "eer_threshold": 0.9491082758754492,
+  "global_threshold_used": 0.9508527559041977,
+  "threshold_selected_on": "validation",
+  "fmr_at_global_threshold": 0.1037,
+  "fnmr_at_global_threshold": 0.13952946657349172,
+  "tar_at_global_threshold": 0.8604705334265083,
+  "accuracy_at_global_threshold": 0.8899683036265591,
+  "tar_at_fmr_0.01": 0.5222455159562078,
+  "tar_at_fmr_0.001": 0.20335429769392033
+}

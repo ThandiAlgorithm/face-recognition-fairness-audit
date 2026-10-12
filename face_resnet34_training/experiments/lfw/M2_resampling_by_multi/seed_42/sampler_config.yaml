@@ -1,0 +1,15 @@
+balance_variable: multi
+original_group_counts:
+  decile_1: 2875
+  decile_2: 1397
+  decile_3: 1577
+  decile_4: 591
+  decile_5: 1197
+  decile_6: 976
+  decile_7: 903
+  decile_8: 1037
+sampling_formula: weight(i) = 1 / count(train images in i's multi group); unknown/missing
+  multi forms its own group, never inferred
+replacement: true
+num_samples_per_epoch: 10553
+sampler_random_seed: 42

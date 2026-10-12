@@ -1,0 +1,98 @@
+{
+  "dataset": "lfw",
+  "attribute": "Black",
+  "threshold": 0.5,
+  "n_true_negative_total": 1148,
+  "n_misclassified": 9,
+  "n_correct": 1139,
+  "misclassification_rate": 0.0078397212543554,
+  "attribute_rate_comparison": [],
+  "attribute_rate_comparison_note": "No other attribute had >= 10 cases in both the misclassified and correctly-classified groups -- sample too small for this comparison.",
+  "misclassified_by_race": {
+    "White": {
+      "n_misclassified": 1,
+      "n_total_female": 865,
+      "rate": 0.0012
+    },
+    "unknown": {
+      "n_misclassified": 8,
+      "n_total_female": 198,
+      "rate": 0.0404
+    },
+    "Asian": {
+      "n_misclassified": 0,
+      "n_total_female": 68,
+      "rate": 0.0
+    },
+    "Indian": {
+      "n_misclassified": 0,
+      "n_total_female": 17,
+      "rate": 0.0
+    }
+  },
+  "sample_misclassified_rows": [
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-654ffa81a7277d3c.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "unknown",
+      "model_confidence_male": 0.9477748274803162
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-26cda0d884a521ca.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.9040706753730774
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-d35a63e1e86d5b67.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.7282294631004333
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-11242ebc1e3d827f.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.7192866206169128
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-b6a278596bdec809.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.6894070506095886
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-995472e4ca0c4763.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.658675491809845
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-4204ecb892fb29fa.png",
+      "race_label": "White",
+      "age_group": "unknown",
+      "ita_group": "\u226528",
+      "model_confidence_male": 0.6223266124725342
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-7eda37fe3066b684.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.6105839014053345
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-5831e096420bcf96.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5690368413925171
+    }
+  ]
+}

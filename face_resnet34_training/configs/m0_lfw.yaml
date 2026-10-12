@@ -1,0 +1,35 @@
+# M0 -- unmitigated LFW face-verification baseline. See src/frs_m0/.
+dataset: lfw
+split_seed: 42
+pair_seed: 42
+min_train_images_per_identity: 2
+
+image_size: 224
+embedding_dim: 512
+
+architecture: resnet34_from_scratch
+pretrained: false
+
+optimizer: sgd
+momentum: 0.9
+weight_decay: 0.0001
+scheduler: cosine_annealing
+
+# lr/batch_size/num_workers/num_threads are set on the CLI per machine,
+# same convention as the M1-M4 attribute pipeline (benchmark first).
+max_epochs: 30
+early_stopping_patience: 10
+checkpoint_selection_metric: val_eer  # lower is better
+
+eval_interval_epochs: 1
+
+n_impostor_pairs_val: 20000
+n_impostor_pairs_test: 20000
+
+tar_at_fmr: [0.01, 0.001]
+
+paths:
+  aligned_images: data/derived/aligned/lfw
+  split_manifest: experiments/lfw/split_manifest.csv
+  lfw_demographics: ../metadata/master_annotations_lfw_demographics_derived.parquet
+  out_dir: outputs/M0_LFW

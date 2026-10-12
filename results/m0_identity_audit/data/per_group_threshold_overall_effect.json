@@ -1,0 +1,8 @@
+{
+  "accuracy_global_threshold": 0.6672292429918083,
+  "accuracy_per_group_threshold": 0.6745152924710822,
+  "tar_global_threshold": 0.6822734684369904,
+  "tar_per_group_threshold": 0.6738877242021896,
+  "fmr_global_threshold": 0.336,
+  "fmr_per_group_threshold": 0.32535
+}

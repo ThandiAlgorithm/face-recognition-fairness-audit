@@ -1,0 +1,63 @@
+{
+  "dataset": "lfw",
+  "attribute": "Black",
+  "threshold": 0.5,
+  "n_true_negative_total": 1148,
+  "n_misclassified": 4,
+  "n_correct": 1144,
+  "misclassification_rate": 0.003484320557491289,
+  "attribute_rate_comparison": [],
+  "attribute_rate_comparison_note": "No other attribute had >= 10 cases in both the misclassified and correctly-classified groups -- sample too small for this comparison.",
+  "misclassified_by_race": {
+    "White": {
+      "n_misclassified": 1,
+      "n_total_female": 865,
+      "rate": 0.0012
+    },
+    "unknown": {
+      "n_misclassified": 3,
+      "n_total_female": 198,
+      "rate": 0.0152
+    },
+    "Asian": {
+      "n_misclassified": 0,
+      "n_total_female": 68,
+      "rate": 0.0
+    },
+    "Indian": {
+      "n_misclassified": 0,
+      "n_total_female": 17,
+      "rate": 0.0
+    }
+  },
+  "sample_misclassified_rows": [
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-654ffa81a7277d3c.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "unknown",
+      "model_confidence_male": 0.6678666472434998
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-11242ebc1e3d827f.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5720052719116211
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-62edb37f917957ed.png",
+      "race_label": "White",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5543414354324341
+    },
+    {
+      "image_path": "data/derived/aligned/lfw/lfw-c9663868ba33bc58.png",
+      "race_label": "unknown",
+      "age_group": "unknown",
+      "ita_group": "<28",
+      "model_confidence_male": 0.5401527285575867
+    }
+  ]
+}

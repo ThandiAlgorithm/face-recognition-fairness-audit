@@ -1,0 +1,13 @@
+{
+  "n_test": 2405,
+  "race_accuracy": 0.7612312811980033,
+  "race_n_valid": 2404,
+  "gender_accuracy": 0.8997504159733777,
+  "gender_n_valid": 2404,
+  "age_group_accuracy": 0.7312811980033278,
+  "age_group_n_valid": 2404,
+  "checkpoint_path": "/tmp/26p66_resnet34/project/face_resnet34_training/experiments/utkface/M2_resampling/seed_42/best_checkpoint.pt",
+  "checkpoint_epoch": 5,
+  "method": "M2",
+  "seed": 42
+}

@@ -1,0 +1,44 @@
+{
+  "attributes": [
+    "race_label",
+    "gender_label",
+    "age_group",
+    "fitzpatrick_approx"
+  ],
+  "group_counts": {
+    "race_label": {
+      "White": 8152,
+      "Black": 3640,
+      "Indian": 3225,
+      "Asian": 2855,
+      "Others": 1366,
+      "unknown": 3
+    },
+    "gender_label": {
+      "male": 10040,
+      "female": 9198,
+      "unknown": 3
+    },
+    "age_group": {
+      "20-39": 9529,
+      "0-19": 3885,
+      "40-59": 3640,
+      "60+": 2184
+    },
+    "fitzpatrick_approx": {
+      "I-II (very light)": 4553,
+      "II-III (light)": 3942,
+      "III-IV (intermediate)": 3145,
+      "IV-V (tan)": 2731,
+      "V (brown)": 2575,
+      "unknown": 1458,
+      "VI (dark)": 837
+    }
+  },
+  "n_images": 19241,
+  "mean_weight": 0.8755372639845282,
+  "min_weight": 0.5351571927296269,
+  "max_weight_before_cap": 1069.5728656345939,
+  "max_weight_cap": 4.0,
+  "n_clipped_at_cap": 3
+}

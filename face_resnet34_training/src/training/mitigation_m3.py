@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 from pathlib import Path
 
@@ -49,8 +50,10 @@ from label_encoders import load_labels
 
 from train import train_dataset, EXPERIMENTS_DIR
 from losses import IGNORE_INDEX, FAIRFACE_UTKFACE_TASKS
+from demographic_weights import compute_multi_demographic_weights
 
 NEUTRAL_WEIGHT = 1.0
+REWEIGHT_VARIABLES = ["ita", "multi"]
 
 
 def _ita_bucket(value) -> str:
@@ -226,6 +229,67 @@ class WeightedAttributeLoss(nn.Module):
         return {"attributes": loss, "total": loss}
 
 
+class MultiWeightedMultiTaskLoss(nn.Module):
+    """FairFace/UTKFace, --reweight-variable multi: ONE combined
+    race+gender+age+skin-tone rarity weight per image (demographic_weights.py,
+    same formula M2-MULTI's sampler uses), applied uniformly to every task's
+    loss -- unlike WeightedMultiTaskLoss above, which computes a separate
+    per-task (ITA, class) weight. Looked up by image_path, since that's
+    already carried in meta for every batch (face_dataset.py)."""
+
+    def __init__(self, weight_by_image: dict[str, float]):
+        super().__init__()
+        self.weight_by_image = weight_by_image
+        self.ce = nn.CrossEntropyLoss(ignore_index=IGNORE_INDEX, reduction="none")
+        self.tracker = _EpochWeightTracker()
+
+    def forward(self, outputs: dict, targets: dict, meta: dict | None = None) -> dict:
+        losses = {}
+        weights = None
+        if self.training:
+            device = next(iter(outputs.values())).device
+            weights = torch.tensor(
+                [self.weight_by_image.get(p, NEUTRAL_WEIGHT) for p in meta["image_path"]],
+                dtype=torch.float32, device=device,
+            )
+            self.tracker.record("multi", weights)
+        for task in FAIRFACE_UTKFACE_TASKS:
+            per_sample = self.ce(outputs[task], targets[task])
+            valid_mask = targets[task] != IGNORE_INDEX
+            n_valid = valid_mask.sum().clamp(min=1)
+            if self.training:
+                losses[task] = (per_sample * weights * valid_mask).sum() / n_valid
+            else:
+                losses[task] = (per_sample * valid_mask).sum() / n_valid
+        losses["total"] = sum(losses[task] for task in FAIRFACE_UTKFACE_TASKS)
+        return losses
+
+
+class MultiWeightedAttributeLoss(nn.Module):
+    """LFW, --reweight-variable multi: same combined per-image weight as
+    above, applied uniformly across every LFWA+ attribute's BCE term for
+    that image."""
+
+    def __init__(self, weight_by_image: dict[str, float]):
+        super().__init__()
+        self.weight_by_image = weight_by_image
+        self.bce = nn.BCEWithLogitsLoss(reduction="none")
+        self.tracker = _EpochWeightTracker()
+
+    def forward(self, outputs: dict, targets: dict, meta: dict | None = None) -> dict:
+        per_sample = self.bce(outputs["attributes"], targets["attributes"])  # (B, n_attributes)
+        if not self.training:
+            loss = per_sample.mean()
+            return {"attributes": loss, "total": loss}
+        weights = torch.tensor(
+            [self.weight_by_image.get(p, NEUTRAL_WEIGHT) for p in meta["image_path"]],
+            dtype=torch.float32, device=per_sample.device,
+        ).unsqueeze(1)
+        self.tracker.record("attributes", weights.squeeze(1))
+        loss = (per_sample * weights).mean()
+        return {"attributes": loss, "total": loss}
+
+
 def run_m3(
     dataset: str,
     max_epochs: int,
@@ -240,9 +304,60 @@ def run_m3(
     early_stopping_patience: int | None,
     weight_clip: float | None = None,
     max_steps_per_epoch: int | None = None,
+    reweight_variable: str = "ita",
 ) -> dict:
-    out_dir = EXPERIMENTS_DIR / dataset / "M3_reweighting" / f"seed_{seed}"
+    dir_name = "M3_reweighting" if reweight_variable == "ita" else "M3_reweighting_multi"
+    out_dir = EXPERIMENTS_DIR / dataset / dir_name / f"seed_{seed}"
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if reweight_variable == "multi":
+        train_ds = FaceDataset(dataset, "train", transform=None)
+        weights_arr, diagnostics = compute_multi_demographic_weights(train_ds.df)
+        weight_by_image = dict(zip(train_ds.df["image_path"], weights_arr.tolist()))
+        (out_dir / "weight_diagnostics.json").write_text(json.dumps(diagnostics, indent=2))
+        labels = load_labels(dataset)
+        loss_fn = MultiWeightedAttributeLoss(weight_by_image) if dataset == "lfw" else MultiWeightedMultiTaskLoss(weight_by_image)
+
+        weight_history_path = out_dir / "loss_weight_history.csv"
+        weight_history_rows: list[dict] = []
+
+        def epoch_callback(epoch: int, val_metrics: dict) -> None:
+            row = {"epoch": epoch}
+            for task, stats in loss_fn.tracker.epoch_summary().items():
+                row[f"{task}_mean_weight"] = stats["mean"]
+                row[f"{task}_min_weight"] = stats["min"]
+                row[f"{task}_max_weight"] = stats["max"]
+            weight_history_rows.append(row)
+            with open(weight_history_path, "w", newline="") as f:
+                fieldnames = sorted({k for r in weight_history_rows for k in r})
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(weight_history_rows)
+
+        import train as train_module
+        original_build_loss = train_module.build_loss
+        train_module.build_loss = lambda _dataset: loss_fn
+        try:
+            result = train_dataset(
+                dataset=dataset,
+                max_epochs=max_epochs,
+                batch_size=batch_size,
+                lr=lr,
+                weight_decay=weight_decay,
+                seed=seed,
+                device_str=device_str,
+                allow_dirty=allow_dirty,
+                num_threads=num_threads,
+                num_workers=num_workers,
+                early_stopping_patience=early_stopping_patience,
+                max_steps_per_epoch=max_steps_per_epoch,
+                out_dir=out_dir,
+                epoch_callback=epoch_callback,
+                method="M3_multi",
+            )
+        finally:
+            train_module.build_loss = original_build_loss
+        return result
 
     tables = compute_reweighting_tables(dataset, weight_clip)
     combined = pd.concat(
@@ -323,6 +438,11 @@ def main() -> None:
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--allow-dirty", action="store_true")
     parser.add_argument("--weight-clip", type=float, default=None, help="Cap normalised weights at this value; always recorded in reweighting_table.csv when used.")
+    parser.add_argument("--reweight-variable", choices=REWEIGHT_VARIABLES, default="ita",
+                         help="'ita' (default) reproduces the original per-task (ITA, class) reweighing, "
+                              "writing to M3_reweighting/ as before. 'multi' uses one combined "
+                              "race+gender+age+skin-tone rarity weight per image applied uniformly across "
+                              "every task, writing to M3_reweighting_multi/ instead so it never overwrites the original.")
     parser.add_argument("--smoke-test-steps", type=int, default=None)
     args = parser.parse_args()
 
@@ -340,6 +460,7 @@ def main() -> None:
         early_stopping_patience=args.early_stopping_patience,
         weight_clip=args.weight_clip,
         max_steps_per_epoch=args.smoke_test_steps,
+        reweight_variable=args.reweight_variable,
     )
 
 

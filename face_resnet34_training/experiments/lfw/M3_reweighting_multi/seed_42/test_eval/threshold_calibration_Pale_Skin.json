@@ -1,0 +1,57 @@
+{
+  "dataset": "lfw",
+  "attribute": "Pale_Skin",
+  "n_total": 1188,
+  "default_threshold_0.5": {
+    "recall_male": 0.8922558922558923,
+    "recall_female": 0.8047138047138047,
+    "gap": 0.08754208754208759
+  },
+  "global_balanced_threshold": {
+    "threshold": 0.5850000000000001,
+    "recall_male": 0.8501683501683501,
+    "recall_female": 0.8535353535353535,
+    "gap": 0.0033670033670033517
+  },
+  "per_race_balanced_threshold": {
+    "Asian": {
+      "n": 68,
+      "at_0.5": {
+        "recall_male": 1.0,
+        "recall_female": 0.8235294117647058
+      },
+      "balanced": {
+        "threshold": 0.7000000000000001,
+        "recall_male": 0.8823529411764706,
+        "recall_female": 0.8823529411764706,
+        "gap": 0.0
+      }
+    },
+    "Black": {
+      "n": 34,
+      "at_0.5": {
+        "recall_male": 0.5,
+        "recall_female": 0.9333333333333333
+      },
+      "balanced": {
+        "threshold": 0.035,
+        "recall_male": 0.75,
+        "recall_female": 0.8,
+        "gap": 0.050000000000000044
+      }
+    },
+    "White": {
+      "n": 865,
+      "at_0.5": {
+        "recall_male": 0.8977505112474438,
+        "recall_female": 0.7606382978723404
+      },
+      "balanced": {
+        "threshold": 0.61,
+        "recall_male": 0.8425357873210634,
+        "recall_female": 0.8404255319148937,
+        "gap": 0.0021102554061697143
+      }
+    }
+  }
+}
