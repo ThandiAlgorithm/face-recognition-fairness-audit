@@ -28,3 +28,17 @@ DATASETS = {
         "has_race": False,
     },
 }
+
+# BAL-M1: this project's own classifier, trained on HarmoFace-95K (balanced
+# across race/gender/age/skin tone). Not in DATASETS above since its label
+# vocab differs (7-way race, plus a skin_tone head the other datasets don't
+# have) -- classifiers.py adds it to the response under "harmoface_balanced"
+# when ours_models.bal_m1_available(); this entry is just its display metadata.
+HARMOFACE_BALANCED_META = {
+    "label": "HarmoFace Balanced (BAL-M1, ours)",
+    "race": ["White", "Black", "Indian", "East Asian", "Southeast Asian", "Middle Eastern", "Latino"],
+    "has_race": True,
+    "has_skin_tone": True,
+    "skin_tone": ["I-II (very light)", "II-III (light)", "III-IV (intermediate)",
+                  "IV-V (tan)", "V (brown)", "VI (dark)"],
+}

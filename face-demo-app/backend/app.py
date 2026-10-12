@@ -12,6 +12,7 @@ import detect
 import quality
 import recognition
 import classifiers
+import ours_models
 
 FRONTEND = os.path.join(os.path.dirname(config.BASE), "frontend")
 app = Flask(__name__, static_folder=FRONTEND, static_url_path="")
@@ -32,6 +33,10 @@ def analyse_one(bgr):
         return {"face_found": False}
     face = detect.crop(bgr, det["bbox"])
     tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+    tmp.close()  # NamedTemporaryFile(delete=False) still holds its own open
+                 # handle on Windows until closed -- leaving it open is what
+                 # made the later os.unlink below raise WinError 32 (the
+                 # file "in use by another process" was this same handle).
     cv2.imwrite(tmp.name, face)
     df = DeepFace.analyze(
         img_path=tmp.name,
@@ -39,7 +44,10 @@ def analyse_one(bgr):
         detector_backend="skip",
         enforce_detection=False,
     )
-    os.unlink(tmp.name)
+    try:
+        os.unlink(tmp.name)
+    except OSError:
+        pass  # best-effort cleanup; a lingering AV/indexer lock here should never fail the request
     df = df[0] if isinstance(df, list) else df
     return {
         "face_found": True,
@@ -104,14 +112,28 @@ def analyze():
 
     t1 = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
     t2 = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+    t1.close(); t2.close()  # see analyse_one's comment -- same Windows handle issue
     cv2.imwrite(t1.name, r1["_face"])
     cv2.imwrite(t2.name, r2["_face"])
-    match = recognition.compare(t1.name, t2.name)
-    os.unlink(t1.name)
-    os.unlink(t2.name)
+    match = recognition.compare_all(t1.name, t2.name)
+    for p in (t1.name, t2.name):
+        try:
+            os.unlink(p)
+        except OSError:
+            pass
 
     for r in (r1, r2):
         r.pop("_face", None)
+
+    dataset_meta = {k: {"label": v["label"], "has_race": v["has_race"],
+                         "race_labels": v["race"]}
+                     for k, v in config.DATASETS.items()}
+    if ours_models.bal_m1_available():
+        m = config.HARMOFACE_BALANCED_META
+        dataset_meta["harmoface_balanced"] = {
+            "label": m["label"], "has_race": m["has_race"], "race_labels": m["race"],
+            "has_skin_tone": m["has_skin_tone"], "skin_tone_labels": m["skin_tone"],
+        }
 
     return jsonify({
         "face_found": {"photo1": True, "photo2": True},
@@ -119,9 +141,7 @@ def analyze():
         "photo2": r2,
         "recognition": match,
         "diff": build_diff(r1["quality"], r2["quality"]),
-        "dataset_meta": {k: {"label": v["label"], "has_race": v["has_race"],
-                             "race_labels": v["race"]}
-                         for k, v in config.DATASETS.items()},
+        "dataset_meta": dataset_meta,
     })
 
 

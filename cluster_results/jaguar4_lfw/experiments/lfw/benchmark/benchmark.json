@@ -1,0 +1,21 @@
+{
+  "hostname": "jaguar4",
+  "cpu_model": "Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz",
+  "torch_threads": 4,
+  "requested_num_threads": 4,
+  "dataloader_workers": 2,
+  "dataset": "lfw",
+  "n_train_images": 10553,
+  "batch_size": 32,
+  "batches_per_epoch": 330,
+  "warmup_batches": 20,
+  "timed_batches": 200,
+  "mean_s_per_batch": 6.206137900268659,
+  "median_s_per_batch": 6.202572023961693,
+  "p90_s_per_batch": 6.230679055210203,
+  "images_per_sec": 5.156185781597722,
+  "estimated_epoch_s": 2048.0255070886574,
+  "estimated_10_epochs_s": 20480.255070886575,
+  "estimated_20_epochs_s": 40960.51014177315,
+  "estimated_30_epochs_s": 61440.765212659724
+}

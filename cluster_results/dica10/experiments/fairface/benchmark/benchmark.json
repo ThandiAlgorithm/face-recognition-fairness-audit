@@ -1,0 +1,21 @@
+{
+  "hostname": "dica10",
+  "cpu_model": "Intel(R) Xeon(R) CPU E5-2620 v3 @ 2.40GHz",
+  "torch_threads": 12,
+  "requested_num_threads": 12,
+  "dataloader_workers": 4,
+  "dataset": "fairface",
+  "n_train_images": 78167,
+  "batch_size": 64,
+  "batches_per_epoch": 1222,
+  "warmup_batches": 20,
+  "timed_batches": 200,
+  "mean_s_per_batch": 3.7121502140187657,
+  "median_s_per_batch": 3.707035529660061,
+  "p90_s_per_batch": 3.8363562850281596,
+  "images_per_sec": 17.240681629290464,
+  "estimated_epoch_s": 4536.247561530931,
+  "estimated_10_epochs_s": 45362.47561530931,
+  "estimated_20_epochs_s": 90724.95123061862,
+  "estimated_30_epochs_s": 136087.42684592793
+}

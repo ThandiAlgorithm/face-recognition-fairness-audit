@@ -1,0 +1,29 @@
+{
+  "race": {
+    "White": 0,
+    "Black": 1,
+    "Indian": 2,
+    "East Asian": 3,
+    "Southeast Asian": 4,
+    "Middle Eastern": 5,
+    "Latino": 6
+  },
+  "gender": {
+    "female": 0,
+    "male": 1
+  },
+  "age": {
+    "0-19": 0,
+    "20-39": 1,
+    "40-59": 2,
+    "60+": 3
+  },
+  "skin_tone": {
+    "I-II (very light)": 0,
+    "II-III (light)": 1,
+    "III-IV (intermediate)": 2,
+    "IV-V (tan)": 3,
+    "V (brown)": 4,
+    "VI (dark)": 5
+  }
+}

@@ -6,6 +6,7 @@ from torchvision import transforms
 
 import config
 from model_arch import MultiHeadResNet
+import ours_models
 
 _TF = transforms.Compose([
     transforms.ToTensor(),
@@ -113,4 +114,6 @@ def classify_all(face_bgr, df_analysis):
     for name in config.DATASETS:
         custom = _custom(name, face_bgr)
         out[name] = custom if custom is not None else _fallback(name, df_analysis)
+    if ours_models.bal_m1_available():
+        out["harmoface_balanced"] = ours_models.bal_m1_classify(face_bgr)
     return out

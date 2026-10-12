@@ -1,0 +1,47 @@
+{
+  "n_test": 9319,
+  "per_task": {
+    "race": {
+      "n": 9319,
+      "macro_f1": 0.6094904096858622,
+      "balanced_accuracy": 0.6114230781229083
+    },
+    "gender": {
+      "n": 9317,
+      "macro_f1": 0.867336837007441,
+      "balanced_accuracy": 0.8711314227176427
+    },
+    "age": {
+      "n": 8943,
+      "macro_f1": 0.6727078343707285,
+      "balanced_accuracy": 0.6816356533726637
+    },
+    "skin_tone": {
+      "n": 8924,
+      "macro_f1": 0.6788468851453427,
+      "balanced_accuracy": 0.676599351275773
+    }
+  },
+  "mean_macro_f1": 0.7070954915523436,
+  "mean_balanced_accuracy": 0.7101973763722469,
+  "equalized_odds_gap_detail": {
+    "race_by_gender": 0.05898857291123947,
+    "race_by_age": 0.17710950483501903,
+    "race_by_skin_tone": 0.32899346661134754,
+    "gender_by_race": 0.08572441638357983,
+    "gender_by_age": 0.24223975641019077,
+    "gender_by_skin_tone": 0.07570472856372268,
+    "age_by_race": 0.14537084758907431,
+    "age_by_gender": 0.09905809169484979,
+    "age_by_skin_tone": 0.17712703785740908,
+    "skin_tone_by_race": 0.21627598725132344,
+    "skin_tone_by_gender": 0.045856891440953805,
+    "skin_tone_by_age": 0.08679690737603517
+  },
+  "equalized_odds_gap_by_attribute": {
+    "race": 0.14912375040799253,
+    "gender": 0.06796785201568102,
+    "age": 0.16871538954041498,
+    "skin_tone": 0.19394174434415978
+  }
+}
