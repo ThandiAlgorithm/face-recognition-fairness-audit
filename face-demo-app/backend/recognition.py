@@ -1,4 +1,3 @@
-import cv2
 from deepface import DeepFace
 import config
 import ours_models
@@ -22,15 +21,15 @@ def _deepface_compare(path1, path2):
     }
 
 
-def compare_all(path1, path2):
+def compare_all(path1, path2, aligned1, aligned2):
     """Runs every available recognition model and returns all results --
     no upfront choice, since the point of this demo is comparing a
-    deployed system (DeepFace) against our own model, not picking one."""
+    deployed system (DeepFace) against our own model, not picking one.
+    DeepFace reads its own loose-crop jpg files; ThirdLens/M0 needs the
+    landmark-aligned arrays it was trained on (see detect.align())."""
     results = {"deepface": _deepface_compare(path1, path2)}
     if ours_models.m0_available():
-        face1 = cv2.imread(path1)
-        face2 = cv2.imread(path2)
-        thirdlens = ours_models.m0_compare(face1, face2)
+        thirdlens = ours_models.m0_compare(aligned1, aligned2)
         if thirdlens is not None:
             results["thirdlens"] = thirdlens
     return results

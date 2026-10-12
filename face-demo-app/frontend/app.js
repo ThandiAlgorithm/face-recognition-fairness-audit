@@ -160,12 +160,6 @@ function renderResults() {
   renderRecog("deepface", rec.deepface);
   renderRecog("thirdlens", rec.thirdlens);
 
-  const ATTR_ICONS = {
-    Smile: "🙂", Eyeglasses: "👓", Sunglasses: "🕶️", Mustache: "👨", Goatee: "🧔",
-    Sideburns: "🧔", "Facial hair": "🧔", Bald: "👨‍🦲", Bangs: "💇",
-    "Black hair": "💇", "Blond hair": "💇", "Brown hair": "💇", "Gray hair": "💇",
-    "Straight hair": "💇", "Wavy hair": "💇", "Heavy makeup": "💄", Lipstick: "💄",
-  };
   const attrCard = get("attr-card");
   const realChanges = (state.result.attribute_changes || []).filter(c => c.change !== "No confident change");
   if (realChanges.length) {
@@ -175,8 +169,7 @@ function renderResults() {
     realChanges.forEach(c => {
       const li = document.createElement("li");
       li.className = "change-row";
-      li.innerHTML = `<span class="icon">${ATTR_ICONS[c.attribute] || "✨"}</span>
-        <span><b>${c.attribute}</b><small>Photo 1: ${c.photo1_state} &rarr; Photo 2: ${c.photo2_state}</small></span>
+      li.innerHTML = `<span><b>${c.attribute}</b><small>Photo 1: ${c.photo1_state} &rarr; Photo 2: ${c.photo2_state}</small></span>
         <span class="chip${c.change === "Removed" ? " orange" : ""}">${c.change}</span>`;
       list.appendChild(li);
     });

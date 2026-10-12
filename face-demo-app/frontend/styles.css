@@ -190,13 +190,12 @@ input.sign{font-family:Georgia,serif;font-style:italic}
 .cmp tr.big td:first-child::after{content:" biggest change";font-size:10px;background:var(--orange);color:#fff;border-radius:6px;padding:1px 5px;margin-left:6px;font-family:Inter,sans-serif}
 
 /* attribute-change rows (ours_models.py's build_attribute_changes), styled like
-   ThirdLens's .change-row: icon + label/sub-text + a status chip */
+   ThirdLens's .change-row: label/sub-text + a status chip */
 #attr-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
 .change-row{
-  display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:12px;
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
   background:rgba(255,255,255,.66);padding:12px 13px;border-radius:12px;
 }
-.change-row .icon{font-size:22px}
 .change-row b{display:block;font-size:14px;color:var(--ink)}
 .change-row small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .change-row .chip{
