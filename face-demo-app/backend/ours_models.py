@@ -40,11 +40,43 @@ def _load_module(unique_name, file_path):
 
 _frs_m0_model = _load_module("_frs_m0_model", os.path.join(TRAINING_ROOT, "src", "frs_m0", "model.py"))
 _bal_m1_model = _load_module("_bal_m1_model", os.path.join(TRAINING_ROOT, "src", "bal_m1", "model.py"))
+_heads_model = _load_module("_heads_model", os.path.join(TRAINING_ROOT, "src", "models", "heads.py"))
 
 M0_CHECKPOINT = os.path.join(TRAINING_ROOT, "outputs", "M0_LFW_arcface", "best.pt")
 M0_THRESHOLD = 0.9509  # EER-selected on the LFW validation split, see outputs/M0_LFW_arcface/threshold.json
 BAL_M1_CHECKPOINT = os.path.join(TRAINING_ROOT, "experiments", "harmoface", "BAL-M1", "best.pt")
 BAL_M1_LABEL_MAPPINGS = os.path.join(TRAINING_ROOT, "experiments", "harmoface", "BAL-M1", "label_mappings.json")
+
+# M1 baseline, not a mitigation variant -- this feature reads one photo at a
+# time, so the population-level fairness tradeoffs M2/M3/M4 were built for
+# don't apply; the plain highest-accuracy checkpoint is the right one here.
+LFW_ATTR_CHECKPOINT = os.path.join(TRAINING_ROOT, "models", "resnet34_baseline_lfw_m1.pt")
+LFW_ATTR_LABELS = os.path.join(TRAINING_ROOT, "configs", "lfw_labels.json")
+
+# A curated subset of LFWA+'s 73 trained attributes -- see
+# face-demo-app/backend/ours_models.py's build_attribute_changes for why the
+# full set isn't surfaced.
+DISPLAY_ATTRS = {
+    "Smiling": "Smile",
+    "Eyeglasses": "Eyeglasses",
+    "Sunglasses": "Sunglasses",
+    "Mustache": "Mustache",
+    "Goatee": "Goatee",
+    "Sideburns": "Sideburns",
+    "5_o_Clock_Shadow": "Facial hair",
+    "Bald": "Bald",
+    "Bangs": "Bangs",
+    "Black_Hair": "Black hair",
+    "Blond_Hair": "Blond hair",
+    "Brown_Hair": "Brown hair",
+    "Gray_Hair": "Gray hair",
+    "Straight_Hair": "Straight hair",
+    "Wavy_Hair": "Wavy hair",
+    "Heavy_Makeup": "Heavy makeup",
+    "Wearing_Lipstick": "Lipstick",
+}
+ATTR_STATE_THRESHOLD = 0.50
+ATTR_MIN_DELTA = 0.20
 
 IMAGE_SIZE = 224
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
@@ -109,12 +141,34 @@ def _load_bal_m1():
     return _cache["bal_m1"]
 
 
+def _load_lfw_attributes():
+    if "lfw_attr" in _cache:
+        return _cache["lfw_attr"]
+    if not os.path.exists(LFW_ATTR_CHECKPOINT):
+        _cache["lfw_attr"] = None
+        return None
+    import json
+
+    with open(LFW_ATTR_LABELS) as f:
+        labels = json.load(f)
+    model = _heads_model.build_model("lfw", labels)
+    ckpt = _load_checkpoint(LFW_ATTR_CHECKPOINT)
+    model.load_state_dict(ckpt["model_state_dict"], strict=False)
+    model.eval()
+    _cache["lfw_attr"] = (model, labels["attributes"])
+    return _cache["lfw_attr"]
+
+
 def m0_available():
     return _load_m0() is not None
 
 
 def bal_m1_available():
     return _load_bal_m1() is not None
+
+
+def lfw_attributes_available():
+    return _load_lfw_attributes() is not None
 
 
 def m0_embed(face_bgr):
@@ -165,3 +219,50 @@ def bal_m1_classify(face_bgr):
         else:
             result[task] = {labels[i]: round(float(probs[i]) * 100, 1) for i in range(len(probs))}
     return result
+
+
+def lfw_attribute_probs(face_bgr):
+    """Raw sigmoid probability per LFWA+ attribute (all 73) for one face.
+    Internal -- app.py feeds the photo1/photo2 pair into
+    build_attribute_changes rather than showing this raw."""
+    loaded = _load_lfw_attributes()
+    if loaded is None:
+        return None
+    model, names = loaded
+    with torch.no_grad():
+        logits = model(_to_tensor(face_bgr))["attributes"]
+        probs = torch.sigmoid(logits).squeeze(0).numpy()
+    return {name: float(probs[i]) for i, name in enumerate(names)}
+
+
+def build_attribute_changes(probs1, probs2, display_attrs=None,
+                             state_threshold=ATTR_STATE_THRESHOLD, min_delta=ATTR_MIN_DELTA):
+    """Compares two photos' attribute probabilities and reports what
+    changed. A probability crossing the 0.5 state threshold isn't enough on
+    its own -- e.g. 0.51 -> 0.48 is technically Yes->No but is noise, not a
+    real change -- so a change is only reported when the state ALSO moved
+    by at least min_delta."""
+    if display_attrs is None:
+        display_attrs = DISPLAY_ATTRS
+    changes = []
+    for key, label in display_attrs.items():
+        if key not in probs1 or key not in probs2:
+            continue
+        p1, p2 = probs1[key], probs2[key]
+        state1 = p1 >= state_threshold
+        state2 = p2 >= state_threshold
+        delta = p2 - p1
+        if state1 != state2 and abs(delta) >= min_delta:
+            change = "Appeared" if state2 else "Removed"
+        else:
+            change = "No confident change"
+        changes.append({
+            "attribute": label,
+            "photo1_probability": round(p1, 3),
+            "photo2_probability": round(p2, 3),
+            "photo1_state": "Yes" if state1 else "No",
+            "photo2_state": "Yes" if state2 else "No",
+            "change": change,
+            "delta": round(delta, 3),
+        })
+    return changes

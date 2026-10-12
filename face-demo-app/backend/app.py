@@ -55,6 +55,7 @@ def analyse_one(bgr):
         "quality": quality.measure(bgr, face, det),
         "datasets": classifiers.classify_all(face, df),
         "_face": face,
+        "_attrs": ours_models.lfw_attribute_probs(face) if ours_models.lfw_attributes_available() else None,
     }
 
 
@@ -122,8 +123,13 @@ def analyze():
         except OSError:
             pass
 
+    attribute_changes = []
+    if r1["_attrs"] and r2["_attrs"]:
+        attribute_changes = ours_models.build_attribute_changes(r1["_attrs"], r2["_attrs"])
+
     for r in (r1, r2):
         r.pop("_face", None)
+        r.pop("_attrs", None)
 
     dataset_meta = {k: {"label": v["label"], "has_race": v["has_race"],
                          "race_labels": v["race"]}
@@ -141,6 +147,7 @@ def analyze():
         "photo2": r2,
         "recognition": match,
         "diff": build_diff(r1["quality"], r2["quality"]),
+        "attribute_changes": attribute_changes,
         "dataset_meta": dataset_meta,
     })
 

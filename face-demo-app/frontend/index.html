@@ -3,17 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Face Demo</title>
+<title>ThirdLens</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=1791840941">
 </head>
 <body>
 <div id="app">
 
   <section class="screen active" data-screen="name">
     <div class="pad">
-      <h1>See how a face model reads you</h1>
+      <div class="brand-row">
+        <div class="brand-mark"></div>
+        <span class="brand-title">ThirdLens</span>
+      </div>
+      <h1>See how a <span class="orange">face model</span> reads you</h1>
       <p class="lead">Take two photos. The app estimates your age and gender, shows how three datasets classify you, and explains what changed between your photos.</p>
       <label class="field">
         <span>Your first name</span>
@@ -84,8 +88,14 @@
       <h1>Check your photos</h1>
       <p class="lead">Make sure your whole face is visible in both.</p>
       <div class="pair">
-        <div><img id="rev1" alt="Photo 1"><button class="btn ghost sm" data-go="cam1">Retake 1</button></div>
-        <div><img id="rev2" alt="Photo 2"><button class="btn ghost sm" data-go="cam2">Retake 2</button></div>
+        <div>
+          <div class="polaroid-frame"><img id="rev1" alt="Photo 1"></div>
+          <button class="btn ghost sm" data-go="cam1">Retake 1</button>
+        </div>
+        <div>
+          <div class="polaroid-frame"><img id="rev2" alt="Photo 2"></div>
+          <button class="btn ghost sm" data-go="cam2">Retake 2</button>
+        </div>
       </div>
       <p class="note">The app will show how each dataset classifies you: FairFace, UTKFace, LFW and this project's own balanced model. It also compares two recognition models (a general one and our own) on your photos, so you can see where they agree or disagree.</p>
     </div>
@@ -94,6 +104,7 @@
 
   <section class="screen" data-screen="processing">
     <div class="pad">
+      <div class="spinner"></div>
       <h1>Analysing your photos</h1>
       <ul class="steps" id="steps">
         <li data-s="detect">Find the face</li>
@@ -102,6 +113,7 @@
         <li data-s="recog">Compare Photo 1 with Photo 2</li>
         <li data-s="classify">Estimate age, gender and dataset scores</li>
       </ul>
+      <p class="note" id="proc-wait" hidden>Still working &mdash; the first analysis of a session can take up to a minute while the models warm up.</p>
       <p class="err" id="proc-err"></p>
     </div>
     <div class="foot"><button class="btn ghost" data-go="review" id="proc-back" hidden>Back</button></div>
@@ -109,6 +121,10 @@
 
   <section class="screen" data-screen="results">
     <div class="pad">
+      <div class="brand-row">
+        <div class="brand-mark"></div>
+        <span class="brand-title">ThirdLens</span>
+      </div>
       <span class="kicker">RESULTS</span>
       <h1 id="greeting">Here is what the model sees</h1>
 
@@ -123,18 +139,18 @@
           <button class="chip active" data-ds="fairface">FairFace</button>
           <button class="chip" data-ds="utkface">UTKFace</button>
           <button class="chip" data-ds="lfw">LFW</button>
-          <button class="chip" data-ds="harmoface_balanced">Balanced (ours)</button>
+          <button class="chip" data-ds="harmoface_balanced">Balanced</button>
         </div>
         <div class="two">
-          <div class="card"><span class="k">Estimated age</span><b class="v" id="r-age">-</b></div>
-          <div class="card"><span class="k">Estimated gender</span><b class="v" id="r-gender">-</b><small id="r-genconf"></small></div>
+          <div class="card tint-peach"><span class="k">Estimated age</span><b class="v" id="r-age">-</b></div>
+          <div class="card tint-peach"><span class="k">Estimated gender</span><b class="v" id="r-gender">-</b><small id="r-genconf"></small></div>
         </div>
-        <div class="card">
+        <div class="card tint-white">
           <div class="card-h"><b id="ds-title">Dataset category scores</b><span class="src" id="ds-src"></span></div>
           <div id="race-bars"></div>
           <p class="note" id="race-note"></p>
         </div>
-        <div class="card" id="skin-tone-card" hidden>
+        <div class="card tint-sage" id="skin-tone-card" hidden>
           <div class="card-h"><b>Skin tone (Fitzpatrick-approx.) scores</b></div>
           <div id="skin-bars"></div>
         </div>
@@ -143,20 +159,24 @@
       <div id="view-compare" class="view" hidden>
         <p class="lead">Two recognition models, same two photos. Do they agree?</p>
         <div class="two">
-          <div class="card">
+          <div class="card tint-sage">
             <div class="card-h"><b>DeepFace (general)</b><b class="v teal" id="same-deepface">-</b></div>
             <div class="meter"><div class="fill" id="score-fill-deepface"></div><div class="mark" id="score-mark-deepface"></div></div>
             <small id="score-txt-deepface"></small>
           </div>
-          <div class="card">
-            <div class="card-h"><b>ThirdLens (ours)</b><b class="v teal" id="same-thirdlens">-</b></div>
+          <div class="card tint-sage">
+            <div class="card-h"><b>ThirdLens</b><b class="v teal" id="same-thirdlens">-</b></div>
             <div class="meter"><div class="fill" id="score-fill-thirdlens"></div><div class="mark" id="score-mark-thirdlens"></div></div>
             <small id="score-txt-thirdlens"></small>
           </div>
         </div>
-        <div class="card" id="attr-card" hidden>
-          <div class="card-h"><b>What changed between your photos</b></div>
+        <div class="card tint-white" id="attr-card" hidden>
+          <div class="card-h"><b>What looks different between your photos?</b></div>
+          <p class="note">Appearance predictions from the LFW/LFWA+ attribute model.</p>
           <ul id="attr-list"></ul>
+          <p class="note">These describe differences detected in the images, not permanent
+          characteristics of the person. Lighting, pose and image quality can affect these
+          predictions.</p>
         </div>
         <div class="card">
           <table class="cmp"><thead><tr><th>Measure</th><th>Photo 1</th><th>Photo 2</th></tr></thead>
@@ -179,6 +199,6 @@
   </section>
 
 </div>
-<script src="app.js"></script>
+<script src="app.js?v=1791840814"></script>
 </body>
 </html>
