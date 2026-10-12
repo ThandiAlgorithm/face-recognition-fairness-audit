@@ -94,9 +94,14 @@ get("submit").addEventListener("click", async () => {
   show("processing");
   get("proc-err").textContent = "";
   get("proc-back").hidden = true;
+  get("proc-wait").hidden = true;
   let step = 0;
   markStep(0, 0);
   const tick = setInterval(() => { step = Math.min(step + 1, STEPS.length - 1); markStep(step, step); }, 700);
+  // The step list only takes ~3.5s to cycle through, but the real request
+  // (DeepFace's cold-start especially) can run another 20-30s -- without
+  // this, the screen looks frozen for the rest of the wait.
+  const waitMsg = setTimeout(() => { get("proc-wait").hidden = false; }, 5000);
   try {
     const res = await fetch(API, {
       method: "POST",
@@ -105,6 +110,8 @@ get("submit").addEventListener("click", async () => {
     });
     const data = await res.json();
     clearInterval(tick);
+    clearTimeout(waitMsg);
+    get("proc-wait").hidden = true;
     if (data.error) {
       markStep(0, -1);
       get("proc-err").textContent = data.error + ". Please retake your photos.";
@@ -117,6 +124,8 @@ get("submit").addEventListener("click", async () => {
     setTimeout(() => show("results"), 400);
   } catch (e) {
     clearInterval(tick);
+    clearTimeout(waitMsg);
+    get("proc-wait").hidden = true;
     get("proc-err").textContent = "Could not reach the server. Is the backend running?";
     get("proc-back").hidden = false;
   }
@@ -152,13 +161,16 @@ function renderResults() {
   renderRecog("thirdlens", rec.thirdlens);
 
   const attrCard = get("attr-card");
-  if (state.result.attribute_changes && state.result.attribute_changes.length) {
+  const realChanges = (state.result.attribute_changes || []).filter(c => c.change !== "No confident change");
+  if (realChanges.length) {
     attrCard.hidden = false;
     const list = get("attr-list");
     list.innerHTML = "";
-    state.result.attribute_changes.forEach(line => {
+    realChanges.forEach(c => {
       const li = document.createElement("li");
-      li.textContent = line;
+      li.className = "change-row";
+      li.innerHTML = `<span><b>${c.attribute}</b><small>Photo 1: ${c.photo1_state} &rarr; Photo 2: ${c.photo2_state}</small></span>
+        <span class="chip${c.change === "Removed" ? " orange" : ""}">${c.change}</span>`;
       list.appendChild(li);
     });
   } else {

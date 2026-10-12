@@ -79,8 +79,7 @@ _DF_RACE_MAP = {
 }
 
 
-def _fallback(name, df_analysis):
-    ds = config.DATASETS[name]
+def _age_bucket(df_analysis):
     age = int(df_analysis["age"])
     bucket = config.AGE_BUCKETS[-1]
     edges = [2, 9, 19, 29, 39, 49, 59, 69]
@@ -88,6 +87,12 @@ def _fallback(name, df_analysis):
         if age <= e:
             bucket = config.AGE_BUCKETS[i]
             break
+    return bucket
+
+
+def _fallback(name, df_analysis):
+    ds = config.DATASETS[name]
+    bucket = _age_bucket(df_analysis)
     gender_scores = df_analysis["gender"]
     gender = "Female" if gender_scores["Woman"] >= gender_scores["Man"] else "Male"
     result = {
@@ -96,9 +101,9 @@ def _fallback(name, df_analysis):
         "gender": gender,
         "gender_conf": round(float(max(gender_scores.values())), 1),
     }
-    if ds["has_race"]:
+    mapping = _DF_RACE_MAP.get(name)
+    if ds["has_race"] and mapping is not None:
         race_raw = {k.lower(): float(v) for k, v in df_analysis["race"].items()}
-        mapping = _DF_RACE_MAP[name]
         merged = {}
         for label, keys in mapping.items():
             merged[label] = round(sum(race_raw.get(k, 0.0) for k in keys), 1)
@@ -109,10 +114,40 @@ def _fallback(name, df_analysis):
     return result
 
 
+def _lfw_from_attributes(face_bgr, df_analysis):
+    """LFW has no trained age-bucket head here (LFWA+'s age-ish flags --
+    Baby/Child/Youth/Middle_Aged/Senior -- are noisy independent sigmoids,
+    not a clean ordinal bucket), so age still comes from DeepFace. But
+    gender and race-like attributes ARE real trained LFWA+ outputs (Male,
+    White/Black/Asian/Indian), so those should come from our own model
+    instead of falling back to DeepFace entirely -- LFWA+ does have labels,
+    they just weren't being used."""
+    probs = ours_models.lfw_attribute_probs(face_bgr)
+    if probs is None:
+        return None
+    fallback = _fallback("lfw", df_analysis)
+    male_p = probs.get("Male", 0.5)
+    is_male = male_p >= 0.5
+    return {
+        "source": "custom",
+        "age": fallback["age"],
+        "gender": "Male" if is_male else "Female",
+        "gender_conf": round((male_p if is_male else 1 - male_p) * 100, 1),
+        # LFWA+'s race flags are independent multi-label sigmoids, not a
+        # forced single choice -- unlike FairFace/UTKFace's softmax race
+        # head, these percentages don't have to add up to 100.
+        "race": {label: round(probs.get(label, 0.0) * 100, 1)
+                  for label in ("White", "Black", "Asian", "Indian")},
+    }
+
+
 def classify_all(face_bgr, df_analysis):
     out = {}
     for name in config.DATASETS:
-        custom = _custom(name, face_bgr)
+        if name == "lfw" and ours_models.lfw_attributes_available():
+            custom = _lfw_from_attributes(face_bgr, df_analysis)
+        else:
+            custom = _custom(name, face_bgr)
         out[name] = custom if custom is not None else _fallback(name, df_analysis)
     if ours_models.bal_m1_available():
         out["harmoface_balanced"] = ours_models.bal_m1_classify(face_bgr)

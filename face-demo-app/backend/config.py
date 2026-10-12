@@ -24,8 +24,13 @@ DATASETS = {
     },
     "lfw": {
         "label": "LFW",
-        "race": [],
-        "has_race": False,
+        # LFWA+'s 73 trained attributes include White/Black/Asian/Indian as
+        # independent flags -- not a forced single choice the way
+        # FairFace/UTKFace's race head is, see classifiers.py's
+        # _lfw_from_attributes. LFW itself still has no OFFICIAL race
+        # annotation; this is our own model's reading of those four flags.
+        "race": ["White", "Black", "Asian", "Indian"],
+        "has_race": True,
     },
 }
 
@@ -35,7 +40,7 @@ DATASETS = {
 # have) -- classifiers.py adds it to the response under "harmoface_balanced"
 # when ours_models.bal_m1_available(); this entry is just its display metadata.
 HARMOFACE_BALANCED_META = {
-    "label": "HarmoFace Balanced (BAL-M1, ours)",
+    "label": "HarmoFace Balanced",
     "race": ["White", "Black", "Indian", "East Asian", "Southeast Asian", "Middle Eastern", "Latino"],
     "has_race": True,
     "has_skin_tone": True,

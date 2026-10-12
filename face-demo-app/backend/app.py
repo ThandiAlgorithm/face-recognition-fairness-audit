@@ -32,6 +32,14 @@ def analyse_one(bgr):
     if det is None:
         return {"face_found": False}
     face = detect.crop(bgr, det["bbox"])
+    # Our own models (M0/ThirdLens, BAL-M1, the LFW attribute model) were
+    # trained on landmark-aligned crops, not a plain bbox+padding crop --
+    # see detect.align()'s docstring. DeepFace keeps using `face` below
+    # (its own backbones expect their own convention, and it already works
+    # adequately on a loose crop); only our models get `aligned`.
+    aligned = detect.align(bgr, det["landmarks"])
+    if aligned is None:
+        aligned = face
     tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
     tmp.close()  # NamedTemporaryFile(delete=False) still holds its own open
                  # handle on Windows until closed -- leaving it open is what
@@ -53,8 +61,10 @@ def analyse_one(bgr):
         "face_found": True,
         "n_faces": det["n_faces"],
         "quality": quality.measure(bgr, face, det),
-        "datasets": classifiers.classify_all(face, df),
+        "datasets": classifiers.classify_all(aligned, df),
         "_face": face,
+        "_aligned": aligned,
+        "_attrs": ours_models.lfw_attribute_probs(aligned) if ours_models.lfw_attributes_available() else None,
     }
 
 
@@ -115,15 +125,21 @@ def analyze():
     t1.close(); t2.close()  # see analyse_one's comment -- same Windows handle issue
     cv2.imwrite(t1.name, r1["_face"])
     cv2.imwrite(t2.name, r2["_face"])
-    match = recognition.compare_all(t1.name, t2.name)
+    match = recognition.compare_all(t1.name, t2.name, r1["_aligned"], r2["_aligned"])
     for p in (t1.name, t2.name):
         try:
             os.unlink(p)
         except OSError:
             pass
 
+    attribute_changes = []
+    if r1["_attrs"] and r2["_attrs"]:
+        attribute_changes = ours_models.build_attribute_changes(r1["_attrs"], r2["_attrs"])
+
     for r in (r1, r2):
         r.pop("_face", None)
+        r.pop("_aligned", None)
+        r.pop("_attrs", None)
 
     dataset_meta = {k: {"label": v["label"], "has_race": v["has_race"],
                          "race_labels": v["race"]}
@@ -141,6 +157,7 @@ def analyze():
         "photo2": r2,
         "recognition": match,
         "diff": build_diff(r1["quality"], r2["quality"]),
+        "attribute_changes": attribute_changes,
         "dataset_meta": dataset_meta,
     })
 
