@@ -135,6 +135,12 @@ input.sign{font-family:Georgia,serif;font-style:italic}
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* live elapsed-time readout so a long DeepFace cold-start doesn't look frozen */
+.timer{
+  font-family:Georgia,serif;font-variant-numeric:tabular-nums;
+  font-size:15px;font-weight:700;color:var(--muted);text-align:center;margin:-10px 0 18px;
+}
+
 .steps{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:18px}
 .steps li{position:relative;padding-left:38px;font-size:15px;font-weight:700;color:var(--muted)}
 .steps li::before{content:"";position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;border:2px solid var(--line)}
