@@ -1,3 +1,13 @@
+---
+title: ThirdLens
+emoji: 🪞
+colorFrom: orange
+colorTo: green
+sdk: docker
+app_port: 8080
+pinned: false
+---
+
 # Face Demo App
 
 A two-photo face demo. A person enters their name, signs a consent form, takes
