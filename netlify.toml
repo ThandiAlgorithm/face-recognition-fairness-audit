@@ -1,0 +1,10 @@
+[build]
+  publish = "face-demo-app/frontend"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # The camera (getUserMedia) requires a secure context; Netlify serves
+    # everything over HTTPS by default, so no extra config is needed for that.
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"

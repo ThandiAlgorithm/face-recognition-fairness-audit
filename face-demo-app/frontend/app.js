@@ -1,4 +1,9 @@
-const API = (location.origin.includes("5000") ? "" : "http://localhost:5000") + "/api/analyze";
+// When served by Flask on :5000 directly, use a relative path. Otherwise
+// (e.g. this file deployed as a static Netlify site) call the deployed
+// backend -- set BACKEND_URL to wherever the Flask app is hosted (Render,
+// Railway, Fly.io, ...).
+const BACKEND_URL = "https://YOUR-BACKEND.onrender.com";
+const API = (location.origin.includes(":5000") ? "" : BACKEND_URL) + "/api/analyze";
 
 const state = { name: "", photo1: null, photo2: null, result: null, ds: "fairface" };
 let stream = null;
@@ -100,8 +105,20 @@ get("submit").addEventListener("click", async () => {
   const tick = setInterval(() => { step = Math.min(step + 1, STEPS.length - 1); markStep(step, step); }, 700);
   // The step list only takes ~3.5s to cycle through, but the real request
   // (DeepFace's cold-start especially) can run another 20-30s -- without
-  // this, the screen looks frozen for the rest of the wait.
+  // a live readout, the screen looks frozen for the rest of the wait.
+  let elapsed = 0;
+  get("proc-timer").textContent = "0:00";
+  const timerTick = setInterval(() => {
+    elapsed++;
+    const m = Math.floor(elapsed / 60), s = elapsed % 60;
+    get("proc-timer").textContent = `${m}:${String(s).padStart(2, "0")}`;
+  }, 1000);
   const waitMsg = setTimeout(() => { get("proc-wait").hidden = false; }, 5000);
+  // The cold-start wait is usually 20-30s past this point -- say so, instead
+  // of letting the same "still working" line sit unchanged that whole time.
+  const longWaitMsg = setTimeout(() => {
+    get("proc-wait").textContent = "Still working — almost there, this last stretch (model warm-up) can take up to 30 more seconds.";
+  }, 30000);
   try {
     const res = await fetch(API, {
       method: "POST",
@@ -110,7 +127,9 @@ get("submit").addEventListener("click", async () => {
     });
     const data = await res.json();
     clearInterval(tick);
+    clearInterval(timerTick);
     clearTimeout(waitMsg);
+    clearTimeout(longWaitMsg);
     get("proc-wait").hidden = true;
     if (data.error) {
       markStep(0, -1);
@@ -124,7 +143,9 @@ get("submit").addEventListener("click", async () => {
     setTimeout(() => show("results"), 400);
   } catch (e) {
     clearInterval(tick);
+    clearInterval(timerTick);
     clearTimeout(waitMsg);
+    clearTimeout(longWaitMsg);
     get("proc-wait").hidden = true;
     get("proc-err").textContent = "Could not reach the server. Is the backend running?";
     get("proc-back").hidden = false;
