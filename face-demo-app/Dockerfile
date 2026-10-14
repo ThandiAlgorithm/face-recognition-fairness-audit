@@ -21,6 +21,16 @@ COPY face-demo-app/frontend/ face-demo-app/frontend/
 COPY configs/ configs/
 COPY face_resnet34_training/src/ face_resnet34_training/src/
 
+# Trained checkpoints -- gitignored, so these only exist on disk if you've
+# copied face-demo-app/model_checkpoints/ onto the build machine yourself
+# (see that folder's README). Each one goes to the exact path ours_models.py
+# expects under face_resnet34_training/.
+COPY face-demo-app/model_checkpoints/resnet34_baseline_lfw_m1.pt face_resnet34_training/models/resnet34_baseline_lfw_m1.pt
+COPY face-demo-app/model_checkpoints/lfw_labels.json face_resnet34_training/configs/lfw_labels.json
+COPY face-demo-app/model_checkpoints/M0_LFW_arcface_best.pt face_resnet34_training/outputs/M0_LFW_arcface/best.pt
+COPY face-demo-app/model_checkpoints/BAL-M1_best.pt face_resnet34_training/experiments/harmoface/BAL-M1/best.pt
+COPY face-demo-app/model_checkpoints/BAL-M1_label_mappings.json face_resnet34_training/experiments/harmoface/BAL-M1/label_mappings.json
+
 EXPOSE 8080
 
 # --chdir so app:app resolves inside backend/. Shell form (not exec form) so
