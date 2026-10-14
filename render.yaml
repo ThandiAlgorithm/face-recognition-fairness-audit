@@ -3,5 +3,5 @@ services:
     name: face-demo-app
     runtime: docker
     dockerfilePath: face-demo-app/Dockerfile
-    dockerContext: face-demo-app
+    dockerContext: .
     plan: free
