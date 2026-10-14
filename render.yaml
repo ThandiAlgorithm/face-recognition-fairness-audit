@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: face-demo-app
+    runtime: docker
+    dockerfilePath: face-demo-app/Dockerfile
+    dockerContext: face-demo-app
+    plan: free

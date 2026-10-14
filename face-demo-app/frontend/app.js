@@ -1,9 +1,7 @@
-// When served by Flask on :5000 directly, use a relative path. Otherwise
-// (e.g. this file deployed as a static Netlify site) call the deployed
-// backend -- set BACKEND_URL to wherever the Flask app is hosted (Render,
-// Railway, Fly.io, ...).
-const BACKEND_URL = "https://YOUR-BACKEND.onrender.com";
-const API = (location.origin.includes(":5000") ? "" : BACKEND_URL) + "/api/analyze";
+// Flask serves the frontend itself (see app.py's static_folder), so the API
+// lives at the same origin as the page whether that's localhost:5000 or the
+// deployed Space -- no separate backend URL to configure.
+const API = "/api/analyze";
 
 const state = { name: "", photo1: null, photo2: null, result: null, ds: "fairface" };
 let stream = null;
