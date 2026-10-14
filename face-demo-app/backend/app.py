@@ -1,4 +1,5 @@
 import base64
+import io
 import tempfile
 import os
 import cv2
@@ -6,6 +7,7 @@ import numpy as np
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from deepface import DeepFace
+from PIL import Image, ImageOps
 
 import config
 import detect
@@ -23,8 +25,17 @@ def decode(data_url):
     if "," in data_url:
         data_url = data_url.split(",", 1)[1]
     raw = base64.b64decode(data_url)
-    arr = np.frombuffer(raw, np.uint8)
-    return cv2.imdecode(arr, cv2.IMREAD_COLOR)
+    try:
+        # Phone-camera gallery photos carry an EXIF rotation tag; cv2.imdecode
+        # ignores it and decodes the raw (often sideways) pixel grid, which
+        # made face detection fail on portrait gallery uploads even though
+        # the same photo displays upright everywhere else. Canvas-captured
+        # camera shots never hit this path (no EXIF on a canvas export).
+        img = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert("RGB")
+        return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    except Exception:
+        arr = np.frombuffer(raw, np.uint8)
+        return cv2.imdecode(arr, cv2.IMREAD_COLOR)
 
 
 def analyse_one(bgr):
