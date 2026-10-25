@@ -199,8 +199,21 @@ class AdversarialLossWrapper(nn.Module):
             dtype=torch.long,
             device=ita_logits.device,
         )
-        adv_loss = self.ce(ita_logits, ita_target)
         n_valid = int((ita_target != IGNORE_INDEX).sum().item())
+        # nn.CrossEntropyLoss's default reduction='mean' divides by the valid
+        # (non-ignore_index) count -- if a batch happens to have ZERO valid
+        # ITA labels, that's a 0/0 division and the loss silently returns NaN,
+        # which then poisons every future epoch once backpropagated (weights
+        # become NaN and stay NaN). Guard it: contribute zero loss for a
+        # batch with no valid adversarial target, instead of letting NaN
+        # through. Discovered via FairFace's M4 training producing NaN from
+        # epoch 0 regardless of learning rate -- FairFace has the largest
+        # invalid-ITA count of the three datasets, making an all-invalid
+        # batch the most likely to occur there.
+        if n_valid > 0:
+            adv_loss = self.ce(ita_logits, ita_target)
+        else:
+            adv_loss = torch.zeros((), dtype=losses["total"].dtype, device=ita_logits.device)
         if self.training:
             self.tracker.record(ita_logits.detach(), ita_target, float(adv_loss.item()), n_valid)
 

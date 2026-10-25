@@ -1,0 +1,13 @@
+{
+  "n_test": 2405,
+  "race_accuracy": 0.7732945091514143,
+  "race_n_valid": 2404,
+  "gender_accuracy": 0.8872712146422629,
+  "gender_n_valid": 2404,
+  "age_group_accuracy": 0.7508319467554077,
+  "age_group_n_valid": 2404,
+  "checkpoint_path": "experiments\\utkface\\M4_adversarial\\seed_42\\best_checkpoint.pt",
+  "checkpoint_epoch": 5,
+  "method": "M4",
+  "seed": 0
+}

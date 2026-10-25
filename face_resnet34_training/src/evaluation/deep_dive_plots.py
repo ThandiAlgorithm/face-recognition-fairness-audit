@@ -22,8 +22,11 @@ import pandas as pd
 plt.rcParams["figure.dpi"] = 150
 plt.rcParams["savefig.bbox"] = "tight"
 
-METHOD_COLORS = {"Baseline": "#4472C4", "Resampling": "#ED7D31", "Reweighting": "#70AD47",
-                  "Adversarial": "#A64D79"}
+METHOD_COLORS = {
+    "Baseline (M1)": "#0057FF", "Resampling (M2)": "#FF6D00", "Reweighting (M3)": "#00C853",
+    "Adversarial (M4)": "#FF1744", "Baseline": "#0057FF", "Resampling": "#FF6D00",
+    "Reweighting": "#00C853", "Adversarial": "#FF1744",
+}
 
 
 def binary_confusion_from_counts(tp: int, tn: int, fp: int, fn: int) -> np.ndarray:

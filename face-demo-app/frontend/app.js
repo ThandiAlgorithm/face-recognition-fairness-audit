@@ -102,10 +102,10 @@ get("submit").addEventListener("click", async () => {
   markStep(0, 0);
   const tick = setInterval(() => { step = Math.min(step + 1, STEPS.length - 1); markStep(step, step); }, 700);
   // The step list only takes ~3.5s to cycle through, but the real request
-  // (DeepFace's cold-start especially) can run another 20-30s -- without
+  // (DeepFace's cold-start especially) can run up to a minute -- without
   // a live countdown, the screen looks frozen for the rest of the wait.
-  // Clamped at 0:00 rather than going negative if it runs past 30s.
-  const COUNTDOWN_START = 30;
+  // Clamped at 0:00 rather than going negative if it runs past 60s.
+  const COUNTDOWN_START = 60;
   let remaining = COUNTDOWN_START;
   get("proc-timer").textContent = `0:${String(remaining).padStart(2, "0")}`;
   const timerTick = setInterval(() => {

@@ -1,0 +1,12 @@
+{
+  "mechanism": "gradient_reversal",
+  "adversarial_target": "ita_group",
+  "ita_class_index": {
+    "<28": 0,
+    "\u226528": 1
+  },
+  "grl_lambda_max": 1.0,
+  "lambda_schedule": "DANN sigmoid ramp: adv_lambda * (2/(1+exp(-10p)) - 1), p = epoch/max_epochs",
+  "grad_clip_norm": 5.0,
+  "loss_formula": "total = base_task_loss + CrossEntropyLoss(ita_head(GRL(features)), ita_group)"
+}
