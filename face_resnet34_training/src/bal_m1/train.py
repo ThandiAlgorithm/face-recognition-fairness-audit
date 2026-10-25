@@ -169,7 +169,8 @@ def run_benchmark(train_ds, batch_size, num_threads, num_workers, n_race, n_gend
     return result
 
 
-def train(lr, batch_size, max_epochs, early_stopping_patience, num_threads, num_workers, seed, device_str):
+def train(lr, batch_size, max_epochs, early_stopping_patience, num_threads, num_workers, seed, device_str,
+          resume=False, resume_checkpoint=None, stop_after_epoch=None):
     set_seed(seed)
     if num_threads is not None:
         torch.set_num_threads(num_threads)
@@ -215,8 +216,25 @@ def train(lr, batch_size, max_epochs, early_stopping_patience, num_threads, num_
     history = []
     best_score = -float("inf")
     epochs_without_improvement = 0
+    start_epoch = 0
 
-    for epoch in range(max_epochs):
+    if resume:
+        ckpt_path = resume_checkpoint or (OUT_DIR / "best.pt")
+        print(f"[BAL-M1] resuming from {ckpt_path}")
+        ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model_state_dict"])
+        optimizer.load_state_dict(ckpt["optimizer_state_dict"])
+        scheduler.load_state_dict(ckpt["scheduler_state_dict"])
+        start_epoch = ckpt["epoch"] + 1
+        best_score = ckpt["mean_macro_f1"]
+        # epochs_without_improvement resets to 0 on resume: the saved checkpoint
+        # has no record of how many non-improving epochs preceded the interruption
+        # (history.csv for this run was not retained), so this is a fresh patience
+        # window from the resume point, not a continuation of an unknown count.
+        epochs_without_improvement = 0
+        print(f"[BAL-M1] resumed at epoch {start_epoch} (best_score={best_score:.4f} from epoch {ckpt['epoch']})")
+
+    for epoch in range(start_epoch, max_epochs):
         t0 = time.time()
         model.train()
         total_loss, n_seen = 0.0, 0
@@ -281,6 +299,11 @@ def train(lr, batch_size, max_epochs, early_stopping_patience, num_threads, num_
             print(f"[BAL-M1] early stopping at epoch {epoch} (no mean_macro_f1 improvement for {early_stopping_patience} epochs)")
             break
 
+        if stop_after_epoch is not None and epoch >= stop_after_epoch:
+            print(f"[BAL-M1] stopping probe at epoch {epoch} (--stop-after-epoch={stop_after_epoch}); "
+                  f"this is NOT early stopping, just a capped probe run")
+            break
+
     return {"best_mean_macro_f1": best_score, "history": history}
 
 
@@ -296,6 +319,15 @@ def main() -> None:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--benchmark", action="store_true")
     parser.add_argument("--benchmark-batches", type=int, default=20)
+    parser.add_argument("--resume", action="store_true",
+                        help="resume from --resume-checkpoint (default OUT_DIR/best.pt): reloads "
+                             "model/optimizer/scheduler state and continues from checkpoint['epoch']+1. "
+                             "--max-epochs must match the ORIGINAL run's value so the cosine LR "
+                             "schedule's shape is unchanged; use --stop-after-epoch to cap a short probe.")
+    parser.add_argument("--resume-checkpoint", type=str, default=None)
+    parser.add_argument("--stop-after-epoch", type=int, default=None,
+                        help="break the loop after this absolute epoch index completes, regardless of "
+                             "max-epochs/early-stopping-patience -- for a cheap partial probe.")
     args = parser.parse_args()
 
     if args.benchmark:
@@ -308,9 +340,11 @@ def main() -> None:
                       torch.device(args.device), args.benchmark_batches)
         return
 
+    resume_ckpt = Path(args.resume_checkpoint) if args.resume_checkpoint else None
     train(lr=args.lr, batch_size=args.batch_size, max_epochs=args.max_epochs,
           early_stopping_patience=args.early_stopping_patience, num_threads=args.num_threads,
-          num_workers=args.num_workers, seed=args.seed, device_str=args.device)
+          num_workers=args.num_workers, seed=args.seed, device_str=args.device,
+          resume=args.resume, resume_checkpoint=resume_ckpt, stop_after_epoch=args.stop_after_epoch)
 
 
 if __name__ == "__main__":
